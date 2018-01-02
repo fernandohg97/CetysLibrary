@@ -6,8 +6,7 @@ import { HomeComponent } from './home/home.component'
 // import { ReservationUpdateComponent } from './home/reservation/reservation-update/reservation-update.component'
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: '', redirectTo: '', pathMatch: 'full' }
+  { path: '', component: HomeComponent }
   // { path: 'reports', component: ReportsComponent },
   // { path: 'reservations-create', component: ReservationCreateComponent },
   // { path: 'reservations-update', component: ReservationUpdateComponent }
