@@ -28,10 +28,10 @@ export class AdminCareersComponent implements OnInit {
   ngOnInit() {
     this.settingsService.loadSchoolSettings().subscribe(res => {
       this.divisions = res
-      console.log(this.divisions)
+      // console.log(this.divisions)
     })
     this.careersService.getAll().then(data => {
-      console.log(data)
+      // console.log(data)
       this.careers = data
     })
   }
@@ -41,9 +41,9 @@ export class AdminCareersComponent implements OnInit {
   }
 
   removeFile() {
-    console.log(this.myInputVariable.nativeElement.files);
+    // console.log(this.myInputVariable.nativeElement.files);
     this.myInputVariable.nativeElement.value = "";
-    console.log(this.myInputVariable.nativeElement.files);
+    // console.log(this.myInputVariable.nativeElement.files);
     this.nameFile = ''
     this.textFile = undefined
   }
@@ -63,29 +63,29 @@ export class AdminCareersComponent implements OnInit {
   }
 
   areaChange(event) {
-    console.log(event.division)
+    // console.log(event.division)
     this.newCareer.area = event.division
   }
 
   save() {
-    console.log(this.newCareer)
+    // console.log(this.newCareer)
     if (this.textFile) {
-      console.log(this.textFile)
+      // console.log(this.textFile)
       let jsonFiles = JSON.parse(this.textFile)
       this.careersService.createFile(jsonFiles)
       .subscribe((response => {
-        console.log(response)
+        // console.log(response)
         this.router.navigateByUrl('/admin-site')
       }), (err => this.anyErrors = JSON.parse(err._body))
       )
     } else {
       this.careersService.create(this.newCareer)
       .subscribe((response => {
-        console.log(response)
+        // console.log(response)
         this.router.navigateByUrl('/admin-site')
       }), (err => {
         this.anyErrors = JSON.parse(err._body)
-        console.log(this.anyErrors.exist)
+        // console.log(this.anyErrors.exist)
       })
       )
     }
@@ -93,7 +93,7 @@ export class AdminCareersComponent implements OnInit {
 
   delete(id: string) {
     this.careersService.remove(id).then(response => {
-      console.log(response)
+      // console.log(response)
     }).catch(err => console.log(`Hubo un error ${err}`))
   }
 

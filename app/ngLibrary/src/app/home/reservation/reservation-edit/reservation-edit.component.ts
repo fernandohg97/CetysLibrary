@@ -24,16 +24,16 @@ export class ReservationEditComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       let cubicleNumberId = params['id'] //
-      console.log(`Id de cubiculo: ${cubicleNumberId}`)
+      // console.log(`Id de cubiculo: ${cubicleNumberId}`)
       if (cubicleNumberId) {
         this.cubiclesService.getById(cubicleNumberId).then(cubicle => {
           this.cubicleReservationNumber = cubicle.cubicleNumber
           this.reservationsService.getByCubicle(this.cubicleReservationNumber.toString()).then(data => {
             data.length == 0 ? this.exist = false : this.exist = true
             this.reservations = data
-            console.log('reservations', data)
+            // console.log('reservations', data)
           })
-          console.log(this.cubicleReservationNumber)
+          // console.log(this.cubicleReservationNumber)
         })
 
       }
@@ -41,13 +41,13 @@ export class ReservationEditComponent implements OnInit {
   }
 
   getCurrentReservation(reservation) {
-    console.log(reservation.usersDetails)
+    // console.log(reservation.usersDetails)
     this.currentReservation = reservation.usersDetails
   }
 
   delete(id: string) {
     this.reservationsService.remove(id).then(response => {
-      console.log(response)
+      // console.log(response)
     }).catch(err => `Hubo un error ${err}`)
     this.exist = false
   }

@@ -25,7 +25,7 @@ export class AdminHomeComponent implements OnInit {
 
   ngOnInit() {
     this.usersService.getAll().then(data => {
-      console.log(data.length)
+      // console.log(data.length)
       this.totalUsers = data.length
     })
     this.cubiclesService.getAll().then(data => {

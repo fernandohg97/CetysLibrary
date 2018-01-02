@@ -53,26 +53,26 @@ export class ReservationCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(`Fehca y hora de entrada: ${this.newReservation.entryTime}`)
+    // console.log(`Fehca y hora de entrada: ${this.newReservation.entryTime}`)
     let hour = this.newReservation.entryTime.getHours()
     let minutes = this.newReservation.entryTime.getMinutes()
 
     let time = this.newReservation.entryTime.getTime()
     if (minutes >= 0 && minutes <= 9) {
       this.currentTime = `${hour}:0${minutes}`
-      console.log(this.currentTime)
+      // console.log(this.currentTime)
     } else {
       this.currentTime = `${hour}:${minutes}`
 
     }
-    console.log('Hora de entrada: ' + this.currentTime)
+    // console.log('Hora de entrada: ' + this.currentTime)
 
     let day = this.newReservation.reservationDate.getDate().toString()
     let month = this.newReservation.reservationDate.getMonth()+1
     let year = this.newReservation.reservationDate.getFullYear()
     if (parseInt(day) >= 1 && parseInt(day) <= 9) {
       day = '0' + day
-      console.log(day)
+      // console.log(day)
     }
     if (month >= 1 && month <= 9) {
       this.currentDate = `${year}-0${month}-${day}`
@@ -80,26 +80,26 @@ export class ReservationCreateComponent implements OnInit {
       this.currentDate = `${year}-${month}-${day}`
     }
     // this.currentDate = `${year}-${month}-${day}`
-    console.log(`Fecha actual: ${this.currentDate}`)
+    // console.log(`Fecha actual: ${this.currentDate}`)
 
     this.settingService.loadSchoolSettings().subscribe(res => {
       this.divisions = res
-      console.log(this.divisions)
+      // console.log(this.divisions)
     })
     this.departmentsService.getAll().then(data => {
-      console.log('Departamentos' + data)
+      // console.log('Departamentos' + data)
       data.forEach(department => {
         this.departments.push(department.departmentName)
       })
     })
     this.route.params.subscribe((params: Params) => {
       let cubicleNumberId = params['id'] //
-      console.log(`Id de cubiculo: ${cubicleNumberId}`)
+      // console.log(`Id de cubiculo: ${cubicleNumberId}`)
       if (cubicleNumberId) {
         this.cubiclesService.getById(cubicleNumberId).then(cubicle => {
-          console.log(cubicle)
+          // console.log(cubicle)
           this.newReservation.cubicle = cubicle.cubicleNumber
-          console.log('Cubiculo: ' + this.newReservation.cubicle)
+          // console.log('Cubiculo: ' + this.newReservation.cubicle)
         })
       }
     })
@@ -114,13 +114,13 @@ export class ReservationCreateComponent implements OnInit {
     // console.log(`Fecha de salida reservacion: ${this.newReservation.departureTime}`)
     console.log(this.registrationNumber)
     this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
-      console.log(`El usuario existe en la base de datos: ${JSON.stringify(user)}`)
+      // console.log(`El usuario existe en la base de datos: ${JSON.stringify(user)}`)
       this.newReservation.user = user
 
       this.reservationsService.create(this.newReservation)
       .subscribe(
         data => {
-          console.log(data)
+          // console.log(data)
           this.router.navigateByUrl('/')
         },
         err => {
@@ -128,7 +128,7 @@ export class ReservationCreateComponent implements OnInit {
       }
       )
     }).catch(error => {
-        console.log(`El usuario no se encuentra en la base de datos ${error.status}`)
+        // console.log(`El usuario no se encuentra en la base de datos ${error.status}`)
         this.anyErrors = JSON.parse(error._body)
     })
   }
@@ -170,13 +170,13 @@ export class ReservationCreateComponent implements OnInit {
     })
     this.usersQuantity.setDivisionSelected(newDivision.division)
     // this.currentCareers = newDivision.careers
-    console.log(`Division selected: ${this.usersQuantity.getDivisionSelected()}, Careers: ${this.currentCareers}`)
+    // console.log(`Division selected: ${this.usersQuantity.getDivisionSelected()}, Careers: ${this.currentCareers}`)
   }
 
   departmentChange(event) {
-    console.log(event)
+    // console.log(event)
     this.usersQuantity.setDepartmentSelected(event)
-    console.log(`Department selected: ${this.usersQuantity.getDepartmentSelected()}`)
+    // console.log(`Department selected: ${this.usersQuantity.getDepartmentSelected()}`)
   }
 
   decrementCareer(career: string) {
@@ -304,6 +304,6 @@ export class ReservationCreateComponent implements OnInit {
         }
     }
     this.newReservation.peopleQuantity+=1
-    console.log(this.newReservation.usersDetails)
+    // console.log(this.newReservation.usersDetails)
   }
 }

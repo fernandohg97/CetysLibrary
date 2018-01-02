@@ -60,8 +60,8 @@ export class AdminReportsComponent implements OnInit, AfterContentInit, OnDestro
     } else {
       this.endDate = `${year}-${month2}-${day}`
     }
-    console.log(this.startDate)
-    console.log(this.endDate)
+    // console.log(this.startDate)
+    // console.log(this.endDate)
   }
 
   insertChartItems(object, labels, data) {
@@ -76,13 +76,13 @@ export class AdminReportsComponent implements OnInit, AfterContentInit, OnDestro
   }
 
   ngAfterContentInit() {
-    console.log('After content init loaded')
+    // console.log('After content init loaded')
     if (this.startDate && this.endDate) {
       this.reportsService.getByDivision(this.startDate, this.endDate).then(data => {
         if (data) {
 
-          console.log('Reportes por division: ')
-          console.log(data)
+          // console.log('Reportes por division: ')
+          // console.log(data)
           this.reportsDivision = data
           this.pieChartLabelsDivision = []
           this.pieChartDataDivision = []
@@ -98,8 +98,8 @@ export class AdminReportsComponent implements OnInit, AfterContentInit, OnDestro
       })
       this.reportsService.getByCubicle(this.startDate, this.endDate).then(data => {
         if (data) {
-          console.log('Reportes por cubiculo: ')
-          console.log(data)
+          // console.log('Reportes por cubiculo: ')
+          // console.log(data)
           this.reportsCubicle = data
           this.pieChartLabelsCubicles = []
           this.pieChartDataCubicles = []
@@ -113,8 +113,8 @@ export class AdminReportsComponent implements OnInit, AfterContentInit, OnDestro
       this.reportsService.getByCareer(this.startDate, this.endDate).then(data => {
         if (data) {
 
-          console.log('Reportes por carrera: ')
-          console.log(data)
+          // console.log('Reportes por carrera: ')
+          // console.log(data)
           this.reportsCareer = data
           this.pieChartLabelsCareers = []
           this.pieChartDataCareers = []
@@ -131,8 +131,8 @@ export class AdminReportsComponent implements OnInit, AfterContentInit, OnDestro
       this.reportsService.getByDay(this.startDate, this.endDate).then(data => {
         if (data) {
 
-          console.log('Reportes por dia: ')
-          console.log(data)
+          // console.log('Reportes por dia: ')
+          // console.log(data)
           this.reportsDay = data
           this.pieChartLabelsDays = []
           this.pieChartDataDays = []
@@ -181,8 +181,8 @@ export class AdminReportsComponent implements OnInit, AfterContentInit, OnDestro
         if (data) {
           // this.pieChartLabelsDivision = new Array
           // this.pieChartDataDivision = new Array
-          console.log('Reportes por division: ')
-          console.log(data)
+          // console.log('Reportes por division: ')
+          // console.log(data)
           this.reportsDivision = data
           this.pieChartLabelsDivision = new Array()
           this.pieChartDataDivision = new Array()
@@ -196,8 +196,8 @@ export class AdminReportsComponent implements OnInit, AfterContentInit, OnDestro
         if (data) {
           // this.pieChartLabelsCubicles = new Array
           // this.pieChartDataCubicles = new Array
-        console.log('Reportes por cubiculo: ')
-        console.log(data)
+        // console.log('Reportes por cubiculo: ')
+        // console.log(data)
         this.reportsCubicle = data
         this.pieChartLabelsCubicles = new Array()
         this.pieChartDataCubicles = new Array()
@@ -214,8 +214,8 @@ export class AdminReportsComponent implements OnInit, AfterContentInit, OnDestro
         if (data) {
           this.pieChartLabelsCareers = new Array()
           this.pieChartDataCareers = new Array()
-          console.log('Reportes por carrera: ')
-          console.log(data)
+          // console.log('Reportes por carrera: ')
+          // console.log(data)
           this.reportsCareer = data
           // this.pieChartLabelsCareers = []
           // this.pieChartDataCareers = []
@@ -227,9 +227,9 @@ export class AdminReportsComponent implements OnInit, AfterContentInit, OnDestro
         if (data) {
           this.pieChartLabelsDays = new Array
           this.pieChartDataDays = new Array
-          console.log(this.pieChartLabelsDays)
-          console.log('Reportes por dia: ')
-          console.log(data)
+          // console.log(this.pieChartLabelsDays)
+          // console.log('Reportes por dia: ')
+          // console.log(data)
           this.reportsDay = data
           // this.pieChartLabelsDays = []
           // this.pieChartDataDays = []
@@ -243,7 +243,7 @@ export class AdminReportsComponent implements OnInit, AfterContentInit, OnDestro
         }
       })
     }
-    console.log(this.pieChartLabelsDays)
+    // console.log(this.pieChartLabelsDays)
   }
 
 }

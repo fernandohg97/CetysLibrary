@@ -23,14 +23,14 @@ export class ReportsComponent implements OnInit {
     this.reservationsService.getAll().then(data => {
       if (data) {
         this.reservations = data
-        console.log(this.reservations)
-        console.log(this.reservations[0].reservationDate)
+        // console.log(this.reservations)
+        // console.log(this.reservations[0].reservationDate)
       }
     })
   }
 
   getCurrentReservation(reservation) {
-    console.log(reservation.usersDetails)
+    // console.log(reservation.usersDetails)
     this.currentReservation = reservation.usersDetails
   }
 
