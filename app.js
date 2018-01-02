@@ -2,6 +2,7 @@
 
 const express = require('express')
 const app = express()
+const path = require('path')
 const bodyParser = require('body-parser')
 const userRouter = require('./app/routes/user.route')
 const reservationRouter = require('./app/routes/reservation.route')
@@ -22,6 +23,9 @@ app.use(function (req, res, next) {
 })
 app.use(express.static(__dirname +'/dist'))
 
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname + '/dist/index.html'))
+})
 app.use('/api', userRouter)
 app.use('/api', reservationRouter)
 app.use('/api', cubicleRouter)
