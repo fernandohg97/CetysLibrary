@@ -21,11 +21,11 @@ app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
   next()
 })
-app.use(express.static(`${__dirname}/ngLibrary/dist`))
+app.use(express.static(`${__dirname}/app/ngLibrary/dist`))
 app.set('view-engine', 'html')
 
 app.all('*', (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, '/ngLibrary/dist/index.html'))
+  res.status(200).sendFile(path.join(__dirname, '/app/ngLibrary/dist/index.html'))
 })
 
 app.use('/api', userRouter)
