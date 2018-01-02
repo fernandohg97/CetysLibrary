@@ -4,7 +4,7 @@
   "description": "Web service for library system",
   "main": "index.js",
   "scripts": {
-    "serve": "nodemon server.js"
+    "test": "test"
   },
   "author": "Fernando Hernandez",
   "license": "ISC",
