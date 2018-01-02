@@ -1,0 +1,22 @@
+'use strict'
+
+const express = require('express')
+const userRouter = express.Router()
+const userCtrl = require('../controllers/user.controller')
+const created = require('../middlewares/userCreated')
+
+userRouter.get('/users', userCtrl.getUsers)
+
+userRouter.get('/users/recent', userCtrl.getUsersRecent)
+
+userRouter.get('/users/:user_id', userCtrl.getUser)
+
+userRouter.get('/users/registrationNumber/:registrationNumber', userCtrl.getUserByRegistrationNumber)
+
+userRouter.post('/users', created.isCreated, userCtrl.createUser)
+
+userRouter.put('/users/:user_id', userCtrl.updateUser)
+
+userRouter.delete('/users/:user_id', userCtrl.removeUser)
+
+module.exports = userRouter

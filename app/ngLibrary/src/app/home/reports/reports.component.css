@@ -1,0 +1,9 @@
+/*.reports-content {
+  margin: 0 auto;
+}*/
+.title {
+  margin-top: 30px;
+}
+.pagination-users /deep/ .ngx-pagination .current {
+  margin-top: 20px;
+}

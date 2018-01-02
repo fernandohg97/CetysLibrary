@@ -1,0 +1,29 @@
+.title {
+  margin-top: 30px;
+}
+.remove {
+  position: relative;
+  /*background: inherit;*/
+}
+.remove-item {
+  position: absolute;
+  left: 30%;
+}
+/*th, td {
+    border-bottom: 1px solid #ddd;
+}*/
+/*.table-content {
+  overflow-x: auto;
+}*/
+/*table {
+  width: 1200px;
+}*/
+.message {
+  margin-top: 50px;
+}
+.message p {
+  color: grey;
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 30px;
+}

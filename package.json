@@ -1,0 +1,21 @@
+{
+  "name": "electron-service",
+  "version": "1.0.0",
+  "description": "Web service for library system",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Fernando Hernandez",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.0",
+    "moment": "^2.19.3",
+    "mongoose": "^4.11.13",
+    "validator": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}

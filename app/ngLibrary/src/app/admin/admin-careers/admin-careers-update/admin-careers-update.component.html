@@ -1,0 +1,52 @@
+<form>
+  <div class="grid-container content">
+    <a class="button" routerLink="/admin-site/careers"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+    <div class="grid-x grid-padding-x">
+      <div class="title cell">
+        <h2>Modificar carrera</h2>
+      </div>
+    </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Nombre
+            <input type="text" name="careerName" placeholder="Ingrese el nombre de la carrera" [ngModel]="currentCareer?.careerName" (ngModelChange)="currentCareer.careerName = $event">
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Clave
+            <input type="text" name="careerCode" placeholder="Ingrese la clave de la carrera" [ngModel]="currentCareer?.careerCode" (ngModelChange)="currentCareer.careerCode = $event">
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Division
+            <input type="text" name="division" placeholder="Ingrese la clave de la carrera" [ngModel]="currentCareer?.division" (ngModelChange)="currentCareer.division = $event">
+          </label>
+        </div>
+      </div>
+      <!-- <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Area
+            <select class="form-control" name="selectedDivision" [(ngModel)]="divisionSelected" (change)="selectChangeHandler($event)" required>
+              <option *ngFor="let division of divisions" [value]="division">{{division.division}}</option>
+            </select>
+          </label>
+        </div>
+      </div> -->
+      <div class="grid-x grid-padding-x">
+        <fieldset class="large-6 cell">
+          <legend>Activo</legend>
+          <input type="radio" name="active" value="true" (change)="isActiveCareer($event)" id=isActive required><label for="isActive">SI</label>
+          <input type="radio" name="active" value="false" (change)="isNotActiveCareer($event)" id="isNotActive"><label for="isNotActive">NO</label>
+        </fieldset>
+      </div>
+      <div class="grid-x grid-padding-x submit-btn">
+        <div class="small-6 medium-6 large-4 cell text-center save-btn">
+          <button type="button" class="button" name="button" (click)="update()">Actualizar</button>
+        </div>
+      </div>
+    </div>
+</form>

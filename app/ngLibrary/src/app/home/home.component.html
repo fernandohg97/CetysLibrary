@@ -1,0 +1,37 @@
+<h1 class="text-center">Sistema de reservacion de cubiculos</h1>
+<!-- <app-reservation-edit></app-reservation-edit> -->
+
+<div class="grid-container matrix">
+  <div class="grid-x grid-padding-x small-up-1 medium-up-3 large-up-4 text-center matrix-content">
+    <a *ngFor="let cubicle of cubicles" routerLink="/reservations-create/{{cubicle._id}}" class="cell button cubicle-option">
+      <a routerLink="/reservations-edit/{{cubicle._id}}" class="boton-edit">
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+      </a>
+      <p class="cubicle-number">{{cubicle.cubicleNumber}}</p>
+      <ng-container *ngIf="cubicle.availability; else elseBlock">
+        <i class="fa fa-check-circle check-icon" aria-hidden="true"></i>
+      </ng-container>
+      <ng-template #elseBlock><i class="fa fa-times-circle times-icon" aria-hidden="true"></i></ng-template>
+    </a>
+  </div>
+</div>
+
+<div class="grid-container boton">
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <a class="button radius shadow float-right reports-button" routerLink="reservations" name="button">Reservaciones</a>
+    </div>
+  </div>
+</div>
+
+
+
+<footer class="text-center font-bold">
+  <div class="grid-x grid-padding-x">
+    <div class="small-12 cell text-center">
+      Cetys Universidad <br> <a routerLink="admin-site" style="font-size: 15px;">Administrador</a>
+
+    </div>
+  </div>
+
+</footer>

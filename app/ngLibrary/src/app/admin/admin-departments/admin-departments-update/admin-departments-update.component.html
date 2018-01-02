@@ -1,0 +1,29 @@
+<form>
+  <div class="grid-container content">
+    <a class="button" routerLink="/admin-site/departments"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+    <div class="grid-x grid-padding-x">
+      <div class="title cell">
+        <h2>Modificar departamento</h2>
+      </div>
+    </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Numero
+            <input type="number" name="departmentNumber" placeholder="Ingrese numero del departamento" [ngModel]="currentDepartment?.departmentCode" (ngModelChange)="currentDepartment.departmentCode = $event">
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Nombre
+            <input type="text" name="departmentName" placeholder="Ingrese nombre del departamento" [ngModel]="currentDepartment?.departmentName" (ngModelChange)="currentDepartment.departmentName = $event">
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x submit-btn">
+        <div class="small-6 medium-6 large-4 cell text-center save-btn">
+          <button type="button" class="button" name="button" (click)="update()">Actualizar</button>
+        </div>
+      </div>
+    </div>
+</form>

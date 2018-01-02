@@ -1,0 +1,161 @@
+<div class="grid-container reports-content">
+  <div class="grid-x grid-padding-x">
+    <div class="small-12 cell">
+      <h2 class="text-center">Reporte estadistico</h2>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="small-6 cell">
+        <label>Fecha Inicio
+          <input type="date" name="startDate" [(ngModel)]="startDate" placeholder="Fecha" required>
+        </label>
+    </div>
+    <div class="small-6 cell">
+      <label>Fecha Fin
+        <input type="date" name="endDate" [(ngModel)]="endDate" placeholder="Fecha" required>
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="small-12 cell">
+      <button type="button" class="button" name="button" (click)="searchReports()">Buscar</button>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="category-title cell">
+      <h4>Ingresos por cubiculo</h4>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Cubiculo</th>
+          <th>Cantidad de ingresos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let report of reportsCubicle">
+          <td>{{report._id}}</td>
+          <td>{{report.ingresos}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="display: block; margin: 0 auto;">
+      <canvas  width="300" height="300" *ngIf="pieChartLabelsCubicles && pieChartDataCubicles" baseChart
+              [data]="pieChartDataCubicles"
+              [labels]="pieChartLabelsCubicles"
+              [chartType]="pieChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)">
+      </canvas>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="category-title cell">
+      <h4>Ingresos por division</h4>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Division</th>
+          <th>Cantidad de ingresos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let report of reportsDivision">
+          <td>{{report._id}}</td>
+          <td>{{report.ingresos}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="display: block; margin: 0 auto;">
+      <canvas width="300" height="300" *ngIf="pieChartLabelsDivision && pieChartDataDivision" baseChart
+              [data]="pieChartDataDivision"
+              [labels]="pieChartLabelsDivision"
+              [chartType]="pieChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)">
+      </canvas>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="category-title cell">
+      <h4>Ingresos por carrera</h4>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Carrera</th>
+          <th>Cantidad de ingresos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let report of reportsCareer">
+          <td>{{report._id}}</td>
+          <td>{{report.ingresos}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="display: block; margin: 0 auto;">
+      <canvas width="300" height="300" *ngIf="pieChartLabelsCareers && pieChartDataCareers" baseChart
+              [data]="pieChartDataCareers"
+              [labels]="pieChartLabelsCareers"
+              [chartType]="pieChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)">
+      </canvas>
+    </div>
+  </div>
+  <!-- <div class="grid-x grid-padding-x">
+    <div class="category-title cell">
+      <h4>Ingresos por departmento</h4>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Departamento</th>
+          <th>Cantidad de ingresos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let department of allDepartments">
+          <td>{{department.departmentName}}</td>
+          <td>s</td>
+        </tr>
+      </tbody>
+    </table>
+  </div> -->
+  <div class="grid-x grid-padding-x">
+    <div class="category-title cell">
+      <h4>Ingreso total por dia</h4>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Cantidad de ingresos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let report of reportsDay">
+          <td>{{report._id | date: 'shortDate'}}</td>
+          <td>{{report.ingresos}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="display: block; margin: 0 auto;">
+    <canvas *ngIf="pieChartLabelsDays && pieChartDataDays" baseChart
+            [data]="pieChartDataDays"
+            [labels]="pieChartLabelsDays"
+            [chartType]="pieChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"
+            [legend]="pieChartLegend">
+    </canvas>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="small-12 cell">
+      Total de reservaciones: {{totalReservations}}
+    </div>
+  </div>
+</div>

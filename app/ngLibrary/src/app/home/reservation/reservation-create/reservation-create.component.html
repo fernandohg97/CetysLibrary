@@ -1,0 +1,128 @@
+<h1 class="text-center">Create Reservation</h1>
+    <form #reservationForm="ngForm">
+      <div class="grid-container content">
+        <div class="grid-x grid-padding-x">
+          <div class="title cell">
+            <h2>Nueva reservacion</h2>
+          </div>
+        </div>
+
+        <div class="grid-x grid-padding-x">
+          <div class="cell form-group">
+            <label>Usuario
+              <input type="number" aria-describedby="userHelpText" class="form-control" name="user" [(ngModel)]="registrationNumber" placeholder="Ingrese la matricula" required #matricula="ngModel">
+            </label>
+            <!-- <p *ngIf="anyErrors._bod" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors._body}}</p> -->
+            <!-- <div *ngIf="matricula.errors && (matricula.dirty || matricula.touched)" class="alert">
+              <div [hidden]="!matricula.errors.required">
+                La matricula es requerida
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="grid-x grid-padding-x">
+          <div class="small-2 cell form-group">
+            <label>Cubiculo
+              <input type="number" class="form-control" value="{{newReservation?.cubicle}}">
+            </label>
+          </div>
+
+          <div class="small-5 cell form-group">
+            <label>Hora de entrada
+              <input type="time" class="form-control" name="entryTime" [(ngModel)]="currentTime">
+              <p *ngIf="anyErrors?.errors?.entryTime" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.entryTime.message}}</p>
+
+            </label>
+          </div>
+
+          <div class="small-5 cell form-group">
+            <label>Hora de salida
+              <input type="time" class="form-control" name="departureTime" [(ngModel)]="departureTime">
+              <p *ngIf="anyErrors?.errors?.departureTime" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.departureTime.message}}</p>
+
+            </label>
+          </div>
+        </div>
+
+        <div class="grid-x grid-padding-x">
+          <div class="auto cell form-group">
+            <label>Division
+              <select class="form-control" name="selectedDivision" [ngModel]="selectedDivision" (ngModelChange)="divisionChange($event)">
+                <option *ngFor="let division of divisions" [ngValue]="division">{{division.division}}</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="auto cell form-group">
+            <label>Departamento
+              <select class="form-control" name="selectedDepartment" [ngModel]="departmentSelected" (ngModelChange)="departmentChange($event)" data-open="quantity-department">
+                <option *ngFor="let department of departments" [value]="department">{{department}}</option>
+              </select>
+            </label>
+          </div>
+
+          <!-- Modal -->
+          <div class="reveal" id="quantity-department" data-reveal>
+            <label for="">Cantidad de personas
+            <div class="input-group">
+              <span class="input-group-label"><i class="fa fa-users" aria-hidden="true"></i></span>
+              <input class="input-group-field" type="number" name="quantityDepartment" min="1" [(ngModel)]="quantityDepartment">
+              <div class="input-group-button">
+                <button type="button" class="button" [disabled]="!registrationNumber" (click)="onSubmitQuantityDepartment()" data-close aria-label="Close modal">Listo</button>
+              </div>
+            </div>
+            </label>
+            <button class="close-button" data-close aria-label="Close modal" type="button">
+             <span aria-hidden="true">&times;</span>
+           </button>
+          </div>
+
+          <div class="auto cell">
+            <label>Fecha
+              <input type="date" name="dateReservation" [(ngModel)]="currentDate" placeholder="Fecha">
+              <p *ngIf="anyErrors?.errors?.reservationDate" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.reservationDate.message}}</p>
+
+            </label>
+          </div>
+        </div>
+        <!-- Input option careers -->
+        <div class="grid-x grid-padding-x plus-minus-group">
+          <ul class="menu">
+            <li *ngFor="let career of currentCareers; let i = index" class="input-group list-group">
+              <span>{{career}}</span>
+              <button type="button" class="button hollow circle" [disabled]="!registrationNumber || valores[i].count == 0" (click)="decrementCareer(career)" data-quantity="minus" data-field="quantity">
+                <i class="fa fa-minus" aria-hidden="true"></i>
+              </button>
+              <input class="text-center input-quantity" type="number" name="quantity" [value]="valores[i].count">
+              <button type="button" class="button hollow circle" [disabled]="!registrationNumber" (click)="incrementCareer(career)" data-quantity="plus" data-field="quantity">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div class="grid-x grid-padding-x">
+          <div class="small-2 cell title-people">
+            <label>Cantidad total
+              <input type="number" name="peopleQuantity" [(ngModel)]="newReservation.peopleQuantity">
+            </label>
+          </div>
+          <div class="small-12 medium-10 large-10 cell">
+            <label>
+              Prestamo de material
+              <textarea name="borrowedMaterial" placeholder="Ingresar el material prestado" [(ngModel)]="newReservation.borrowedMaterial"></textarea>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid-x grid-padding-x">
+          <div class="small-6 medium-6 large-4 cell text-center hola">
+            <button type="button" class="button" name="button" [disabled]="!reservationForm.form.valid" (click)="save()">
+              Reservar
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </form>

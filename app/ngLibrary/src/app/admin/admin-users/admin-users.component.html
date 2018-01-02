@@ -1,0 +1,126 @@
+<div *ngIf="!called" class="grid-container table-content">
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <button type="button" class="button float-right" name="button" (click)="createUser()">Nuevo usuario</button>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="small-12 cell">
+      <label>Buscar
+        <input type="text" placeholder="Ingrese la matricula o nombre del usuario" [(ngModel)]="searchUserNumber">
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <table class="unstriped table-info">
+      <thead>
+        <tr>
+          <th>Matricula</th>
+          <th>Nombre</th>
+          <th>Division</th>
+          <th>Carrera</th>
+          <th>Modificar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users | paginate: { itemsPerPage: 50, currentPage: page } | searchUser: searchUserNumber" data-closable>
+          <td>{{user.registrationNumber}}</td>
+          <td>{{user.name}}</td>
+          <td>{{user.division}}</td>
+          <td>{{user.career}}</td>
+          <td class="text-center"><a routerLink="/admin-site/users/{{user._id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+          <td class="remove">
+              <button (click)="delete(user._id)" class="close-button remove-item" aria-label="Dismiss alert" type="button" data-close>
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- <ul>
+    <li *ngFor="let item of users | paginate: { itemsPerPage: 10, currentPage: page }"> {{item.name}} </li>
+  </ul> -->
+  <div class="grid-x grid-padding-x">
+    <div class="small-12 cell text-center">
+      <pagination-controls class="pagination-users" (pageChange)="page = $event"></pagination-controls>
+    </div>
+  </div>
+
+</div>
+
+<!-- Create User Form -->
+<form *ngIf="called">
+  <div class="grid-container content">
+    <button type="button" class="button" name="button" (click)="called = false"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+    <div class="grid-x grid-padding-x">
+      <div class="title cell">
+        <h2>Nuevo usuario</h2>
+      </div>
+    </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Nombre
+            <input type="text" name="name" placeholder="Ingrese nombre del estudiante" [(ngModel)]="newUser.name" required>
+            <p *ngIf="anyErrors?.errors?.name" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.name.message}}</p>
+
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Matricula
+            <input type="number" name="registrationNumber" placeholder="Ingrese la matricula del estudiante" [(ngModel)]="newUser.registrationNumber" required>
+            <div *ngIf="anyErrors">
+              <p *ngIf="anyErrors?.errors?.registrationNumber" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.registrationNumber.message}}</p>
+              <p *ngIf="anyErrors?.existUser && !anyErrors?.existUsers" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existUser}}</p>
+            </div>
+
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Division
+            <select class="form-control" name="selectedDivision" [ngModel]="divisionSelected" (ngModelChange)="divisionChange($event)" required>
+              <!-- <option [value]="''"></option> -->
+              <option *ngFor="let division of divisions" [ngValue]="division">{{division.division}}</option>
+            </select>
+            <p *ngIf="anyErrors?.errors?.division" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.division.message}}</p>
+
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Carrera
+            <select class="form-control" name="selectedCareer" [ngModel]="newUser?.career" (ngModelChange)="newUser.career = $event" required>
+              <!-- <option [selected]="selectedDivision == 'Choose an option'">Choose an option</option> -->
+              <!-- <option [value]="''"></option> -->
+              <option *ngFor="let career of careers" [value]="career">{{career}}</option>
+            </select>
+            <p *ngIf="anyErrors?.errors?.career" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.career.message}}</p>
+
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x file-btn">
+        <div class="small-12 cell uploadFile-btn">
+          <label><strong>Adjuntar archivo</strong></label>
+          <label for="exampleFileUpload" class="button">Upload File</label>
+          <input #inputFile type="file" id="exampleFileUpload" class="show-for-sr" (change)="fileChange($event)" accept=".json, .csv" multiple>
+          <span class="nameFile">{{nameFile}}</span>
+          <p *ngIf="anyErrors?.existUsers" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existUsers}}</p>
+        </div>
+        <div class="small-12 cell">
+          <button type="button" class="button" name="button" *ngIf="nameFile" (click)="removeFile()">Remove file</button>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x submit-btn">
+        <div class="small-6 medium-6 large-4 cell text-center save-btn">
+          <button type="button" class="button" name="button" (click)="save()">Guardar</button>
+        </div>
+      </div>
+    </div>
+</form>

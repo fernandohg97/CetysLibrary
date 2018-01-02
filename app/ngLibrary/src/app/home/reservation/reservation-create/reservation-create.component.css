@@ -1,0 +1,65 @@
+.ng-valid[required], .ng-valid.required {
+  border-left: 5px solid rgb(43, 147, 72);
+}
+.ng-invalid:not(form) {
+  border-left: 5px solid rgb(152, 57, 57);
+}
+
+form {
+  border: solid orange;
+}
+.content {
+  border: solid brown;
+  background-color: #ffffff;
+}
+
+.circle {
+  position: relative;
+  /*font-size: 10px;*/
+  width: 20px;
+  height: 25px;
+  margin-top: 5px;
+  /*border-radius: 80%;*/
+}
+.circle i {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 5px;
+}
+.input-quantity {
+  margin: 0px 20px;
+  width: 60px;
+}
+.plus-minus-group {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.list-group {
+  /*border: solid green;*/
+  margin-left: 20px;
+  width: auto;
+  position: relative;
+  padding-top: 25px;
+}
+.list-group span {
+  position: absolute;
+  top: 0;
+  margin-left: 60px;
+  font-size: 13px;
+  /*border: solid brown;*/
+}
+.title-people {
+  /*border: solid orange;
+  padding: 0;*/
+  /*vertical-align: middle;
+  margin: 0 auto;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;*/
+}
+.hola {
+  margin: 0 auto;
+  /*border: solid green;*/
+}

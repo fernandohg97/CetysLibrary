@@ -1,0 +1,78 @@
+<div *ngIf="!called" class="grid-container table-content">
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <button type="button" class="button float-right" name="button" (click)="createCubicle()">Nuevo cubiculo</button>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="small-12 cell">
+      <label>Buscar
+        <input type="text" placeholder="Ingrese el numero de cubiculo" [(ngModel)]="searchCubicle">
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <table class="unstriped table-info">
+      <thead>
+        <tr>
+          <th>Cubiculo</th>
+          <th>Modificar</th>
+          <th>Eliminar</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cubicle of cubicles | searchCubicle: searchCubicle" data-closable>
+          <td>{{cubicle.cubicleNumber}}</td>
+          <td><a routerLink="/admin-site/cubicles/{{cubicle._id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+          <td class="remove">
+              <button (click)="delete(cubicle._id)" class="close-button remove-item" aria-label="Dismiss alert" type="button" data-close>
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<form *ngIf="called">
+  <div class="grid-container content">
+    <button type="button" class="button" name="button" (click)="called = false"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+    <div class="grid-x grid-padding-x">
+      <div class="title cell">
+        <h2>Nuevo cubiculo</h2>
+      </div>
+    </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Numero
+            <input type="number" name="cubicleNumber" placeholder="Ingrese el numero del cubiculo" [(ngModel)]="newCubicle.cubicleNumber" required>
+            <div *ngIf="anyErrors">
+              <p *ngIf="anyErrors?.errors?.cubicleNumber" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.cubicleNumber.message}}</p>
+              <p *ngIf="anyErrors?.existCubicle && !anyErrors?.existCubicles" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existCubicle}}</p>
+            </div>
+
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x file-btn">
+        <div class="small-12 cell uploadFile-btn">
+          <label><strong>Adjuntar archivo</strong></label>
+          <label for="exampleFileUpload" class="button">Upload File</label>
+          <input #inputFile type="file" id="exampleFileUpload" class="show-for-sr" (change)="fileChange($event)" accept=".json, .csv" multiple>
+          <span class="nameFile">{{nameFile}}</span>
+          <p *ngIf="anyErrors?.existCubicles" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existCubicles}}</p>
+
+        </div>
+        <div class="small-12 cell">
+          <button type="button" class="button" name="button" *ngIf="nameFile" (click)="removeFile()">Remove file</button>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x submit-btn">
+        <div class="small-6 medium-6 large-4 cell text-center save-btn">
+          <button type="button" class="button" name="button" (click)="save()">Guardar</button>
+        </div>
+      </div>
+    </div>
+</form>

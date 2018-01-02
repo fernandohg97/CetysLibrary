@@ -1,0 +1,96 @@
+'use strict'
+
+const express = require('express')
+const Reservation = require('../models/reservation/reservation.model')
+
+function getReservations(req, res) {
+  let findReservations = Reservation.find().sort({createdAt: -1})
+  findReservations.then(reservations => {
+    // console.log(reservations);
+    res.json(reservations)
+  })
+  .catch(err => {
+    res.status(500).send({message: `Error del servidor: ${err}`})
+  })
+}
+
+function getReservation(req, res) {
+  let findReservation = Reservation.findById(req.params.reservation_id)
+
+  findReservation.then(reservation => {
+    if (reservation) {
+      res.json(reservation)
+    } else {
+      res.status(404).send({message: `Page not found`})
+    }
+  })
+  .catch(err => {
+    res.status(500).send({message: `Error del server: ${err}`})
+  })
+}
+
+function getReservationsByCubicle(req, res) {
+  let findReservationsByCubicles = Reservation.find({cubicle: {$eq: req.params.cubicle}, enable: true}).sort({reservationDate: -1})
+
+  findReservationsByCubicles.then(reservations => {
+    if (reservations) {
+      res.status(200).json(reservations)
+    } else {
+      res.status(404).send({message: 'Page not Found'})
+    }
+  })
+  .catch(err => {
+    res.status(500).send({message: `Error del server: ${err}`})
+  })
+}
+
+function createReservation(req, res) {
+  let reservation = new Reservation(req.body)
+
+  let createReservation = reservation.save()
+  createReservation.then(reservation => {
+    res.status(200).json({
+      reservation: reservation,
+      message: 'Reservation successfully created'
+    })
+  })
+  .catch(err => {
+    res.status(500).send(err)
+  })
+}
+
+function updateReservation(req, res) {
+  let updateReservation = Reservation.findByIdAndUpdate(req.params.reservation_id, req.body)
+
+  updateReservation.then(reservation => {
+    res.json({
+      reservationUpdated: reservation,
+      message: 'Reservation successfully updated'
+    })
+  })
+  .catch(err => {
+    res.status(500).send({message: `No se pudo actualizar la reservacion: ${err}`})
+  })
+}
+
+function removeReservation(req, res) {
+  let removeReservation = Reservation.findByIdAndRemove(req.params.reservation_id)
+
+  removeReservation.then(reservation => {
+    res.json({message: 'Reservation successfully deleted'})
+  })
+  .catch(err => {
+    res.status(500).send({message: `No se pudo eliminar la reservacion: ${err}`})
+  })
+
+
+}
+
+module.exports = {
+  getReservations,
+  getReservation,
+  getReservationsByCubicle,
+  createReservation,
+  updateReservation,
+  removeReservation
+}

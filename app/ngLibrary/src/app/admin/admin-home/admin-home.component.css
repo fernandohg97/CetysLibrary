@@ -1,0 +1,27 @@
+/*.title {
+  z-index: 100;
+}
+h3 {
+  display: block;
+  z-index: 10;
+  color: rgba(180, 180, 180, 0.81);
+}*/
+.blocks {
+  text-align: center;
+  margin-top: 50px;
+}
+.blocks div {
+  margin-bottom: 50px;
+}
+hr {
+  border-width: 2px;
+}
+.admin-home {
+  margin-top: 20px;
+}
+.admin-home h2, .admin-home h4 {
+  display: inline;
+}
+h2 {
+  padding-right: 20px;
+}

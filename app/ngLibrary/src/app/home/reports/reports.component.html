@@ -1,0 +1,66 @@
+<div class="grid-container">
+  <div class="grid-x grid-padding-x">
+    <div class="title cell">
+      <h2 class="text-center">Reservaciones</h2>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="small-12 cell">
+      <label>Buscar
+        <input type="text" placeholder="Ingrese matricula del usuario" [(ngModel)]="searchReservationNumber">
+      </label>
+    </div>
+
+    <table class="unstriped">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Cubiculo</th>
+          <th>Entrada</th>
+          <th>Salida</th>
+          <th>Fecha</th>
+          <th>Personas</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let reservation of reservations | paginate: { itemsPerPage: 30, currentPage: page }"  class="text-center">
+            <td>{{reservation.user.registrationNumber}}</td>
+            <td>{{reservation.cubicle}}</td>
+            <td>{{reservation.entryTime | date: 'shortTime'}}</td>
+            <td>{{reservation.departureTime | date: 'shortTime'}}</td>
+            <td>{{reservation.reservationDate | date: 'mediumDate'}}</td>
+            <td class="clear button" style="color: #000000; font-size: 16px; margin: 0;" (click)="getCurrentReservation(reservation)" data-open="reportsModal">{{reservation.peopleQuantity}}</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="small-12 cell text-center">
+      <pagination-controls class="pagination-users" (pageChange)="page = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+<!-- User details Modal -->
+<div class="reveal" id="reportsModal" data-reveal>
+  <table>
+    <thead>
+      <tr>
+        <th>Carrera/Departamento</th>
+        <th>Division</th>
+        <th>Cantidad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let userDetail of currentReservation">
+        <td *ngIf="userDetail.career; else elseBlock">{{userDetail.career}}</td>
+        <ng-template #elseBlock><td>{{userDetail.department}}</td></ng-template>
+        <td *ngIf="userDetail.division; else elseDivision">{{userDetail.division}}</td>
+        <ng-template #elseDivision><td>N/A</td></ng-template>
+        <td>{{userDetail.quantity}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>

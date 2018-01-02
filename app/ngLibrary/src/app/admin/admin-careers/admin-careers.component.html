@@ -1,0 +1,119 @@
+<div *ngIf="!called" class="grid-container table-content">
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <button type="button" class="button float-right" name="button" (click)="createCareer()">Nueva carrera</button>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="small-12 cell">
+      <label>Buscar
+        <input type="text" placeholder="Ingrese la clave o nombre de la carrera" [(ngModel)]="searchCareerName">
+      </label>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <table class="unstriped table-info">
+      <thead>
+        <tr>
+          <th>Clave</th>
+          <th>Nombre</th>
+          <th>Division</th>
+          <th>Activo</th>
+          <th>Modificar</th>
+          <th>Eliminar</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let career of careers | paginate: { itemsPerPage: 50, currentPage: page } | searchCareer: searchCareerName" data-closable>
+          <td>{{career.careerCode}}</td>
+          <td>{{career.careerName}}</td>
+          <td>{{career.division}}</td>
+          <td *ngIf="career.active; else elseBlock">Si</td>
+          <ng-template #elseBlock>No</ng-template>
+          <td class="text-center"><a routerLink="/admin-site/careers/{{career._id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+          <td class="remove">
+              <button (click)="delete(career._id)" class="close-button remove-item" aria-label="Dismiss alert" type="button" data-close>
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="small-12 cell text-center">
+      <pagination-controls class="pagination-users" (pageChange)="page = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+
+<!-- Create Form -->
+<form *ngIf="called" #careerForm="ngForm">
+  <div class="grid-container content">
+    <button type="button" class="button" name="button" (click)="called = false"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+    <div class="grid-x grid-padding-x">
+      <div class="title cell">
+        <h2>Nueva carrera</h2>
+      </div>
+    </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Nombre
+            <input type="text" name="careerName" placeholder="Ingrese el nombre de la carrera" [(ngModel)]="newCareer.careerName" required>
+            <p *ngIf="anyErrors?.errors?.careerName" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.careerName.message}}</p>
+
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Clave
+            <input type="text" name="shortName" placeholder="Ingrese la clave de la carrera" [(ngModel)]="newCareer.careerCode" required>
+            <div *ngIf="anyErrors">
+              <p *ngIf="anyErrors?.errors?.careerCode" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.careerCode.message}}</p>
+              <p *ngIf="anyErrors?.existCareer && !anyErrors?.existCareers" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existCareer}}</p>
+            </div>
+
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Division
+            <input type="text" name="division" placeholder="Ingrese la division de la carrera" [(ngModel)]="newCareer.division" required>
+            <p *ngIf="anyErrors?.errors?.division" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.division.message}}</p>
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Area
+            <select class="form-control" name="selectedDivision" [ngModel]="areaSelected" (ngModelChange)="areaChange($event)" required>
+              <!-- <option [value]="''"></option> -->
+              <option *ngFor="let division of divisions" [ngValue]="division">{{division.division}}</option>
+            </select>
+            <p *ngIf="anyErrors?.errors?.area" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.area.message}}</p>
+
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x file-btn">
+        <div class="small-12 cell uploadFile-btn">
+          <label><strong>Adjuntar archivo</strong></label>
+          <label for="exampleFileUpload" class="button">Upload File</label>
+          <input #inputFile type="file" id="exampleFileUpload" class="show-for-sr" name="fileUpload" (change)="fileChange($event)" accept=".json, .csv" multiple>
+          <span class="nameFile">{{nameFile}}</span>
+          <p *ngIf="anyErrors?.existCareers" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existCareers}}</p>
+
+        </div>
+        <div class="small-12 cell">
+          <button type="button" class="button" name="button" *ngIf="nameFile" (click)="removeFile()">Remove file</button>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x submit-btn">
+        <div class="small-6 medium-6 large-4 cell text-center save-btn">
+          <button type="button" class="button" name="button" (click)="save()">Guardar</button>
+        </div>
+      </div>
+    </div>
+</form>

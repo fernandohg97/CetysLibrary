@@ -1,0 +1,50 @@
+<form>
+  <div class="grid-container content">
+    <a class="button" routerLink="/admin-site/users"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+    <div class="grid-x grid-padding-x">
+      <div class="title cell">
+        <h2>Modificar usuario</h2>
+      </div>
+    </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Nombre
+            <input type="text" name="name" placeholder="Ingrese nombre del estudiante" [ngModel]="currentUser?.name" (ngModelChange)="currentUser.name = $event">
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Matricula
+            <input type="number" name="registrationNumber" placeholder="Ingrese la matricula del estudiante" [ngModel]="currentUser?.registrationNumber" (ngModelChange)="currentUser.registrationNumber = $event">
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Division
+            <select class="form-control" name="selectedDivision" [ngModel]="divisionSelected" (ngModelChange)="divisionChange($event)" required>
+              <!-- <option [value]="''"></option> -->
+              <option *ngFor="let division of divisions" [ngValue]="division">{{division.division}}</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Carrera
+            <select class="form-control" name="selectedCareer" [ngModel]="currentUser?.career" (ngModelChange)="currentUser.career = $event" required>
+              <!-- <option [selected]="selectedDivision == 'Choose an option'">Choose an option</option> -->
+              <!-- <option [value]="''"></option> -->
+              <option *ngFor="let career of careers" [value]="career">{{career}}</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x submit-btn">
+        <div class="small-6 medium-6 large-4 cell text-center save-btn">
+          <button type="button" class="button" name="button" (click)="update()">Actualizar</button>
+        </div>
+      </div>
+    </div>
+</form>
