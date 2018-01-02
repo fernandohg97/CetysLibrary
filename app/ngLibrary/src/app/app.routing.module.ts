@@ -7,7 +7,7 @@ import { HomeComponent } from './home/home.component'
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: '', redirectTo: '/', pathMatch: 'full' }
+  { path: '', redirectTo: '', pathMatch: 'full' }
   // { path: 'reports', component: ReportsComponent },
   // { path: 'reservations-create', component: ReservationCreateComponent },
   // { path: 'reservations-update', component: ReservationUpdateComponent }

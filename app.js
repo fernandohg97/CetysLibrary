@@ -22,6 +22,7 @@ app.use(function (req, res, next) {
   next()
 })
 app.use(express.static(`${__dirname}/ngLibrary/dist`))
+app.set('view-engine', 'html')
 
 app.all('*', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '/ngLibrary/dist/index.html'))
