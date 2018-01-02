@@ -35,6 +35,7 @@ export class ReservationCreateComponent implements OnInit {
   selectedDivision: any
   departments: String[] = new Array
   anyErrors: any
+  departmentSelected: any
 
   constructor(
     private departmentsService: DepartmentsService,

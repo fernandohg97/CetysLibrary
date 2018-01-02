@@ -31,6 +31,8 @@ export class ReservationUpdateComponent implements OnInit {
   currentDepartureTime: string
   departments: String[] = new Array
   anyErrors: any
+  departmentSelected: any
+  selectedDivision: any
 
   constructor(
     private route: ActivatedRoute,
