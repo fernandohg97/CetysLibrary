@@ -4,7 +4,6 @@
   "description": "Web service for library system",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
     "serve": "nodemon server.js"
   },
   "author": "Fernando Hernandez",

@@ -13,7 +13,7 @@ const employeeRouter = require('./app/routes/employee.route')
 const reportsRouter = require('./app/routes/reports.route')
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({extended: false}))
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Methods', 'DELETE,GET,PUT,POST')
@@ -21,11 +21,12 @@ app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
   next()
 })
-app.use(express.static(`${__dirname}/dist`))
+app.use(express.static(`${__dirname}/ngLibrary/dist`))
 
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, '/dist/index.html'))
+app.all('*', (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '/ngLibrary/dist/index.html'))
 })
+
 app.use('/api', userRouter)
 app.use('/api', reservationRouter)
 app.use('/api', cubicleRouter)
