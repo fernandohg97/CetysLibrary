@@ -24,10 +24,6 @@ app.use(function (req, res, next) {
 app.use(express.static(`${__dirname}/ngLibrary/dist`))
 app.set('view-engine', 'html')
 
-app.all('*', (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, '/ngLibrary/dist/index.html'))
-})
-
 app.use('/api', userRouter)
 app.use('/api', reservationRouter)
 app.use('/api', cubicleRouter)
@@ -35,5 +31,9 @@ app.use('/api', careerRouter)
 app.use('/api', departmentRouter)
 app.use('/api', employeeRouter)
 app.use('/api', reportsRouter)
+
+app.all('*', (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '/ngLibrary/dist/index.html'))
+})
 
 module.exports = app
