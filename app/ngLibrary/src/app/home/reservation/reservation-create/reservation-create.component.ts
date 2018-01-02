@@ -67,10 +67,19 @@ export class ReservationCreateComponent implements OnInit {
     }
     console.log('Hora de entrada: ' + this.currentTime)
 
-    let day = this.newReservation.reservationDate.getDate()
+    let day = this.newReservation.reservationDate.getDate().toString()
     let month = this.newReservation.reservationDate.getMonth()+1
     let year = this.newReservation.reservationDate.getFullYear()
-    this.currentDate = `${year}-${month}-${day}`
+    if (parseInt(day) >= 1 && parseInt(day) <= 9) {
+      day = '0' + day
+      console.log(day)
+    }
+    if (month >= 1 && month <= 9) {
+      this.currentDate = `${year}-0${month}-${day}`
+    } else {
+      this.currentDate = `${year}-${month}-${day}`
+    }
+    // this.currentDate = `${year}-${month}-${day}`
     console.log(`Fecha actual: ${this.currentDate}`)
 
     this.settingService.loadSchoolSettings().subscribe(res => {

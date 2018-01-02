@@ -5,11 +5,8 @@
   border-left: 5px solid rgb(152, 57, 57);
 }
 
-form {
-  border: solid orange;
-}
 .content {
-  border: solid brown;
+  border: solid #000000;
   background-color: #ffffff;
 }
 

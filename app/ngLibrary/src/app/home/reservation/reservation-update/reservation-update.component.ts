@@ -63,10 +63,18 @@ export class ReservationUpdateComponent implements OnInit {
             let minutes = entryTime.getMinutes() < 10 ? `0${entryTime.getMinutes()}` : entryTime.getMinutes()
             this.currentTime = `${hour}:${minutes}`
             let reservationDate = new Date(reservation.reservationDate)
-            let day = reservationDate.getDate()
+            let day = reservationDate.getDate().toString()
             let month = reservationDate.getMonth()+1
             let year = reservationDate.getFullYear()
-            this.currentDate = `${year}-${month}-${day}`
+            if (parseInt(day) >= 1 && parseInt(day) <= 9) {
+              day = '0' + day
+              console.log(day)
+            }
+            if (month >= 1 && month <= 9) {
+              this.currentDate = `${year}-0${month}-${day}`
+            } else {
+              this.currentDate = `${year}-${month}-${day}`
+            }
             let departureTime = new Date(reservation.departureTime)
             let departureHour = departureTime.getHours()
             let departureMinutes = departureTime.getMinutes() < 10 ? `0${departureTime.getMinutes()}` : departureTime.getMinutes()
