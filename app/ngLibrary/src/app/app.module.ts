@@ -4,12 +4,15 @@ import { AdminModule } from './admin/admin.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { HomeModule } from './home/home.module';
+// import { SearchReservationPipe } from './pipes/searchReservation/search-reservation.pipe';
+
 import Chart from 'chart.js';
 
 @NgModule({
   // All components
   declarations: [
-    AppComponent
+    AppComponent,
+    // SearchReservationPipe
   ],
   // All modules
   imports: [
