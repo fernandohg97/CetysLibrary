@@ -20,6 +20,7 @@ export class ReportsComponent implements OnInit {
   searchByNumber: number
   page: number = 1
   currentReservation: UserDetailsModel
+  searchReservationNumber: number
 
   constructor(private dataReservationService: DataReservationService, private reservationsService: ReservationsService, private usersService: UsersService) { }
 
