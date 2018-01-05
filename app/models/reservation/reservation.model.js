@@ -14,7 +14,6 @@ var usersDetailSchema = new Schema({
 })
 
 var reservationSchema = new Schema({
-  // user: {type: Schema.Types.ObjectId, ref: 'User'},
   user: {
     _id: {type: Schema.Types.ObjectId, ref: 'User'},
     registrationNumber: {type: Number, required: [true, 'La matricula es requerida']},
@@ -26,7 +25,6 @@ var reservationSchema = new Schema({
     },
     career: {type: String, uppercase: true, required: [true, 'La carrera es requerida']}
   },
-  // cubicle: {type: Schema.Types.ObjectId, ref: 'Cubicle'},
   cubicle: {type: Number, required: true},
   reservationDate: {type: Date, required: [true, 'La fecha de reservacion es requerida'], validate: valid.reservationDateValidation},
   entryTime: {type: Date, default: Date.now, required: [true, 'La hora de entrada es requerida']},
