@@ -46,17 +46,20 @@ function getReservationsByCubicle(req, res) {
 
 function createReservation(req, res) {
   let reservation = new Reservation(req.body)
-
-  let createReservation = reservation.save()
-  createReservation.then(reservation => {
-    res.status(200).json({
-      reservation: reservation,
-      message: 'Reservation successfully created'
+  if (reservation.departureTime <= reservation.entryTime) {
+    return res.status(500).send({message: 'La hora de salida ya paso'})
+  } else {
+    let createReservation = reservation.save()
+    createReservation.then(reservation => {
+      res.status(200).json({
+        reservation: reservation,
+        message: 'Reservation successfully created'
+      })
     })
-  })
-  .catch(err => {
-    res.status(500).send(err)
-  })
+    .catch(err => {
+      res.status(500).send(err)
+    })
+  }
 }
 
 function updateReservation(req, res) {
