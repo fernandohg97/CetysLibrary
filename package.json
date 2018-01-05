@@ -2,8 +2,9 @@
   "name": "electron-service",
   "version": "1.0.0",
   "description": "Web service for library system",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "test"
   },
   "author": "Fernando Hernandez",

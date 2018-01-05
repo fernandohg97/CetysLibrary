@@ -13,6 +13,9 @@ h3 {
 .blocks div {
   margin-bottom: 50px;
 }
+.blocks a:hover {
+  background-color: rgba(75, 75, 75, 0.69);
+}
 hr {
   border-width: 2px;
 }

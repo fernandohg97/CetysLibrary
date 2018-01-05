@@ -41,7 +41,6 @@ function getUser(req, res) {
 }
 
 function getUserByRegistrationNumber(req, res) {
-  console.log(req.params.registrationNumber);
   let findUserByNumber = User.findOne(req.params)
 
   findUserByNumber.then(user => {

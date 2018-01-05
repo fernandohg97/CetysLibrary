@@ -4,9 +4,9 @@
 .title-admin {
   font-size: 20px;
 }
-.admin-menu a {
+/*.admin-menu a {
   color: #ffffff;
-}
+}*/
 .top-bar-right ul {
   background: inherit;
 }
@@ -21,4 +21,17 @@
 }*/
 .top-bar-right a i {
   margin-right: 10px;
+}
+.menu-bar a {
+  color: whitesmoke;
+}
+.menu-bar a:hover {
+  /*background-color: grey;*/
+  color: rgba(17, 18, 17, 0.86);
+}
+.title-left a{
+  color: whitesmoke;
+}
+.title-left a:hover {
+  color: rgba(17, 18, 17, 0.86);
 }

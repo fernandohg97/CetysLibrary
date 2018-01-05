@@ -5,6 +5,12 @@
   border-left: 5px solid rgb(152, 57, 57);
 }
 
+form {
+  margin-top: 100px;
+}
+.title-rs {
+  padding: 20px 0;
+}
 .content {
   border: solid #000000;
   background-color: #ffffff;
@@ -43,6 +49,19 @@
   position: absolute;
   top: 0;
   margin-left: 60px;
+  font-size: 13px;
+  /*border: solid brown;*/
+}
+.department-list {
+  margin-left: 20px;
+  width: auto;
+  position: relative;
+  padding-top: 25px;
+}
+.department-list span {
+  position: absolute;
+  top: 0;
+  margin-left: 10px;
   font-size: 13px;
   /*border: solid brown;*/
 }
