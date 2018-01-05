@@ -9,7 +9,6 @@ import { HomeComponent } from './home.component';
 import { ReservationCreateComponent } from './reservation/reservation-create/reservation-create.component';
 import { ReservationUpdateComponent } from './reservation/reservation-update/reservation-update.component';
 import { ReservationEditComponent } from './reservation/reservation-edit/reservation-edit.component';
-import { SearchReservationPipe } from '../pipes/searchReservation/search-reservation.pipe';
 import { CubiclesService } from '../services/cubicles/cubicles.service';
 import { CareersService } from '../services/careers/careers.service';
 import { DepartmentsService } from '../services/departments/departments.service';
@@ -17,6 +16,11 @@ import { UsersService } from '../services/users/users.service';
 import { SettingsService} from '../services/settings/settings.service';
 import { ReservationsService } from '../services/reservations/reservations.service';
 import { UsersQuantityService } from '../services/usersQuantity/users.quantity.service';
+import {ModalModule} from "ng2-modal";
+import { NguiPopupModule } from '@ngui/popup';
+import { PopupUserDetailsComponent } from './popup-userDetails/popup-userDetails.component';
+import { DataReservationService } from '../services/dataReservation/data-reservation.service';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -25,14 +29,17 @@ import { UsersQuantityService } from '../services/usersQuantity/users.quantity.s
     FormsModule,
     ReservationModule,
     ReportsModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    ModalModule,
+    NguiPopupModule,
+    PipesModule.forRoot()
   ],
   declarations: [
     HomeComponent,
     ReservationCreateComponent,
     ReservationUpdateComponent,
     ReservationEditComponent,
-    SearchReservationPipe
+    PopupUserDetailsComponent
   ],
   providers: [
     CubiclesService,
@@ -41,13 +48,15 @@ import { UsersQuantityService } from '../services/usersQuantity/users.quantity.s
     DepartmentsService,
     SettingsService,
     ReservationsService,
-    UsersQuantityService
+    UsersQuantityService,
+    DataReservationService
   ],
   exports: [
     ReservationModule,
     ReportsModule,
     ReservationEditComponent,
-    SearchReservationPipe
-  ]
+    PopupUserDetailsComponent
+  ],
+  entryComponents: [PopupUserDetailsComponent]
 })
 export class HomeModule { }
