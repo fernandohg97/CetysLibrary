@@ -6,10 +6,13 @@
 }
 
 form {
-  border: solid orange;
+  margin-top: 100px;
+}
+.title-rs {
+  padding: 20px 0;
 }
 .content {
-  border: solid brown;
+  border: solid #000000;
   background-color: #ffffff;
 }
 
@@ -46,6 +49,19 @@ form {
   position: absolute;
   top: 0;
   margin-left: 60px;
+  font-size: 13px;
+  /*border: solid brown;*/
+}
+.department-list {
+  margin-left: 20px;
+  width: auto;
+  position: relative;
+  padding-top: 25px;
+}
+.department-list span {
+  position: absolute;
+  top: 0;
+  margin-left: 10px;
   font-size: 13px;
   /*border: solid brown;*/
 }

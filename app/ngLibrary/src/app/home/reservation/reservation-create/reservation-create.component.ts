@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterContentInit, DoCheck } from '@angular/core';
 import { Router, ActivatedRoute, Params} from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -13,6 +13,7 @@ import { UserDepartmentModel } from '../../../models/userDetails.model';
 import { UserDivisionModel } from '../../../models/userDetails.model';
 import { UserModel } from '../../../models/user.model';
 import { CareersService } from '../../../services/careers/careers.service';
+import { DataReservationService } from '../../../services/dataReservation/data-reservation.service';
 
 @Component({
   selector: 'app-reservation-create',
@@ -20,6 +21,7 @@ import { CareersService } from '../../../services/careers/careers.service';
   styleUrls: ['./reservation-create.component.css']
 })
 export class ReservationCreateComponent implements OnInit {
+
 
   valores: Array<any> = new Array
   newReservation = new ReservationModel()
@@ -30,13 +32,16 @@ export class ReservationCreateComponent implements OnInit {
   currentTime: string
   currentCareers: Array<String>
   currentDepartment: string
-  quantityDepartment: number
+  quantityDepartment: number = 0
   divisions: any
   selectedDivision: any
   departments: String[] = new Array
   anyErrors: any
+  departmentSelected: string
+  departureTimeError: any
 
   constructor(
+    private dataReservationService: DataReservationService,
     private departmentsService: DepartmentsService,
     private usersService: UsersService,
     private usersQuantity: UsersQuantityService,
@@ -46,30 +51,39 @@ export class ReservationCreateComponent implements OnInit {
     private careersService: CareersService,
     private router: Router,
     private route: ActivatedRoute
-  ){
-    this.quantityDepartment = 1
-
-  }
+  ){ }
 
   ngOnInit() {
     console.log(`Fehca y hora de entrada: ${this.newReservation.entryTime}`)
-    let hour = this.newReservation.entryTime.getHours()
+    let hour = this.newReservation.entryTime.getHours().toString()
     let minutes = this.newReservation.entryTime.getMinutes()
 
-    let time = this.newReservation.entryTime.getTime()
+
+    if (parseInt(hour) >= 0 && parseInt(hour) <= 9) {
+      hour = '0' + hour
+      console.log(hour)
+    }
     if (minutes >= 0 && minutes <= 9) {
       this.currentTime = `${hour}:0${minutes}`
       console.log(this.currentTime)
     } else {
       this.currentTime = `${hour}:${minutes}`
-
     }
     console.log('Hora de entrada: ' + this.currentTime)
 
-    let day = this.newReservation.reservationDate.getDate()
+    let day = this.newReservation.reservationDate.getDate().toString()
     let month = this.newReservation.reservationDate.getMonth()+1
     let year = this.newReservation.reservationDate.getFullYear()
-    this.currentDate = `${year}-${month}-${day}`
+
+    if (parseInt(day) >= 1 && parseInt(day) <= 9) {
+      day = '0' + day
+      console.log(day)
+    }
+    if (month >= 1 && month <= 9) {
+      this.currentDate = `${year}-0${month}-${day}`
+    } else {
+      this.currentDate = `${year}-${month}-${day}`
+    }
     console.log(`Fecha actual: ${this.currentDate}`)
 
     this.settingService.loadSchoolSettings().subscribe(res => {
@@ -95,13 +109,13 @@ export class ReservationCreateComponent implements OnInit {
     })
   }
 
+
+
   save() {
     this.newReservation.entryTime = new Date(`${this.currentDate}, ${this.currentTime}`)
     this.newReservation.departureTime = new Date(`${this.currentDate}, ${this.departureTime}`)
     this.newReservation.reservationDate = new Date(`${this.currentDate}, ${this.currentTime}`)
-    // console.log(this.newReservation.reservationDate)
-    // console.log(`Fecha de entrada reservacion: ${this.newReservation.entryTime}`)
-    // console.log(`Fecha de salida reservacion: ${this.newReservation.departureTime}`)
+
     console.log(this.registrationNumber)
     this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
       console.log(`El usuario existe en la base de datos: ${JSON.stringify(user)}`)
@@ -115,6 +129,7 @@ export class ReservationCreateComponent implements OnInit {
         },
         err => {
           this.anyErrors = JSON.parse(err._body)
+          this.departureTimeError = JSON.parse(err._body).message
       }
       )
     }).catch(error => {
@@ -123,23 +138,10 @@ export class ReservationCreateComponent implements OnInit {
     })
   }
 
-  // onUserChange(event) {
-  //   this.usersService.getByRegistrationNumber(event).then(user => {
-  //     console.log(user)
-  //   })
-  // }
-
-  onSubmitQuantityDepartment() {
-    // console.log(this.quantityDepartment)
-    let newDepartmentUser = new UserDepartmentModel(this.quantityDepartment, this.usersQuantity.getDepartmentSelected(), this.registrationNumber)
-    this.newReservation.usersDetails.push(newDepartmentUser)
-    this.newReservation.peopleQuantity += this.quantityDepartment
-    console.log(this.newReservation.usersDetails)
-    this.quantityDepartment = 1
-  }
-
   divisionChange(newDivision) {
+    this.departmentSelected = ''
     this.currentCareers = new Array
+    this.valores = []
     console.log(newDivision.division)
     this.careersService.getByDivision(newDivision.division).then(data => {
       if (data.length >= 1) {
@@ -164,6 +166,20 @@ export class ReservationCreateComponent implements OnInit {
   }
 
   departmentChange(event) {
+    this.selectedDivision = {}
+    let sigue: boolean = false
+    console.log(event)
+    this.currentCareers = []
+    if (this.newReservation.usersDetails) {
+      this.newReservation.usersDetails.forEach((e, index) => {
+        if (event == e.department) {
+          this.quantityDepartment = e.quantity
+          sigue = true
+        }
+      })
+    }
+    if (!sigue) this.quantityDepartment = 0
+    this.departmentSelected = event
     console.log(event)
     this.usersQuantity.setDepartmentSelected(event)
     console.log(`Department selected: ${this.usersQuantity.getDepartmentSelected()}`)
@@ -294,6 +310,40 @@ export class ReservationCreateComponent implements OnInit {
         }
     }
     this.newReservation.peopleQuantity+=1
+    console.log(this.newReservation.usersDetails)
+  }
+
+
+  decrementDepartment() {
+    this.quantityDepartment -= 1
+    this.newReservation.usersDetails.forEach((e, index) => {
+      if (this.usersQuantity.getDepartmentSelected() == e.department) {
+          e.quantity -= 1
+          if (e.quantity == 0) {
+            this.newReservation.usersDetails.splice(index, 1)
+          }
+      }
+    })
+    if (this.newReservation.peopleQuantity > 0) {
+      this.newReservation.peopleQuantity-=1
+    }
+    console.log(this.newReservation.usersDetails)
+  }
+
+  incrementDepartment() {
+    let exist = false
+    this.quantityDepartment += 1
+    this.newReservation.usersDetails.forEach((e, index) => {
+      if (this.usersQuantity.getDepartmentSelected() == e.department) {
+          e.quantity += 1
+          exist = true
+      }
+    })
+    if (!exist) {
+      let newDepartmentUser = new UserDepartmentModel(this.quantityDepartment, this.usersQuantity.getDepartmentSelected(), this.registrationNumber)
+      this.newReservation.usersDetails.push(newDepartmentUser)
+    }
+    this.newReservation.peopleQuantity += 1
     console.log(this.newReservation.usersDetails)
   }
 }
