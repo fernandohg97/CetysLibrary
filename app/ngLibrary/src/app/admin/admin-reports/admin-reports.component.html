@@ -17,8 +17,11 @@
     </div>
   </div>
   <div class="grid-x grid-padding-x">
-    <div class="small-12 cell">
+    <div class="small-6 cell">
       <button type="button" class="button" name="button" (click)="searchReports()">Buscar</button>
+    </div>
+    <div class="small-6 cell text-right">
+      <h6><u><strong>Total de reservaciones: {{totalReservations}}</strong></u></h6>
     </div>
   </div>
   <div class="grid-x grid-padding-x">
@@ -43,9 +46,7 @@
       <canvas  width="300" height="300" *ngIf="pieChartLabelsCubicles && pieChartDataCubicles" baseChart
               [data]="pieChartDataCubicles"
               [labels]="pieChartLabelsCubicles"
-              [chartType]="pieChartType"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)">
+              [chartType]="pieChartType">
       </canvas>
     </div>
   </div>
@@ -71,9 +72,7 @@
       <canvas width="300" height="300" *ngIf="pieChartLabelsDivision && pieChartDataDivision" baseChart
               [data]="pieChartDataDivision"
               [labels]="pieChartLabelsDivision"
-              [chartType]="pieChartType"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)">
+              [chartType]="pieChartType">
       </canvas>
     </div>
   </div>
@@ -99,9 +98,7 @@
       <canvas width="300" height="300" *ngIf="pieChartLabelsCareers && pieChartDataCareers" baseChart
               [data]="pieChartDataCareers"
               [labels]="pieChartLabelsCareers"
-              [chartType]="pieChartType"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)">
+              [chartType]="pieChartType">
       </canvas>
     </div>
   </div>
@@ -143,19 +140,14 @@
       </tbody>
     </table>
   </div>
-  <div style="display: block; margin: 0 auto;">
+  <div style="display: block; margin: 0 auto; padding: 20px;">
     <canvas *ngIf="pieChartLabelsDays && pieChartDataDays" baseChart
             [data]="pieChartDataDays"
             [labels]="pieChartLabelsDays"
-            [chartType]="pieChartType"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"
-            [legend]="pieChartLegend">
+            [chartType]="pieChartType">
     </canvas>
   </div>
-  <div class="grid-x grid-padding-x">
-    <div class="small-12 cell">
-      Total de reservaciones: {{totalReservations}}
-    </div>
-  </div>
+  <!-- <div class="grid-x grid-padding-x total-msg">
+
+  </div> -->
 </div>
