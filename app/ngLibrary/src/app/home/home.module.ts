@@ -16,7 +16,6 @@ import { UsersService } from '../services/users/users.service';
 import { SettingsService} from '../services/settings/settings.service';
 import { ReservationsService } from '../services/reservations/reservations.service';
 import { UsersQuantityService } from '../services/usersQuantity/users.quantity.service';
-import {ModalModule} from "ng2-modal";
 import { NguiPopupModule } from '@ngui/popup';
 import { PopupUserDetailsComponent } from './popup-userDetails/popup-userDetails.component';
 import { DataReservationService } from '../services/dataReservation/data-reservation.service';
@@ -30,7 +29,6 @@ import { PipesModule } from '../pipes/pipes.module';
     ReservationModule,
     ReportsModule,
     HomeRoutingModule,
-    ModalModule,
     NguiPopupModule,
     PipesModule.forRoot()
   ],
