@@ -45,9 +45,12 @@ function getUserByRegistrationNumber(req, res) {
 
   findUserByNumber.then(user => {
     if (user) {
-      res.status(200).json(user)
+      res.status(200).json({
+        usuario: user,
+        msg: 'El usuario existe'
+      })
     } else {
-      res.status(404).send('La matricula no se encuentra')
+      res.status(404).send({messageUser: 'La matricula no se encuentra'})
     }
   })
   .catch(err => {
