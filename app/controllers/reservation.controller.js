@@ -46,8 +46,9 @@ function getReservationsByCubicle(req, res) {
 
 function createReservation(req, res) {
   let reservation = new Reservation(req.body)
-  if (reservation.departureTime <= reservation.entryTime) {
-    return res.status(500).send({message: 'La hora de salida ya paso'})
+  console.log(reservation.departureTime);
+  if (reservation.departureTime !== null && reservation.departureTime <= reservation.entryTime) {
+    return res.status(500).send({departureTimeMsg: 'La hora de salida ya paso'})
   } else {
     let createReservation = reservation.save()
     createReservation.then(reservation => {
