@@ -27,12 +27,12 @@
   <tbody>
     <ng-container *ngFor="let reservation of reservations | searchReservation: searchReservationUser" class="text-center">
       <tr data-closable>
-        <td>{{reservation.user.registrationNumber}}</td>
+        <td class="clear button user-number" (click)="getCurrentUser(reservation.user)">{{reservation.user.registrationNumber}}</td>
         <td>{{reservation.cubicle}}</td>
         <td>{{reservation.entryTime | date: 'shortTime'}}</td>
         <td>{{reservation.departureTime | date: 'shortTime'}}</td>
         <td>{{reservation.reservationDate | date: 'mediumDate'}}</td>
-        <td class="clear button" style="color: #000000; font-size: 16px; margin: 0;" (click)="getCurrentReservation(reservation)" data-open="exampleModal1">{{reservation.peopleQuantity}}</td>
+        <td class="clear button user-people" style="color: #000000; font-size: 16px; margin: 0;" (click)="getCurrentReservation(reservation)" data-open="exampleModal1">{{reservation.peopleQuantity}}</td>
         <td>
           <a routerLink="/reservations-update/{{reservation._id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
           <a (click)="delete(reservation._id)" data-close><i class="fa fa-trash" aria-hidden="true"></i></a>

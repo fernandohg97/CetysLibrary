@@ -8,6 +8,7 @@ import { CubiclesService } from '../../../services/cubicles/cubicles.service';
 import { UserDetailsModel } from '../../../models/userDetails.model';
 import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
 import { PopupUserDetailsComponent } from '../../popup-userDetails/popup-userDetails.component';
+import { PopupUserInfoComponent } from '../../popup-user-info/popup-user-info.component';
 import { DataReservationService } from '../../../services/dataReservation/data-reservation.service';
 
 @Component({
@@ -18,10 +19,10 @@ import { DataReservationService } from '../../../services/dataReservation/data-r
 export class ReservationEditComponent implements OnInit {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
+  @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
   reservations: ReservationModel[]
   cubicleReservationNumber: Number
   exist: Boolean
-  currentReservation: UserDetailsModel
 
   constructor(
     private dataReservationService: DataReservationService,
@@ -46,10 +47,21 @@ export class ReservationEditComponent implements OnInit {
     })
   }
 
+  getCurrentUser(user) {
+    this.openPopup2()
+    this.dataReservationService.changeUser(user)
+  }
+
   getCurrentReservation(reservation) {
     this.openPopup()
-    this.currentReservation = reservation.usersDetails
-    this.dataReservationService.addReservationsDetails(this.currentReservation)
+    this.dataReservationService.addReservationsDetails(reservation.userDetails)
+  }
+
+  openPopup2() {
+    this.popup2.open(PopupUserInfoComponent, {
+      classNames: 'custom',
+      closeButton: true
+    })
   }
 
   openPopup() {
