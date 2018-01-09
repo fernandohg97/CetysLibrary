@@ -6,6 +6,7 @@ import { UserModel } from '../../models/user.model';
 import { UserDetailsModel } from '../../models/userDetails.model';
 import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
 import { PopupUserDetailsComponent } from '../popup-userDetails/popup-userDetails.component';
+import { PopupUserInfoComponent } from '../popup-user-info/popup-user-info.component';
 import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
 
 @Component({
@@ -15,6 +16,7 @@ import { DataReservationService } from '../../services/dataReservation/data-rese
 })
 export class ReportsComponent implements OnInit {
 
+  @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
   reservations: ReservationModel[]
   searchByNumber: number
@@ -40,8 +42,20 @@ export class ReportsComponent implements OnInit {
     this.dataReservationService.addReservationsDetails(this.currentReservation)
   }
 
+  getCurrentUser(user) {
+    this.openPopup2()
+    this.dataReservationService.changeUser(user)
+  }
+
+  openPopup2() {
+    this.popup2.open(PopupUserInfoComponent, {
+      classNames: 'custom',
+      closeButton: true
+    })
+  }
+
   openPopup() {
-    this.popup2.open(PopupUserDetailsComponent, {
+    this.popup.open(PopupUserDetailsComponent, {
       classNames: 'custom',
       closeButton: true
     })
