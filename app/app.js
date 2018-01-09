@@ -11,6 +11,7 @@ const careerRouter = require('./routes/career.route')
 const departmentRouter = require('./routes/department.route')
 const employeeRouter = require('./routes/employee.route')
 const reportsRouter = require('./routes/reports.route')
+const externalUserRouter = require('./routes/externalUser.route')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
@@ -31,6 +32,8 @@ app.use('/api', careerRouter)
 app.use('/api', departmentRouter)
 app.use('/api', employeeRouter)
 app.use('/api', reportsRouter)
+app.use('/api', externalUserRouter)
+
 
 app.all('*', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '/ngLibrary/dist/index.html'))
