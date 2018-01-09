@@ -25,6 +25,13 @@ export class ReservationsService {
     .catch(ReservationsService.handleError)
   }
 
+  getCount(): Promise<number> {
+    return this.http.get(`${this.url}/count`)
+    .toPromise()
+    .then()
+    .catch(ReservationsService.handleError)
+  }
+
   getById(_id: String): Promise<ReservationModel> {
     return this.http.get(`${this.url}/${_id}`)
     .toPromise()
