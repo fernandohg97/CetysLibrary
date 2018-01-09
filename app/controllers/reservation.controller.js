@@ -6,7 +6,16 @@ const Reservation = require('../models/reservation/reservation.model')
 function getReservations(req, res) {
   let findReservations = Reservation.find().sort({createdAt: -1})
   findReservations.then(reservations => {
-    // console.log(reservations);
+    res.json(reservations)
+  })
+  .catch(err => {
+    res.status(500).send({message: `Error del servidor: ${err}`})
+  })
+}
+
+function getReservationsCount(req, res) {
+  let findReservations = Reservation.find().count()
+  findReservations.then(reservations => {
     res.json(reservations)
   })
   .catch(err => {
@@ -92,6 +101,7 @@ function removeReservation(req, res) {
 
 module.exports = {
   getReservations,
+  getReservationsCount,
   getReservation,
   getReservationsByCubicle,
   createReservation,

@@ -47,7 +47,7 @@ function getUserByRegistrationNumber(req, res) {
     if (user) {
       res.status(200).json({
         usuario: user,
-        msg: 'El usuario existe'
+        msg: 'El estudiante existe'
       })
     } else {
       res.status(404).send({messageUser: 'La matricula no se encuentra'})
@@ -62,7 +62,7 @@ function createUser(req, res) {
   let users = req.body
   if (users.length > 1) {
     User.insertMany(users).then(users => {
-      res.status(200).json({message: 'Users successfully created'})
+      res.status(200).json({message: 'Students successfully created'})
     }).catch(err => {
       res.status(500).send({message: `Error del server ${err}`})
     })
@@ -70,7 +70,7 @@ function createUser(req, res) {
     let newUser = new User(users)
     let createUser = newUser.save()
     createUser.then(user => {
-      return res.status(200).json({message: 'User successfully created'})
+      return res.status(200).json({message: 'Student successfully created'})
     }).catch(err => {
       return res.status(500).send(err)
     })
@@ -81,10 +81,10 @@ function updateUser(req, res) {
   let updateUser = User.findByIdAndUpdate(req.params.user_id, req.body)
 
   updateUser.then(user => {
-    res.json({message: 'User updated successfully'})
+    res.json({message: 'Student updated successfully'})
   })
   .catch(err => {
-    res.status(500).send({message: `No se pudo actualizar el usuario: ${err}`})
+    res.status(500).send({message: `No se pudo actualizar el estudiante: ${err}`})
   })
 }
 
@@ -92,10 +92,10 @@ function removeUser(req, res) {
   let removeUser = User.findByIdAndRemove(req.params.user_id)
 
   removeUser.then(user => {
-    res.json({message: 'User deleted successfully'})
+    res.json({message: 'Student deleted successfully'})
   })
   .catch(err => {
-    res.status(500).send({message: `No se pudo eliminar el usuario: ${err}`})
+    res.status(500).send({message: `No se pudo eliminar el estudiante: ${err}`})
   })
 }
 
