@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from "@angular/http";
-
 import { AdminComponent } from './admin.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { AdminUsersComponent } from './admin-users/admin-users.component';
@@ -27,6 +26,12 @@ import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
 import { ReportsService } from '../services/reports/reports.service';
 import { SettingsService } from '../services/settings/settings.service';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { AdminEmployeesComponent } from './admin-employees/admin-employees.component';
+import { AdminEmployeesUpdateComponent } from './admin-employees/admin-employees-update/admin-employees-update.component';
+import { EmployeesService } from '../services/employees/employees.service';
+import { PipesModule } from '../pipes/pipes.module';
+import { AdminExternalUserComponent } from './admin-external-user/admin-external-user.component';
+import { AdminExternalUserUpdateComponent } from './admin-external-user/admin-external-user-update/admin-external-user-update.component';
 
 @NgModule({
   imports: [
@@ -35,7 +40,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     AdminRoutingModule,
     HttpModule,
     NgxPaginationModule,
-    ChartsModule
+    ChartsModule,
+    PipesModule.forRoot()
   ],
   declarations: [
     AdminComponent,
@@ -52,7 +58,11 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     AdminDepartmentsUpdateComponent,
     AdminUsersUpdateComponent,
     AdminReportsComponent,
-    SearchUserPipe
+    SearchUserPipe,
+    AdminEmployeesComponent,
+    AdminEmployeesUpdateComponent,
+    AdminExternalUserComponent,
+    AdminExternalUserUpdateComponent
   ],
   providers: [
     UsersService,
@@ -60,7 +70,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     CareersService,
     ReportsService,
     DepartmentsService,
-    SettingsService
+    SettingsService,
+    EmployeesService
   ]
 })
 export class AdminModule { }
