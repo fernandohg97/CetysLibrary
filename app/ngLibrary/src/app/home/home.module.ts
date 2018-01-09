@@ -20,6 +20,7 @@ import { NguiPopupModule } from '@ngui/popup';
 import { PopupUserDetailsComponent } from './popup-userDetails/popup-userDetails.component';
 import { DataReservationService } from '../services/dataReservation/data-reservation.service';
 import { PipesModule } from '../pipes/pipes.module';
+import { PopupUserInfoComponent } from './popup-user-info/popup-user-info.component';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { PipesModule } from '../pipes/pipes.module';
     ReservationCreateComponent,
     ReservationUpdateComponent,
     ReservationEditComponent,
-    PopupUserDetailsComponent
+    PopupUserDetailsComponent,
+    PopupUserInfoComponent
   ],
   providers: [
     CubiclesService,
@@ -55,6 +57,6 @@ import { PipesModule } from '../pipes/pipes.module';
     ReservationEditComponent,
     PopupUserDetailsComponent
   ],
-  entryComponents: [PopupUserDetailsComponent]
+  entryComponents: [PopupUserDetailsComponent, PopupUserInfoComponent]
 })
 export class HomeModule { }
