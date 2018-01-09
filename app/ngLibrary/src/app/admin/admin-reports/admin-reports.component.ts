@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterContentInit, ViewChild } from '@angular/core';
 import { ReportsService } from '../../services/reports/reports.service';
 import { BaseChartDirective } from 'chart.js';
+import { ReservationsService } from '../../services/reservations/reservations.service';
 
 @Component({
   selector: 'app-admin-reports',
@@ -11,8 +12,8 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
 
   @ViewChild("baseChart") chart: BaseChartDirective;
   totalReservations: number = 0
-  startDate: String
-  endDate: String
+  startDate: string
+  endDate: string
   reportsCubicle: any
   reportsCareer: any
   reportsDivision: any
@@ -32,9 +33,12 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
   countLabelsCareers: number
   countLabelsDays: number
 
-  constructor(private reportsService: ReportsService) {}
+  constructor(private reportsService: ReportsService, private reservationsService: ReservationsService) {}
 
   ngOnInit() {
+    this.reservationsService.getCount().then(data => {
+      this.totalReservations = parseInt(JSON.parse(JSON.stringify(data))._body)
+    })
     let day = this.currentDate.getDate().toString()
     let month = this.currentDate.getMonth()+1
     let year = this.currentDate.getFullYear()
@@ -69,7 +73,7 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
           this.pieChartDataDivision = []
           this.insertChartItems(this.reportsDivision, this.pieChartLabelsDivision, this.pieChartDataDivision)
           this.countLabelsDivision = this.pieChartDataDivision.length
-          this.sumReservations(this.reportsDivision)
+          // this.sumReservations(this.reportsDivision)
         }
       })
       this.reportsService.getByCubicle(this.startDate, this.endDate).then(data => {
@@ -82,7 +86,7 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
             this.pieChartDataCubicles.push(element.ingresos)
           })
           this.countLabelsCubicles = this.pieChartDataCubicles.length
-          this.sumReservations(this.reportsCubicle)
+          // this.sumReservations(this.reportsCubicle)
         }
       })
       this.reportsService.getByCareer(this.startDate, this.endDate).then(data => {
@@ -92,7 +96,7 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
           this.pieChartDataCareers = []
           this.insertChartItems(this.reportsCareer, this.pieChartLabelsCareers, this.pieChartDataCareers)
           this.countLabelsCareers = this.pieChartDataCareers.length
-          this.sumReservations(this.reportsCareer)
+          // this.sumReservations(this.reportsCareer)
         }
       })
       this.reportsService.getByDay(this.startDate, this.endDate).then(data => {
@@ -106,7 +110,7 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
             this.pieChartDataDays.push(element.ingresos)
           })
           this.countLabelsDays = this.pieChartDataDays.length
-          this.sumReservations(this.reportsDay)
+          // this.sumReservations(this.reportsDay)
         }
       })
     }
@@ -119,11 +123,11 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
     })
   }
 
-  sumReservations(reservations) {
-    reservations.forEach(element => {
-        this.totalReservations += element.ingresos
-    });
-  }
+  // sumReservations(reservations) {
+  //   reservations.forEach(element => {
+  //       this.totalReservations += element.ingresos
+  //   });
+  // }
 
   searchReports() {
     let labelsDaysClone = this.pieChartLabelsDays
@@ -170,6 +174,8 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
       })
       this.reportsService.getByCareer(this.startDate, this.endDate).then(data => {
         if (data) {
+          console.log('Reportes por carrera')
+          console.log(data)
           this.reportsCareer = data
           this.insertChartItems(this.reportsCareer, itemsCareers, dataCareersClone)
           dataCareersClone.splice(0, this.countLabelsCareers)
