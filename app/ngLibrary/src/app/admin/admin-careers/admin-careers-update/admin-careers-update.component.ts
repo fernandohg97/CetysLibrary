@@ -47,10 +47,7 @@ export class AdminCareersUpdateComponent implements OnInit {
     console.log(event.target.value)
     this.currentCareer.active = event.target.value
   }
-  // selectChangeHandler(event: any) {
-  //   this.divisionSelected = event.target.value
-  //   console.log(this.divisionSelected)
-  // }
+
   update() {
     this.careersService.update(this.currentCareer._id, this.currentCareer).then(response => {
       console.log(response)

@@ -73,8 +73,7 @@
       </div>
       <div class="grid-x grid-padding-x file-btn">
         <div class="small-12 cell uploadFile-btn">
-          <label><strong>Adjuntar archivo</strong></label>
-          <label for="exampleFileUpload" class="button">Upload File</label>
+          <label for="exampleFileUpload" class="button">Adjuntar archivo</label>
           <input type="file" id="exampleFileUpload" class="show-for-sr" (change)="fileChange($event)" accept=".json, .csv" multiple>
           <span #inputFile class="nameFile">{{nameFile}}</span>
           <p *ngIf="anyErrors?.existDepartments" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existDepartments}}</p>

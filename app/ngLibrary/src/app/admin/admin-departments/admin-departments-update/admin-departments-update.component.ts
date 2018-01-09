@@ -6,8 +6,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 @Component({
   selector: 'app-admin-departments-update',
   templateUrl: './admin-departments-update.component.html',
-  styleUrls: ['./admin-departments-update.component.css'],
-  providers: [DepartmentsService]
+  styleUrls: ['./admin-departments-update.component.css']
 })
 export class AdminDepartmentsUpdateComponent implements OnInit {
 

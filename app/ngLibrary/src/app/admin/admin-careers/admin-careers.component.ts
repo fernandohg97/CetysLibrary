@@ -85,7 +85,6 @@ export class AdminCareersComponent implements OnInit {
         this.router.navigateByUrl('/admin-site')
       }), (err => {
         this.anyErrors = JSON.parse(err._body)
-        console.log(this.anyErrors.exist)
       })
       )
     }
