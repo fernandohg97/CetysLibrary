@@ -1,7 +1,7 @@
 <div *ngIf="!called" class="grid-container table-content">
   <div class="grid-x grid-padding-x">
     <div class="cell">
-      <button type="button" class="button float-right" name="button" (click)="createUser()">Nuevo usuario</button>
+      <button type="button" class="button float-right" name="button" (click)="createUser()">Nuevo estudiante</button>
     </div>
   </div>
   <div class="grid-x grid-padding-x">
@@ -56,7 +56,7 @@
     <button type="button" class="button" name="button" (click)="called = false"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
     <div class="grid-x grid-padding-x">
       <div class="title cell">
-        <h2>Nuevo usuario</h2>
+        <h2>Nuevo estudiante</h2>
       </div>
     </div>
       <div class="grid-x grid-padding-x">
@@ -64,7 +64,6 @@
           <label>Nombre
             <input type="text" name="name" placeholder="Ingrese nombre del estudiante" [(ngModel)]="newUser.name" required>
             <p *ngIf="anyErrors?.errors?.name" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.name.message}}</p>
-
           </label>
         </div>
       </div>
@@ -107,8 +106,7 @@
       </div>
       <div class="grid-x grid-padding-x file-btn">
         <div class="small-12 cell uploadFile-btn">
-          <label><strong>Adjuntar archivo</strong></label>
-          <label for="exampleFileUpload" class="button">Upload File</label>
+          <label for="exampleFileUpload" class="button">Adjuntar archivo</label>
           <input #inputFile type="file" id="exampleFileUpload" class="show-for-sr" (change)="fileChange($event)" accept=".json, .csv" multiple>
           <span class="nameFile">{{nameFile}}</span>
           <p *ngIf="anyErrors?.existUsers" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existUsers}}</p>
