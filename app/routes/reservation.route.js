@@ -7,6 +7,8 @@ const reservationCtrl = require('../controllers/reservation.controller')
 
 reservationRouter.get('/reservations', reservationCtrl.getReservations)
 
+reservationRouter.get('/reservations/count', reservationCtrl.getReservationsCount)
+
 reservationRouter.get('/reservations/:reservation_id', reservationCtrl.getReservation)
 
 reservationRouter.get('/reservations/cubicle/:cubicle', reservationCtrl.getReservationsByCubicle)
