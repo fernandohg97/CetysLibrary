@@ -22,7 +22,6 @@ import { DataReservationService } from '../../../services/dataReservation/data-r
 })
 export class ReservationCreateComponent implements OnInit {
 
-
   valores: Array<any> = new Array
   newReservation = new ReservationModel()
   newUser = new UserModel()
@@ -57,7 +56,6 @@ export class ReservationCreateComponent implements OnInit {
     console.log(`Fehca y hora de entrada: ${this.newReservation.entryTime}`)
     let hour = this.newReservation.entryTime.getHours().toString()
     let minutes = this.newReservation.entryTime.getMinutes()
-
 
     if (parseInt(hour) >= 0 && parseInt(hour) <= 9) {
       hour = '0' + hour
@@ -109,8 +107,6 @@ export class ReservationCreateComponent implements OnInit {
     })
   }
 
-
-
   save() {
     this.newReservation.entryTime = new Date(`${this.currentDate}, ${this.currentTime}`)
     this.newReservation.departureTime = new Date(`${this.currentDate}, ${this.departureTime}`)
@@ -118,8 +114,9 @@ export class ReservationCreateComponent implements OnInit {
 
     console.log(this.registrationNumber)
     this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
+      // console.log(JSON.parse(JSON.stringify(user)).usuario)
       console.log(`El usuario existe en la base de datos: ${JSON.stringify(user)}`)
-      this.newReservation.user = user
+      this.newReservation.user = JSON.parse(JSON.stringify(user)).usuario
 
       this.reservationsService.create(this.newReservation)
       .subscribe(
@@ -129,13 +126,22 @@ export class ReservationCreateComponent implements OnInit {
         },
         err => {
           this.anyErrors = JSON.parse(err._body)
-          this.departureTimeError = JSON.parse(err._body).message
+          console.log(this.anyErrors)
+          this.departureTimeError = JSON.parse(err._body)
       }
       )
     }).catch(error => {
         console.log(`El usuario no se encuentra en la base de datos ${error.status}`)
         this.anyErrors = JSON.parse(error._body)
     })
+  }
+
+  searchUser() {
+    this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => {
+      console.log(JSON.parse(JSON.stringify(data)).usuario)
+      this.anyErrors = JSON.parse(JSON.stringify(data))
+      // this.newReservation.user = user
+    }).catch(err => this.anyErrors = JSON.parse(err._body))
   }
 
   divisionChange(newDivision) {
