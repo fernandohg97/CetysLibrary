@@ -12,6 +12,10 @@ import { AdminCubiclesUpdateComponent } from '../admin-cubicles/admin-cubicles-u
 import { AdminCareersUpdateComponent } from '../admin-careers/admin-careers-update/admin-careers-update.component';
 import { AdminDepartmentsUpdateComponent } from '../admin-departments/admin-departments-update/admin-departments-update.component';
 import { AdminReportsComponent } from '../admin-reports/admin-reports.component';
+import { AdminEmployeesComponent } from '../admin-employees/admin-employees.component';
+import { AdminEmployeesUpdateComponent } from '../admin-employees/admin-employees-update/admin-employees-update.component';
+import { AdminExternalUserComponent } from '../admin-external-user/admin-external-user.component';
+import { AdminExternalUserUpdateComponent } from '../admin-external-user/admin-external-user-update/admin-external-user-update.component';
 
 const adminRoutes: Routes = [{
   path: 'admin-site',
@@ -26,6 +30,10 @@ const adminRoutes: Routes = [{
     {path: 'careers/:id', component: AdminCareersUpdateComponent},
     {path: 'departments', component: AdminDepartmentsComponent},
     {path: 'departments/:id', component: AdminDepartmentsUpdateComponent},
+    {path: 'employees', component: AdminEmployeesComponent},
+    {path: 'employees/:id', component: AdminEmployeesUpdateComponent},
+    {path: 'externals', component: AdminExternalUserComponent},
+    {path: 'externals/:id', component: AdminExternalUserUpdateComponent},
     {path: 'reports', component: AdminReportsComponent},
     { path: '**', redirectTo: '', pathMatch: 'full' } // Route in case page is not found
 
