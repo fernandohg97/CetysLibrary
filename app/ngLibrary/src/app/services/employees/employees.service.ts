@@ -43,8 +43,8 @@ export class EmployeesService {
     .catch(err => EmployeesService.handleError(err))
   }
 
-  update(id: String, careerModel: EmployeeModel) {
-    return this.http.put(`${this.url}/${id}`, careerModel).toPromise()
+  update(id: String, employeeModel: EmployeeModel) {
+    return this.http.put(`${this.url}/${id}`, employeeModel).toPromise()
   }
 
   remove(id: String) {
