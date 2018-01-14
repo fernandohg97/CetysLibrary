@@ -4,8 +4,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const externalUserSchema = new Schema({
-  userNumber: {
-    type: Number,
+  userCode: {
+    type: String,
     unique: true,
     required: [true, 'El codigo del usuario es requerido']
   },
