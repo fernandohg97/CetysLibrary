@@ -1,5 +1,5 @@
 {
-  "name": "electron-service",
+  "name": "Library-service",
   "version": "1.0.0",
   "description": "Web service for library system",
   "main": "server.js",
