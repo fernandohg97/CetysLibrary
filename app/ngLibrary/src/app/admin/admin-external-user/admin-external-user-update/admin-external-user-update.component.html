@@ -1,3 +1,36 @@
-<p>
-  admin-external-user-update works!
-</p>
+<form>
+  <div class="grid-container content">
+    <a class="button" routerLink="/admin-site/externals"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+    <div class="grid-x grid-padding-x">
+      <div class="title cell">
+        <h2>Modificar usuario</h2>
+      </div>
+    </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Codigo
+            <input type="text" name="externalUserCode" placeholder="Ingrese numero del usuario" [ngModel]="currentUser?.userCode" (ngModelChange)="currentUser.userCode = $event">
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Nombre
+            <input type="text" name="name" placeholder="Ingrese nombre del usuario" [ngModel]="currentUser?.name" (ngModelChange)="currentUser.name = $event">
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x">
+        <div class="medium-6 cell">
+          <label>Descripcion
+            <textarea name="description" placeholder="Ingrese alguna descripcion del usuario" [ngModel]="currentUser?.description" (ngModelChange)="currentUser.description = $event"></textarea>
+          </label>
+        </div>
+      </div>
+      <div class="grid-x grid-padding-x submit-btn">
+        <div class="small-6 medium-6 large-4 cell text-center save-btn">
+          <button type="button" class="button" name="button" (click)="update()">Actualizar</button>
+        </div>
+      </div>
+    </div>
+</form>

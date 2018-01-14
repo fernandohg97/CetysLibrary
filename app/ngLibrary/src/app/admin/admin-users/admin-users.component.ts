@@ -35,7 +35,8 @@ export class AdminUsersComponent implements OnInit {
 
   ngOnInit() {
     this.settingService.loadSchoolSettings().subscribe(res => {
-      this.divisions = res
+      let data = res.splice(res.length - 1, 1)
+      this.divisions = data
       console.log(this.divisions)
     })
     this.usersService.getAll().then(data => {

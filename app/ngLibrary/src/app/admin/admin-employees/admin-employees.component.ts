@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { EmployeesService } from '../../services/employees/employees.service';
 import { EmployeeModel } from '../../models/employee.model';
 import { Router, ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-admin-employees',
   templateUrl: './admin-employees.component.html',
@@ -17,7 +18,6 @@ export class AdminEmployeesComponent implements OnInit {
   page: number = 1
   @ViewChild('inputFile') myInputVariable: any;
   anyErrors: any
-
 
   constructor(private employeesService: EmployeesService, private router: Router) {
     this.called = false

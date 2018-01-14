@@ -32,6 +32,7 @@ import { EmployeesService } from '../services/employees/employees.service';
 import { PipesModule } from '../pipes/pipes.module';
 import { AdminExternalUserComponent } from './admin-external-user/admin-external-user.component';
 import { AdminExternalUserUpdateComponent } from './admin-external-user/admin-external-user-update/admin-external-user-update.component';
+import { ExternalUserService } from '../services/externalUser/external-user.service';
 
 @NgModule({
   imports: [
@@ -71,7 +72,8 @@ import { AdminExternalUserUpdateComponent } from './admin-external-user/admin-ex
     ReportsService,
     DepartmentsService,
     SettingsService,
-    EmployeesService
+    EmployeesService,
+    ExternalUserService
   ]
 })
 export class AdminModule { }
