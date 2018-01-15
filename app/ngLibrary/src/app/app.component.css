@@ -1,3 +1,5 @@
 footer {
   color: slategray;
+  position: absolute;
+  bottom: 0;
 }
