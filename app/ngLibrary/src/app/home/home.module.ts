@@ -21,6 +21,7 @@ import { PopupUserDetailsComponent } from './popup-userDetails/popup-userDetails
 import { DataReservationService } from '../services/dataReservation/data-reservation.service';
 import { PipesModule } from '../pipes/pipes.module';
 import { PopupUserInfoComponent } from './popup-user-info/popup-user-info.component';
+import { PopupEmployeeInfoComponent } from './popup-employee-info/popup-employee-info.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { PopupUserInfoComponent } from './popup-user-info/popup-user-info.compon
     ReservationUpdateComponent,
     ReservationEditComponent,
     PopupUserDetailsComponent,
-    PopupUserInfoComponent
+    PopupUserInfoComponent,
+    PopupEmployeeInfoComponent
   ],
   providers: [
     CubiclesService,
@@ -57,6 +59,6 @@ import { PopupUserInfoComponent } from './popup-user-info/popup-user-info.compon
     ReservationEditComponent,
     PopupUserDetailsComponent
   ],
-  entryComponents: [PopupUserDetailsComponent, PopupUserInfoComponent]
+  entryComponents: [PopupUserDetailsComponent, PopupUserInfoComponent, PopupEmployeeInfoComponent]
 })
 export class HomeModule { }
