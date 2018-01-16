@@ -8,6 +8,7 @@ import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
 import { PopupUserDetailsComponent } from '../popup-userDetails/popup-userDetails.component';
 import { PopupUserInfoComponent } from '../popup-user-info/popup-user-info.component';
 import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
+import { PopupEmployeeInfoComponent } from '../popup-employee-info/popup-employee-info.component';
 
 @Component({
   selector: 'app-reports',
@@ -18,6 +19,7 @@ export class ReportsComponent implements OnInit {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
+  @ViewChild(NguiPopupComponent) popup3: NguiPopupComponent;
   reservations: ReservationModel[]
   searchByNumber: number
   page: number = 1
@@ -36,19 +38,30 @@ export class ReportsComponent implements OnInit {
   }
 
   getCurrentReservation(reservation) {
-    console.log(reservation.usersDetails)
-    this.openPopup()
     this.currentReservation = reservation.usersDetails
     this.dataReservationService.addReservationsDetails(this.currentReservation)
+    this.openPopup()
   }
 
   getCurrentUser(user) {
-    this.openPopup2()
-    this.dataReservationService.changeUser(user)
+    if (user.registrationNumber) {
+      this.openPopup2()
+      this.dataReservationService.changeUser(user)
+    } else {
+      this.openPopup3()
+      this.dataReservationService.changeEmployee(user)
+    }
   }
 
   openPopup2() {
     this.popup2.open(PopupUserInfoComponent, {
+      classNames: 'custom',
+      closeButton: true
+    })
+  }
+
+  openPopup3() {
+    this.popup2.open(PopupEmployeeInfoComponent, {
       classNames: 'custom',
       closeButton: true
     })
