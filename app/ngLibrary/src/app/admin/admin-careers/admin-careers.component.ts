@@ -27,6 +27,7 @@ export class AdminCareersComponent implements OnInit {
 
   ngOnInit() {
     this.settingsService.loadSchoolSettings().subscribe(res => {
+      res.splice(res.length - 1, 1)
       this.divisions = res
       console.log(this.divisions)
     })

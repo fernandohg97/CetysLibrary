@@ -73,6 +73,7 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
           this.pieChartDataDivision = []
           this.insertChartItems(this.reportsDivision, this.pieChartLabelsDivision, this.pieChartDataDivision)
           this.countLabelsDivision = this.pieChartDataDivision.length
+          console.log(this.pieChartLabelsDivision)
           // this.sumReservations(this.reportsDivision)
         }
       })

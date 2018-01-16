@@ -12,10 +12,6 @@ import { CubiclesService } from '../services/cubicles/cubicles.service';
 import { CareersService } from '../services/careers/careers.service';
 import { DepartmentsService } from '../services/departments/departments.service';
 import { AdminDepartmentsComponent } from './admin-departments/admin-departments.component';
-import { SearchCubiclePipe } from '../pipes/searchCubicle/search-cubicle.pipe';
-import { SearchCareerPipe } from '../pipes/searchCareer/search-career.pipe';
-import { SearchUserPipe } from '../pipes/searchUser/search-user.pipe';
-import { SearchDepartmentPipe } from '../pipes/searchDepartment/search-department.pipe';
 import { AdminCubiclesUpdateComponent } from './admin-cubicles/admin-cubicles-update/admin-cubicles-update.component';
 import { AdminCareersUpdateComponent } from './admin-careers/admin-careers-update/admin-careers-update.component';
 import { AdminDepartmentsUpdateComponent } from './admin-departments/admin-departments-update/admin-departments-update.component';
@@ -51,15 +47,11 @@ import { ExternalUserService } from '../services/externalUser/external-user.serv
     AdminCareersComponent,
     AdminCubiclesComponent,
     AdminDepartmentsComponent,
-    SearchCubiclePipe,
-    SearchCareerPipe,
-    SearchDepartmentPipe,
     AdminCubiclesUpdateComponent,
     AdminCareersUpdateComponent,
     AdminDepartmentsUpdateComponent,
     AdminUsersUpdateComponent,
     AdminReportsComponent,
-    SearchUserPipe,
     AdminEmployeesComponent,
     AdminEmployeesUpdateComponent,
     AdminExternalUserComponent,

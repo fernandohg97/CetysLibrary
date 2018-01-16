@@ -35,9 +35,8 @@ export class AdminUsersComponent implements OnInit {
 
   ngOnInit() {
     this.settingService.loadSchoolSettings().subscribe(res => {
-      let data = res.splice(res.length - 1, 1)
-      this.divisions = data
-      console.log(this.divisions)
+      res.splice(res.length - 1, 1)
+      this.divisions = res
     })
     this.usersService.getAll().then(data => {
       console.log(data)
@@ -98,14 +97,30 @@ export class AdminUsersComponent implements OnInit {
   }
 
   divisionChange(event) {
-    console.log(event.division)
+    switch (event.division) {
+      case 'DOCTORADO':
+        this.newUser.division = 'DOCT'
+        break
+      case 'POSGRADO':
+        this.newUser.division = 'POST'
+        break
+      case 'INGENIERIA':
+        this.newUser.division = 'PROF'
+        break
+      case 'ADMINISTRACION Y NEGOCIOS':
+        this.newUser.division = 'PROF'
+        break
+      case 'PREPARATORIA':
+        this.newUser.division = 'PREP'
+        break
+    }
     this.careers = new Array
     this.careersService.getByDivision(event.division).then(data => {
+      console.log(data)
         data.forEach(career => {
           this.careers.push(career.careerCode)
         })
     }).catch(err => console.log(`Error ${err}`))
-    this.newUser.division = event.division
   }
 
 }
