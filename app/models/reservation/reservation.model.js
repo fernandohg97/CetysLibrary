@@ -16,14 +16,20 @@ var usersDetailSchema = new Schema({
 var reservationSchema = new Schema({
   user: {
     _id: {type: Schema.Types.ObjectId, ref: 'User'},
-    registrationNumber: {type: Number, required: [true, 'La matricula es requerida']},
-    name: {type: String, required: [true, 'El nombre es requerido']},
+    registrationNumber: Number,
+    name: String,
     division: {
       type: String,
-      enum: ['PREP', 'PROF', 'POST', 'DOCT'],
-      required: [true, 'La division es requerida']
+      enum: ['PREP', 'PROF', 'POST', 'DOCT']
     },
-    career: {type: String, uppercase: true, required: [true, 'La carrera es requerida']}
+    career: {type: String, uppercase: true}
+  },
+  employee: {
+    _id: {type: Schema.Types.ObjectId, ref: 'Employee'},
+    employeeNumber: Number,
+    name: {type: String, uppercase: true},
+    department: Number,
+    active: {type: Boolean, default: true}
   },
   cubicle: {type: Number, required: true},
   reservationDate: {type: Date, required: [true, 'La fecha de reservacion es requerida'], validate: valid.reservationDateValidation},
