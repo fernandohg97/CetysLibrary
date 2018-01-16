@@ -15,7 +15,6 @@ export class PopupUserInfoComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.dataReservationService.getCurrentUser()
-    console.log(this.currentUser)
   }
 
 }
