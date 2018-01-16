@@ -13,4 +13,6 @@ reportsRouter.get('/reportsCubicle', reportsCtrl.getReportsByCubicle)
 
 reportsRouter.get('/reportsDay', reportsCtrl.getReportsByDay)
 
+reportsRouter.get('/reportsDepartment', reportsCtrl.getReportsByDepartment)
+
 module.exports = reportsRouter
