@@ -2,7 +2,7 @@
 
 const express = require('express')
 const User = require('../models/user/user.model')
-// const Employee = require('../models/employee/employee.model')
+const Employee = require('../models/employee/employee.model')
 function getUsers(req, res) {
   let findUsers = User.find().sort({registrationNumber: -1})
 
@@ -50,17 +50,16 @@ function getUserByRegistrationNumber(req, res) {
         msg: 'El estudiante existe'
       })
     } else {
-      // Employee.findOne(req.params).then(employee => {
-      //   if (employee) {
-      //     return res.status(200).json({
-      //       empleado: employee,
-      //       msg: 'El empleado existe'
-      //     })
-      //   } else {
-      //     return res.status(404).send({messageUser: 'La matricula no se encuentra'})
-      //   }
-      // }).catch(err => return res.status(500).send({message: `Error del server: ${err}`}))
-      return res.status(404).send({messageUser: 'La matricula no se encuentra'})
+      Employee.findOne({employeeNumber: req.params.registrationNumber}).then(employee => {
+        if (employee) {
+          return res.status(200).json({
+            empleado: employee,
+            msg: 'El empleado existe'
+          })
+        } else {
+          return res.status(404).send({messageUser: 'La matricula no se encuentra'})
+        }
+      }).catch(err => res.status(500).send({message: `Error del server: ${err}`}))
     }
   })
   .catch(err => {
