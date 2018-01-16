@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { UserDetailsModel } from '../../models/userDetails.model';
 import { UserModel } from '../../models/user.model';
+import { EmployeeModel } from '../../models/employee.model';
 
 @Injectable()
 export class DataReservationService {
@@ -13,6 +14,10 @@ export class DataReservationService {
   user: UserModel
   private userSource = new BehaviorSubject<UserModel>(this.user);
   currentUser = this.userSource.asObservable();
+
+  employee: EmployeeModel
+  private employeeSource = new BehaviorSubject<EmployeeModel>(this.employee)
+  currentEmployee = this.employeeSource.asObservable();
 
   constructor() { }
 
@@ -32,6 +37,15 @@ export class DataReservationService {
   public changeUser(message: UserModel) {
     this.user = message
     this.userSource.next(this.user)
+  }
+
+  public getCurrentEmployee(): EmployeeModel {
+    return this.employee
+  }
+
+  public changeEmployee(message: EmployeeModel) {
+    this.employee = message
+    this.employeeSource.next(this.employee)
   }
 
 }
