@@ -1,37 +1,37 @@
 [
   {
     "id": 0,
-    "division": "Preparatoria",
+    "division": "PREPARATORIA",
     "area": "PREP",
     "careers": ["PREP"]
   },
   {
     "id": 1,
-    "division": "Ingenieria",
+    "division": "INGENIERIA",
     "area": "PROF",
     "careers": ["IS", "ICE", "IER", "IM", "IMEC", "IIND", "IDGD"]
   },
   {
     "id": 2,
-    "division": "Administracion y Negocios",
+    "division": "ADMINISTRACION Y NEGOCIOS",
     "area": "PROF",
     "careers": ["LAE", "LAM", "LDG", "LNI"]
   },
   {
     "id": 3,
-    "division": "Posgrado",
+    "division": "POSGRADO",
     "area": "POST",
     "careers": ["MBA", "MED", "MPSI", "MII"]
   },
   {
     "id": 4,
-    "division": "Doctorado",
+    "division": "DOCTORADO",
     "area": "DOCT",
     "careers": ["DOED"]
   },
   {
     "id": 5,
-    "division": "Externo",
+    "division": "EXTERNO",
     "area": "EXT",
     "careers": ["EXT"]
   }
