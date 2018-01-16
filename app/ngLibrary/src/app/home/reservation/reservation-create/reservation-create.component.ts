@@ -112,12 +112,12 @@ export class ReservationCreateComponent implements OnInit {
     this.newReservation.departureTime = new Date(`${this.currentDate}, ${this.departureTime}`)
     this.newReservation.reservationDate = new Date(`${this.currentDate}, ${this.currentTime}`)
 
-    console.log(this.registrationNumber)
     this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
-      // console.log(JSON.parse(JSON.stringify(user)).usuario)
-      console.log(`El usuario existe en la base de datos: ${JSON.stringify(user)}`)
-      this.newReservation.user = JSON.parse(JSON.stringify(user)).usuario
-
+      let student = JSON.parse(JSON.stringify(user)).usuario
+      let employee = JSON.parse(JSON.stringify(user)).empleado
+      if (student) {
+        this.newReservation.user = student
+      } else { this.newReservation.employee = employee }
       this.reservationsService.create(this.newReservation)
       .subscribe(
         data => {
@@ -138,7 +138,7 @@ export class ReservationCreateComponent implements OnInit {
 
   searchUser() {
     this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => {
-      console.log(JSON.parse(JSON.stringify(data)).usuario)
+      // console.log(JSON.parse(JSON.stringify(data)).usuario || JSON.parse(JSON.stringify(data)).empleado)
       this.anyErrors = JSON.parse(JSON.stringify(data))
       // this.newReservation.user = user
     }).catch(err => this.anyErrors = JSON.parse(err._body))

@@ -9,6 +9,7 @@ import { UserDetailsModel } from '../../../models/userDetails.model';
 import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
 import { PopupUserDetailsComponent } from '../../popup-userDetails/popup-userDetails.component';
 import { PopupUserInfoComponent } from '../../popup-user-info/popup-user-info.component';
+import { PopupEmployeeInfoComponent } from '../../popup-employee-info/popup-employee-info.component';
 import { DataReservationService } from '../../../services/dataReservation/data-reservation.service';
 
 @Component({
@@ -20,6 +21,7 @@ export class ReservationEditComponent implements OnInit {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
+  @ViewChild(NguiPopupComponent) popup3: NguiPopupComponent;
   reservations: ReservationModel[]
   cubicleReservationNumber: Number
   exist: Boolean
@@ -48,17 +50,29 @@ export class ReservationEditComponent implements OnInit {
   }
 
   getCurrentUser(user) {
-    this.openPopup2()
-    this.dataReservationService.changeUser(user)
+    if (user.registrationNumber) {
+      this.openPopup2()
+      this.dataReservationService.changeUser(user)
+    } else {
+      this.openPopup3()
+      this.dataReservationService.changeEmployee(user)
+    }
   }
 
   getCurrentReservation(reservation) {
+    this.dataReservationService.addReservationsDetails(reservation.usersDetails)
     this.openPopup()
-    this.dataReservationService.addReservationsDetails(reservation.userDetails)
   }
 
   openPopup2() {
     this.popup2.open(PopupUserInfoComponent, {
+      classNames: 'custom',
+      closeButton: true
+    })
+  }
+
+  openPopup3() {
+    this.popup2.open(PopupEmployeeInfoComponent, {
       classNames: 'custom',
       closeButton: true
     })
