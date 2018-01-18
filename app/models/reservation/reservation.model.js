@@ -7,10 +7,11 @@ const valid = require('./reservation.validation')
 
 var usersDetailSchema = new Schema({
   quantity: {type: Number, required: true},
-  registrationNumber: {type: Number, required: true},
-  division: {type: String},
-  career: {type: String},
-  department: {type: String}
+  registrationNumber: Number,
+  userCode: String,
+  division: String,
+  career: String,
+  department: String
 })
 
 var reservationSchema = new Schema({
@@ -30,6 +31,12 @@ var reservationSchema = new Schema({
     name: {type: String, uppercase: true},
     department: Number,
     active: {type: Boolean, default: true}
+  },
+  externalUser: {
+    _id: {type: Schema.Types.ObjectId, ref: 'ExternalUser'},
+    userCode: {type: String, uppercase: true},
+    name: {type: String, uppercase: true},
+    description: String
   },
   cubicle: {type: Number, required: true},
   reservationDate: {type: Date, required: [true, 'La fecha de reservacion es requerida'], validate: valid.reservationDateValidation},
