@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { UserDetailsModel } from '../../models/userDetails.model';
 import { UserModel } from '../../models/user.model';
 import { EmployeeModel } from '../../models/employee.model';
+import { ExternalUserModel } from '../../models/externalUser.model';
 
 @Injectable()
 export class DataReservationService {
@@ -18,6 +19,10 @@ export class DataReservationService {
   employee: EmployeeModel
   private employeeSource = new BehaviorSubject<EmployeeModel>(this.employee)
   currentEmployee = this.employeeSource.asObservable();
+
+  external: ExternalUserModel
+  private externalSource = new BehaviorSubject<ExternalUserModel>(this.external)
+  currentExternalUser = this.externalSource.asObservable();
 
   constructor() { }
 
@@ -45,6 +50,15 @@ export class DataReservationService {
 
   public changeEmployee(message: EmployeeModel) {
     this.employee = message
+    this.employeeSource.next(this.employee)
+  }
+
+  public getCurrentExternalUser(): ExternalUserModel {
+    return this.external
+  }
+
+  public changeExternalUser(message: ExternalUserModel) {
+    this.external = message
     this.employeeSource.next(this.employee)
   }
 
