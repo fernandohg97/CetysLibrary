@@ -29,6 +29,22 @@ function getExternalUser(req, res) {
   })
 }
 
+function getByUserCode(req, res) {
+  let findUserByCode = ExternalUser.findOne(req.params)
+
+  findUserByCode.then(externalUser => {
+    if (externalUser) {
+      return res.status(200).json({
+        usuario: externalUser,
+        msg: 'El usuario existe'
+      })
+    } else { return res.status(404).send({messageUser: 'El usuario no se encuentra'})}
+  })
+  .catch(err => {
+    res.status(500).send({message: `Error del server: ${err}`})
+  })
+}
+
 function createExternalUser(req, res) {
   let users = req.body
   if (users.length > 1) {
@@ -73,6 +89,7 @@ function removeExternalUser(req, res) {
 module.exports = {
   getExternalUsers,
   getExternalUser,
+  getByUserCode,
   createExternalUser,
   updateExternalUser,
   removeExternalUser
