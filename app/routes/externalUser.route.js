@@ -9,6 +9,8 @@ externalUserRouter.get('/externalUsers', externalUserCtrl.getExternalUsers)
 
 externalUserRouter.get('/externalUsers/:externalUser_id', externalUserCtrl.getExternalUser)
 
+externalUserRouter.get('/externalUsers/userCode/:userCode', externalUserCtrl.getByUserCode)
+
 externalUserRouter.post('/externalUsers', created.isCreated, externalUserCtrl.createExternalUser)
 
 externalUserRouter.put('/externalUsers/:externalUser_id', externalUserCtrl.updateExternalUser)
