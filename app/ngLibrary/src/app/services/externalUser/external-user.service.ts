@@ -31,6 +31,13 @@ export class ExternalUserService {
     .catch(ExternalUserService.handleError)
   }
 
+  getByUserCode(registrationNumber: string): Promise<ExternalUserModel> {
+    return this.http.get(`${this.url}/userCode/${registrationNumber}`)
+    .toPromise()
+    .then(res => res.json() as ExternalUserModel)
+    .catch(ExternalUserService.handleError)
+  }
+
   create(newExternalUser: ExternalUserModel) {
     return this.http.post(this.url, newExternalUser)
     .map(res => res.json())
