@@ -1,31 +1,31 @@
-import { Component, OnInit, Input, ViewChild, AfterContentInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params} from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { ReservationsService } from '../../../services/reservations/reservations.service';
-import { CubiclesService } from '../../../services/cubicles/cubicles.service';
-import { SettingsService } from '../../../services/settings/settings.service';
-import { DepartmentsService } from '../../../services/departments/departments.service';
-import { UsersQuantityService } from '../../../services/usersQuantity/users.quantity.service';
-import { UsersService } from '../../../services/users/users.service';
-import { ReservationModel } from '../../../models/reservation.model';
-import { UserDepartmentModel } from '../../../models/userDetails.model';
-import { UserDivisionModel } from '../../../models/userDetails.model';
-import { UserModel } from '../../../models/user.model';
-import { CareersService } from '../../../services/careers/careers.service';
-import { DataReservationService } from '../../../services/dataReservation/data-reservation.service';
+import { ReservationsService } from '../../../../services/reservations/reservations.service';
+import { CubiclesService } from '../../../../services/cubicles/cubicles.service';
+import { SettingsService } from '../../../../services/settings/settings.service';
+import { DepartmentsService } from '../../../../services/departments/departments.service';
+import { UsersQuantityService } from '../../../../services/usersQuantity/users.quantity.service';
+import { ExternalUserService } from '../../../../services/externalUser/external-user.service';
+import { ExternalUserModel } from '../../../../models/externalUser.model';
+import { ReservationModel } from '../../../../models/reservation.model';
+import { UserDepartmentModel } from '../../../../models/userDetails.model';
+import { UserDivisionModel } from '../../../../models/userDetails.model';
+import { CareersService } from '../../../../services/careers/careers.service';
+import { DataReservationService } from '../../../../services/dataReservation/data-reservation.service';
 
 @Component({
-  selector: 'app-reservation-create',
-  templateUrl: './reservation-create.component.html',
-  styleUrls: ['./reservation-create.component.css']
+  selector: 'app-reservation-create-external',
+  templateUrl: './reservation-create-external.component.html',
+  styleUrls: ['./reservation-create-external.component.css']
 })
-export class ReservationCreateComponent implements OnInit, OnDestroy {
+export class ReservationCreateExternalComponent implements OnInit {
 
   valores: Array<any> = new Array
   newReservation = new ReservationModel()
-  newUser = new UserModel()
-  registrationNumber: number
+  newUser = new ExternalUserModel()
+  registrationNumber: string
   departureTime: string
   currentDate: string
   currentTime: string
@@ -43,15 +43,15 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
   constructor(
     private dataReservationService: DataReservationService,
     private departmentsService: DepartmentsService,
-    private usersService: UsersService,
     private usersQuantity: UsersQuantityService,
     private settingService: SettingsService,
     private cubiclesService: CubiclesService,
     private reservationsService: ReservationsService,
     private careersService: CareersService,
+    private externalUserService: ExternalUserService,
     private router: Router,
     private route: ActivatedRoute
-  ){ this.called = false }
+  ) { this.called = true }
 
   ngOnInit() {
     console.log(`Fehca y hora de entrada: ${this.newReservation.entryTime}`)
@@ -108,26 +108,14 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
     })
   }
 
-  ngOnDestroy() {
-    console.clear()
-    this.newReservation = new ReservationModel()
-  }
-
   save() {
     this.newReservation.entryTime = new Date(`${this.currentDate}, ${this.currentTime}`)
     this.newReservation.departureTime = new Date(`${this.currentDate}, ${this.departureTime}`)
     this.newReservation.reservationDate = new Date(`${this.currentDate}, ${this.currentTime}`)
 
-    this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
-      let student = JSON.parse(JSON.stringify(user)).usuario
-      let employee = JSON.parse(JSON.stringify(user)).empleado
-      if (student) {
-        // this.dataReservationService.changeUserType(student)
-        this.newReservation.user = student
-      } else {
-        // this.dataReservationService.changeUserType(employee)
-        this.newReservation.employee = employee
-      }
+    this.externalUserService.getByUserCode(this.registrationNumber).then(user => {
+      let externalUser = JSON.parse(JSON.stringify(user)).usuario
+      this.newReservation.externalUser = externalUser
       this.reservationsService.create(this.newReservation)
       .subscribe(
         data => {
@@ -146,12 +134,8 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
     })
   }
 
-  reservateExternalUser() {
-    this.called = true
-  }
-
   searchUser() {
-    this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => {
+    this.externalUserService.getByUserCode(this.registrationNumber).then(data => {
       // console.log(JSON.parse(JSON.stringify(data)).usuario || JSON.parse(JSON.stringify(data)).empleado)
       this.anyErrors = JSON.parse(JSON.stringify(data))
       // this.newReservation.user = user
@@ -235,7 +219,7 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
                 }
               })
               if (quantity > 0) {
-                let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
+                let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, undefined, this.registrationNumber)
                 this.newReservation.usersDetails.push(newDivisionUser)
               }
           }
@@ -276,7 +260,7 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
           element.count = quantity
         }
       })
-      let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
+      let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, undefined, this.registrationNumber)
       this.newReservation.usersDetails.push(newDivisionUser)
     } else {
         if (this.usersQuantity.getCareer() != career) {
@@ -301,7 +285,7 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
                   element.count = quantity
                 }
               })
-              let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
+              let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, undefined, this.registrationNumber)
               this.newReservation.usersDetails.push(newDivisionUser)
           }
         } else {
@@ -313,7 +297,7 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
                 element.count = quantity
               }
             })
-            let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
+            let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, undefined, this.registrationNumber)
             this.newReservation.usersDetails.push(newDivisionUser)
           } else {
             this.newReservation.usersDetails.forEach(carrera => {
@@ -332,7 +316,6 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
     this.newReservation.peopleQuantity+=1
     console.log(this.newReservation.usersDetails)
   }
-
 
   decrementDepartment() {
     this.quantityDepartment -= 1
@@ -360,10 +343,12 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
       }
     })
     if (!exist) {
-      let newDepartmentUser = new UserDepartmentModel(this.quantityDepartment, this.usersQuantity.getDepartmentSelected(), this.registrationNumber)
+      let newDepartmentUser = new UserDepartmentModel(this.quantityDepartment, this.usersQuantity.getDepartmentSelected(), undefined, this.registrationNumber)
       this.newReservation.usersDetails.push(newDepartmentUser)
     }
     this.newReservation.peopleQuantity += 1
     console.log(this.newReservation.usersDetails)
   }
+
+
 }
