@@ -7,6 +7,7 @@ const externalUserSchema = new Schema({
   userCode: {
     type: String,
     unique: true,
+    uppercase: true,
     required: [true, 'El codigo del usuario es requerido']
   },
   name: {type: String, required: [true, 'El nombre del empleado es requerido'], uppercase: true},
