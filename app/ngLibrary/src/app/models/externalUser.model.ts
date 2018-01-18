@@ -1,6 +1,6 @@
 export class ExternalUserModel {
   _id: String;
-  userCode: String;
-  name: String;
-  description: String;
+  userCode: string;
+  name: string;
+  description: string;
 }
