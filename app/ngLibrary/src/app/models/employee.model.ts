@@ -1,7 +1,7 @@
 export class EmployeeModel {
   _id: String;
-  employeeNumber: Number;
+  employeeNumber: number;
   name: String;
-  department: Number;
+  department: number;
   active: Boolean;
 }
