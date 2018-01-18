@@ -24,7 +24,7 @@
       </thead>
       <tbody>
           <tr *ngFor="let reservation of reservations | paginate: { itemsPerPage: 30, currentPage: page } | searchReservation: searchReservationNumber"  class="text-center">
-            <td class="clear button user-number" (click)="getCurrentUser(reservation.user || reservation.employee)">{{reservation.user?.registrationNumber || reservation.employee.employeeNumber}}</td>
+            <td class="clear button user-number" (click)="getCurrentUser(reservation.user || reservation.employee || reservation.externalUser)">{{reservation.user?.registrationNumber || reservation.employee.employeeNumber || reservation.externalUser.userCode}}</td>
             <td>{{reservation.cubicle}}</td>
             <td>{{reservation.entryTime | date: 'shortTime'}}</td>
             <td>{{reservation.departureTime | date: 'shortTime'}}</td>

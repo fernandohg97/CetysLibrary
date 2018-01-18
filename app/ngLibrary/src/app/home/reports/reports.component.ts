@@ -9,6 +9,7 @@ import { PopupUserDetailsComponent } from '../popup-userDetails/popup-userDetail
 import { PopupUserInfoComponent } from '../popup-user-info/popup-user-info.component';
 import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
 import { PopupEmployeeInfoComponent } from '../popup-employee-info/popup-employee-info.component';
+import { PopupExternalInfoComponent } from '../popup-external-info/popup-external-info.component';
 
 @Component({
   selector: 'app-reports',
@@ -20,6 +21,8 @@ export class ReportsComponent implements OnInit {
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup3: NguiPopupComponent;
+  @ViewChild(NguiPopupComponent) popup4: NguiPopupComponent;
+
   reservations: ReservationModel[]
   searchByNumber: number
   page: number = 1
@@ -32,7 +35,6 @@ export class ReportsComponent implements OnInit {
       if (data) {
         this.reservations = data
         console.log(this.reservations)
-        console.log(this.reservations[0].reservationDate)
       }
     })
   }
@@ -47,10 +49,20 @@ export class ReportsComponent implements OnInit {
     if (user.registrationNumber) {
       this.openPopup2()
       this.dataReservationService.changeUser(user)
-    } else {
+    } else if (user.employeeNumber) {
       this.openPopup3()
       this.dataReservationService.changeEmployee(user)
+    } else {
+      this.openPopup4()
+      this.dataReservationService.changeExternalUser(user)
     }
+  }
+
+  openPopup() {
+    this.popup.open(PopupUserDetailsComponent, {
+      classNames: 'custom',
+      closeButton: true
+    })
   }
 
   openPopup2() {
@@ -61,14 +73,14 @@ export class ReportsComponent implements OnInit {
   }
 
   openPopup3() {
-    this.popup2.open(PopupEmployeeInfoComponent, {
+    this.popup3.open(PopupEmployeeInfoComponent, {
       classNames: 'custom',
       closeButton: true
     })
   }
 
-  openPopup() {
-    this.popup.open(PopupUserDetailsComponent, {
+  openPopup4() {
+    this.popup4.open(PopupExternalInfoComponent, {
       classNames: 'custom',
       closeButton: true
     })
