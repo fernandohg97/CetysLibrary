@@ -7,6 +7,7 @@ import { ReservationModule } from './reservation/reservation.module';
 import { ReportsModule } from './reports/reports.module';
 import { HomeComponent } from './home.component';
 import { ReservationCreateComponent } from './reservation/reservation-create/reservation-create.component';
+import { ReservationCreateExternalComponent } from './reservation/reservation-create/reservation-create-external/reservation-create-external.component';
 import { ReservationUpdateComponent } from './reservation/reservation-update/reservation-update.component';
 import { ReservationEditComponent } from './reservation/reservation-edit/reservation-edit.component';
 import { CubiclesService } from '../services/cubicles/cubicles.service';
@@ -22,6 +23,8 @@ import { DataReservationService } from '../services/dataReservation/data-reserva
 import { PipesModule } from '../pipes/pipes.module';
 import { PopupUserInfoComponent } from './popup-user-info/popup-user-info.component';
 import { PopupEmployeeInfoComponent } from './popup-employee-info/popup-employee-info.component';
+import { ExternalUserService } from '../services/externalUser/external-user.service';
+import { PopupExternalInfoComponent } from './popup-external-info/popup-external-info.component';
 
 @NgModule({
   imports: [
@@ -41,7 +44,9 @@ import { PopupEmployeeInfoComponent } from './popup-employee-info/popup-employee
     ReservationEditComponent,
     PopupUserDetailsComponent,
     PopupUserInfoComponent,
-    PopupEmployeeInfoComponent
+    PopupEmployeeInfoComponent,
+    ReservationCreateExternalComponent,
+    PopupExternalInfoComponent
   ],
   providers: [
     CubiclesService,
@@ -51,7 +56,8 @@ import { PopupEmployeeInfoComponent } from './popup-employee-info/popup-employee
     SettingsService,
     ReservationsService,
     UsersQuantityService,
-    DataReservationService
+    DataReservationService,
+    ExternalUserService
   ],
   exports: [
     ReservationModule,
@@ -59,6 +65,6 @@ import { PopupEmployeeInfoComponent } from './popup-employee-info/popup-employee
     ReservationEditComponent,
     PopupUserDetailsComponent
   ],
-  entryComponents: [PopupUserDetailsComponent, PopupUserInfoComponent, PopupEmployeeInfoComponent]
+  entryComponents: [PopupUserDetailsComponent, PopupUserInfoComponent, PopupEmployeeInfoComponent, PopupExternalInfoComponent]
 })
 export class HomeModule { }
