@@ -3,6 +3,7 @@
 const express = require('express')
 const User = require('../models/user/user.model')
 const Employee = require('../models/employee/employee.model')
+
 function getUsers(req, res) {
   let findUsers = User.find().sort({registrationNumber: -1})
 
