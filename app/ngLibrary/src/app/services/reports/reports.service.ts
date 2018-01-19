@@ -53,6 +53,30 @@ export class ReportsService {
     .catch(ReportsService.handleError)
   }
 
+  getByExternal(startDate: any, endDate: any): Promise<any> {
+    return this.http.get(`${this.url}External`, {
+      params: {
+        start: startDate,
+        end: endDate
+      },
+    })
+    .toPromise()
+    .then(res => res.json())
+    .catch(ReportsService.handleError)
+  }
+
+  // getByCareerCompanions(startDate: any, endDate: any): Promise<any> {
+  //   return this.http.get(`${this.url}Companions`, {
+  //     params: {
+  //       start: startDate,
+  //       end: endDate
+  //     },
+  //   })
+  //   .toPromise()
+  //   .then(res => res.json())
+  //   .catch(ReportsService.handleError)
+  // }
+
   getByCubicle(startDate: any, endDate: any): Promise<any> {
     return this.http.get(`${this.url}Cubicle`, {
       params: {
