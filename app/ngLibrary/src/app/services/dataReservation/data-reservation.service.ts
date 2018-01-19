@@ -22,7 +22,7 @@ export class DataReservationService {
 
   external: ExternalUserModel
   private externalSource = new BehaviorSubject<ExternalUserModel>(this.external)
-  currentExternalUser = this.externalSource.asObservable();
+  currentExternal = this.externalSource.asObservable();
 
   constructor() { }
 
@@ -59,7 +59,7 @@ export class DataReservationService {
 
   public changeExternalUser(message: ExternalUserModel) {
     this.external = message
-    this.employeeSource.next(this.employee)
+    this.externalSource.next(this.external)
   }
 
 }
