@@ -18,6 +18,8 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
   reportsCareer: any
   reportsDivision: any
   reportsDay: any
+  reportsExternal: any
+  // reportsCompanions: any
   currentDate: Date = new Date()
   pieChartLabelsDivision: string[]
   pieChartDataDivision: number[]
@@ -25,6 +27,10 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
   pieChartDataCubicles: number[]
   pieChartLabelsCareers: string[]
   pieChartDataCareers: number[]
+  // pieChartLabelsCompanions: string[]
+  // pieChartDataCompanions: number[]
+  pieChartLabelsExternal: string[]
+  pieChartDataExternal: number[]
   pieChartLabelsDays: string[]
   pieChartDataDays: number[]
   pieChartType: string = 'pie'
@@ -32,6 +38,8 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
   countLabelsDivision: number
   countLabelsCareers: number
   countLabelsDays: number
+  countLabelsExternal: number
+  // countLabelsCompanions: number
 
   constructor(private reportsService: ReportsService, private reservationsService: ReservationsService) {}
 
@@ -100,6 +108,30 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
           // this.sumReservations(this.reportsCareer)
         }
       })
+      this.reportsService.getByExternal(this.startDate, this.endDate).then(data => {
+        if (data) {
+          this.reportsExternal = data
+          console.log(data)
+          this.pieChartLabelsExternal = []
+          this.pieChartDataExternal = []
+          this.insertChartItems(this.reportsExternal, this.pieChartLabelsExternal, this.pieChartDataExternal)
+          this.countLabelsExternal = this.pieChartDataExternal.length
+        }
+      })
+      // this.reportsService.getByCareerCompanions(this.startDate, this.endDate).then(data => {
+      //   if (data) {
+      //     let array = new Array()
+      //     data.forEach(el => {
+      //       array.push(el._id)
+      //     })
+      //     this.reportsCompanions = array
+      //     this.pieChartLabelsCompanions = []
+      //     this.pieChartDataCompanions = []
+      //     this.insertChartItemsCompanions(this.reportsCompanions, this.pieChartLabelsCompanions, this.pieChartDataCompanions)
+      //     this.countLabelsCompanions = this.pieChartDataCompanions.length
+      //     // this.sumReservations(this.reportsCareer)
+      //   }
+      // })
       this.reportsService.getByDay(this.startDate, this.endDate).then(data => {
         if (data) {
           this.reportsDay = data
@@ -124,10 +156,15 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
     })
   }
 
-  // sumReservations(reservations) {
-  //   reservations.forEach(element => {
-  //       this.totalReservations += element.ingresos
-  //   });
+  // insertChartItemsCompanions(object, labels, data) {
+  //   object.forEach(element => {
+  //     element.careers.forEach(careers => {
+  //       labels.push(careers)
+  //     });
+  //     element.cantidad.forEach(count => {
+  //       data.push(count)
+  //     })
+  //   })
   // }
 
   searchReports() {
@@ -146,6 +183,14 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
     let labelsDivisionClone = this.pieChartLabelsDivision
     let dataDivisionClone = this.pieChartDataDivision
     let itemsDivision = []
+
+    let labelsExternalClone = this.pieChartLabelsExternal
+    let dataExternalClone = this.pieChartDataExternal
+    let itemsExternal = []
+
+    // let labelsCompanionsClone = this.pieChartLabelsCompanions
+    // let dataCompanionsClone = this.pieChartDataCompanions
+    // let itemsCompanions = []
 
     if (this.startDate && this.endDate) {
       this.reportsService.getByDivision(this.startDate, this.endDate).then(data => {
@@ -186,6 +231,34 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
           this.pieChartDataCareers = dataCareersClone
         }
       })
+      this.reportsService.getByExternal(this.startDate, this.endDate).then(data => {
+        if (data) {
+          this.reportsExternal = data
+          this.insertChartItems(this.reportsExternal, itemsExternal, dataExternalClone)
+          dataExternalClone.splice(0, this.countLabelsExternal)
+          this.countLabelsExternal = dataExternalClone.length
+          labelsExternalClone = itemsExternal
+          this.pieChartLabelsExternal = labelsExternalClone
+          this.pieChartDataExternal = dataExternalClone
+        }
+      })
+      // this.reportsService.getByCareerCompanions(this.startDate, this.endDate).then(data => {
+      //   if (data) {
+      //     console.log('Reportes por acompanantes')
+      //     let array = new Array()
+      //     data.forEach(el => {
+      //       array.push(el._id)
+      //     })
+      //     console.log(array)
+      //     this.reportsCompanions = array
+      //     this.insertChartItemsCompanions(this.reportsCompanions, itemsCompanions, dataCompanionsClone)
+      //     dataCompanionsClone.splice(0, this.countLabelsCompanions)
+      //     this.countLabelsCompanions = dataCompanionsClone.length
+      //     labelsCompanionsClone = itemsCompanions
+      //     this.pieChartLabelsCompanions = labelsCompanionsClone
+      //     this.pieChartDataCompanions = dataCompanionsClone
+      //   }
+      // })
       this.reportsService.getByDay(this.startDate, this.endDate).then(data => {
         if (data) {
           this.reportsDay = data
