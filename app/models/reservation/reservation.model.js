@@ -30,7 +30,7 @@ var reservationSchema = new Schema({
     employeeNumber: Number,
     name: {type: String, uppercase: true},
     department: Number,
-    active: {type: Boolean, default: true}
+    active: Boolean
   },
   externalUser: {
     _id: {type: Schema.Types.ObjectId, ref: 'ExternalUser'},
