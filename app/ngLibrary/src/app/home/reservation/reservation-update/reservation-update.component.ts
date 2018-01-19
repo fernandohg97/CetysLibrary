@@ -105,6 +105,7 @@ export class ReservationUpdateComponent implements OnInit {
             } else {
               this.externalUser = true
               this.externalUserCode = reservation.externalUser['userCode']
+              console.log(this.externalUserCode)
             }
             console.log(this.updateReservation)
         })
@@ -296,7 +297,7 @@ export class ReservationUpdateComponent implements OnInit {
                 }
               })
               if (quantity > 0) {
-                let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
+                let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber, this.externalUserCode)
                 this.updateReservation.usersDetails.push(newDivisionUser)
               }
 
@@ -338,7 +339,7 @@ export class ReservationUpdateComponent implements OnInit {
           element.count = quantity
         }
       })
-      let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
+      let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber, this.externalUserCode)
       this.updateReservation.usersDetails.push(newDivisionUser)
     } else {
         if (this.usersQuantity.getCareer() != career) {
@@ -363,7 +364,7 @@ export class ReservationUpdateComponent implements OnInit {
                   element.count = quantity
                 }
               })
-              let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
+              let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber, this.externalUserCode)
               this.updateReservation.usersDetails.push(newDivisionUser)
           }
         } else {
@@ -375,7 +376,7 @@ export class ReservationUpdateComponent implements OnInit {
                 element.count = quantity
               }
             })
-            let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
+            let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber, this.externalUserCode)
             this.updateReservation.usersDetails.push(newDivisionUser)
           } else {
             this.updateReservation.usersDetails.forEach(carrera => {
@@ -421,7 +422,7 @@ export class ReservationUpdateComponent implements OnInit {
       }
     })
     if (!exist) {
-      let newDepartmentUser = new UserDepartmentModel(this.quantityDepartment, this.usersQuantity.getDepartmentSelected(), this.registrationNumber)
+      let newDepartmentUser = new UserDepartmentModel(this.quantityDepartment, this.usersQuantity.getDepartmentSelected(), this.registrationNumber, this.externalUserCode)
       this.updateReservation.usersDetails.push(newDepartmentUser)
     }
     this.updateReservation.peopleQuantity += 1
