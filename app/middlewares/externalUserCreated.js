@@ -23,14 +23,14 @@ function checkExternalUsers (externalUsers, externalUsersUser) {
   let exist = false
   if (externalUsersUser.length == undefined) {
     externalUsers.forEach(externalUser => {
-      if (externalUser.userNumber === externalUsersUser.userNumber) {
+      if (externalUser.userCode === externalUsersUser.userCode) {
         exist = true
       }
     })
   } else {
     externalUsers.forEach(externalUser => {
       for (var i = 0; i < externalUsersUser.length; i++) {
-        if (externalUser.userNumber === externalUsersUser[i].userNumber) {
+        if (externalUser.userCode === externalUsersUser[i].userCode) {
           exist = true
         }
       }
