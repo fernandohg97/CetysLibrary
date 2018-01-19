@@ -7,9 +7,18 @@
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell">
       <label>Buscar
-        <input type="text" placeholder="Ingrese matricula del usuario" [(ngModel)]="searchReservationNumber">
+        <input type="text" placeholder="Ingrese matricula o codigo del usuario" [(ngModel)]="searchReservationNumber">
       </label>
+      <!-- <fieldset>
+        <legend>Filtros:</legend>
+        <input type="radio" name="external" value="searchReservationExternal" (change)="toExternal($event)" id="externalUser"><label for="externalUser">Externo</label>
+        <input type="radio" name="student" value="searchReservation" (change)="toStudent($event)" id="studentUser"><label for="studentUser">Estudiante</label>
+        <input type="radio" name="employee" value="searchReservationEmployee" (change)="toEmployee($event)" id="employeeUser"><label for="employeeUser">Empleado</label>
+      </fieldset> -->
     </div>
+
+    <!-- <div class="grid-x grid-padding-x"> -->
+
 
     <table class="unstriped">
       <thead>
@@ -23,8 +32,8 @@
         </tr>
       </thead>
       <tbody>
-          <tr *ngFor="let reservation of reservations | paginate: { itemsPerPage: 30, currentPage: page } | searchReservation: searchReservationNumber"  class="text-center">
-            <td class="clear button user-number" (click)="getCurrentUser(reservation.user || reservation.employee || reservation.externalUser)">{{reservation.user?.registrationNumber || reservation.employee.employeeNumber || reservation.externalUser.userCode}}</td>
+          <tr *ngFor="let reservation of reservations | paginate: { itemsPerPage: 30, currentPage: page } | searchReservation: searchReservationNumber">
+            <td class="clear button user-number" (click)="getCurrentUser(reservation.user || reservation.employee || reservation.externalUser)">{{reservation.user?.registrationNumber || reservation.employee?.employeeNumber || reservation.externalUser?.userCode}}</td>
             <td>{{reservation.cubicle}}</td>
             <td>{{reservation.entryTime | date: 'shortTime'}}</td>
             <td>{{reservation.departureTime | date: 'shortTime'}}</td>

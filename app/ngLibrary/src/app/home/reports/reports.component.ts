@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { ReservationsService } from '../../services/reservations/reservations.service';
 import { ReservationModel } from '../../models/reservation.model';
 import { UsersService } from '../../services/users/users.service';
@@ -27,8 +28,10 @@ export class ReportsComponent implements OnInit {
   searchByNumber: number
   page: number = 1
   currentReservation: UserDetailsModel
+  currentPipe: string
 
-  constructor(private dataReservationService: DataReservationService, private reservationsService: ReservationsService, private usersService: UsersService) { }
+  constructor(private dataReservationService: DataReservationService, private reservationsService: ReservationsService, private usersService: UsersService) {
+  this.currentPipe = 'searchReservation' }
 
   ngOnInit() {
     this.reservationsService.getAll().then(data => {
