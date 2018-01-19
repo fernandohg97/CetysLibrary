@@ -15,4 +15,8 @@ reportsRouter.get('/reportsDay', reportsCtrl.getReportsByDay)
 
 reportsRouter.get('/reportsDepartment', reportsCtrl.getReportsByDepartment)
 
+reportsRouter.get('/reportsExternal', reportsCtrl.getReportsByExternalUser)
+
+reportsRouter.get('/reportsCompanions', reportsCtrl.getReportsByCareerCompanions)
+
 module.exports = reportsRouter
