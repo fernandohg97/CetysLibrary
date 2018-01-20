@@ -20,6 +20,8 @@ export class AdminCareersComponent implements OnInit {
   page: number = 1
   @ViewChild('inputFile') myInputVariable: any;
   anyErrors: any
+  errorFile: string
+  errorItem: string
 
   constructor(private settingsService: SettingsService, private careersService: CareersService, private router: Router) {
     this.called = false
@@ -69,7 +71,7 @@ export class AdminCareersComponent implements OnInit {
       this.careersService.createFile(jsonFiles)
       .subscribe((response => {
         this.router.navigateByUrl('/admin-site')
-      }), (err => this.anyErrors = JSON.parse(err._body))
+      }), (err => this.errorFile = JSON.parse(err._body).existCareers)
       )
     } else {
       this.careersService.create(this.newCareer)
@@ -77,6 +79,7 @@ export class AdminCareersComponent implements OnInit {
         this.router.navigateByUrl('/admin-site')
       }), (err => {
         this.anyErrors = JSON.parse(err._body)
+        this.errorItem = JSON.parse(err._body).existCareer
       })
       )
     }

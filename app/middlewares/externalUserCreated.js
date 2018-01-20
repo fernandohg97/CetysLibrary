@@ -23,7 +23,7 @@ function checkExternalUsers (externalUsers, externalUsersUser) {
   let exist = false
   if (externalUsersUser.length == undefined) {
     externalUsers.forEach(externalUser => {
-      if (externalUser.userCode === externalUsersUser.userCode) {
+      if (externalUser.userCode === externalUsersUser.userCode.toUpperCase()) {
         exist = true
       }
     })

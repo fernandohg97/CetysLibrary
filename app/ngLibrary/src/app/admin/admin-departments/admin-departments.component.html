@@ -56,7 +56,7 @@
             <input type="number" name="departmentNumber" placeholder="Ingrese numero del departamento" [(ngModel)]="newDepartment.departmentCode" required>
             <div *ngIf="anyErrors">
               <p *ngIf="anyErrors?.errors?.departmentCode" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.departmentCode.message}}</p>
-              <p *ngIf="anyErrors?.existDepartment && !anyErrors?.existDepartments" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existDepartment}}</p>
+              <p *ngIf="errorItem" class="help-text" id="userHelpText" style="color: #b53535;">{{errorItem}}</p>
             </div>
 
           </label>
@@ -67,7 +67,6 @@
           <label>Nombre
             <input type="text" name="departmentName" placeholder="Ingrese nombre del departamento" [(ngModel)]="newDepartment.departmentName" required>
             <p *ngIf="anyErrors?.errors?.departmentName" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.departmentName.message}}</p>
-
           </label>
         </div>
       </div>
@@ -76,7 +75,7 @@
           <label for="exampleFileUpload" class="button">Adjuntar archivo</label>
           <input type="file" id="exampleFileUpload" class="show-for-sr" (change)="fileChange($event)" accept=".json, .csv" multiple>
           <span #inputFile class="nameFile">{{nameFile}}</span>
-          <p *ngIf="anyErrors?.existDepartments" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existDepartments}}</p>
+          <p *ngIf="errorFile" class="help-text" id="userHelpText" style="color: #b53535;">{{errorFile}}</p>
         </div>
         <div class="small-12 cell">
           <button type="button" class="button" name="button" *ngIf="nameFile" (click)="removeFile()">Remover archivo</button>

@@ -6,7 +6,6 @@ const Schema = mongoose.Schema
 const externalUserSchema = new Schema({
   userCode: {
     type: String,
-    unique: true,
     uppercase: true,
     required: [true, 'El codigo del usuario es requerido']
   },

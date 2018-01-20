@@ -53,9 +53,7 @@ export class ReservationsService {
   }
 
   update(id: String, reservationModel: ReservationModel) {
-    return this.http.put(`${this.url}/${id}`, reservationModel)
-    .map(response => response.json())
-    .catch(err => ReservationsService.handleError(err))
+    return this.http.put(`${this.url}/${id}`, reservationModel).toPromise()
   }
 
   remove(id: String) {

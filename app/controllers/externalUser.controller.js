@@ -76,7 +76,7 @@ function updateExternalUser(req, res) {
 }
 
 function removeExternalUser(req, res) {
-  let removeExternalUser = ExternalUser.findByIdAndRemove(req.params.career_id)
+  let removeExternalUser = ExternalUser.findByIdAndRemove(req.params.externalUser_id)
 
   removeExternalUser.then(user => {
     res.json({message: 'External user deleted successfully'})

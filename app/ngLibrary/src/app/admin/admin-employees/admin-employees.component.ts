@@ -18,6 +18,8 @@ export class AdminEmployeesComponent implements OnInit {
   page: number = 1
   @ViewChild('inputFile') myInputVariable: any;
   anyErrors: any
+  errorFile: string
+  errorItem: string
 
   constructor(private employeesService: EmployeesService, private router: Router) {
     this.called = false
@@ -60,7 +62,7 @@ export class AdminEmployeesComponent implements OnInit {
       .subscribe((response => {
         this.router.navigateByUrl('/admin-site')
       }), (err => {
-        this.anyErrors = JSON.parse(err._body)
+        this.errorFile = JSON.parse(err._body).existEmployees
       })
       )
     } else {
@@ -69,6 +71,7 @@ export class AdminEmployeesComponent implements OnInit {
         this.router.navigateByUrl('/admin-site')
       }), (err => {
         this.anyErrors = JSON.parse(err._body)
+        this.errorItem = JSON.parse(err._body).existEmployee
       })
       )
     }

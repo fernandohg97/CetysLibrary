@@ -20,7 +20,7 @@ import { DataReservationService } from '../../../services/dataReservation/data-r
   templateUrl: './reservation-create.component.html',
   styleUrls: ['./reservation-create.component.css']
 })
-export class ReservationCreateComponent implements OnInit, OnDestroy {
+export class ReservationCreateComponent implements OnInit {
 
   valores: Array<any> = new Array
   newReservation = new ReservationModel()
@@ -95,10 +95,6 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
         })
       }
     })
-  }
-
-  ngOnDestroy() {
-    this.newReservation = new ReservationModel()
   }
 
   save() {
