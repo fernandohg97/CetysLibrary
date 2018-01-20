@@ -22,6 +22,8 @@ export class AdminUsersComponent implements OnInit {
   page: number = 1
   @ViewChild('inputFile') myInputVariable: any;
   anyErrors: any
+  errorFile: string
+  errorItem: string
 
   constructor(
     private usersService: UsersService,
@@ -78,14 +80,17 @@ export class AdminUsersComponent implements OnInit {
       .subscribe((response => {
         console.log(response)
         this.router.navigateByUrl('/admin-site')
-      }), (err => this.anyErrors = JSON.parse(err._body))
+      }), (err => this.errorFile = JSON.parse(err._body).existUsers)
       )
     } else {
       this.usersService.create(this.newUser)
       .subscribe((response => {
         console.log(response)
         this.router.navigateByUrl('/admin-site')
-      }), (err => this.anyErrors = JSON.parse(err._body))
+      }), (err => {
+        this.anyErrors = JSON.parse(err._body)
+        this.errorItem = JSON.parse(err._body).existUser
+      })
       )
     }
   }

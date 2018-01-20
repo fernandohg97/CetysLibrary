@@ -18,8 +18,10 @@ export class AdminExternalUserComponent implements OnInit {
   page: number = 1
   @ViewChild('inputFile') myInputVariable: any;
   anyErrors: any
+  errorFile: string
+  errorItem: string
 
-  constructor(private externalUserService: ExternalUserService, private router: Router) { 
+  constructor(private externalUserService: ExternalUserService, private router: Router) {
     this.called = false
   }
 
@@ -64,7 +66,7 @@ export class AdminExternalUserComponent implements OnInit {
         console.log(response)
         this.router.navigateByUrl('/admin-site')
       }), (err => {
-        this.anyErrors = JSON.parse(err._body)
+        this.errorFile = JSON.parse(err._body).existExternalUsers
       })
       )
     } else {
@@ -74,7 +76,7 @@ export class AdminExternalUserComponent implements OnInit {
         this.router.navigateByUrl('/admin-site')
       }), (err => {
         this.anyErrors = JSON.parse(err._body)
-        console.log(err)
+        this.errorItem = JSON.parse(err._body).existExternalUser
       })
       )
     }

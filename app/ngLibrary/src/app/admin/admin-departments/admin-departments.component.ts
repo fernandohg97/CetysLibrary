@@ -18,6 +18,8 @@ export class AdminDepartmentsComponent implements OnInit {
   page: number = 1
   @ViewChild('inputFile') myInputVariable: any;
   anyErrors: any
+  errorFile: string
+  errorItem: string
 
   constructor(private departmentsService: DepartmentsService, private router: Router) {
     this.called = false
@@ -64,7 +66,7 @@ export class AdminDepartmentsComponent implements OnInit {
       .subscribe((response => {
         console.log(response)
         this.router.navigateByUrl('/admin-site')
-      }), (err => this.anyErrors = JSON.parse(err._body))
+      }), (err => this.errorFile = JSON.parse(err._body).existDepartments)
       )
     } else {
       this.departmentsService.create(this.newDepartment)
@@ -73,6 +75,7 @@ export class AdminDepartmentsComponent implements OnInit {
         this.router.navigateByUrl('/admin-site')
       }), (err => {
         this.anyErrors = JSON.parse(err._body)
+        this.errorItem = JSON.parse(err._body).existDepartment
         console.log(err)
       })
       )

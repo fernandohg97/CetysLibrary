@@ -58,7 +58,7 @@
             <input type="text" name="externalUserCode" placeholder="Ingrese codigo del usuario" [(ngModel)]="newExternalUser.userCode" required>
             <div *ngIf="anyErrors">
               <p *ngIf="anyErrors?.errors?.userCode" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.userCode.message}}</p>
-              <p *ngIf="anyErrors?.existExternalUser && !anyErrors?.existExternalUsers" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existExternalUser}}</p>
+              <p *ngIf="errorItem" class="help-text" id="userHelpText" style="color: #b53535;">{{errorItem}}</p>
             </div>
           </label>
         </div>
@@ -84,7 +84,7 @@
           <label for="exampleFileUpload" class="button">Adjuntar archivo</label>
           <input #inputFile type="file" id="exampleFileUpload" class="show-for-sr" (change)="fileChange($event)" accept=".json, .csv" multiple>
           <span class="nameFile">{{nameFile}}</span>
-          <p *ngIf="anyErrors?.existExternalUsers" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existExternalUsers}}</p>
+          <p *ngIf="errorFile" class="help-text" id="userHelpText" style="color: #b53535;">{{errorFile}}</p>
         </div>
         <div class="small-12 cell">
           <button type="button" class="button" name="button" *ngIf="nameFile" (click)="removeFile()">Remover archivo</button>

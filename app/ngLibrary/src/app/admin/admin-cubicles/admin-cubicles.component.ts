@@ -18,6 +18,8 @@ export class AdminCubiclesComponent implements OnInit {
   nameFile: string
   @ViewChild('inputFile') myInputVariable: any;
   anyErrors: any
+  errorFile: string
+  errorItem: string
 
   constructor(private cubiclesService: CubiclesService, private router: Router, private route: ActivatedRoute) {
     this.called = false
@@ -65,14 +67,17 @@ export class AdminCubiclesComponent implements OnInit {
       .subscribe((response => {
         console.log(response)
         this.router.navigateByUrl('/admin-site')
-      }), (err => this.anyErrors = JSON.parse(err._body))
+      }), (err => this.errorFile = JSON.parse(err._body).existCubicles)
       )
     } else {
       this.cubiclesService.create(this.newCubicle)
       .subscribe((response => {
         console.log(response)
         this.router.navigateByUrl('/admin-site')
-      }), (err => this.anyErrors = JSON.parse(err._body))
+      }), (err => {
+          this.anyErrors = JSON.parse(err._body)
+          this.errorItem = JSON.parse(err._body).existCubicle
+        })
       )
     }
   }

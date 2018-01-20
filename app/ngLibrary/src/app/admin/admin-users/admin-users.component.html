@@ -73,7 +73,7 @@
             <input type="number" name="registrationNumber" placeholder="Ingrese la matricula del estudiante" [(ngModel)]="newUser.registrationNumber" required>
             <div *ngIf="anyErrors">
               <p *ngIf="anyErrors?.errors?.registrationNumber" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.registrationNumber.message}}</p>
-              <p *ngIf="anyErrors?.existUser && !anyErrors?.existUsers" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existUser}}</p>
+              <p *ngIf="errorItem" class="help-text" id="userHelpText" style="color: #b53535;">{{errorItem}}</p>
             </div>
 
           </label>
@@ -109,7 +109,7 @@
           <label for="exampleFileUpload" class="button">Adjuntar archivo</label>
           <input #inputFile type="file" id="exampleFileUpload" class="show-for-sr" (change)="fileChange($event)" accept=".json, .csv" multiple>
           <span class="nameFile">{{nameFile}}</span>
-          <p *ngIf="anyErrors?.existUsers" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existUsers}}</p>
+          <p *ngIf="errorFile" class="help-text" id="userHelpText" style="color: #b53535;">{{errorFile}}</p>
         </div>
         <div class="small-12 cell">
           <button type="button" class="button" name="button" *ngIf="nameFile" (click)="removeFile()">Remover archivo</button>
