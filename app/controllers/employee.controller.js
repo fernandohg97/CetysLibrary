@@ -4,7 +4,7 @@ const express = require('express')
 const Employee = require('../models/employee/employee.model')
 
 function getEmployees(req, res) {
-  let findEmployees = Employee.find().sort({employeeNumber: 1})
+  let findEmployees = Employee.find().sort({employeeNumber: -1})
 
   findEmployees.then(employees => {
     res.json(employees)
@@ -43,7 +43,7 @@ function createEmployee(req, res) {
     createEmployee.then(employee => {
       return res.status(200).json({message: 'Employee successfully created'})
     }).catch(err => {
-      return res.status(500).send({message: `Error del server ${err}`})
+      return res.status(500).send(err)
     })
   }
 }

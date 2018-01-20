@@ -29,8 +29,32 @@ export class ReportsService {
     .catch(ReportsService.handleError)
   }
 
+  getByDepartment(startDate: any, endDate: any): Promise<any> {
+    return this.http.get(`${this.url}Department`, {
+      params: {
+        start: startDate,
+        end: endDate
+      },
+    })
+    .toPromise()
+    .then(res => res.json())
+    .catch(ReportsService.handleError)
+  }
+
   getByCareer(startDate: any, endDate: any): Promise<any> {
     return this.http.get(`${this.url}Career`, {
+      params: {
+        start: startDate,
+        end: endDate
+      },
+    })
+    .toPromise()
+    .then(res => res.json())
+    .catch(ReportsService.handleError)
+  }
+
+  getByExternal(startDate: any, endDate: any): Promise<any> {
+    return this.http.get(`${this.url}External`, {
       params: {
         start: startDate,
         end: endDate

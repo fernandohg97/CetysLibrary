@@ -7,7 +7,7 @@
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell">
       <label>Buscar
-        <input type="text" placeholder="Ingrese matricula del usuario" [(ngModel)]="searchReservationNumber">
+        <input type="text" placeholder="Ingrese matricula o codigo del usuario" [(ngModel)]="searchReservationNumber">
       </label>
     </div>
 
@@ -23,13 +23,13 @@
         </tr>
       </thead>
       <tbody>
-          <tr *ngFor="let reservation of reservations | paginate: { itemsPerPage: 30, currentPage: page } | searchReservation: searchReservationNumber"  class="text-center">
-            <td>{{reservation.user.registrationNumber}}</td>
+          <tr *ngFor="let reservation of reservations | paginate: { itemsPerPage: 30, currentPage: page } | searchReservation: searchReservationNumber">
+            <td class="clear button user-number" (click)="getCurrentUser(reservation.user || reservation.employee || reservation.externalUser)">{{reservation.user?.registrationNumber || reservation.employee?.employeeNumber || reservation.externalUser?.userCode}}</td>
             <td>{{reservation.cubicle}}</td>
             <td>{{reservation.entryTime | date: 'shortTime'}}</td>
             <td>{{reservation.departureTime | date: 'shortTime'}}</td>
             <td>{{reservation.reservationDate | date: 'mediumDate'}}</td>
-            <td class="clear button" style="color: #000000; font-size: 16px; margin: 0;" (click)="getCurrentReservation(reservation)" data-open="reportsModal">{{reservation.peopleQuantity}}</td>
+            <td class="clear button user-people" (click)="getCurrentReservation(reservation)">{{reservation.peopleQuantity}}</td>
           </tr>
       </tbody>
     </table>

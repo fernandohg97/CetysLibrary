@@ -102,25 +102,35 @@
       </canvas>
     </div>
   </div>
-  <!-- <div class="grid-x grid-padding-x">
+
+  <div class="grid-x grid-padding-x">
     <div class="category-title cell">
-      <h4>Ingresos por departmento</h4>
+      <h4>Ingresos por externo</h4>
     </div>
     <table>
       <thead>
         <tr>
-          <th>Departamento</th>
+          <th>Usuario</th>
           <th>Cantidad de ingresos</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let department of allDepartments">
-          <td>{{department.departmentName}}</td>
-          <td>s</td>
+        <tr *ngFor="let external of reportsExternal">
+          <td>{{external._id}}</td>
+          <td>{{external.ingresos}}</td>
         </tr>
       </tbody>
     </table>
-  </div> -->
+    <div style="display: block; margin: 0 auto;">
+      <canvas width="300" height="300" *ngIf="pieChartLabelsExternal && pieChartDataExternal" baseChart
+              [data]="pieChartDataExternal"
+              [labels]="pieChartLabelsExternal"
+              [chartType]="pieChartType">
+      </canvas>
+    </div>
+  </div>
+
+
   <div class="grid-x grid-padding-x">
     <div class="category-title cell">
       <h4>Ingreso total por dia</h4>
@@ -147,7 +157,4 @@
             [chartType]="pieChartType">
     </canvas>
   </div>
-  <!-- <div class="grid-x grid-padding-x total-msg">
-
-  </div> -->
 </div>

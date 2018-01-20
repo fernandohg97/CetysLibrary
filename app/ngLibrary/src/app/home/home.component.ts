@@ -25,8 +25,6 @@ export class HomeComponent implements OnInit {
     .then(data => {
       if (data) {
         this.cubicles = data
-        // console.log('Cubiculos:')
-        // console.log(data)
         this.reservationsService.getAll().then(data => {
           if (data) {
             this.reservations = data
@@ -54,13 +52,10 @@ export class HomeComponent implements OnInit {
   }
 
   updateReservation(reservation) {
-    this.reservationsService.update(reservation._id, reservation)
-    .subscribe(
-      data => {
-        console.log(data)
-      },
-      err => console.log(err)
-    )
+    this.reservationsService.update(reservation._id, reservation).then(response => {
+      if (response.status == 200 || response.status == 204) {
+        response
+      }
+    })
   }
-
 }

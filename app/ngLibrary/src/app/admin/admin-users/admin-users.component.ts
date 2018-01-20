@@ -22,6 +22,8 @@ export class AdminUsersComponent implements OnInit {
   page: number = 1
   @ViewChild('inputFile') myInputVariable: any;
   anyErrors: any
+  errorFile: string
+  errorItem: string
 
   constructor(
     private usersService: UsersService,
@@ -35,11 +37,10 @@ export class AdminUsersComponent implements OnInit {
 
   ngOnInit() {
     this.settingService.loadSchoolSettings().subscribe(res => {
+      res.splice(res.length - 1, 1)
       this.divisions = res
-      // console.log(this.divisions)
     })
     this.usersService.getAll().then(data => {
-      // console.log(data)
       this.users = data
     })
   }
@@ -49,9 +50,7 @@ export class AdminUsersComponent implements OnInit {
   }
 
   removeFile() {
-    // console.log(this.myInputVariable.nativeElement.files);
     this.myInputVariable.nativeElement.value = "";
-    // console.log(this.myInputVariable.nativeElement.files);
     this.nameFile = ''
     this.textFile = undefined
   }
@@ -72,39 +71,54 @@ export class AdminUsersComponent implements OnInit {
 
   save() {
     if (this.textFile) {
-      // console.log(this.textFile)
       let jsonFiles = JSON.parse(this.textFile)
       this.usersService.createFile(jsonFiles)
       .subscribe((response => {
-        // console.log(response)
         this.router.navigateByUrl('/admin-site')
-      }), (err => this.anyErrors = JSON.parse(err._body))
+      }), (err => this.errorFile = JSON.parse(err._body).existUsers)
       )
     } else {
       this.usersService.create(this.newUser)
       .subscribe((response => {
-        // console.log(response)
         this.router.navigateByUrl('/admin-site')
-      }), (err => this.anyErrors = JSON.parse(err._body))
+      }), (err => {
+        this.anyErrors = JSON.parse(err._body)
+        this.errorItem = JSON.parse(err._body).existUser
+      })
       )
     }
   }
 
   delete(id: string) {
     this.usersService.remove(id).then(response => {
-      // console.log(response)
+      response
     }).catch(err => console.log(`Hubo un error ${err}`))
   }
 
   divisionChange(event) {
-    // console.log(event.division)
+    switch (event.division) {
+      case 'DOCTORADO':
+        this.newUser.division = 'DOCT'
+        break
+      case 'POSGRADO':
+        this.newUser.division = 'POST'
+        break
+      case 'INGENIERIA':
+        this.newUser.division = 'PROF'
+        break
+      case 'ADMINISTRACION Y NEGOCIOS':
+        this.newUser.division = 'PROF'
+        break
+      case 'PREPARATORIA':
+        this.newUser.division = 'PREP'
+        break
+    }
     this.careers = new Array
     this.careersService.getByDivision(event.division).then(data => {
         data.forEach(career => {
           this.careers.push(career.careerCode)
         })
     }).catch(err => console.log(`Error ${err}`))
-    this.newUser.division = event.division
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterContentInit, ViewChild } from '@angular/core';
 import { ReportsService } from '../../services/reports/reports.service';
 import { BaseChartDirective } from 'chart.js';
+import { ReservationsService } from '../../services/reservations/reservations.service';
 
 @Component({
   selector: 'app-admin-reports',
@@ -11,12 +12,14 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
 
   @ViewChild("baseChart") chart: BaseChartDirective;
   totalReservations: number = 0
-  startDate: String
-  endDate: String
+  startDate: string
+  endDate: string
   reportsCubicle: any
   reportsCareer: any
   reportsDivision: any
   reportsDay: any
+  reportsExternal: any
+  // reportsCompanions: any
   currentDate: Date = new Date()
   pieChartLabelsDivision: string[]
   pieChartDataDivision: number[]
@@ -24,6 +27,10 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
   pieChartDataCubicles: number[]
   pieChartLabelsCareers: string[]
   pieChartDataCareers: number[]
+  // pieChartLabelsCompanions: string[]
+  // pieChartDataCompanions: number[]
+  pieChartLabelsExternal: string[]
+  pieChartDataExternal: number[]
   pieChartLabelsDays: string[]
   pieChartDataDays: number[]
   pieChartType: string = 'pie'
@@ -31,10 +38,15 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
   countLabelsDivision: number
   countLabelsCareers: number
   countLabelsDays: number
+  countLabelsExternal: number
+  // countLabelsCompanions: number
 
-  constructor(private reportsService: ReportsService) {}
+  constructor(private reportsService: ReportsService, private reservationsService: ReservationsService) {}
 
   ngOnInit() {
+    this.reservationsService.getCount().then(data => {
+      this.totalReservations = parseInt(JSON.parse(JSON.stringify(data))._body)
+    })
     let day = this.currentDate.getDate().toString()
     let month = this.currentDate.getMonth()+1
     let year = this.currentDate.getFullYear()
@@ -69,7 +81,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
           this.pieChartDataDivision = []
           this.insertChartItems(this.reportsDivision, this.pieChartLabelsDivision, this.pieChartDataDivision)
           this.countLabelsDivision = this.pieChartDataDivision.length
-          this.sumReservations(this.reportsDivision)
         }
       })
       this.reportsService.getByCubicle(this.startDate, this.endDate).then(data => {
@@ -82,7 +93,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
             this.pieChartDataCubicles.push(element.ingresos)
           })
           this.countLabelsCubicles = this.pieChartDataCubicles.length
-          this.sumReservations(this.reportsCubicle)
         }
       })
       this.reportsService.getByCareer(this.startDate, this.endDate).then(data => {
@@ -92,7 +102,15 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
           this.pieChartDataCareers = []
           this.insertChartItems(this.reportsCareer, this.pieChartLabelsCareers, this.pieChartDataCareers)
           this.countLabelsCareers = this.pieChartDataCareers.length
-          this.sumReservations(this.reportsCareer)
+        }
+      })
+      this.reportsService.getByExternal(this.startDate, this.endDate).then(data => {
+        if (data) {
+          this.reportsExternal = data
+          this.pieChartLabelsExternal = []
+          this.pieChartDataExternal = []
+          this.insertChartItems(this.reportsExternal, this.pieChartLabelsExternal, this.pieChartDataExternal)
+          this.countLabelsExternal = this.pieChartDataExternal.length
         }
       })
       this.reportsService.getByDay(this.startDate, this.endDate).then(data => {
@@ -106,7 +124,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
             this.pieChartDataDays.push(element.ingresos)
           })
           this.countLabelsDays = this.pieChartDataDays.length
-          this.sumReservations(this.reportsDay)
         }
       })
     }
@@ -117,12 +134,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
       labels.push(element._id)
       data.push(element.ingresos)
     })
-  }
-
-  sumReservations(reservations) {
-    reservations.forEach(element => {
-        this.totalReservations += element.ingresos
-    });
   }
 
   searchReports() {
@@ -141,6 +152,10 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
     let labelsDivisionClone = this.pieChartLabelsDivision
     let dataDivisionClone = this.pieChartDataDivision
     let itemsDivision = []
+
+    let labelsExternalClone = this.pieChartLabelsExternal
+    let dataExternalClone = this.pieChartDataExternal
+    let itemsExternal = []
 
     if (this.startDate && this.endDate) {
       this.reportsService.getByDivision(this.startDate, this.endDate).then(data => {
@@ -177,6 +192,17 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
           labelsCareersClone = itemsCareers
           this.pieChartLabelsCareers = labelsCareersClone
           this.pieChartDataCareers = dataCareersClone
+        }
+      })
+      this.reportsService.getByExternal(this.startDate, this.endDate).then(data => {
+        if (data) {
+          this.reportsExternal = data
+          this.insertChartItems(this.reportsExternal, itemsExternal, dataExternalClone)
+          dataExternalClone.splice(0, this.countLabelsExternal)
+          this.countLabelsExternal = dataExternalClone.length
+          labelsExternalClone = itemsExternal
+          this.pieChartLabelsExternal = labelsExternalClone
+          this.pieChartDataExternal = dataExternalClone
         }
       })
       this.reportsService.getByDay(this.startDate, this.endDate).then(data => {

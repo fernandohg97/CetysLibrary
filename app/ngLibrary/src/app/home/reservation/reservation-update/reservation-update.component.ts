@@ -11,6 +11,7 @@ import { UsersService } from '../../../services/users/users.service';
 import { DepartmentsService } from '../../../services/departments/departments.service';
 import { UserModel } from '../../../models/user.model';
 import { CareersService } from '../../../services/careers/careers.service';
+import { ExternalUserService } from '../../../services/externalUser/external-user.service';
 
 @Component({
   selector: 'app-reservation-update',
@@ -22,6 +23,7 @@ export class ReservationUpdateComponent implements OnInit {
   updateReservation = new ReservationModel()
   newUser = new UserModel()
   registrationNumber: number
+  externalUserCode: string
   reservationId: String
   currentCareers: Array<String>
   divisions: any
@@ -35,6 +37,8 @@ export class ReservationUpdateComponent implements OnInit {
   departureTimeError: any
   selectedDivision: any
   valores: Array<any> = new Array
+  employee: Boolean = false
+  externalUser: Boolean
 
   constructor(
     private route: ActivatedRoute,
@@ -44,27 +48,25 @@ export class ReservationUpdateComponent implements OnInit {
     private settingService: SettingsService,
     private usersService: UsersService,
     private careersService: CareersService,
-    private departmentsService: DepartmentsService
+    private departmentsService: DepartmentsService,
+    private externalUserService: ExternalUserService
   ) {
     this.quantityDepartment = 1
+    this.externalUser = false
   }
 
   ngOnInit() {
     this.settingService.loadSchoolSettings().subscribe(res => {
       this.divisions = res
-      // console.log(this.divisions)
     })
     this.route.params.subscribe((params: Params) => {
       this.reservationId = params['id'] //
-      // console.log(`Id de la reservacion: ${this.reservationId}`)
       if (this.reservationId) {
         this.reservationsService.getById(this.reservationId).then(reservation => {
-            // console.log(`Reservacion a actualizar: ${JSON.stringify(reservation)}`)
             let entryTime = new Date(reservation.entryTime)
             let hour = entryTime.getHours().toString()
             if (parseInt(hour) >= 0 && parseInt(hour) <= 9) {
               hour = '0' + hour
-              console.log(hour)
             }
             let minutes = entryTime.getMinutes() < 10 ? `0${entryTime.getMinutes()}` : entryTime.getMinutes()
             this.currentTime = `${hour}:${minutes}`
@@ -74,7 +76,6 @@ export class ReservationUpdateComponent implements OnInit {
             let year = reservationDate.getFullYear()
             if (parseInt(day) >= 1 && parseInt(day) <= 9) {
               day = '0' + day
-              console.log(day)
             }
             if (month >= 1 && month <= 9) {
               this.currentDate = `${year}-0${month}-${day}`
@@ -85,14 +86,23 @@ export class ReservationUpdateComponent implements OnInit {
             let departureHour = departureTime.getHours().toString()
             if (parseInt(departureHour) >= 0 && parseInt(departureHour) <= 9) {
               departureHour = '0' + departureHour
-              console.log(departureHour)
             }
             let departureMinutes = departureTime.getMinutes() < 10 ? `0${departureTime.getMinutes()}` : departureTime.getMinutes()
             this.currentDepartureTime = `${departureHour}:${departureMinutes}`
             this.updateReservation = reservation
-            this.registrationNumber = reservation.user['registrationNumber']
-            // console.log(this.updateReservation)
-            // this.updateReservation.user = reservation.user._id
+
+            if (reservation.hasOwnProperty('user')) {
+                this.registrationNumber = reservation.user['registrationNumber']
+                this.updateReservation.user = reservation.user
+            } else if (reservation.hasOwnProperty('employee')) {
+              this.employee = true
+              this.registrationNumber = reservation.employee['employeeNumber']
+              this.updateReservation.employee = reservation.employee
+            } else {
+              this.externalUser = true
+              this.externalUserCode = reservation.externalUser['userCode']
+              this.updateReservation.externalUser = reservation.externalUser
+            }
         })
       }
     })
@@ -107,38 +117,66 @@ export class ReservationUpdateComponent implements OnInit {
     this.updateReservation.entryTime = new Date(`${this.currentDate}, ${this.currentTime}`)
     this.updateReservation.departureTime = new Date(`${this.currentDate}, ${this.currentDepartureTime}`)
     this.updateReservation.reservationDate = new Date(`${this.currentDate}, ${this.currentTime}`)
-    if (this.registrationNumber != this.updateReservation.user['registrationNumber']) {
-      this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
-        this.updateReservation.user = user
-      }).catch(err => {
-        this.anyErrors = JSON.parse(err._body)
-      })
+    if (this.employee) {
+        if (this.registrationNumber != this.updateReservation.employee.employeeNumber) {
+          this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
+            let employee = JSON.parse(JSON.stringify(user)).empleado
+            this.updateReservation.employee = employee
+            this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
+              if (response.status == 200 || response.status == 204) {
+                this.router.navigateByUrl('/')
+              }
+            }).catch(error => {
+              this.anyErrors = JSON.parse(error._body)
+            })
+          }).catch(err => {
+            this.anyErrors = JSON.parse(err._body)
+          })
+        }
+    } else if (this.externalUser) {
+      if (this.externalUserCode != this.updateReservation.externalUser.userCode) {
+        this.externalUserService.getByUserCode(this.externalUserCode).then(user => {
+          let external = JSON.parse(JSON.stringify(user)).usuario
+          this.updateReservation.externalUser = external
+          this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
+            if (response.status == 200 || response.status == 204) {
+              this.router.navigateByUrl('/')
+            }
+          }).catch(error => {
+            this.anyErrors = JSON.parse(error._body)
+          })
+        }).catch(err => {
+          this.anyErrors = JSON.parse(err._body)
+        })
+      }
+    } else {
+      if (this.registrationNumber != this.updateReservation.user.registrationNumber) {
+        this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
+          let student = JSON.parse(JSON.stringify(user)).usuario
+          this.updateReservation.user = student
+          this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
+            if (response.status == 200 || response.status == 204) {
+              this.router.navigateByUrl('/')
+            }
+          }).catch(error => {
+            this.anyErrors = JSON.parse(error._body)
+          })
+        }).catch(err => {
+          this.anyErrors = JSON.parse(err._body)
+        })
+      }
     }
-    this.reservationsService.update(this.reservationId, this.updateReservation)
-    .subscribe(
-      data => {
-        // console.log(data)
-        this.router.navigateByUrl('/')
-      },
-      err => {
-        this.anyErrors = JSON.parse(err._body)
-    }
-    )
-    // this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
-    //   if (response.status == 200 || response.status == 204) {
-    //     console.log(response.json())
-    //     this.router.navigateByUrl('/')
-    //   }
-    // }).catch(error => {
-    //   this.anyErrors = JSON.parse(error._body)
-    //   console.log(this.anyErrors)
-    // })
+  }
+
+  searchUser() {
+    this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => {
+      this.anyErrors = JSON.parse(JSON.stringify(data))
+    }).catch(err => this.anyErrors = JSON.parse(err._body))
   }
 
   departmentChange(event) {
     this.selectedDivision = {}
     let sigue: boolean = false
-    console.log(event)
     this.currentCareers = []
     if (this.updateReservation.usersDetails) {
       this.updateReservation.usersDetails.forEach((e, index) => {
@@ -150,16 +188,13 @@ export class ReservationUpdateComponent implements OnInit {
     }
     if (!sigue) this.quantityDepartment = 0
     this.departmentSelected = event
-    console.log(event)
     this.usersQuantity.setDepartmentSelected(event)
-    // console.log(`Department selected: ${this.usersQuantity.getDepartmentSelected()}`)
   }
 
   divisionChange(newDivision) {
     this.departmentSelected = ''
     this.currentCareers = new Array
     this.valores = []
-    console.log(newDivision.division)
     this.usersQuantity.setDivisionSelected(newDivision.division)
     this.careersService.getByDivision(newDivision.division).then(data => {
       if (data.length >= 1) {
@@ -178,7 +213,6 @@ export class ReservationUpdateComponent implements OnInit {
         })
       }
     })
-    // console.log(`Division selected: ${this.usersQuantity.getDivisionSelected()}, Careers: ${this.currentCareers}`)
   }
 
   decrement(career: string) {
@@ -211,7 +245,7 @@ export class ReservationUpdateComponent implements OnInit {
                 }
               })
               if (quantity > 0) {
-                let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
+                let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber, this.externalUserCode)
                 this.updateReservation.usersDetails.push(newDivisionUser)
               }
 
@@ -240,7 +274,6 @@ export class ReservationUpdateComponent implements OnInit {
     if (this.updateReservation.peopleQuantity > 0) {
       this.updateReservation.peopleQuantity-=1
     }
-    // console.log(this.updateReservation.usersDetails)
   }
 
   increment(career: string) {
@@ -253,7 +286,7 @@ export class ReservationUpdateComponent implements OnInit {
           element.count = quantity
         }
       })
-      let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
+      let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber, this.externalUserCode)
       this.updateReservation.usersDetails.push(newDivisionUser)
     } else {
         if (this.usersQuantity.getCareer() != career) {
@@ -278,7 +311,7 @@ export class ReservationUpdateComponent implements OnInit {
                   element.count = quantity
                 }
               })
-              let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
+              let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber, this.externalUserCode)
               this.updateReservation.usersDetails.push(newDivisionUser)
           }
         } else {
@@ -290,7 +323,7 @@ export class ReservationUpdateComponent implements OnInit {
                 element.count = quantity
               }
             })
-            let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
+            let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber, this.externalUserCode)
             this.updateReservation.usersDetails.push(newDivisionUser)
           } else {
             this.updateReservation.usersDetails.forEach(carrera => {
@@ -307,7 +340,6 @@ export class ReservationUpdateComponent implements OnInit {
         }
     }
     this.updateReservation.peopleQuantity+=1
-    // console.log(this.updateReservation.usersDetails)
   }
 
   decrementDepartment() {
@@ -323,7 +355,6 @@ export class ReservationUpdateComponent implements OnInit {
     if (this.updateReservation.peopleQuantity > 0) {
       this.updateReservation.peopleQuantity-=1
     }
-    console.log(this.updateReservation.usersDetails)
   }
 
   incrementDepartment() {
@@ -336,13 +367,9 @@ export class ReservationUpdateComponent implements OnInit {
       }
     })
     if (!exist) {
-      let newDepartmentUser = new UserDepartmentModel(this.quantityDepartment, this.usersQuantity.getDepartmentSelected(), this.registrationNumber)
+      let newDepartmentUser = new UserDepartmentModel(this.quantityDepartment, this.usersQuantity.getDepartmentSelected(), this.registrationNumber, this.externalUserCode)
       this.updateReservation.usersDetails.push(newDepartmentUser)
     }
     this.updateReservation.peopleQuantity += 1
-    console.log(this.updateReservation.usersDetails)
   }
-
-
-
 }

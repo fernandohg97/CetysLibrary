@@ -6,7 +6,16 @@ const Reservation = require('../models/reservation/reservation.model')
 function getReservations(req, res) {
   let findReservations = Reservation.find().sort({createdAt: -1})
   findReservations.then(reservations => {
-    // console.log(reservations);
+    res.json(reservations)
+  })
+  .catch(err => {
+    res.status(500).send({message: `Error del servidor: ${err}`})
+  })
+}
+
+function getReservationsCount(req, res) {
+  let findReservations = Reservation.find().count()
+  findReservations.then(reservations => {
     res.json(reservations)
   })
   .catch(err => {
@@ -46,8 +55,9 @@ function getReservationsByCubicle(req, res) {
 
 function createReservation(req, res) {
   let reservation = new Reservation(req.body)
-  if (reservation.departureTime <= reservation.entryTime) {
-    return res.status(500).send({message: 'La hora de salida ya paso'})
+  console.log(reservation.departureTime);
+  if (reservation.departureTime !== null && reservation.departureTime <= reservation.entryTime) {
+    return res.status(500).send({departureTimeMsg: 'La hora de salida ya paso'})
   } else {
     let createReservation = reservation.save()
     createReservation.then(reservation => {
@@ -91,6 +101,7 @@ function removeReservation(req, res) {
 
 module.exports = {
   getReservations,
+  getReservationsCount,
   getReservation,
   getReservationsByCubicle,
   createReservation,

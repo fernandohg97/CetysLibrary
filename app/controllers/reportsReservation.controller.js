@@ -5,11 +5,31 @@ const Reservation = require('../models/reservation/reservation.model')
 function getReportsByDivision(req, res) {
   let findReservationsDivision = Reservation.aggregate( [
     { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
-    { $group: { "_id": "$user.division", "ingresos": { $sum: 1 } } }
+    { $group: { _id: "$user.division", "ingresos": { $sum: 1 } } }
    ])
 
   findReservationsDivision.then(data => {
     if (data) {
+      let newData = data.filter(value => value._id != null)
+      res.json(newData)
+    } else {
+      res.status(404).send({message: `Page not found`})
+    }
+  })
+  .catch(err => {
+    res.status(500).send({message: `Error del server: ${err}`})
+  })
+}
+
+function getReportsByDepartment(req, res) {
+  let findReservationsDepartment = Reservation.aggregate( [
+    { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
+    { $group: { _id: "$employee.department", "ingresos": { $sum: 1 } } }
+   ])
+
+  findReservationsDepartment.then(data => {
+    if (data) {
+      let newData = data.filter(value => value._id != null)
       res.json(data)
     } else {
       res.status(404).send({message: `Page not found`})
@@ -41,12 +61,49 @@ function getReportsByCareer(req, res) {
     { $group: { _id: "$user.career", ingresos: { $sum: 1 } } }  ])
 
   findReservationsCareer.then(data => {
-    if (data) return res.json(data)
+    if (data) {
+      let newData = data.filter(value => value._id != null)
+      return res.json(newData)
+    }
     return res.status(404).send({message: 'Page not found'})
   }).catch(err => {
     res.status(500).send({message: `Error del server ${err}`})
   })
 }
+
+function getReportsByExternalUser(req, res) {
+  let findReservationsExternal = Reservation.aggregate( [
+    { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
+    { $group: { _id: "$externalUser.userCode", ingresos: { $sum: 1 } } }  ])
+
+  findReservationsExternal.then(data => {
+    if (data) {
+      let newData = data.filter(value => value._id != null)
+      return res.json(newData)
+    }
+    return res.status(404).send({message: 'Page not found'})
+  }).catch(err => {
+    res.status(500).send({message: `Error del server ${err}`})
+  })
+}
+
+function getReportsByCareerCompanions(req, res) {
+  let findReservationsCareerCompanions = Reservation.aggregate( [
+    { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
+    { $group: { _id: {careers: "$usersDetails.career", cantidad: "$usersDetails.quantity"} } }  ])
+
+  findReservationsCareerCompanions.then(data => {
+    if (data) {
+      let newData = data.filter(value => value._id.careers.length != 0)
+      return res.json(newData)
+    }
+    return res.status(404).send({message: 'Page not found'})
+  }).catch(err => {
+    res.status(500).send({message: `Error del server ${err}`})
+  })
+}
+
+
 
 function getReportsByDay(req, res) {
   let findReservationsDay = Reservation.aggregate( [
@@ -62,13 +119,12 @@ function getReportsByDay(req, res) {
   })
 }
 
-// function getReportsByDepartment(req, res) {
-//   let findReservationsByDepartment = Reservation.aggregate([{ $group: { _id: "$"}}])
-// }
-
 module.exports = {
   getReportsByCareer,
   getReportsByCubicle,
   getReportsByDivision,
-  getReportsByDay
+  getReportsByDay,
+  getReportsByDepartment,
+  getReportsByCareerCompanions,
+  getReportsByExternalUser
 }

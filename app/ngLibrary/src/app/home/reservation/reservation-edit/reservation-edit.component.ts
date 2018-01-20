@@ -8,6 +8,9 @@ import { CubiclesService } from '../../../services/cubicles/cubicles.service';
 import { UserDetailsModel } from '../../../models/userDetails.model';
 import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
 import { PopupUserDetailsComponent } from '../../popup-userDetails/popup-userDetails.component';
+import { PopupUserInfoComponent } from '../../popup-user-info/popup-user-info.component';
+import { PopupEmployeeInfoComponent } from '../../popup-employee-info/popup-employee-info.component';
+import { PopupExternalInfoComponent } from '../../popup-external-info/popup-external-info.component';
 import { DataReservationService } from '../../../services/dataReservation/data-reservation.service';
 
 @Component({
@@ -18,10 +21,12 @@ import { DataReservationService } from '../../../services/dataReservation/data-r
 export class ReservationEditComponent implements OnInit {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
+  @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
+  @ViewChild(NguiPopupComponent) popup3: NguiPopupComponent;
+  @ViewChild(NguiPopupComponent) popup4: NguiPopupComponent;
   reservations: ReservationModel[]
   cubicleReservationNumber: Number
   exist: Boolean
-  currentReservation: UserDetailsModel
 
   constructor(
     private dataReservationService: DataReservationService,
@@ -46,10 +51,22 @@ export class ReservationEditComponent implements OnInit {
     })
   }
 
+  getCurrentUser(user) {
+    if (user.registrationNumber) {
+      this.openPopup2()
+      this.dataReservationService.changeUser(user)
+    } else if (user.employeeNumber) {
+      this.openPopup3()
+      this.dataReservationService.changeEmployee(user)
+    } else {
+      this.openPopup4()
+      this.dataReservationService.changeExternalUser(user)
+    }
+  }
+
   getCurrentReservation(reservation) {
+    this.dataReservationService.addReservationsDetails(reservation.usersDetails)
     this.openPopup()
-    this.currentReservation = reservation.usersDetails
-    this.dataReservationService.addReservationsDetails(this.currentReservation)
   }
 
   openPopup() {
@@ -59,9 +76,30 @@ export class ReservationEditComponent implements OnInit {
     })
   }
 
+  openPopup2() {
+    this.popup2.open(PopupUserInfoComponent, {
+      classNames: 'custom',
+      closeButton: true
+    })
+  }
+
+  openPopup3() {
+    this.popup3.open(PopupEmployeeInfoComponent, {
+      classNames: 'custom',
+      closeButton: true
+    })
+  }
+
+  openPopup4() {
+    this.popup4.open(PopupExternalInfoComponent, {
+      classNames: 'custom',
+      closeButton: true
+    })
+  }
+
   delete(id: string) {
     this.reservationsService.remove(id).then(response => {
-      console.log(response)
+      response
     }).catch(err => console.log(`Hubo un error ${err}`))
     this.exist = false
   }

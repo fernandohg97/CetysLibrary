@@ -6,8 +6,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 @Component({
   selector: 'app-admin-departments-update',
   templateUrl: './admin-departments-update.component.html',
-  styleUrls: ['./admin-departments-update.component.css'],
-  providers: [DepartmentsService]
+  styleUrls: ['./admin-departments-update.component.css']
 })
 export class AdminDepartmentsUpdateComponent implements OnInit {
 
@@ -18,10 +17,8 @@ export class AdminDepartmentsUpdateComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       let departmentId = params['id'] //
-      console.log(`Id del departamento: ${departmentId}`)
       if (departmentId) {
         this.departmentsService.getById(departmentId).then(department => {
-          console.log(department)
           this.currentDepartment = department
         })
       }
@@ -30,7 +27,6 @@ export class AdminDepartmentsUpdateComponent implements OnInit {
 
   update() {
     this.departmentsService.update(this.currentDepartment._id, this.currentDepartment).then(response => {
-      console.log(response)
       if (response.status == 200 || response.status == 204) {
         this.router.navigateByUrl('/admin-site')
       }

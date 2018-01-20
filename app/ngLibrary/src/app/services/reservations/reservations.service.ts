@@ -25,6 +25,13 @@ export class ReservationsService {
     .catch(ReservationsService.handleError)
   }
 
+  getCount(): Promise<number> {
+    return this.http.get(`${this.url}/count`)
+    .toPromise()
+    .then()
+    .catch(ReservationsService.handleError)
+  }
+
   getById(_id: String): Promise<ReservationModel> {
     return this.http.get(`${this.url}/${_id}`)
     .toPromise()
@@ -46,18 +53,12 @@ export class ReservationsService {
   }
 
   update(id: String, reservationModel: ReservationModel) {
-    return this.http.put(`${this.url}/${id}`, reservationModel)
-    .map(response => response.json())
-    .catch(err => ReservationsService.handleError(err))
+    return this.http.put(`${this.url}/${id}`, reservationModel).toPromise()
   }
 
   remove(id: String) {
     console.log(id)
     return this.http.delete(`${this.url}/${id}`).toPromise()
   }
-
-  // createUsersDetails(userDetails: UserDetails) {
-  //   return userDetails;
-  // }
 
 }

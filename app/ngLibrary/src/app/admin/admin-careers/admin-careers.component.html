@@ -71,7 +71,7 @@
             <input type="text" name="shortName" placeholder="Ingrese la clave de la carrera" [(ngModel)]="newCareer.careerCode" required>
             <div *ngIf="anyErrors">
               <p *ngIf="anyErrors?.errors?.careerCode" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.careerCode.message}}</p>
-              <p *ngIf="anyErrors?.existCareer && !anyErrors?.existCareers" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existCareer}}</p>
+              <p *ngIf="errorItem" class="help-text" id="userHelpText" style="color: #b53535;">{{errorItem}}</p>
             </div>
 
           </label>
@@ -99,15 +99,14 @@
       </div>
       <div class="grid-x grid-padding-x file-btn">
         <div class="small-12 cell uploadFile-btn">
-          <label><strong>Adjuntar archivo</strong></label>
-          <label for="exampleFileUpload" class="button">Upload File</label>
+          <label for="exampleFileUpload" class="button">Adjuntar archivo</label>
           <input #inputFile type="file" id="exampleFileUpload" class="show-for-sr" name="fileUpload" (change)="fileChange($event)" accept=".json, .csv" multiple>
           <span class="nameFile">{{nameFile}}</span>
-          <p *ngIf="anyErrors?.existCareers" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.existCareers}}</p>
+          <p *ngIf="errorFile" class="help-text" id="userHelpText" style="color: #b53535;">{{errorFile}}</p>
 
         </div>
         <div class="small-12 cell">
-          <button type="button" class="button" name="button" *ngIf="nameFile" (click)="removeFile()">Remove file</button>
+          <button type="button" class="button" name="button" *ngIf="nameFile" (click)="removeFile()">Remover archivo</button>
         </div>
       </div>
       <div class="grid-x grid-padding-x submit-btn">
