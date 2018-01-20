@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit {
   updateReservation(reservation) {
     this.reservationsService.update(reservation._id, reservation).then(response => {
       if (response.status == 200 || response.status == 204) {
-        console.log(response)
+        response
       }
     })
   }

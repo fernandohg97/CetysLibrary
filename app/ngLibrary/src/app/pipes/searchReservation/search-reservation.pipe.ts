@@ -19,8 +19,6 @@ export class SearchReservationPipe implements PipeTransform {
         if (value.externalUser.userCode == codeUpper) return value
       }
     })
-    // console.log(user)
-    // return user
   }
 
 }

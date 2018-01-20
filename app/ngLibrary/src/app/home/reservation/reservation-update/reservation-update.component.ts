@@ -123,12 +123,10 @@ export class ReservationUpdateComponent implements OnInit {
             this.updateReservation.employee = employee
             this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
               if (response.status == 200 || response.status == 204) {
-                console.log(response.json())
                 this.router.navigateByUrl('/')
               }
             }).catch(error => {
               this.anyErrors = JSON.parse(error._body)
-              console.log(this.anyErrors)
             })
           }).catch(err => {
             this.anyErrors = JSON.parse(err._body)
@@ -138,17 +136,13 @@ export class ReservationUpdateComponent implements OnInit {
       if (this.externalUserCode != this.updateReservation.externalUser.userCode) {
         this.externalUserService.getByUserCode(this.externalUserCode).then(user => {
           let external = JSON.parse(JSON.stringify(user)).usuario
-          console.log(external)
           this.updateReservation.externalUser = external
-          console.log(this.updateReservation.externalUser)
           this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
             if (response.status == 200 || response.status == 204) {
-              console.log(response.json())
               this.router.navigateByUrl('/')
             }
           }).catch(error => {
             this.anyErrors = JSON.parse(error._body)
-            console.log(this.anyErrors)
           })
         }).catch(err => {
           this.anyErrors = JSON.parse(err._body)
@@ -159,74 +153,19 @@ export class ReservationUpdateComponent implements OnInit {
         this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
           let student = JSON.parse(JSON.stringify(user)).usuario
           this.updateReservation.user = student
-          console.log(this.updateReservation.user)
           this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
             if (response.status == 200 || response.status == 204) {
-              console.log(response.json())
               this.router.navigateByUrl('/')
             }
           }).catch(error => {
             this.anyErrors = JSON.parse(error._body)
-            console.log(this.anyErrors)
           })
         }).catch(err => {
           this.anyErrors = JSON.parse(err._body)
         })
       }
     }
-
-      // if (this.employee) {
-      //   if (this.registrationNumber != this.updateReservation.employee.employeeNumber) {
-      //     console.log(this.registrationNumber)
-      //     this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
-      //       let student = JSON.parse(JSON.stringify(user)).usuario
-      //       console.log(student)
-      //       let employee = JSON.parse(JSON.stringify(user)).empleado
-      //       if (student) {
-      //         this.updateReservation.employee = null
-      //         this.updateReservation.user = student
-      //         console.log(this.updateReservation.user)
-      //       } else {
-      //         this.updateReservation.employee = employee
-      //       }
-      //     }).catch(err => {
-      //       this.anyErrors = JSON.parse(err._body)
-      //     })
-      //   }
-      // } else {
-      //   if (this.registrationNumber != this.updateReservation.user.registrationNumber) {
-      //     this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
-      //       let student = JSON.parse(JSON.stringify(user)).usuario
-      //       console.log(student)
-      //         this.updateReservation.user = student
-      //         console.log(this.updateReservation.user)
-      //
-      //     }).catch(err => {
-      //       this.anyErrors = JSON.parse(err._body)
-      //     })
-      //   }
-      // }
-
-    // this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
-    //   if (response.status == 200 || response.status == 204) {
-    //     console.log(response.json())
-    //     this.router.navigateByUrl('/')
-    //   }
-    // }).catch(error => {
-    //   this.anyErrors = JSON.parse(error._body)
-    //   console.log(this.anyErrors)
-    // })
   }
-
-  // codeOnChange(event) {
-  //   if (this.employee) {
-  //     this.updateReservation.employee.employeeNumber = event
-  //   } else if (this.externalUser) {
-  //     this.updateReservation.externalUser.userCode = event
-  //   } else {
-  //     this.updateReservation.user.registrationNumber = event
-  //   }
-  // }
 
   searchUser() {
     this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => {
