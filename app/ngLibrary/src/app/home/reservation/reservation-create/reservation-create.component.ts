@@ -54,21 +54,17 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
   ){ this.called = false }
 
   ngOnInit() {
-    console.log(`Fehca y hora de entrada: ${this.newReservation.entryTime}`)
     let hour = this.newReservation.entryTime.getHours().toString()
     let minutes = this.newReservation.entryTime.getMinutes()
 
     if (parseInt(hour) >= 0 && parseInt(hour) <= 9) {
       hour = '0' + hour
-      console.log(hour)
     }
     if (minutes >= 0 && minutes <= 9) {
       this.currentTime = `${hour}:0${minutes}`
-      console.log(this.currentTime)
     } else {
       this.currentTime = `${hour}:${minutes}`
     }
-    console.log('Hora de entrada: ' + this.currentTime)
 
     let day = this.newReservation.reservationDate.getDate().toString()
     let month = this.newReservation.reservationDate.getMonth()+1
@@ -76,40 +72,32 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
 
     if (parseInt(day) >= 1 && parseInt(day) <= 9) {
       day = '0' + day
-      console.log(day)
     }
     if (month >= 1 && month <= 9) {
       this.currentDate = `${year}-0${month}-${day}`
     } else {
       this.currentDate = `${year}-${month}-${day}`
     }
-    console.log(`Fecha actual: ${this.currentDate}`)
 
     this.settingService.loadSchoolSettings().subscribe(res => {
       this.divisions = res
-      console.log(this.divisions)
     })
     this.departmentsService.getAll().then(data => {
-      console.log('Departamentos' + data)
       data.forEach(department => {
         this.departments.push(department.departmentName)
       })
     })
     this.route.params.subscribe((params: Params) => {
       let cubicleNumberId = params['id'] //
-      console.log(`Id de cubiculo: ${cubicleNumberId}`)
       if (cubicleNumberId) {
         this.cubiclesService.getById(cubicleNumberId).then(cubicle => {
-          console.log(cubicle)
           this.newReservation.cubicle = cubicle.cubicleNumber
-          console.log('Cubiculo: ' + this.newReservation.cubicle)
         })
       }
     })
   }
 
   ngOnDestroy() {
-    console.clear()
     this.newReservation = new ReservationModel()
   }
 
@@ -122,26 +110,21 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
       let student = JSON.parse(JSON.stringify(user)).usuario
       let employee = JSON.parse(JSON.stringify(user)).empleado
       if (student) {
-        // this.dataReservationService.changeUserType(student)
         this.newReservation.user = student
       } else {
-        // this.dataReservationService.changeUserType(employee)
         this.newReservation.employee = employee
       }
       this.reservationsService.create(this.newReservation)
       .subscribe(
         data => {
-          console.log(data)
           this.router.navigateByUrl('/')
         },
         err => {
           this.anyErrors = JSON.parse(err._body)
-          console.log(this.anyErrors)
           this.departureTimeError = JSON.parse(err._body)
       }
       )
     }).catch(error => {
-        console.log(`El usuario no se encuentra en la base de datos ${error.status}`)
         this.anyErrors = JSON.parse(error._body)
     })
   }
@@ -152,9 +135,7 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
 
   searchUser() {
     this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => {
-      // console.log(JSON.parse(JSON.stringify(data)).usuario || JSON.parse(JSON.stringify(data)).empleado)
       this.anyErrors = JSON.parse(JSON.stringify(data))
-      // this.newReservation.user = user
     }).catch(err => this.anyErrors = JSON.parse(err._body))
   }
 
@@ -162,7 +143,6 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
     this.departmentSelected = ''
     this.currentCareers = new Array
     this.valores = []
-    console.log(newDivision.division)
     this.careersService.getByDivision(newDivision.division).then(data => {
       if (data.length >= 1) {
         data.forEach(career => {
@@ -181,14 +161,11 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
       }
     })
     this.usersQuantity.setDivisionSelected(newDivision.division)
-    // this.currentCareers = newDivision.careers
-    console.log(`Division selected: ${this.usersQuantity.getDivisionSelected()}, Careers: ${this.currentCareers}`)
   }
 
   departmentChange(event) {
     this.selectedDivision = {}
     let sigue: boolean = false
-    console.log(event)
     this.currentCareers = []
     if (this.newReservation.usersDetails) {
       this.newReservation.usersDetails.forEach((e, index) => {
@@ -200,9 +177,7 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
     }
     if (!sigue) this.quantityDepartment = 0
     this.departmentSelected = event
-    console.log(event)
     this.usersQuantity.setDepartmentSelected(event)
-    console.log(`Department selected: ${this.usersQuantity.getDepartmentSelected()}`)
   }
 
   decrementCareer(career: string) {
@@ -263,7 +238,6 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
     if (this.newReservation.peopleQuantity > 0) {
       this.newReservation.peopleQuantity-=1
     }
-    console.log(this.newReservation.usersDetails)
   }
 
   incrementCareer(career: string) {
@@ -330,7 +304,6 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
         }
     }
     this.newReservation.peopleQuantity+=1
-    console.log(this.newReservation.usersDetails)
   }
 
 
@@ -347,7 +320,6 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
     if (this.newReservation.peopleQuantity > 0) {
       this.newReservation.peopleQuantity-=1
     }
-    console.log(this.newReservation.usersDetails)
   }
 
   incrementDepartment() {
@@ -364,6 +336,5 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
       this.newReservation.usersDetails.push(newDepartmentUser)
     }
     this.newReservation.peopleQuantity += 1
-    console.log(this.newReservation.usersDetails)
   }
 }

@@ -39,7 +39,6 @@ export class AdminUsersComponent implements OnInit {
       this.divisions = res
     })
     this.usersService.getAll().then(data => {
-      console.log(data)
       this.users = data
     })
   }
@@ -49,9 +48,7 @@ export class AdminUsersComponent implements OnInit {
   }
 
   removeFile() {
-    console.log(this.myInputVariable.nativeElement.files);
     this.myInputVariable.nativeElement.value = "";
-    console.log(this.myInputVariable.nativeElement.files);
     this.nameFile = ''
     this.textFile = undefined
   }
@@ -72,18 +69,15 @@ export class AdminUsersComponent implements OnInit {
 
   save() {
     if (this.textFile) {
-      console.log(this.textFile)
       let jsonFiles = JSON.parse(this.textFile)
       this.usersService.createFile(jsonFiles)
       .subscribe((response => {
-        console.log(response)
         this.router.navigateByUrl('/admin-site')
       }), (err => this.anyErrors = JSON.parse(err._body))
       )
     } else {
       this.usersService.create(this.newUser)
       .subscribe((response => {
-        console.log(response)
         this.router.navigateByUrl('/admin-site')
       }), (err => this.anyErrors = JSON.parse(err._body))
       )
@@ -92,7 +86,7 @@ export class AdminUsersComponent implements OnInit {
 
   delete(id: string) {
     this.usersService.remove(id).then(response => {
-      console.log(response)
+      response
     }).catch(err => console.log(`Hubo un error ${err}`))
   }
 
@@ -116,7 +110,6 @@ export class AdminUsersComponent implements OnInit {
     }
     this.careers = new Array
     this.careersService.getByDivision(event.division).then(data => {
-      console.log(data)
         data.forEach(career => {
           this.careers.push(career.careerCode)
         })

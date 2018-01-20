@@ -25,7 +25,6 @@ export class AdminCubiclesComponent implements OnInit {
 
   ngOnInit() {
     this.cubiclesService.getAll().then(data => {
-      console.log(data)
       this.cubicles = data
     })
   }
@@ -35,9 +34,7 @@ export class AdminCubiclesComponent implements OnInit {
   }
 
   removeFile() {
-    console.log(this.myInputVariable.nativeElement.files);
     this.myInputVariable.nativeElement.value = "";
-    console.log(this.myInputVariable.nativeElement.files);
     this.nameFile = ''
     this.textFile = undefined
   }
@@ -45,7 +42,6 @@ export class AdminCubiclesComponent implements OnInit {
   fileChange(event) {
     let input = event.target;
     this.nameFile = input.files[0].name
-    console.log(event.target.value)
 
     for (var index = 0; index < input.files.length; index++) {
         let reader = new FileReader();
@@ -59,18 +55,15 @@ export class AdminCubiclesComponent implements OnInit {
 
   save() {
     if (this.textFile) {
-      console.log(this.textFile)
       let jsonFiles = JSON.parse(this.textFile)
       this.cubiclesService.createFile(jsonFiles)
       .subscribe((response => {
-        console.log(response)
         this.router.navigateByUrl('/admin-site')
       }), (err => this.anyErrors = JSON.parse(err._body))
       )
     } else {
       this.cubiclesService.create(this.newCubicle)
       .subscribe((response => {
-        console.log(response)
         this.router.navigateByUrl('/admin-site')
       }), (err => this.anyErrors = JSON.parse(err._body))
       )
@@ -79,8 +72,7 @@ export class AdminCubiclesComponent implements OnInit {
 
   delete(id: string) {
     this.cubiclesService.remove(id).then(response => {
-      console.log(response)
-      console.log(response.status)
+      response
     }).catch(err => console.log(`hubo un error ${err}`))
   }
 

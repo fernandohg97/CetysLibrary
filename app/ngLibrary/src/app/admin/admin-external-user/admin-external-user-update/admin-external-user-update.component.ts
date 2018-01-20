@@ -17,10 +17,8 @@ export class AdminExternalUserUpdateComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       let externalUserId = params['id'] //
-      console.log(`Id del departamento: ${externalUserId}`)
       if (externalUserId) {
         this.externalUserService.getById(externalUserId).then(user => {
-          console.log(user)
           this.currentUser = user
         })
       }
@@ -29,7 +27,6 @@ export class AdminExternalUserUpdateComponent implements OnInit {
 
   update() {
     this.externalUserService.update(this.currentUser._id, this.currentUser).then(response => {
-      console.log(response)
       if (response.status == 200 || response.status == 204) {
         this.router.navigateByUrl('/admin-site')
       }

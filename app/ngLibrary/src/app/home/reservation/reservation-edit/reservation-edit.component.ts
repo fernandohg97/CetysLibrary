@@ -99,7 +99,7 @@ export class ReservationEditComponent implements OnInit {
 
   delete(id: string) {
     this.reservationsService.remove(id).then(response => {
-      console.log(response)
+      response
     }).catch(err => console.log(`Hubo un error ${err}`))
     this.exist = false
   }

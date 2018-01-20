@@ -15,7 +15,6 @@ export class PopupExternalInfoComponent implements OnInit {
 
   ngOnInit() {
     this.currentExternalUser = this.dataReservationService.getCurrentExternalUser()
-    console.log(this.currentExternalUser)
   }
 
 }

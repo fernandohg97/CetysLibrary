@@ -17,10 +17,8 @@ export class AdminEmployeesUpdateComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       let employeeId = params['id'] //
-      console.log(`Id del departamento: ${employeeId}`)
       if (employeeId) {
         this.employeesService.getById(employeeId).then(employee => {
-          console.log(employee)
           this.currentEmployee = employee
         })
       }
@@ -28,18 +26,15 @@ export class AdminEmployeesUpdateComponent implements OnInit {
   }
 
   isActiveCareer(event: any) {
-    console.log(event.target.value)
     this.currentEmployee.active = event.target.value
   }
 
   isNotActiveCareer(event: any) {
-    console.log(event.target.value)
     this.currentEmployee.active = event.target.value
   }
 
   update() {
     this.employeesService.update(this.currentEmployee._id, this.currentEmployee).then(response => {
-      console.log(response)
       if (response.status == 200 || response.status == 204) {
         this.router.navigateByUrl('/admin-site')
       }

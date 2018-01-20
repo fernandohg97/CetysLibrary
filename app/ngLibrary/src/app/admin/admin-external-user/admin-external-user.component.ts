@@ -19,7 +19,7 @@ export class AdminExternalUserComponent implements OnInit {
   @ViewChild('inputFile') myInputVariable: any;
   anyErrors: any
 
-  constructor(private externalUserService: ExternalUserService, private router: Router) { 
+  constructor(private externalUserService: ExternalUserService, private router: Router) {
     this.called = false
   }
 
@@ -34,9 +34,7 @@ export class AdminExternalUserComponent implements OnInit {
   }
 
   removeFile() {
-    console.log(this.myInputVariable.nativeElement.files);
     this.myInputVariable.nativeElement.value = "";
-    console.log(this.myInputVariable.nativeElement.files);
     this.nameFile = ''
     this.textFile = undefined
   }
@@ -57,11 +55,9 @@ export class AdminExternalUserComponent implements OnInit {
 
   save() {
     if (this.textFile) {
-      console.log(this.textFile)
       let jsonFiles = JSON.parse(this.textFile)
       this.externalUserService.createFile(jsonFiles)
       .subscribe((response => {
-        console.log(response)
         this.router.navigateByUrl('/admin-site')
       }), (err => {
         this.anyErrors = JSON.parse(err._body)
@@ -70,11 +66,9 @@ export class AdminExternalUserComponent implements OnInit {
     } else {
       this.externalUserService.create(this.newExternalUser)
       .subscribe((response => {
-        console.log(response)
         this.router.navigateByUrl('/admin-site')
       }), (err => {
         this.anyErrors = JSON.parse(err._body)
-        console.log(err)
       })
       )
     }
@@ -82,7 +76,7 @@ export class AdminExternalUserComponent implements OnInit {
 
   delete(id: string) {
     this.externalUserService.remove(id).then(response => {
-      console.log(response)
+      response
     }).catch(err => console.log(`Hubo un error ${err}`))
   }
 

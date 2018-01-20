@@ -22,35 +22,28 @@ export class AdminCareersUpdateComponent implements OnInit {
   ngOnInit() {
     this.settingService.loadSchoolSettings().subscribe(res => {
       this.divisions = res
-      console.log(this.divisions)
     })
     this.route.params.subscribe((params: Params) => {
       let careerId = params['id'] //
-      console.log(`Id de la carrera: ${careerId}`)
       if (careerId) {
         this.careersService.getById(careerId).then(career => {
-          console.log(career)
           this.currentCareer = career
           this.divisionSelected = career.area
-          console.log(this.currentCareer.active)
         })
       }
     })
   }
 
   isActiveCareer(event: any) {
-    console.log(event.target.value)
     this.currentCareer.active = event.target.value
   }
 
   isNotActiveCareer(event: any) {
-    console.log(event.target.value)
     this.currentCareer.active = event.target.value
   }
 
   update() {
     this.careersService.update(this.currentCareer._id, this.currentCareer).then(response => {
-      console.log(response)
       if (response.status == 200 || response.status == 204) {
         this.router.navigateByUrl('/admin-site')
       }

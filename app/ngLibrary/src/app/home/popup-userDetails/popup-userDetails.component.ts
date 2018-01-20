@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
 import { UsersQuantityService } from '../../services/usersQuantity/users.quantity.service';
 import { UserDepartmentModel } from '../../models/userDetails.model';
@@ -9,7 +9,7 @@ import { UserDetailsModel } from '../../models/userDetails.model';
   templateUrl: './popup-userDetails.component.html',
   styleUrls: ['./popup-userDetails.component.css']
 })
-export class PopupUserDetailsComponent implements OnInit, OnDestroy {
+export class PopupUserDetailsComponent implements OnInit {
 
   currentReservation: UserDetailsModel
 
@@ -21,7 +21,5 @@ export class PopupUserDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.currentReservation = this.dataReservationService.getCurrentReservations()
   }
-
-  ngOnDestroy() {}
 
 }

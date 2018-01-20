@@ -25,7 +25,6 @@ export class AdminDepartmentsComponent implements OnInit {
 
   ngOnInit() {
     this.departmentsService.getAll().then(data => {
-      console.log(data)
       this.departments = data
     })
   }
@@ -35,9 +34,7 @@ export class AdminDepartmentsComponent implements OnInit {
   }
 
   removeFile() {
-    console.log(this.myInputVariable.nativeElement.files);
     this.myInputVariable.nativeElement.value = "";
-    console.log(this.myInputVariable.nativeElement.files);
     this.nameFile = ''
     this.textFile = undefined
   }
@@ -58,22 +55,18 @@ export class AdminDepartmentsComponent implements OnInit {
 
   save() {
     if (this.textFile) {
-      console.log(this.textFile)
       let jsonFiles = JSON.parse(this.textFile)
       this.departmentsService.createFile(jsonFiles)
       .subscribe((response => {
-        console.log(response)
         this.router.navigateByUrl('/admin-site')
       }), (err => this.anyErrors = JSON.parse(err._body))
       )
     } else {
       this.departmentsService.create(this.newDepartment)
       .subscribe((response => {
-        console.log(response)
         this.router.navigateByUrl('/admin-site')
       }), (err => {
         this.anyErrors = JSON.parse(err._body)
-        console.log(err)
       })
       )
     }
@@ -81,7 +74,7 @@ export class AdminDepartmentsComponent implements OnInit {
 
   delete(id: string) {
     this.departmentsService.remove(id).then(response => {
-      console.log(response)
+      response
     }).catch(err => console.log(`Hubo un error ${err}`))
   }
 }

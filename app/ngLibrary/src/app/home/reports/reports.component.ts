@@ -37,7 +37,6 @@ export class ReportsComponent implements OnInit {
     this.reservationsService.getAll().then(data => {
       if (data) {
         this.reservations = data
-        console.log(this.reservations)
       }
     })
   }

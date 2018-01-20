@@ -29,15 +29,12 @@ export class AdminUsersUpdateComponent implements OnInit {
   ngOnInit() {
     this.settingService.loadSchoolSettings().subscribe(res => {
       this.divisions = res
-      console.log(this.divisions)
     })
     this.route.params.subscribe((params: Params) => {
       let userId = params['id'] //
-      console.log(`Id del usuario: ${userId}`)
       if (userId) {
         this.usersService.getById(userId).then(user => {
           if (user) {
-            console.log(user)
             this.currentUser = user
             this.divisionSelected = user.division
           }
@@ -47,7 +44,6 @@ export class AdminUsersUpdateComponent implements OnInit {
   }
 
   divisionChange(event: any) {
-    console.log(event)
     this.careers = new Array
     this.careersService.getByDivision(event.division).then(data => {
         data.forEach(career => {
@@ -75,9 +71,8 @@ export class AdminUsersUpdateComponent implements OnInit {
   }
 
   update() {
-    console.log(this.currentUser)
     this.usersService.update(this.currentUser._id, this.currentUser).then(response => {
-      console.log(response)
+      response
       if (response.status == 200 || response.status == 204) {
         this.router.navigateByUrl('/admin-site')
       }

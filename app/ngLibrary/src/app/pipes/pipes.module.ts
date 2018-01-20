@@ -18,9 +18,6 @@ import { SearchDepartmentPipe } from './searchDepartment/search-department.pipe'
     SearchCubiclePipe,
     SearchDepartmentPipe
   ],
-  // All modules
-  imports: [
-  ],
   exports: [
     SearchReservationPipe,
     SearchEmployeePipe,

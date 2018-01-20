@@ -81,8 +81,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
           this.pieChartDataDivision = []
           this.insertChartItems(this.reportsDivision, this.pieChartLabelsDivision, this.pieChartDataDivision)
           this.countLabelsDivision = this.pieChartDataDivision.length
-          console.log(this.pieChartLabelsDivision)
-          // this.sumReservations(this.reportsDivision)
         }
       })
       this.reportsService.getByCubicle(this.startDate, this.endDate).then(data => {
@@ -95,7 +93,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
             this.pieChartDataCubicles.push(element.ingresos)
           })
           this.countLabelsCubicles = this.pieChartDataCubicles.length
-          // this.sumReservations(this.reportsCubicle)
         }
       })
       this.reportsService.getByCareer(this.startDate, this.endDate).then(data => {
@@ -105,33 +102,17 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
           this.pieChartDataCareers = []
           this.insertChartItems(this.reportsCareer, this.pieChartLabelsCareers, this.pieChartDataCareers)
           this.countLabelsCareers = this.pieChartDataCareers.length
-          // this.sumReservations(this.reportsCareer)
         }
       })
       this.reportsService.getByExternal(this.startDate, this.endDate).then(data => {
         if (data) {
           this.reportsExternal = data
-          console.log(data)
           this.pieChartLabelsExternal = []
           this.pieChartDataExternal = []
           this.insertChartItems(this.reportsExternal, this.pieChartLabelsExternal, this.pieChartDataExternal)
           this.countLabelsExternal = this.pieChartDataExternal.length
         }
       })
-      // this.reportsService.getByCareerCompanions(this.startDate, this.endDate).then(data => {
-      //   if (data) {
-      //     let array = new Array()
-      //     data.forEach(el => {
-      //       array.push(el._id)
-      //     })
-      //     this.reportsCompanions = array
-      //     this.pieChartLabelsCompanions = []
-      //     this.pieChartDataCompanions = []
-      //     this.insertChartItemsCompanions(this.reportsCompanions, this.pieChartLabelsCompanions, this.pieChartDataCompanions)
-      //     this.countLabelsCompanions = this.pieChartDataCompanions.length
-      //     // this.sumReservations(this.reportsCareer)
-      //   }
-      // })
       this.reportsService.getByDay(this.startDate, this.endDate).then(data => {
         if (data) {
           this.reportsDay = data
@@ -143,7 +124,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
             this.pieChartDataDays.push(element.ingresos)
           })
           this.countLabelsDays = this.pieChartDataDays.length
-          // this.sumReservations(this.reportsDay)
         }
       })
     }
@@ -155,17 +135,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
       data.push(element.ingresos)
     })
   }
-
-  // insertChartItemsCompanions(object, labels, data) {
-  //   object.forEach(element => {
-  //     element.careers.forEach(careers => {
-  //       labels.push(careers)
-  //     });
-  //     element.cantidad.forEach(count => {
-  //       data.push(count)
-  //     })
-  //   })
-  // }
 
   searchReports() {
     let labelsDaysClone = this.pieChartLabelsDays
@@ -187,10 +156,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
     let labelsExternalClone = this.pieChartLabelsExternal
     let dataExternalClone = this.pieChartDataExternal
     let itemsExternal = []
-
-    // let labelsCompanionsClone = this.pieChartLabelsCompanions
-    // let dataCompanionsClone = this.pieChartDataCompanions
-    // let itemsCompanions = []
 
     if (this.startDate && this.endDate) {
       this.reportsService.getByDivision(this.startDate, this.endDate).then(data => {
@@ -220,8 +185,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
       })
       this.reportsService.getByCareer(this.startDate, this.endDate).then(data => {
         if (data) {
-          console.log('Reportes por carrera')
-          console.log(data)
           this.reportsCareer = data
           this.insertChartItems(this.reportsCareer, itemsCareers, dataCareersClone)
           dataCareersClone.splice(0, this.countLabelsCareers)
@@ -242,23 +205,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
           this.pieChartDataExternal = dataExternalClone
         }
       })
-      // this.reportsService.getByCareerCompanions(this.startDate, this.endDate).then(data => {
-      //   if (data) {
-      //     console.log('Reportes por acompanantes')
-      //     let array = new Array()
-      //     data.forEach(el => {
-      //       array.push(el._id)
-      //     })
-      //     console.log(array)
-      //     this.reportsCompanions = array
-      //     this.insertChartItemsCompanions(this.reportsCompanions, itemsCompanions, dataCompanionsClone)
-      //     dataCompanionsClone.splice(0, this.countLabelsCompanions)
-      //     this.countLabelsCompanions = dataCompanionsClone.length
-      //     labelsCompanionsClone = itemsCompanions
-      //     this.pieChartLabelsCompanions = labelsCompanionsClone
-      //     this.pieChartDataCompanions = dataCompanionsClone
-      //   }
-      // })
       this.reportsService.getByDay(this.startDate, this.endDate).then(data => {
         if (data) {
           this.reportsDay = data
