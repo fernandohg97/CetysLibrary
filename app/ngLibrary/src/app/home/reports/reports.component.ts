@@ -29,6 +29,7 @@ export class ReportsComponent implements OnInit {
   page: number = 1
   currentReservation: UserDetailsModel
   currentPipe: string
+  searchReservationNumber: string
 
   constructor(private dataReservationService: DataReservationService, private reservationsService: ReservationsService, private usersService: UsersService) {
   this.currentPipe = 'searchReservation' }
