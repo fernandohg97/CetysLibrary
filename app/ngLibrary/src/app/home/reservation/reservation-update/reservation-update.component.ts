@@ -97,8 +97,8 @@ export class ReservationUpdateComponent implements OnInit {
             this.currentDepartureTime = `${departureHour}:${departureMinutes}`
             this.updateReservation = reservation
             if (reservation.hasOwnProperty('user')) {
-                this.registrationNumber = reservation.user['registrationNumber']
-                this.updateReservation.user = reservation.user
+              this.registrationNumber = reservation.user['registrationNumber']
+              this.updateReservation.user = reservation.user
             } else if (reservation.hasOwnProperty('employee')) {
               this.employee = true
               this.registrationNumber = reservation.employee['employeeNumber']
@@ -142,6 +142,8 @@ export class ReservationUpdateComponent implements OnInit {
           }).catch(err => {
             this.anyErrors = JSON.parse(err._body)
           })
+        } else {
+          this.updateInfo()
         }
     } else if (this.externalUser) {
       if (this.externalUserCode != this.updateReservation.externalUser.userCode) {
@@ -162,6 +164,8 @@ export class ReservationUpdateComponent implements OnInit {
         }).catch(err => {
           this.anyErrors = JSON.parse(err._body)
         })
+      } else {
+        this.updateInfo()
       }
     } else {
       if (this.registrationNumber != this.updateReservation.user.registrationNumber) {
@@ -181,50 +185,22 @@ export class ReservationUpdateComponent implements OnInit {
         }).catch(err => {
           this.anyErrors = JSON.parse(err._body)
         })
+      } else {
+        this.updateInfo()
       }
     }
+  }
 
-      // if (this.employee) {
-      //   if (this.registrationNumber != this.updateReservation.employee.employeeNumber) {
-      //     console.log(this.registrationNumber)
-      //     this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
-      //       let student = JSON.parse(JSON.stringify(user)).usuario
-      //       console.log(student)
-      //       let employee = JSON.parse(JSON.stringify(user)).empleado
-      //       if (student) {
-      //         this.updateReservation.employee = null
-      //         this.updateReservation.user = student
-      //         console.log(this.updateReservation.user)
-      //       } else {
-      //         this.updateReservation.employee = employee
-      //       }
-      //     }).catch(err => {
-      //       this.anyErrors = JSON.parse(err._body)
-      //     })
-      //   }
-      // } else {
-      //   if (this.registrationNumber != this.updateReservation.user.registrationNumber) {
-      //     this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
-      //       let student = JSON.parse(JSON.stringify(user)).usuario
-      //       console.log(student)
-      //         this.updateReservation.user = student
-      //         console.log(this.updateReservation.user)
-      //
-      //     }).catch(err => {
-      //       this.anyErrors = JSON.parse(err._body)
-      //     })
-      //   }
-      // }
-
-    // this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
-    //   if (response.status == 200 || response.status == 204) {
-    //     console.log(response.json())
-    //     this.router.navigateByUrl('/')
-    //   }
-    // }).catch(error => {
-    //   this.anyErrors = JSON.parse(error._body)
-    //   console.log(this.anyErrors)
-    // })
+  updateInfo() {
+    this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
+      if (response.status == 200 || response.status == 204) {
+        console.log(response.json())
+        this.router.navigateByUrl('/')
+      }
+    }).catch(error => {
+      this.anyErrors = JSON.parse(error._body)
+      console.log(this.anyErrors)
+    })
   }
 
   // codeOnChange(event) {
