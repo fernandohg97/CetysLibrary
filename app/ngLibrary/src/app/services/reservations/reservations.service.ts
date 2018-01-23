@@ -61,8 +61,4 @@ export class ReservationsService {
     return this.http.delete(`${this.url}/${id}`).toPromise()
   }
 
-  // createUsersDetails(userDetails: UserDetails) {
-  //   return userDetails;
-  // }
-
 }
