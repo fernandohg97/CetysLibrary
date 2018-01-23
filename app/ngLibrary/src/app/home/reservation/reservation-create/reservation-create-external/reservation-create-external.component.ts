@@ -29,6 +29,7 @@ export class ReservationCreateExternalComponent implements OnInit {
   departureTime: string
   currentDate: string
   currentTime: string
+  currentUser: ExternalUserModel
   currentCareers: Array<String>
   currentDepartment: string
   quantityDepartment: number = 0
@@ -136,10 +137,11 @@ export class ReservationCreateExternalComponent implements OnInit {
 
   searchUser() {
     this.externalUserService.getByUserCode(this.registrationNumber).then(data => {
-      // console.log(JSON.parse(JSON.stringify(data)).usuario || JSON.parse(JSON.stringify(data)).empleado)
-      this.anyErrors = JSON.parse(JSON.stringify(data))
-      // this.newReservation.user = user
-    }).catch(err => this.anyErrors = JSON.parse(err._body))
+      this.currentUser = JSON.parse(JSON.stringify(data)).usuario
+    }).catch(err => {
+      this.currentUser = null
+      this.anyErrors = JSON.parse(err._body)
+    })
   }
 
   divisionChange(newDivision) {
