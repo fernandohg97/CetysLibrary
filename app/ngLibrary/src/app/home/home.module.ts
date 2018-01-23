@@ -25,6 +25,7 @@ import { PopupUserInfoComponent } from './popup-user-info/popup-user-info.compon
 import { PopupEmployeeInfoComponent } from './popup-employee-info/popup-employee-info.component';
 import { ExternalUserService } from '../services/externalUser/external-user.service';
 import { PopupExternalInfoComponent } from './popup-external-info/popup-external-info.component';
+import { PopupBorrowedMaterialComponent } from './popup-borrowed-material/popup-borrowed-material.component';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { PopupExternalInfoComponent } from './popup-external-info/popup-external
     PopupUserInfoComponent,
     PopupEmployeeInfoComponent,
     ReservationCreateExternalComponent,
-    PopupExternalInfoComponent
+    PopupExternalInfoComponent,
+    PopupBorrowedMaterialComponent
   ],
   providers: [
     CubiclesService,
@@ -65,6 +67,6 @@ import { PopupExternalInfoComponent } from './popup-external-info/popup-external
     ReservationEditComponent,
     PopupUserDetailsComponent
   ],
-  entryComponents: [PopupUserDetailsComponent, PopupUserInfoComponent, PopupEmployeeInfoComponent, PopupExternalInfoComponent]
+  entryComponents: [PopupUserDetailsComponent, PopupUserInfoComponent, PopupEmployeeInfoComponent, PopupExternalInfoComponent, PopupBorrowedMaterialComponent]
 })
 export class HomeModule { }

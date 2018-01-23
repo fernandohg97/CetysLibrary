@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
       if (response.status == 200 || response.status == 204) {
         console.log(response)
       }
-    })
+    }).catch(err => console.log(err))
   }
 
 }
