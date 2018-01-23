@@ -11,6 +11,7 @@ import { PopupUserInfoComponent } from '../popup-user-info/popup-user-info.compo
 import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
 import { PopupEmployeeInfoComponent } from '../popup-employee-info/popup-employee-info.component';
 import { PopupExternalInfoComponent } from '../popup-external-info/popup-external-info.component';
+import { PopupBorrowedMaterialComponent } from '../popup-borrowed-material/popup-borrowed-material.component';
 
 @Component({
   selector: 'app-reports',
@@ -59,6 +60,14 @@ export class ReportsComponent implements OnInit {
       this.openPopup4()
       this.dataReservationService.changeExternalUser(user)
     }
+  }
+
+  getBorrowedMaterial(material) {
+    this.dataReservationService.changeBorrowedMaterial(material)
+    this.popup.open(PopupBorrowedMaterialComponent, {
+      classNames: 'custom',
+      closeButton: true
+    })
   }
 
   openPopup() {
