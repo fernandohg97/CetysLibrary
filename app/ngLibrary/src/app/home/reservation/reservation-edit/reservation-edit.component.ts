@@ -12,6 +12,7 @@ import { PopupUserInfoComponent } from '../../popup-user-info/popup-user-info.co
 import { PopupEmployeeInfoComponent } from '../../popup-employee-info/popup-employee-info.component';
 import { PopupExternalInfoComponent } from '../../popup-external-info/popup-external-info.component';
 import { DataReservationService } from '../../../services/dataReservation/data-reservation.service';
+import { PopupBorrowedMaterialComponent } from '../../popup-borrowed-material/popup-borrowed-material.component';
 
 @Component({
   selector: 'app-reservation-edit',
@@ -67,6 +68,14 @@ export class ReservationEditComponent implements OnInit {
   getCurrentReservation(reservation) {
     this.dataReservationService.addReservationsDetails(reservation.usersDetails)
     this.openPopup()
+  }
+
+  getBorrowedMaterial(material) {
+    this.dataReservationService.changeBorrowedMaterial(material)
+    this.popup.open(PopupBorrowedMaterialComponent, {
+      classNames: 'custom',
+      closeButton: true
+    })
   }
 
   openPopup() {
