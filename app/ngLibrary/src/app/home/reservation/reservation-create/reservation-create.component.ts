@@ -138,10 +138,6 @@ export class ReservationCreateComponent implements OnInit {
 
   searchUser() {
     this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => {
-<<<<<<< HEAD
-      this.anyErrors = JSON.parse(JSON.stringify(data))
-    }).catch(err => this.anyErrors = JSON.parse(err._body))
-=======
       this.currentUser = JSON.parse(JSON.stringify(data)).usuario || JSON.parse(JSON.stringify(data)).empleado
       if (this.currentUser.hasOwnProperty('department')) {
         this.departmentsService.getByNumber(this.currentUser.department).then(data => {
@@ -152,7 +148,6 @@ export class ReservationCreateComponent implements OnInit {
       this.currentUser = this.departmentUser = ''
       this.anyErrors = JSON.parse(err._body)
     })
->>>>>>> 6f88e15179c21d33d57156d21c165567ead3cd70
   }
 
   divisionChange(newDivision) {

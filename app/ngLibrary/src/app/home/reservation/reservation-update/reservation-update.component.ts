@@ -113,16 +113,10 @@ export class ReservationUpdateComponent implements OnInit {
   }
 
   update() {
-<<<<<<< HEAD
-    this.updateReservation.entryTime = new Date(`${this.currentDate}, ${this.currentTime}`)
-    this.updateReservation.departureTime = new Date(`${this.currentDate}, ${this.currentDepartureTime}`)
-    this.updateReservation.reservationDate = new Date(`${this.currentDate}, ${this.currentTime}`)
-=======
     console.log(this.employee)
     this.updateReservation.entryTime = new Date(`${this.currentDate} ${this.currentTime}`)
     this.updateReservation.departureTime = new Date(`${this.currentDate} ${this.currentDepartureTime}`)
     this.updateReservation.reservationDate = new Date(`${this.currentDate} ${this.currentTime}`)
->>>>>>> 6f88e15179c21d33d57156d21c165567ead3cd70
     if (this.employee) {
         if (this.registrationNumber != this.updateReservation.employee.employeeNumber) {
           this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
@@ -178,8 +172,6 @@ export class ReservationUpdateComponent implements OnInit {
         this.updateInfo()
       }
     }
-<<<<<<< HEAD
-=======
   }
 
   updateInfo() {
@@ -192,7 +184,6 @@ export class ReservationUpdateComponent implements OnInit {
       this.anyErrors = JSON.parse(error._body)
       console.log(this.anyErrors)
     })
->>>>>>> 6f88e15179c21d33d57156d21c165567ead3cd70
   }
 
   searchUser() {
