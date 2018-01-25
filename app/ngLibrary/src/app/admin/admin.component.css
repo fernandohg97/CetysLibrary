@@ -1,12 +1,20 @@
-.admin-bar {
+/*.no-js .top-bar {
+  display: none;
+}
+@media screen and (min-width: 40em) {
+  .no-js .top-bar {
+    display: block;
+  }
+  .no-js .title-bar {
+    display: none;
+  }
+}*/
+header {
   background: #4a8ab9 !important;
 }
-.title-admin {
-  font-size: 20px;
+.admin-bar {
+  background: inherit;
 }
-/*.admin-menu a {
-  color: #ffffff;
-}*/
 .top-bar-right ul {
   background: inherit;
 }
@@ -16,9 +24,6 @@
   padding: 0;
   font-size: 20px;
 }
-/*.top-bar-right a {
-  color: #ffffff;
-}*/
 .top-bar-right a i {
   margin-right: 10px;
 }
