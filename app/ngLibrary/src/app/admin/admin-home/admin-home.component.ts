@@ -5,6 +5,7 @@ import { CareersService } from '../../services/careers/careers.service';
 import { DepartmentsService } from '../../services/departments/departments.service';
 import { EmployeesService } from '../../services/employees/employees.service';
 import { ExternalUserService } from '../../services/externalUser/external-user.service';
+import { ReservationsService } from '../../services/reservations/reservations.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -26,7 +27,8 @@ export class AdminHomeComponent implements OnInit {
     private careersService: CareersService,
     private departmentsService: DepartmentsService,
     private employeesService: EmployeesService,
-    private externalUserService: ExternalUserService
+    private externalUserService: ExternalUserService,
+    private reservationsService: ReservationsService
   ) { }
 
   ngOnInit() {
@@ -48,6 +50,12 @@ export class AdminHomeComponent implements OnInit {
     this.externalUserService.getAll().then(data => {
       this.totalExternals = data.length
     })
+  }
+
+  removeAll() {
+    this.reservationsService.removeAll().then(response => {
+      console.log(response)
+    }).catch(err => console.log(err))
   }
 
 }
