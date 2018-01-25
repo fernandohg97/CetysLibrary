@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { CubiclesService } from '../../services/cubicles/cubicles.service';
+import { ReservationsService } from '../../services/reservations/reservations.service';
+import { CubicleModel } from '../../models/cubicle.model';
+import { ReservationModel } from '../../models/reservation.model';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-main-home',
+  templateUrl: './main-home.component.html',
+  styleUrls: ['./main-home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class MainHomeComponent implements OnInit {
 
-  constructor() { }
+  cubicles: CubicleModel[]
+  reservations: ReservationModel[]
+  currentDate: Date = new Date()
+  iconElement: string
 
-<<<<<<< HEAD
   constructor(private cubiclesService: CubiclesService, private reservationsService: ReservationsService) {
     this.iconElement = 'fa fa-check-circle'
   }
@@ -19,6 +25,8 @@ export class HomeComponent implements OnInit {
     .then(data => {
       if (data) {
         this.cubicles = data
+        console.log('Cubiculos:')
+        console.log(data)
         this.reservationsService.getAll().then(data => {
           if (data) {
             this.reservations = data
@@ -48,12 +56,9 @@ export class HomeComponent implements OnInit {
   updateReservation(reservation) {
     this.reservationsService.update(reservation._id, reservation).then(response => {
       if (response.status == 200 || response.status == 204) {
-        response
+        console.log(response)
       }
-    })
+    }).catch(err => console.log(err))
   }
-=======
-  ngOnInit() {}
 
->>>>>>> 6f88e15179c21d33d57156d21c165567ead3cd70
 }

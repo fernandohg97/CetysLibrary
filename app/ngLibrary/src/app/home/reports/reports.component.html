@@ -1,6 +1,13 @@
+<!-- <div class="grid-container">
+  <div class="grid-x grid-padding-x">
+    <div class="cell">
+      <a routerLink="/" class="button"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+    </div>
+  </div>
+</div> -->
 <div class="grid-container">
   <div class="grid-x grid-padding-x">
-    <div class="title cell">
+    <div class="cell title">
       <h2 class="text-center">Reservaciones</h2>
     </div>
   </div>
@@ -20,6 +27,7 @@
           <th>Salida</th>
           <th>Fecha</th>
           <th>Personas</th>
+          <th>Material</th>
         </tr>
       </thead>
       <tbody>
@@ -30,6 +38,8 @@
             <td>{{reservation.departureTime | date: 'shortTime'}}</td>
             <td>{{reservation.reservationDate | date: 'mediumDate'}}</td>
             <td class="clear button user-people" (click)="getCurrentReservation(reservation)">{{reservation.peopleQuantity}}</td>
+            <td *ngIf="reservation.borrowedMaterial; else elseBlock" (click)="getBorrowedMaterial(reservation.borrowedMaterial)"><i class="fa fa-check" aria-hidden="true"></i></td>
+            <ng-template #elseBlock><td><i class="fa fa-times" aria-hidden="true"></i> </td></ng-template>
           </tr>
       </tbody>
     </table>

@@ -24,6 +24,10 @@ export class DataReservationService {
   private externalSource = new BehaviorSubject<ExternalUserModel>(this.external)
   currentExternal = this.externalSource.asObservable();
 
+  borrowedMaterial: String
+  private borrowedMaterialSource = new BehaviorSubject<String>(this.borrowedMaterial)
+  currentBorrowedMaterial = this.borrowedMaterialSource.asObservable();
+
   constructor() { }
 
   public getCurrentReservations(): UserDetailsModel {
@@ -60,6 +64,15 @@ export class DataReservationService {
   public changeExternalUser(message: ExternalUserModel) {
     this.external = message
     this.externalSource.next(this.external)
+  }
+
+  public getCurrentBorrowedMaterial(): String {
+    return this.borrowedMaterial
+  }
+
+  public changeBorrowedMaterial(message: String) {
+    this.borrowedMaterial = message
+    this.borrowedMaterialSource.next(this.borrowedMaterial)
   }
 
 }

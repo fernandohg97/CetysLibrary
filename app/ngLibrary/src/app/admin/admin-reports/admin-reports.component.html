@@ -18,7 +18,7 @@
   </div>
   <div class="grid-x grid-padding-x">
     <div class="small-6 cell">
-      <button type="button" class="button" name="button" (click)="searchReports()">Buscar</button>
+      <button type="button" class="button radius shadow" name="button" (click)="searchReports()">Buscar</button>
     </div>
     <div class="small-6 cell text-right">
       <h6><u><strong>Total de reservaciones: {{totalReservations}}</strong></u></h6>
@@ -102,7 +102,36 @@
       </canvas>
     </div>
   </div>
+<<<<<<< HEAD
 
+=======
+  <!-- <div class="grid-x grid-padding-x">
+    <div class="category-title cell">
+      <h4>Ingresos por carrera (acompañantes)</h4>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Carrera</th>
+          <th>Cantidad de ingresos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let report of reportsCompanions let i = index">
+          <td>{{report.careers}}</td>
+          <td>{{report.cantidad}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="display: block; margin: 0 auto;">
+      <canvas width="300" height="300" *ngIf="pieChartLabelsCompanions && pieChartDataCompanions" baseChart
+              [data]="pieChartDataCompanions"
+              [labels]="pieChartLabelsCompanions"
+              [chartType]="pieChartType">
+      </canvas>
+    </div>
+  </div> -->
+>>>>>>> 6f88e15179c21d33d57156d21c165567ead3cd70
   <div class="grid-x grid-padding-x">
     <div class="category-title cell">
       <h4>Ingresos por externo</h4>

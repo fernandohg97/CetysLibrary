@@ -9,6 +9,8 @@ departmentRouter.get('/departments', departmentCtrl.getDepartments)
 
 departmentRouter.get('/departments/:department_id', departmentCtrl.getDepartment)
 
+departmentRouter.get('/departments/number/:department', departmentCtrl.getDepartmentByNumber)
+
 departmentRouter.post('/departments', created.isCreated, departmentCtrl.createDepartment)
 
 departmentRouter.put('/departments/:department_id', departmentCtrl.updateDepartment)

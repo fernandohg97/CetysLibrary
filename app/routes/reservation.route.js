@@ -19,4 +19,6 @@ reservationRouter.put('/reservations/:reservation_id', reservationCtrl.updateRes
 
 reservationRouter.delete('/reservations/:reservation_id', reservationCtrl.removeReservation)
 
+reservationRouter.delete('/reservations', reservationCtrl.removeReservations)
+
 module.exports = reservationRouter
