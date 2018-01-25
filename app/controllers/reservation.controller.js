@@ -2,6 +2,7 @@
 
 const express = require('express')
 const Reservation = require('../models/reservation/reservation.model')
+const app = require('../app.config')
 
 function getReservations(req, res) {
   let findReservations = Reservation.find().sort({createdAt: -1})
@@ -95,8 +96,14 @@ function removeReservation(req, res) {
   .catch(err => {
     res.status(500).send({message: `No se pudo eliminar la reservacion: ${err}`})
   })
+}
 
+function removeReservations(req, res) {
+  let removeReservations = Reservation.remove({})
 
+  removeReservations.then(response => {
+    res.json({message: `Reservations successfully deleted ${response}`})
+  }).catch(err => res.status(500).send({message: `No se pudo eliminar las reservaciones: ${err}`}))
 }
 
 module.exports = {
@@ -106,5 +113,6 @@ module.exports = {
   getReservationsByCubicle,
   createReservation,
   updateReservation,
-  removeReservation
+  removeReservation,
+  removeReservations
 }
