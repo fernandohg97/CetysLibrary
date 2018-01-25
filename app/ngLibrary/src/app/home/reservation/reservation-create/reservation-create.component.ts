@@ -111,9 +111,14 @@ export class ReservationCreateComponent implements OnInit {
   }
 
   save() {
-    this.newReservation.entryTime = new Date(`${this.currentDate}, ${this.currentTime}`)
-    this.newReservation.departureTime = new Date(`${this.currentDate}, ${this.departureTime}`)
-    this.newReservation.reservationDate = new Date(`${this.currentDate}, ${this.currentTime}`)
+    console.log(this.currentDate)
+    console.log(this.currentTime)
+    this.newReservation.entryTime = new Date(`${this.currentDate} ${this.currentTime}`)
+    this.newReservation.departureTime = new Date(`${this.currentDate} ${this.departureTime}`)
+    this.newReservation.reservationDate = new Date(`${this.currentDate} ${this.currentTime}`)
+    console.log(this.newReservation.entryTime)
+    console.log(this.newReservation.departureTime)
+    console.log(this.newReservation.reservationDate)
 
     this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
       let student = JSON.parse(JSON.stringify(user)).usuario

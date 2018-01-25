@@ -6,7 +6,7 @@
   </div>
 
   <div *ngIf="exist" class="grid-x grid-padding-x">
-    <a routerLink="/" class="button"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+    <a routerLink="/" class="button radius shadow"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
     <div class="small-12 cell">
       <label>Buscar
         <input type="text" placeholder="Ingrese matricula del usuario" [(ngModel)]="searchReservationUser">
@@ -37,7 +37,7 @@
             <td *ngIf="reservation.borrowedMaterial; else elseBlock" (click)="getBorrowedMaterial(reservation.borrowedMaterial)"><i class="fa fa-check" aria-hidden="true"></i></td>
             <ng-template #elseBlock><td><i class="fa fa-times" aria-hidden="true"></i></td></ng-template>
             <td>
-              <a routerLink="/reservations-update/{{reservation._id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+              <a routerLink="/home/reservations-update/{{reservation._id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
               <a (click)="delete(reservation._id)" data-close><i class="fa fa-trash" aria-hidden="true"></i></a>
             </td>
           </tr>

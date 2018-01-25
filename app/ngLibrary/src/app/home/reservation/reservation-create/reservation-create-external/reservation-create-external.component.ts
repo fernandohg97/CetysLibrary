@@ -110,9 +110,9 @@ export class ReservationCreateExternalComponent implements OnInit {
   }
 
   save() {
-    this.newReservation.entryTime = new Date(`${this.currentDate}, ${this.currentTime}`)
-    this.newReservation.departureTime = new Date(`${this.currentDate}, ${this.departureTime}`)
-    this.newReservation.reservationDate = new Date(`${this.currentDate}, ${this.currentTime}`)
+    this.newReservation.entryTime = new Date(`${this.currentDate} ${this.currentTime}`)
+    this.newReservation.departureTime = new Date(`${this.currentDate} ${this.departureTime}`)
+    this.newReservation.reservationDate = new Date(`${this.currentDate} ${this.currentTime}`)
 
     this.externalUserService.getByUserCode(this.registrationNumber).then(user => {
       let externalUser = JSON.parse(JSON.stringify(user)).usuario

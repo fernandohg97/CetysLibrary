@@ -121,9 +121,9 @@ export class ReservationUpdateComponent implements OnInit {
 
   update() {
     console.log(this.employee)
-    this.updateReservation.entryTime = new Date(`${this.currentDate}, ${this.currentTime}`)
-    this.updateReservation.departureTime = new Date(`${this.currentDate}, ${this.currentDepartureTime}`)
-    this.updateReservation.reservationDate = new Date(`${this.currentDate}, ${this.currentTime}`)
+    this.updateReservation.entryTime = new Date(`${this.currentDate} ${this.currentTime}`)
+    this.updateReservation.departureTime = new Date(`${this.currentDate} ${this.currentDepartureTime}`)
+    this.updateReservation.reservationDate = new Date(`${this.currentDate} ${this.currentTime}`)
     if (this.employee) {
         if (this.registrationNumber != this.updateReservation.employee.employeeNumber) {
           console.log(this.registrationNumber)
