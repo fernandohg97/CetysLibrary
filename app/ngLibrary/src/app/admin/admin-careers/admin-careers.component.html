@@ -79,7 +79,7 @@
       </div>
       <div class="grid-x grid-padding-x">
         <div class="medium-6 cell">
-          <label>Division
+          <label>Divisi&oacute;n
             <input type="text" name="division" placeholder="Ingrese la division de la carrera" [(ngModel)]="newCareer.division" required>
             <p *ngIf="anyErrors?.errors?.division" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.division.message}}</p>
           </label>
@@ -87,7 +87,7 @@
       </div>
       <div class="grid-x grid-padding-x">
         <div class="medium-6 cell">
-          <label>Area
+          <label>&Aacute;rea
             <select class="form-control" name="selectedDivision" [ngModel]="areaSelected" (ngModelChange)="areaChange($event)" required>
               <!-- <option [value]="''"></option> -->
               <option *ngFor="let division of divisions" [ngValue]="division">{{division.division}}</option>

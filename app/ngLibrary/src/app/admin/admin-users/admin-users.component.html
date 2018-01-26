@@ -15,9 +15,9 @@
     <table class="unstriped table-info">
       <thead>
         <tr>
-          <th>Matricula</th>
+          <th>Matr&iacute;cula</th>
           <th>Nombre</th>
-          <th>Division</th>
+          <th>Divisi&oacute;n</th>
           <th>Carrera</th>
           <th>Modificar</th>
           <th>Eliminar</th>
@@ -69,7 +69,7 @@
       </div>
       <div class="grid-x grid-padding-x">
         <div class="medium-6 cell">
-          <label>Matricula
+          <label>Matr&iacute;cula
             <input type="number" name="registrationNumber" placeholder="Ingrese la matricula del estudiante" [(ngModel)]="newUser.registrationNumber" required>
             <div *ngIf="anyErrors">
               <p *ngIf="anyErrors?.errors?.registrationNumber" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.registrationNumber.message}}</p>
@@ -81,7 +81,7 @@
       </div>
       <div class="grid-x grid-padding-x">
         <div class="medium-6 cell">
-          <label>Division
+          <label>Divisi&oacute;n
             <select class="form-control" name="selectedDivision" [ngModel]="divisionSelected" (ngModelChange)="divisionChange($event)" required>
               <!-- <option [value]="''"></option> -->
               <option *ngFor="let division of divisions" [ngValue]="division">{{division.division}}</option>

@@ -15,7 +15,7 @@
     <table class="unstriped table-info">
       <thead>
         <tr>
-          <th>Numero</th>
+          <th>N&uacute;mero</th>
           <th>Departamento</th>
           <th>Modificar</th>
           <th>Eliminar</th>
@@ -52,7 +52,7 @@
     </div>
       <div class="grid-x grid-padding-x">
         <div class="medium-6 cell">
-          <label>Numero
+          <label>N&uacute;mero
             <input type="number" name="departmentNumber" placeholder="Ingrese numero del departamento" [(ngModel)]="newDepartment.departmentCode" required>
             <div *ngIf="anyErrors">
               <p *ngIf="anyErrors?.errors?.departmentCode" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.departmentCode.message}}</p>
