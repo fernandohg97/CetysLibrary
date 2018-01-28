@@ -18,7 +18,7 @@
           <div class="cell form-group">
             <label>Usuario
               <div class="input-group">
-                <input class="input-group-field" type="{{ externalUser ? 'text' : 'number' }}" name="user" [(ngModel)]="registrationNumber || externalUserCode" placeholder="Ingrese la matricula" required>
+                <input class="input-group-field" type="{{ externalUser ? 'text' : 'number' }}" name="user" [ngModel]="registrationNumber || externalUserCode" (ngModelChange)="changeUserNumber($event)" placeholder="Ingrese la matricula" required>
                 <div class="input-group-button">
                   <button type="button" class="button" (click)="searchUser()">Buscar</button>
                 </div>

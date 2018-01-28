@@ -133,6 +133,7 @@ export class ReservationUpdateComponent implements OnInit {
             this.anyErrors = JSON.parse(err._body)
           })
         } else {
+          console.log(this.registrationNumber)
           this.updateInfo()
         }
     } else if (this.externalUser) {
@@ -151,10 +152,13 @@ export class ReservationUpdateComponent implements OnInit {
           this.anyErrors = JSON.parse(err._body)
         })
       } else {
+        console.log(this.registrationNumber)
         this.updateInfo()
       }
     } else {
       if (this.registrationNumber != this.updateReservation.user.registrationNumber) {
+        console.log(this.registrationNumber)
+        console.log(this.updateReservation.user.registrationNumber)
         this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
           let student = JSON.parse(JSON.stringify(user)).usuario
           this.updateReservation.user = student
@@ -169,6 +173,7 @@ export class ReservationUpdateComponent implements OnInit {
           this.anyErrors = JSON.parse(err._body)
         })
       } else {
+        console.log(this.registrationNumber)
         this.updateInfo()
       }
     }
@@ -186,10 +191,24 @@ export class ReservationUpdateComponent implements OnInit {
     })
   }
 
+  changeUserNumber(newValue) {
+    if (this.externalUser) {
+      this.externalUserCode = newValue
+    } else {
+      this.registrationNumber = newValue
+    }
+  }
+
   searchUser() {
-    this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => {
-      this.anyErrors = JSON.parse(JSON.stringify(data))
-    }).catch(err => this.anyErrors = JSON.parse(err._body))
+    if (this.externalUser) {
+      this.externalUserService.getByUserCode(this.externalUserCode).then(data => {
+        this.anyErrors = JSON.parse(JSON.stringify(data))
+      }).catch(err => this.anyErrors = JSON.parse(err._body))
+    } else {
+      this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => {
+        this.anyErrors = JSON.parse(JSON.stringify(data))
+      }).catch(err => this.anyErrors = JSON.parse(err._body))
+    }
   }
 
   departmentChange(event) {
