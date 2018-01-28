@@ -6,6 +6,7 @@ import { DepartmentsService } from '../../services/departments/departments.servi
 import { EmployeesService } from '../../services/employees/employees.service';
 import { ExternalUserService } from '../../services/externalUser/external-user.service';
 import { ReservationsService } from '../../services/reservations/reservations.service';
+import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
 import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
 import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
 
@@ -32,7 +33,8 @@ export class AdminHomeComponent implements OnInit {
     private departmentsService: DepartmentsService,
     private employeesService: EmployeesService,
     private externalUserService: ExternalUserService,
-    private reservationsService: ReservationsService
+    private reservationsService: ReservationsService,
+    private dataReservationService: DataReservationService
   ) { this.message = false }
 
   ngOnInit() {
@@ -58,17 +60,8 @@ export class AdminHomeComponent implements OnInit {
 
   openPopup() {
       this.popup.open(PopupConfirmComponent, {
-        classNames: 'custom'
-        // closeButton: true
+        classNames: 'custom',
+        closeButton: true
       })
     }
-
-  removeAll() {
-    this.openPopup()
-    if (this.message) {
-      this.reservationsService.removeAll().then(response => {
-      console.log(response)
-      }).catch(err => console.log(err))
-    }
-  }
 }
