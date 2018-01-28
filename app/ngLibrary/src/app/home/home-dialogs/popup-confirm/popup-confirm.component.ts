@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataReservationService } from '../../../services/dataReservation/data-reservation.service';
+import { ReservationsService } from '../../../services/reservations/reservations.service';
 
 @Component({
   selector: 'app-popup-confirm',
@@ -8,8 +8,14 @@ import { DataReservationService } from '../../../services/dataReservation/data-r
 })
 export class PopupConfirmComponent implements OnInit {
 
-  constructor(private dataReservationService: DataReservationService) { }
+  constructor(private reservationsService: ReservationsService) { }
 
-  ngOnInit() { }
+  ngOnInit() {  }
+
+  removeAll() {
+    this.reservationsService.removeAll().then(response => {
+    console.log(response)
+    }).catch(err => console.log(err))
+  }
 
 }
