@@ -120,6 +120,7 @@ export class ReservationCreateComponent implements OnInit {
       this.reservationsService.create(this.newReservation)
       .subscribe(
         data => {
+          console.log(data)
           this.router.navigateByUrl('/')
         },
         err => {
