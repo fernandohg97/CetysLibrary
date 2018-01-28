@@ -6,12 +6,12 @@ import { UsersService } from '../../services/users/users.service';
 import { UserModel } from '../../models/user.model';
 import { UserDetailsModel } from '../../models/userDetails.model';
 import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
-import { PopupUserDetailsComponent } from '../popup-userDetails/popup-userDetails.component';
-import { PopupUserInfoComponent } from '../popup-user-info/popup-user-info.component';
+import { PopupUserDetailsComponent } from '../home-dialogs/popup-userDetails/popup-userDetails.component';
+import { PopupUserInfoComponent } from '../home-dialogs/popup-user-info/popup-user-info.component';
 import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
-import { PopupEmployeeInfoComponent } from '../popup-employee-info/popup-employee-info.component';
-import { PopupExternalInfoComponent } from '../popup-external-info/popup-external-info.component';
-import { PopupBorrowedMaterialComponent } from '../popup-borrowed-material/popup-borrowed-material.component';
+import { PopupEmployeeInfoComponent } from '../home-dialogs/popup-employee-info/popup-employee-info.component';
+import { PopupExternalInfoComponent } from '../home-dialogs/popup-external-info/popup-external-info.component';
+import { PopupBorrowedMaterialComponent } from '../home-dialogs/popup-borrowed-material/popup-borrowed-material.component';
 
 @Component({
   selector: 'app-reports',
