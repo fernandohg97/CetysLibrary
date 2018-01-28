@@ -46,7 +46,7 @@ var reservationSchema = new Schema({
   usersDetails: {type: [usersDetailSchema]},
   borrowedMaterial: String,
   enable: {type: Boolean, default: true, required: true},
-  createdAt: {type: Date, required: true, default: Date.now}
+  createdAt: {type: Date, required: true, default: new Date()}
 })
 
 module.exports = mongoose.model('Reservation', reservationSchema)
