@@ -1,8 +1,8 @@
 import { Component, OnInit} from '@angular/core';
-import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
-import { UsersQuantityService } from '../../services/usersQuantity/users.quantity.service';
-import { UserDepartmentModel } from '../../models/userDetails.model';
-import { UserDetailsModel } from '../../models/userDetails.model';
+import { DataReservationService } from '../../../services/dataReservation/data-reservation.service';
+import { UsersQuantityService } from '../../../services/usersQuantity/users.quantity.service';
+import { UserDepartmentModel } from '../../../models/userDetails.model';
+import { UserDetailsModel } from '../../../models/userDetails.model';
 
 @Component({
   selector: 'app-popup-userDetails',

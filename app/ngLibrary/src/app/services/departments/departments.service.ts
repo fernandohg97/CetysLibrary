@@ -31,6 +31,14 @@ export class DepartmentsService {
     .catch(DepartmentsService.handleError)
   }
 
+  getByNumber(number: String): Promise<DepartmentModel> {
+    return this.http.get(`${this.url}/number/${number}`)
+    .toPromise()
+    .then(res => res.json() as DepartmentModel)
+    .catch(DepartmentsService.handleError)
+  }
+
+
   create(newDepartment: DepartmentModel) {
     return this.http.post(this.url, newDepartment)
     .map(res => res.json())

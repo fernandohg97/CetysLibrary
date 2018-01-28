@@ -3,7 +3,7 @@
   <div class="grid-container">
     <div class="grid-x grid-padding-x">
       <div class="cell">
-        <button type="button" class="button" name="button" (click)="called = false"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+        <button type="button" class="button radius shadow" name="button" (click)="called = false"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
       </div>
     </div>
   </div>
@@ -16,7 +16,7 @@
   </div>
 
   <div class="grid-x grid-padding-x">
-    <div class="cell form-group">
+    <div class="small-6 cell form-group">
       <label>Usuario externo
         <div class="input-group">
           <input class="input-group-field" type="text" name="user" [(ngModel)]="registrationNumber" placeholder="Ingrese el codigo del usuario" required>
@@ -27,6 +27,13 @@
       </label>
       <p *ngIf="anyErrors?.messageUser" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors.messageUser}}</p>
       <p *ngIf="anyErrors?.msg" class="help-text" id="userHelpText" style="color: #3f9d51;">{{anyErrors.msg}}</p>
+    </div>
+    <div class="small-6 cell">
+      <label for="">Informacion</label>
+      <ul class="user-list-info">
+        <li>Nombre: {{currentUser?.name}}</li>
+        <li>Descripcion: {{currentUser?.description}}</li>
+      </ul>
     </div>
   </div>
 

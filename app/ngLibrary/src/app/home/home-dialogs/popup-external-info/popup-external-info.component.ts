@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
-import { ExternalUserModel } from '../../models/externalUser.model';
+import { DataReservationService } from '../../../services/dataReservation/data-reservation.service';
+import { ExternalUserModel } from '../../../models/externalUser.model';
 
 @Component({
   selector: 'app-popup-external-info',

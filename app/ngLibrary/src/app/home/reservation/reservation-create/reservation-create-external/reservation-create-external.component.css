@@ -6,7 +6,11 @@
 }
 
 form {
+<<<<<<< HEAD
   margin-top: 100px;
+=======
+  margin-top: 70px;
+>>>>>>> develop
 }
 .title-rs {
   padding: 20px 0;
@@ -18,11 +22,17 @@ form {
 
 .circle {
   position: relative;
+<<<<<<< HEAD
   /*font-size: 10px;*/
   width: 20px;
   height: 25px;
   margin-top: 5px;
   /*border-radius: 80%;*/
+=======
+  width: 20px;
+  height: 25px;
+  margin-top: 5px;
+>>>>>>> develop
 }
 .circle i {
   position: absolute;
@@ -39,7 +49,10 @@ form {
   margin-bottom: 20px;
 }
 .list-group {
+<<<<<<< HEAD
   /*border: solid green;*/
+=======
+>>>>>>> develop
   margin-left: 20px;
   width: auto;
   position: relative;
@@ -50,7 +63,10 @@ form {
   top: 0;
   margin-left: 60px;
   font-size: 13px;
+<<<<<<< HEAD
   /*border: solid brown;*/
+=======
+>>>>>>> develop
 }
 .department-list {
   margin-left: 20px;
@@ -65,6 +81,7 @@ form {
   font-size: 13px;
   /*border: solid brown;*/
 }
+<<<<<<< HEAD
 .title-people {
   /*border: solid orange;
   padding: 0;*/
@@ -78,4 +95,11 @@ form {
 .hola {
   margin: 0 auto;
   /*border: solid green;*/
+=======
+.hola {
+  margin: 0 auto;
+}
+.user-list-info {
+  list-style-type: circle;
+>>>>>>> develop
 }

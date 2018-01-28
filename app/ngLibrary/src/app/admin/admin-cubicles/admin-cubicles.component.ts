@@ -44,6 +44,7 @@ export class AdminCubiclesComponent implements OnInit {
   fileChange(event) {
     let input = event.target;
     this.nameFile = input.files[0].name
+
     for (var index = 0; index < input.files.length; index++) {
         let reader = new FileReader();
         reader.onload = () => {
@@ -76,6 +77,7 @@ export class AdminCubiclesComponent implements OnInit {
 
   delete(id: string) {
     this.cubiclesService.remove(id).then(response => {
+      response
     }).catch(err => console.log(`hubo un error ${err}`))
   }
 

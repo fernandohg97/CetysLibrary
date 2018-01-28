@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
-import { EmployeeModel } from '../../models/employee.model';
+import { DataReservationService } from '../../../services/dataReservation/data-reservation.service';
+import { EmployeeModel } from '../../../models/employee.model';
 
 @Component({
   selector: 'app-popup-employee-info',

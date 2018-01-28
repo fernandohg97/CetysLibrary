@@ -1,28 +1,75 @@
 <!doctype html>
-<html lang="en">
+<html class="no-js" lang="en">
   <head>
     <base href="/">
     <meta charset="utf-8">
     <title>Reservacion de cubiculos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-prototype.css">
-    <!-- <link rel="stylesheet" href="assets/css/foundation.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-prototype.css"> -->
+    <link rel="stylesheet" href="assets/css/foundation.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.js"></script>
     <!-- <script src="node_modules/chart.js/src/chart.js"></script> -->
   </head>
   <body>
-    <app-root></app-root>
+    <style media="screen">
+      .links {
+        color: #000000;
+      }
+      .links:hover {
+        color: rgb(25, 45, 38);
+      }
+      .nested a{
+        color: rgb(107, 111, 88);
+      }
+      .nested a:hover {
+        color: rgb(118, 135, 104);
+      }
+    </style>
+    <!-- <div class="off-canvas-wrapper">
+      <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper> -->
+        <div class="off-canvas position-left" id="offCanvasLeft" data-off-canvas data-transition="overlap">
+    <!-- Your menu or Off-canvas content goes here -->
+          <ul class="vertical menu">
+            <li><a href="/" class="links">Inicio</a></li>
+            <li><a href="/admin-site" class="links">Admin</a></li>
+            <ul class="nested vertical menu">
+              <li><a href="/admin-site/users">Estudiantes</a></li>
+              <li><a href="/admin-site/cubicles">Cubiculos</a></li>
+              <li><a href="/admin-site/careers">Carreras</a></li>
+              <li><a href="/admin-site/departments">Departamentos</a></li>
+              <li><a href="/admin-site/employees">Empleados</a></li>
+              <li><a href="/admin-site/externals">Externos</a></li>
+            </ul>
+            <li><a href="/admin-site/reports" class="links">Reportes</a></li>
+          </ul>
+        </div>
+
+        <div class="off-canvas-content" data-off-canvas-content>
+    <!-- Your page content lives here -->
+          <app-root></app-root>
+        </div>
+      <!-- </div>
+    </div> -->
+
+
+     <script type="text/javascript" src="assets/js/vendor/jquery.js"></script>
+     <script type="text/javascript" src="assets/js/vendor/what-input.js"></script>
+     <script type="text/javascript" src="assets/js/vendor/foundation.js"></script>
+      <script type="text/javascript" src="assets/js/app.js">
+
+      </script>
+   <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.2.1.js"
       integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
       crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.js"></script> -->
+    <!-- <script type="text/javascript">
       $(document).ready(function() { $(document).foundation(); });
-    </script>
+    </script> -->
   </body>
 </html>

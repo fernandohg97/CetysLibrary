@@ -29,6 +29,7 @@ export class ReservationCreateExternalComponent implements OnInit {
   departureTime: string
   currentDate: string
   currentTime: string
+  currentUser: ExternalUserModel
   currentCareers: Array<String>
   currentDepartment: string
   quantityDepartment: number = 0
@@ -98,9 +99,9 @@ export class ReservationCreateExternalComponent implements OnInit {
   }
 
   save() {
-    this.newReservation.entryTime = new Date(`${this.currentDate}, ${this.currentTime}`)
-    this.newReservation.departureTime = new Date(`${this.currentDate}, ${this.departureTime}`)
-    this.newReservation.reservationDate = new Date(`${this.currentDate}, ${this.currentTime}`)
+    this.newReservation.entryTime = new Date(`${this.currentDate} ${this.currentTime}`)
+    this.newReservation.departureTime = new Date(`${this.currentDate} ${this.departureTime}`)
+    this.newReservation.reservationDate = new Date(`${this.currentDate} ${this.currentTime}`)
 
     this.externalUserService.getByUserCode(this.registrationNumber).then(user => {
       let externalUser = JSON.parse(JSON.stringify(user)).usuario
@@ -122,8 +123,11 @@ export class ReservationCreateExternalComponent implements OnInit {
 
   searchUser() {
     this.externalUserService.getByUserCode(this.registrationNumber).then(data => {
-      this.anyErrors = JSON.parse(JSON.stringify(data))
-    }).catch(err => this.anyErrors = JSON.parse(err._body))
+      this.currentUser = JSON.parse(JSON.stringify(data)).usuario
+    }).catch(err => {
+      this.currentUser = null
+      this.anyErrors = JSON.parse(err._body)
+    })
   }
 
   divisionChange(newDivision) {

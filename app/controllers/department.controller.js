@@ -29,6 +29,21 @@ function getDepartment(req, res) {
   })
 }
 
+function getDepartmentByNumber(req, res) {
+  let findDepartment = Department.findOne({departmentCode: req.params.department})
+
+  findDepartment.then(department => {
+    if (department) {
+      res.status(200).json(department)
+    } else {
+      res.status(404).send({message: 'Page not found'})
+    }
+  })
+  .catch(err => {
+    res.status(500).send({message: `Error del server: ${err}`})
+  })
+}
+
 function createDepartment(req, res) {
   let departments = req.body
   if (departments.length > 1) {
@@ -73,6 +88,7 @@ function removeDepartment(req, res) {
 module.exports = {
   getDepartments,
   getDepartment,
+  getDepartmentByNumber,
   createDepartment,
   updateDepartment,
   removeDepartment

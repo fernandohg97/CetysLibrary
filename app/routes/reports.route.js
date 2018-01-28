@@ -17,6 +17,8 @@ reportsRouter.get('/reportsDepartment', reportsCtrl.getReportsByDepartment)
 
 reportsRouter.get('/reportsExternal', reportsCtrl.getReportsByExternalUser)
 
-reportsRouter.get('/reportsCompanions', reportsCtrl.getReportsByCareerCompanions)
+reportsRouter.get('/reportsCompanionsCareer', reportsCtrl.getReportsByCareerCompanions)
+
+reportsRouter.get('/reportsCompanionsQuantity', reportsCtrl.getReportsByQuantityCompanions)
 
 module.exports = reportsRouter

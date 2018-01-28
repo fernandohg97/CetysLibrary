@@ -41,6 +41,30 @@ export class ReportsService {
     .catch(ReportsService.handleError)
   }
 
+  getByCompanions(startDate: any, endDate: any): Promise<any> {
+    return this.http.get(`${this.url}CompanionsCareer`, {
+      params: {
+        start: startDate,
+        end: endDate
+      },
+    })
+    .toPromise()
+    .then(res => res.json())
+    .catch(ReportsService.handleError)
+  }
+
+  getByQuantityCompanions(startDate: any, endDate: any): Promise<any> {
+    return this.http.get(`${this.url}CompanionsQuantity`, {
+      params: {
+        start: startDate,
+        end: endDate
+      },
+    })
+    .toPromise()
+    .then(res => res.json())
+    .catch(ReportsService.handleError)
+  }
+
   getByCareer(startDate: any, endDate: any): Promise<any> {
     return this.http.get(`${this.url}Career`, {
       params: {
