@@ -1,7 +1,7 @@
 <div *ngIf="!called" class="grid-container table-content">
   <div class="grid-x grid-padding-x">
     <div class="cell">
-      <button type="button" class="button float-right" name="button" (click)="createUser()">Nuevo estudiante</button>
+      <button type="button" class="button radius shadow float-right" name="button" (click)="createUser()">Nuevo estudiante</button>
     </div>
   </div>
   <div class="grid-x grid-padding-x">
@@ -15,9 +15,9 @@
     <table class="unstriped table-info">
       <thead>
         <tr>
-          <th>Matricula</th>
+          <th>Matr&iacute;cula</th>
           <th>Nombre</th>
-          <th>Division</th>
+          <th>Divisi&oacute;n</th>
           <th>Carrera</th>
           <th>Modificar</th>
           <th>Eliminar</th>
@@ -53,7 +53,7 @@
 <!-- Create User Form -->
 <form *ngIf="called">
   <div class="grid-container content">
-    <button type="button" class="button" name="button" (click)="called = false"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+    <button type="button" class="button radius shadow" name="button" (click)="called = false"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
     <div class="grid-x grid-padding-x">
       <div class="title cell">
         <h2>Nuevo estudiante</h2>
@@ -69,7 +69,7 @@
       </div>
       <div class="grid-x grid-padding-x">
         <div class="medium-6 cell">
-          <label>Matricula
+          <label>Matr&iacute;cula
             <input type="number" name="registrationNumber" placeholder="Ingrese la matricula del estudiante" [(ngModel)]="newUser.registrationNumber" required>
             <div *ngIf="anyErrors">
               <p *ngIf="anyErrors?.errors?.registrationNumber" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.registrationNumber.message}}</p>
@@ -81,7 +81,7 @@
       </div>
       <div class="grid-x grid-padding-x">
         <div class="medium-6 cell">
-          <label>Division
+          <label>Divisi&oacute;n
             <select class="form-control" name="selectedDivision" [ngModel]="divisionSelected" (ngModelChange)="divisionChange($event)" required>
               <!-- <option [value]="''"></option> -->
               <option *ngFor="let division of divisions" [ngValue]="division">{{division.division}}</option>
@@ -106,18 +106,18 @@
       </div>
       <div class="grid-x grid-padding-x file-btn">
         <div class="small-12 cell uploadFile-btn">
-          <label for="exampleFileUpload" class="button">Adjuntar archivo</label>
+          <label for="exampleFileUpload" class="button radius shadow">Adjuntar archivo</label>
           <input #inputFile type="file" id="exampleFileUpload" class="show-for-sr" (change)="fileChange($event)" accept=".json, .csv" multiple>
           <span class="nameFile">{{nameFile}}</span>
           <p *ngIf="errorFile" class="help-text" id="userHelpText" style="color: #b53535;">{{errorFile}}</p>
         </div>
         <div class="small-12 cell">
-          <button type="button" class="button" name="button" *ngIf="nameFile" (click)="removeFile()">Remover archivo</button>
+          <button type="button" class="button radius shadow" name="button" *ngIf="nameFile" (click)="removeFile()">Remover archivo</button>
         </div>
       </div>
       <div class="grid-x grid-padding-x submit-btn">
         <div class="small-6 medium-6 large-4 cell text-center save-btn">
-          <button type="button" class="button" name="button" (click)="save()">Guardar</button>
+          <button type="button" class="button radius shadow" name="button" (click)="save()">Guardar</button>
         </div>
       </div>
     </div>

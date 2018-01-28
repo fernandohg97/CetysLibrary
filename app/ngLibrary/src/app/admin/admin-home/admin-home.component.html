@@ -5,14 +5,13 @@
       <hr>
     </div>
   </div>
-
   <div class="grid-x grid-margin-x small-up-1 medium-up-2 large-up-2 blocks">
     <a routerLink="users" class="cell callout button">
       <h6 class="font-bold">Estudiantes</h6>
       <span>{{totalUsers}} Elementos</span>
     </a>
     <a routerLink="cubicles" class="cell callout button">
-      <h6 class="font-bold">Cubiculos</h6>
+      <h6 class="font-bold">Cub&iacute;culos</h6>
       <span>{{totalCubicles}} Elementos</span>
     </a>
     <a routerLink="departments" class="cell callout button">
@@ -32,4 +31,8 @@
       <span>{{totalExternals}} Elementos</span>
     </a>
   </div>
+  <div class="grid-x grid-padding-x">
+    <button type="button" class="button radius shadow" name="button" (click)="openPopup()">Reiniciar reservaciones</button>
+  </div>
 </div>
+<ngui-popup #popup></ngui-popup>

@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UsersService } from '../../services/users/users.service';
 import { CubiclesService } from '../../services/cubicles/cubicles.service';
 import { CareersService } from '../../services/careers/careers.service';
 import { DepartmentsService } from '../../services/departments/departments.service';
 import { EmployeesService } from '../../services/employees/employees.service';
 import { ExternalUserService } from '../../services/externalUser/external-user.service';
+import { ReservationsService } from '../../services/reservations/reservations.service';
+import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
+import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
+import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
 
 @Component({
   selector: 'app-admin-home',
@@ -13,6 +17,8 @@ import { ExternalUserService } from '../../services/externalUser/external-user.s
 })
 export class AdminHomeComponent implements OnInit {
 
+  @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
+  message: Boolean
   totalUsers: number
   totalCubicles: number
   totalCareers: number
@@ -26,8 +32,10 @@ export class AdminHomeComponent implements OnInit {
     private careersService: CareersService,
     private departmentsService: DepartmentsService,
     private employeesService: EmployeesService,
-    private externalUserService: ExternalUserService
-  ) { }
+    private externalUserService: ExternalUserService,
+    private reservationsService: ReservationsService,
+    private dataReservationService: DataReservationService
+  ) { this.message = false }
 
   ngOnInit() {
     this.usersService.getAll().then(data => {
@@ -50,4 +58,10 @@ export class AdminHomeComponent implements OnInit {
     })
   }
 
+  openPopup() {
+      this.popup.open(PopupConfirmComponent, {
+        classNames: 'custom',
+        closeButton: true
+      })
+    }
 }

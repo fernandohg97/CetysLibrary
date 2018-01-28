@@ -91,8 +91,8 @@ export class ReservationUpdateComponent implements OnInit {
             this.currentDepartureTime = `${departureHour}:${departureMinutes}`
             this.updateReservation = reservation
             if (reservation.hasOwnProperty('user')) {
-                this.registrationNumber = reservation.user['registrationNumber']
-                this.updateReservation.user = reservation.user
+              this.registrationNumber = reservation.user['registrationNumber']
+              this.updateReservation.user = reservation.user
             } else if (reservation.hasOwnProperty('employee')) {
               this.employee = true
               this.registrationNumber = reservation.employee['employeeNumber']
@@ -113,9 +113,10 @@ export class ReservationUpdateComponent implements OnInit {
   }
 
   update() {
-    this.updateReservation.entryTime = new Date(`${this.currentDate}, ${this.currentTime}`)
-    this.updateReservation.departureTime = new Date(`${this.currentDate}, ${this.currentDepartureTime}`)
-    this.updateReservation.reservationDate = new Date(`${this.currentDate}, ${this.currentTime}`)
+    console.log(this.employee)
+    this.updateReservation.entryTime = new Date(`${this.currentDate} ${this.currentTime}`)
+    this.updateReservation.departureTime = new Date(`${this.currentDate} ${this.currentDepartureTime}`)
+    this.updateReservation.reservationDate = new Date(`${this.currentDate} ${this.currentTime}`)
     if (this.employee) {
         if (this.registrationNumber != this.updateReservation.employee.employeeNumber) {
           this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
@@ -131,6 +132,9 @@ export class ReservationUpdateComponent implements OnInit {
           }).catch(err => {
             this.anyErrors = JSON.parse(err._body)
           })
+        } else {
+          console.log(this.registrationNumber)
+          this.updateInfo()
         }
     } else if (this.externalUser) {
       if (this.externalUserCode != this.updateReservation.externalUser.userCode) {
@@ -147,9 +151,14 @@ export class ReservationUpdateComponent implements OnInit {
         }).catch(err => {
           this.anyErrors = JSON.parse(err._body)
         })
+      } else {
+        console.log(this.registrationNumber)
+        this.updateInfo()
       }
     } else {
       if (this.registrationNumber != this.updateReservation.user.registrationNumber) {
+        console.log(this.registrationNumber)
+        console.log(this.updateReservation.user.registrationNumber)
         this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
           let student = JSON.parse(JSON.stringify(user)).usuario
           this.updateReservation.user = student
@@ -163,14 +172,43 @@ export class ReservationUpdateComponent implements OnInit {
         }).catch(err => {
           this.anyErrors = JSON.parse(err._body)
         })
+      } else {
+        console.log(this.registrationNumber)
+        this.updateInfo()
       }
     }
   }
 
+  updateInfo() {
+    this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
+      if (response.status == 200 || response.status == 204) {
+        console.log(response.json())
+        this.router.navigateByUrl('/')
+      }
+    }).catch(error => {
+      this.anyErrors = JSON.parse(error._body)
+      console.log(this.anyErrors)
+    })
+  }
+
+  changeUserNumber(newValue) {
+    if (this.externalUser) {
+      this.externalUserCode = newValue
+    } else {
+      this.registrationNumber = newValue
+    }
+  }
+
   searchUser() {
-    this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => {
-      this.anyErrors = JSON.parse(JSON.stringify(data))
-    }).catch(err => this.anyErrors = JSON.parse(err._body))
+    if (this.externalUser) {
+      this.externalUserService.getByUserCode(this.externalUserCode).then(data => {
+        this.anyErrors = JSON.parse(JSON.stringify(data))
+      }).catch(err => this.anyErrors = JSON.parse(err._body))
+    } else {
+      this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => {
+        this.anyErrors = JSON.parse(JSON.stringify(data))
+      }).catch(err => this.anyErrors = JSON.parse(err._body))
+    }
   }
 
   departmentChange(event) {

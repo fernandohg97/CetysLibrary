@@ -1,24 +1,31 @@
-.admin-bar {
+/* Large and up */
+@media screen and (min-width: 79em) {
+  .top-bar-left {
+    margin-left: 22%;
+  }
+}
+button i {
+  color: whitesmoke;
+}
+button {
+  margin: 0 0 0 10px;
+  padding: 0;
+}
+header {
   background: #4a8ab9 !important;
 }
-.title-admin {
-  font-size: 20px;
+.admin-bar {
+  background: inherit;
 }
-/*.admin-menu a {
-  color: #ffffff;
-}*/
+
 .top-bar-right ul {
   background: inherit;
 }
 .top-bar-left a {
-  /*color: #ffffff;*/
   margin: 0 0 0 20px;
   padding: 0;
   font-size: 20px;
 }
-/*.top-bar-right a {
-  color: #ffffff;
-}*/
 .top-bar-right a i {
   margin-right: 10px;
 }
@@ -26,7 +33,6 @@
   color: whitesmoke;
 }
 .menu-bar a:hover {
-  /*background-color: grey;*/
   color: rgba(17, 18, 17, 0.86);
 }
 .title-left a{

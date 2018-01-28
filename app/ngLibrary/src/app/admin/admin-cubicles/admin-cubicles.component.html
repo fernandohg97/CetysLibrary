@@ -1,7 +1,7 @@
 <div *ngIf="!called" class="grid-container table-content">
   <div class="grid-x grid-padding-x">
     <div class="cell">
-      <button type="button" class="button float-right" name="button" (click)="createCubicle()">Nuevo cubiculo</button>
+      <button type="button" class="button radius shadow float-right" name="button" (click)="createCubicle()">Nuevo cub&iacute;culo</button>
     </div>
   </div>
   <div class="grid-x grid-padding-x">
@@ -15,7 +15,7 @@
     <table class="unstriped table-info">
       <thead>
         <tr>
-          <th>Cubiculo</th>
+          <th>Cub&iacute;culo</th>
           <th>Modificar</th>
           <th>Eliminar</th>
           </tr>
@@ -38,15 +38,15 @@
 
 <form *ngIf="called">
   <div class="grid-container content">
-    <button type="button" class="button" name="button" (click)="called = false"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+    <button type="button" class="button radius shadow" name="button" (click)="called = false"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
     <div class="grid-x grid-padding-x">
       <div class="title cell">
-        <h2>Nuevo cubiculo</h2>
+        <h2>Nuevo cub&iacute;culo</h2>
       </div>
     </div>
       <div class="grid-x grid-padding-x">
         <div class="medium-6 cell">
-          <label>Numero
+          <label>N&uacute;mero
             <input type="number" name="cubicleNumber" placeholder="Ingrese el numero del cubiculo" [(ngModel)]="newCubicle.cubicleNumber" required>
             <div *ngIf="anyErrors">
               <p *ngIf="anyErrors?.errors?.cubicleNumber" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.cubicleNumber.message}}</p>
@@ -64,12 +64,12 @@
           <p *ngIf="errorFile" class="help-text" id="userHelpText" style="color: #b53535;">{{errorFile}}</p>
         </div>
         <div class="small-12 cell">
-          <button type="button" class="button" name="button" *ngIf="nameFile" (click)="removeFile()">Remover archivo</button>
+          <button type="button" class="button radius shadow" name="button" *ngIf="nameFile" (click)="removeFile()">Remover archivo</button>
         </div>
       </div>
       <div class="grid-x grid-padding-x submit-btn">
         <div class="small-6 medium-6 large-4 cell text-center save-btn">
-          <button type="button" class="button" name="button" (click)="save()">Guardar</button>
+          <button type="button" class="button radius shadow" name="button" (click)="save()">Guardar</button>
         </div>
       </div>
     </div>

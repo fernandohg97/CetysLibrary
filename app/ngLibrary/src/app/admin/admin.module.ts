@@ -29,6 +29,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { AdminExternalUserComponent } from './admin-external-user/admin-external-user.component';
 import { AdminExternalUserUpdateComponent } from './admin-external-user/admin-external-user-update/admin-external-user-update.component';
 import { ExternalUserService } from '../services/externalUser/external-user.service';
+import { NguiPopupModule } from '@ngui/popup';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { ExternalUserService } from '../services/externalUser/external-user.serv
     HttpModule,
     NgxPaginationModule,
     ChartsModule,
+    NguiPopupModule,
     PipesModule.forRoot()
   ],
   declarations: [

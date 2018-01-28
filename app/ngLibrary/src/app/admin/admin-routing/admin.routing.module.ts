@@ -21,23 +21,20 @@ const adminRoutes: Routes = [{
   path: 'admin-site',
   component: AdminComponent,
   children: [
-    {path: '', component: AdminHomeComponent},
-    {path: 'users', component: AdminUsersComponent},
-    {path: 'users/:id', component: AdminUsersUpdateComponent},
-    {path: 'cubicles', component: AdminCubiclesComponent},
-    {path: 'cubicles/:id', component: AdminCubiclesUpdateComponent},
-    {path: 'careers', component: AdminCareersComponent},
-    {path: 'careers/:id', component: AdminCareersUpdateComponent},
-    {path: 'departments', component: AdminDepartmentsComponent},
-    {path: 'departments/:id', component: AdminDepartmentsUpdateComponent},
-    {path: 'employees', component: AdminEmployeesComponent},
-    {path: 'employees/:id', component: AdminEmployeesUpdateComponent},
-    {path: 'externals', component: AdminExternalUserComponent},
-    {path: 'externals/:id', component: AdminExternalUserUpdateComponent},
-    {path: 'reports', component: AdminReportsComponent},
-    { path: '**', redirectTo: '', pathMatch: 'full' } // Route in case page is not found
-
-    // {path: '', redirectTo: 'home', pathMatch: 'full'}
+    { path: '', component: AdminHomeComponent },
+    { path: 'users', component: AdminUsersComponent },
+    { path: 'users/:id', component: AdminUsersUpdateComponent },
+    { path: 'cubicles', component: AdminCubiclesComponent },
+    { path: 'cubicles/:id', component: AdminCubiclesUpdateComponent },
+    { path: 'careers', component: AdminCareersComponent },
+    { path: 'careers/:id', component: AdminCareersUpdateComponent },
+    { path: 'departments', component: AdminDepartmentsComponent },
+    { path: 'departments/:id', component: AdminDepartmentsUpdateComponent },
+    { path: 'employees', component: AdminEmployeesComponent },
+    { path: 'employees/:id', component: AdminEmployeesUpdateComponent },
+    { path: 'externals', component: AdminExternalUserComponent },
+    { path: 'externals/:id', component: AdminExternalUserUpdateComponent },
+    { path: 'reports', component: AdminReportsComponent }
   ]
 
 }

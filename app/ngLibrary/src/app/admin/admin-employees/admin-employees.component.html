@@ -1,7 +1,7 @@
 <div *ngIf="!called" class="grid-container table-content">
   <div class="grid-x grid-padding-x">
     <div class="cell">
-      <button type="button" class="button float-right" name="button" (click)="createEmployee()">Nuevo empleado</button>
+      <button type="button" class="button radius shadow float-right" name="button" (click)="createEmployee()">Nuevo empleado</button>
     </div>
   </div>
   <div class="grid-x grid-padding-x">
@@ -15,7 +15,7 @@
     <table class="unstriped table-info">
       <thead>
         <tr>
-          <th>Numero</th>
+          <th>N&uacute;mero</th>
           <th>Nombre</th>
           <th>Departamento</th>
           <th>Activo</th>
@@ -49,7 +49,7 @@
 
 <form *ngIf="called">
   <div class="grid-container content">
-    <button type="button" class="button" name="button" (click)="called = false"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+    <button type="button" class="button radius shadow" name="button" (click)="called = false"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
     <div class="grid-x grid-padding-x">
       <div class="title cell">
         <h2>Nuevo empleado</h2>
@@ -57,7 +57,7 @@
     </div>
       <div class="grid-x grid-padding-x">
         <div class="medium-6 cell">
-          <label>Numero
+          <label>N&uacute;mero
             <input type="number" name="employeeNumber" placeholder="Ingrese numero del empleado" [(ngModel)]="newEmployee.employeeNumber" required>
             <div *ngIf="anyErrors">
               <p *ngIf="anyErrors?.errors?.employeeNumber" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.employeeNumber.message}}</p>
@@ -85,18 +85,18 @@
 
       <div class="grid-x grid-padding-x file-btn">
         <div class="small-12 cell uploadFile-btn">
-          <label for="exampleFileUpload" class="button">Adjuntar archivo</label>
+          <label for="exampleFileUpload" class="button radius shadow">Adjuntar archivo</label>
           <input #inputFile type="file" id="exampleFileUpload" class="show-for-sr" (change)="fileChange($event)" accept=".json, .csv" multiple>
           <span class="nameFile">{{nameFile}}</span>
           <p *ngIf="errorFile" class="help-text" id="userHelpText" style="color: #b53535;">{{errorFile}}</p>
         </div>
         <div class="small-12 cell">
-          <button type="button" class="button" name="button" *ngIf="nameFile" (click)="removeFile()">Remover archivo</button>
+          <button type="button" class="button radius shadow" name="button" *ngIf="nameFile" (click)="removeFile()">Remover archivo</button>
         </div>
       </div>
       <div class="grid-x grid-padding-x submit-btn">
         <div class="small-6 medium-6 large-4 cell text-center save-btn">
-          <button type="button" class="button" name="button" (click)="save()">Guardar</button>
+          <button type="button" class="button radius shadow" name="button" (click)="save()">Guardar</button>
         </div>
       </div>
     </div>

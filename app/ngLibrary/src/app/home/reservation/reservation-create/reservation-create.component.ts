@@ -31,6 +31,7 @@ export class ReservationCreateComponent implements OnInit {
   currentTime: string
   currentCareers: Array<String>
   currentDepartment: string
+  currentUser: any
   quantityDepartment: number = 0
   divisions: any
   selectedDivision: any
@@ -39,6 +40,7 @@ export class ReservationCreateComponent implements OnInit {
   departmentSelected: string
   departureTimeError: any
   called: Boolean
+  departmentUser: String
 
   constructor(
     private dataReservationService: DataReservationService,
@@ -98,9 +100,14 @@ export class ReservationCreateComponent implements OnInit {
   }
 
   save() {
-    this.newReservation.entryTime = new Date(`${this.currentDate}, ${this.currentTime}`)
-    this.newReservation.departureTime = new Date(`${this.currentDate}, ${this.departureTime}`)
-    this.newReservation.reservationDate = new Date(`${this.currentDate}, ${this.currentTime}`)
+    console.log(this.currentDate)
+    console.log(this.currentTime)
+    this.newReservation.entryTime = new Date(`${this.currentDate} ${this.currentTime}`)
+    this.newReservation.departureTime = new Date(`${this.currentDate} ${this.departureTime}`)
+    this.newReservation.reservationDate = new Date(`${this.currentDate} ${this.currentTime}`)
+    console.log(this.newReservation.entryTime)
+    console.log(this.newReservation.departureTime)
+    console.log(this.newReservation.reservationDate)
 
     this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
       let student = JSON.parse(JSON.stringify(user)).usuario
@@ -113,6 +120,7 @@ export class ReservationCreateComponent implements OnInit {
       this.reservationsService.create(this.newReservation)
       .subscribe(
         data => {
+          console.log(data)
           this.router.navigateByUrl('/')
         },
         err => {
@@ -131,8 +139,16 @@ export class ReservationCreateComponent implements OnInit {
 
   searchUser() {
     this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => {
-      this.anyErrors = JSON.parse(JSON.stringify(data))
-    }).catch(err => this.anyErrors = JSON.parse(err._body))
+      this.currentUser = JSON.parse(JSON.stringify(data)).usuario || JSON.parse(JSON.stringify(data)).empleado
+      if (this.currentUser.hasOwnProperty('department')) {
+        this.departmentsService.getByNumber(this.currentUser.department).then(data => {
+          this.departmentUser = data.departmentName
+        })
+      }
+    }).catch(err => {
+      this.currentUser = this.departmentUser = ''
+      this.anyErrors = JSON.parse(err._body)
+    })
   }
 
   divisionChange(newDivision) {
