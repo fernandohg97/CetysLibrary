@@ -64,7 +64,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
     let month2 = this.currentDate.getMonth()+2
 
     let time = this.currentDate.getTime()
-    console.log(time)
     dayNumber += 1
     let theDay = dayNumber.toString()
     if (parseInt(day) >= 1 && parseInt(day) <= 9) {
@@ -97,7 +96,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit() {
-    console.log(`${this.startDate2}, ${this.endDate2}`)
     if (this.startDate && this.endDate) {
       this.reportsService.getByDivision(this.startDate2, this.endDate2).then(data => {
         if (data) {
@@ -111,7 +109,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
       this.reportsService.getByDepartment(this.startDate2, this.endDate2).then(data => {
         if (data) {
           this.reportsDepartment = data
-          console.log(data)
           this.pieChartLabelsDepartments = []
           this.pieChartDataDepartments = []
           this.insertChartItems(this.reportsDepartment, this.pieChartLabelsDepartments, this.pieChartDataDepartments)
@@ -135,7 +132,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
           this.reportsCareer = data
           this.pieChartLabelsCareers = []
           this.pieChartDataCareers = []
-          console.log(data)
           this.insertChartItems(this.reportsCareer, this.pieChartLabelsCareers, this.pieChartDataCareers)
           this.countLabelsCareers = this.pieChartDataCareers.length
         }
@@ -170,8 +166,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
                   k++
                 })
               }
-              console.log(this.pieChartLabelsCompanions)
-              console.log(this.newArray)
           })
         }
       })
@@ -187,14 +181,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
                 j++
               });
           }
-          // this.reportsCompanionsQuantity.forEach((element) => {
-          //   element._id.forEach((el, ind) => {
-          //     this.newArray[ind].ingresos = el
-          //     this.pieChartDataCompanions.push(el)
-          //   });
-          // })
-          console.log(this.pieChartDataCompanions)
-          console.log(this.newArray)
           this.countLabelsCompanions = this.pieChartDataCompanions.length
         }
       })
@@ -209,18 +195,10 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
       })
       this.reportsService.getByDay(this.startDate, this.endDate).then(data => {
         if (data) {
-          // data.forEach(element => {
-          //   element._id = new Date(element._id)
-          // })
           this.reportsDay = data
-          console.log(this.reportsDay)
           this.pieChartLabelsDays = []
           this.pieChartDataDays = []
           this.insertChartItems(this.reportsDay, this.pieChartLabelsDays, this.pieChartDataDays)
-          // data.forEach(element => {
-          //   this.pieChartLabelsDays.push(element._id)
-          //   this.pieChartDataDays.push(element.ingresos)
-          // })
           this.countLabelsDays = this.pieChartDataDays.length
         }
       })
@@ -265,13 +243,8 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
     this.newArray = []
 
     if (this.startDate && this.endDate) {
-      // this.startDate = this.startDate + 'T08:00:00.000Z'
-      // this.endDate = this.endDate + 'T08:00:00.000Z'
-      console.log(this.startDate)
-      console.log(this.endDate)
       this.reportsService.getByDivision(this.startDate, this.endDate).then(data => {
         if (data) {
-          console.log(data)
           this.reportsDivision = data
           this.insertChartItems(this.reportsDivision, itemsDivision, dataDivisionClone)
           dataDivisionClone.splice(0, this.countLabelsDivision)
@@ -320,14 +293,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
       this.reportsService.getByCompanions(this.startDate, this.endDate).then(data => {
         if (data) {
           let k = 0
-          // data.forEach(element => {
-          //   element._id.forEach((el, index) => {
-          //     itemsCompanions.push(el)
-          //     this.newArray.push({
-          //       careers: el
-          //     })
-          //   })
-          // })
           this.reportsCompanions = data
           this.reportsCompanions.forEach(element => {
               if (element._id.userCareers.length > 0) {
@@ -358,8 +323,6 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
                   k++
                 })
               }
-              console.log(this.pieChartLabelsCompanions)
-              console.log(this.newArray)
           })
           this.reportsService.getByQuantityCompanions(this.startDate, this.endDate).then(data => {
             if (data) {
@@ -372,23 +335,11 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
                     j++
                   });
               }
-              // this.reportsCompanionsQuantity.forEach(element => {
-              //   element._id.forEach((el, ind) => {
-              //     this.newArray[ind].ingresos = el
-              //     dataCompanionsClone.push(el)
-              //     console.log(dataCompanionsClone)
-              //   });
-              // })
               dataCompanionsClone.splice(0, this.countLabelsCompanions)
               this.countLabelsCompanions = labelsCompanionsClone.length
               labelsCompanionsClone = itemsCompanions
-              console.log(labelsCompanionsClone)
               this.pieChartLabelsCompanions = labelsCompanionsClone
               this.pieChartDataCompanions = dataCompanionsClone
-              console.log(this.pieChartLabelsCompanions)
-              // console.log(this.pieChartLabelsCompanions)
-              // console.log(this.pieChartDataCompanions)
-
             }
           })
         }

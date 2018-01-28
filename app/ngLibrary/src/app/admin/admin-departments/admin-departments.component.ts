@@ -44,7 +44,6 @@ export class AdminDepartmentsComponent implements OnInit {
   fileChange(event) {
     let input = event.target;
     this.nameFile = input.files[0].name
-
     for (var index = 0; index < input.files.length; index++) {
         let reader = new FileReader();
         reader.onload = () => {

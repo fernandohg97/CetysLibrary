@@ -113,7 +113,6 @@ export class ReservationUpdateComponent implements OnInit {
   }
 
   update() {
-    console.log(this.employee)
     this.updateReservation.entryTime = new Date(`${this.currentDate} ${this.currentTime}`)
     this.updateReservation.departureTime = new Date(`${this.currentDate} ${this.currentDepartureTime}`)
     this.updateReservation.reservationDate = new Date(`${this.currentDate} ${this.currentTime}`)
@@ -133,7 +132,6 @@ export class ReservationUpdateComponent implements OnInit {
             this.anyErrors = JSON.parse(err._body)
           })
         } else {
-          console.log(this.registrationNumber)
           this.updateInfo()
         }
     } else if (this.externalUser) {
@@ -152,13 +150,11 @@ export class ReservationUpdateComponent implements OnInit {
           this.anyErrors = JSON.parse(err._body)
         })
       } else {
-        console.log(this.registrationNumber)
+
         this.updateInfo()
       }
     } else {
       if (this.registrationNumber != this.updateReservation.user.registrationNumber) {
-        console.log(this.registrationNumber)
-        console.log(this.updateReservation.user.registrationNumber)
         this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
           let student = JSON.parse(JSON.stringify(user)).usuario
           this.updateReservation.user = student
@@ -173,7 +169,6 @@ export class ReservationUpdateComponent implements OnInit {
           this.anyErrors = JSON.parse(err._body)
         })
       } else {
-        console.log(this.registrationNumber)
         this.updateInfo()
       }
     }
@@ -182,12 +177,10 @@ export class ReservationUpdateComponent implements OnInit {
   updateInfo() {
     this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
       if (response.status == 200 || response.status == 204) {
-        console.log(response.json())
         this.router.navigateByUrl('/')
       }
     }).catch(error => {
       this.anyErrors = JSON.parse(error._body)
-      console.log(this.anyErrors)
     })
   }
 

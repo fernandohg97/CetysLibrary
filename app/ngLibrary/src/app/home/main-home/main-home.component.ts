@@ -25,8 +25,6 @@ export class MainHomeComponent implements OnInit {
     .then(data => {
       if (data) {
         this.cubicles = data
-        console.log('Cubiculos:')
-        console.log(data)
         this.reservationsService.getAll().then(data => {
           if (data) {
             this.reservations = data
