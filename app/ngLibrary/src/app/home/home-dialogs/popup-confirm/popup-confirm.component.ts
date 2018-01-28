@@ -8,12 +8,8 @@ import { DataReservationService } from '../../../services/dataReservation/data-r
 })
 export class PopupConfirmComponent implements OnInit {
 
-  messageConfirmation: Boolean
-
   constructor(private dataReservationService: DataReservationService) { }
 
-  ngOnInit() {
-    this.messageConfirmation = this.dataReservationService.getCurrentConfirmationMessage()
-  }
+  ngOnInit() { }
 
 }
