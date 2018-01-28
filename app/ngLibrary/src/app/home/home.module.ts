@@ -16,18 +16,13 @@ import { UsersService } from '../services/users/users.service';
 import { SettingsService} from '../services/settings/settings.service';
 import { ReservationsService } from '../services/reservations/reservations.service';
 import { UsersQuantityService } from '../services/usersQuantity/users.quantity.service';
-import { NguiPopupModule } from '@ngui/popup';
-import { PopupUserDetailsComponent } from './popup-userDetails/popup-userDetails.component';
 import { DataReservationService } from '../services/dataReservation/data-reservation.service';
 import { PipesModule } from '../pipes/pipes.module';
-import { PopupUserInfoComponent } from './popup-user-info/popup-user-info.component';
-import { PopupEmployeeInfoComponent } from './popup-employee-info/popup-employee-info.component';
 import { ExternalUserService } from '../services/externalUser/external-user.service';
-import { PopupExternalInfoComponent } from './popup-external-info/popup-external-info.component';
-import { PopupBorrowedMaterialComponent } from './popup-borrowed-material/popup-borrowed-material.component';
 import { MainHomeComponent } from './main-home/main-home.component';
 import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
 import { ReportsComponent } from './reports/reports.component';
+import { HomeDialogsModule } from './home-dialogs/home-dialogs.module';
 
 @NgModule({
   imports: [
@@ -36,8 +31,8 @@ import { ReportsComponent } from './reports/reports.component';
     FormsModule,
     ReservationModule,
     HomeRoutingModule,
-    NguiPopupModule,
     NgxPaginationModule,
+    HomeDialogsModule,
     PipesModule.forRoot()
   ],
   declarations: [
@@ -46,12 +41,7 @@ import { ReportsComponent } from './reports/reports.component';
     ReservationUpdateComponent,
     ReservationEditComponent,
     ReportsComponent,
-    PopupUserDetailsComponent,
-    PopupUserInfoComponent,
-    PopupEmployeeInfoComponent,
     ReservationCreateExternalComponent,
-    PopupExternalInfoComponent,
-    PopupBorrowedMaterialComponent,
     MainHomeComponent
   ],
   providers: [
@@ -67,9 +57,7 @@ import { ReportsComponent } from './reports/reports.component';
   ],
   exports: [
     ReservationModule,
-    ReservationEditComponent,
-    PopupUserDetailsComponent
-  ],
-  entryComponents: [PopupUserDetailsComponent, PopupUserInfoComponent, PopupEmployeeInfoComponent, PopupExternalInfoComponent, PopupBorrowedMaterialComponent]
+    ReservationEditComponent
+  ]
 })
 export class HomeModule { }
