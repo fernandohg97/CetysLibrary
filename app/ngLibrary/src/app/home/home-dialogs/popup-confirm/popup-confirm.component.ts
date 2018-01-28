@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReservationsService } from '../../../services/reservations/reservations.service';
+import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
 
 @Component({
   selector: 'app-popup-confirm',
@@ -7,6 +8,7 @@ import { ReservationsService } from '../../../services/reservations/reservations
   styleUrls: ['./popup-confirm.component.css']
 })
 export class PopupConfirmComponent implements OnInit {
+  @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
 
   constructor(private reservationsService: ReservationsService) { }
 
