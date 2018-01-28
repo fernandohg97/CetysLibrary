@@ -1,25 +1,27 @@
-/*.no-js .top-bar {
-  display: none;
+/* Large and up */
+@media screen and (min-width: 79em) {
+  .top-bar-left {
+    margin-left: 22%;
+  }
 }
-@media screen and (min-width: 40em) {
-  .no-js .top-bar {
-    display: block;
-  }
-  .no-js .title-bar {
-    display: none;
-  }
-}*/
+button i {
+  color: whitesmoke;
+}
+button {
+  margin: 0 0 0 10px;
+  padding: 0;
+}
 header {
   background: #4a8ab9 !important;
 }
 .admin-bar {
   background: inherit;
 }
+
 .top-bar-right ul {
   background: inherit;
 }
 .top-bar-left a {
-  /*color: #ffffff;*/
   margin: 0 0 0 20px;
   padding: 0;
   font-size: 20px;
@@ -31,7 +33,6 @@ header {
   color: whitesmoke;
 }
 .menu-bar a:hover {
-  /*background-color: grey;*/
   color: rgba(17, 18, 17, 0.86);
 }
 .title-left a{
