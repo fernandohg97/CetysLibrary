@@ -1,3 +1,10 @@
+button i {
+  color: whitesmoke;
+}
+button {
+  margin: 0 0 0 10px;
+  padding: 0;
+}
 header {
   background: #4a8ab9 !important;
 }
@@ -5,28 +12,19 @@ header {
   background: inherit;
   padding: 5px;
 }
-@media screen and (min-width: 40em) {
-  .home-bar {
-    margin-left: 20%;
-    margin-right: 20%;
-  }
+.home-bar .top-bar-left {
+  margin-left: 20%;
 }
-@media screen and (max-width: 39.9375em) {
-  .top-bar-right {
-    margin-top: 10px;
-  }
+.home-bar .top-bar-right {
+  margin-right: 20%;
 }
-.top-bar-left a {
+.top-bar-left a, .top-bar-right a {
   margin: 0;
   padding: 0;
 }
-
 .top-bar-right a {
-  margin: 0;
-  padding: 0;
   color: #ffffff;
 }
 .top-bar-right a:hover {
-  /*background-color: grey;*/
   color: rgba(17, 18, 17, 0.86);
 }
