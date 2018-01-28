@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HomeRoutingModule } from './home-routing/home.routing.module'
 import { ReservationModule } from './reservation/reservation.module';
-import { ReportsModule } from './reports/reports.module';
 import { HomeComponent } from './home.component';
 import { ReservationCreateComponent } from './reservation/reservation-create/reservation-create.component';
 import { ReservationCreateExternalComponent } from './reservation/reservation-create/reservation-create-external/reservation-create-external.component';
@@ -27,6 +26,8 @@ import { ExternalUserService } from '../services/externalUser/external-user.serv
 import { PopupExternalInfoComponent } from './popup-external-info/popup-external-info.component';
 import { PopupBorrowedMaterialComponent } from './popup-borrowed-material/popup-borrowed-material.component';
 import { MainHomeComponent } from './main-home/main-home.component';
+import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
+import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
   imports: [
@@ -34,9 +35,9 @@ import { MainHomeComponent } from './main-home/main-home.component';
     HttpModule,
     FormsModule,
     ReservationModule,
-    ReportsModule,
     HomeRoutingModule,
     NguiPopupModule,
+    NgxPaginationModule,
     PipesModule.forRoot()
   ],
   declarations: [
@@ -44,6 +45,7 @@ import { MainHomeComponent } from './main-home/main-home.component';
     ReservationCreateComponent,
     ReservationUpdateComponent,
     ReservationEditComponent,
+    ReportsComponent,
     PopupUserDetailsComponent,
     PopupUserInfoComponent,
     PopupEmployeeInfoComponent,
@@ -65,7 +67,6 @@ import { MainHomeComponent } from './main-home/main-home.component';
   ],
   exports: [
     ReservationModule,
-    ReportsModule,
     ReservationEditComponent,
     PopupUserDetailsComponent
   ],
