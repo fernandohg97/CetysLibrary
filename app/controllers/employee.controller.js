@@ -70,10 +70,22 @@ function removeEmployee(req, res) {
   })
 }
 
+function removeEmployees(req, res) {
+  let removeEmployees = Employee.remove({})
+
+  removeEmployees.then(response => {
+    res.json({message: 'Employees deleted successfully'})
+  })
+  .catch(err => {
+    res.status(500).send({message: `No se pudo eliminar los empleados: ${err}`})
+  })
+}
+
 module.exports = {
   getEmployees,
   getEmployee,
   createEmployee,
   updateEmployee,
-  removeEmployee
+  removeEmployee,
+  removeEmployees
 }

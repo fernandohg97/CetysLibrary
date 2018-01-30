@@ -85,11 +85,23 @@ function removeDepartment(req, res) {
   })
 }
 
+function removeDepartments(req, res) {
+  let removeDepartments = Department.remove({})
+
+  removeDepartments.then(response => {
+    res.json({message: 'Departments deleted successfully'})
+  })
+  .catch(err => {
+    res.status(500).send({message: `No se pudo eliminar los departamentos: ${err}`})
+  })
+}
+
 module.exports = {
   getDepartments,
   getDepartment,
   getDepartmentByNumber,
   createDepartment,
   updateDepartment,
-  removeDepartment
+  removeDepartment,
+  removeDepartments
 }

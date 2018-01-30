@@ -81,11 +81,23 @@ function removeCareer(req, res) {
   })
 }
 
+function removeCareers(req, res) {
+  let removeCareers = Career.remove({})
+
+  removeCareers.then(response => {
+    res.json({message: 'Careers deleted successfully'})
+  })
+  .catch(err => {
+    res.status(500).send({message: `No se pudo eliminar las carreras: ${err}`})
+  })
+}
+
 module.exports = {
   getCareers,
   getCareersByDivision,
   getCareer,
   createCareer,
   updateCareer,
-  removeCareer
+  removeCareer,
+  removeCareers
 }
