@@ -1,6 +1,9 @@
 <div *ngIf="!called" class="grid-container table-content">
   <div class="grid-x grid-padding-x">
-    <div class="cell">
+    <div class="small-6 cell">
+      <button type="button" class="secondary button radius shadow" name="button" (click)="openPopup()"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Remover</button>
+    </div>
+    <div class="small-6 cell">
       <button type="button" class="button radius shadow float-right" name="button" (click)="createDepartment()">Nuevo departmento</button>
     </div>
   </div>
@@ -41,6 +44,8 @@
     </div>
   </div>
 </div>
+<ngui-popup #popup></ngui-popup>
+
 
 <form *ngIf="called">
   <div class="grid-container content">

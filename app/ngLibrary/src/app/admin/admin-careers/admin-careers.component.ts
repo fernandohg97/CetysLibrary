@@ -3,6 +3,10 @@ import { CareersService } from '../../services/careers/careers.service';
 import { CareerModel } from '../../models/career.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SettingsService} from '../../services/settings/settings.service';
+import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
+import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
+import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
+import { AdminSection } from '../../enums/admin-section.enum';
 
 @Component({
   selector: 'app-admin-careers',
@@ -11,6 +15,7 @@ import { SettingsService} from '../../services/settings/settings.service';
 })
 export class AdminCareersComponent implements OnInit {
 
+  @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   newCareer = new CareerModel()
   divisions: any
   careers: CareerModel[]
@@ -23,7 +28,12 @@ export class AdminCareersComponent implements OnInit {
   errorFile: string
   errorItem: string
 
-  constructor(private settingsService: SettingsService, private careersService: CareersService, private router: Router) {
+  constructor(
+    private dataReservationService: DataReservationService,
+    private settingsService: SettingsService,
+    private careersService: CareersService,
+    private router: Router
+  ) {
     this.called = false
   }
 
@@ -64,6 +74,14 @@ export class AdminCareersComponent implements OnInit {
   areaChange(event) {
     this.newCareer.area = event.division
   }
+
+  openPopup() {
+    this.dataReservationService.changeAdminSelected(AdminSection.careers)
+      this.popup.open(PopupConfirmComponent, {
+        classNames: 'custom',
+        closeButton: true
+      })
+    }
 
   save() {
     if (this.textFile) {

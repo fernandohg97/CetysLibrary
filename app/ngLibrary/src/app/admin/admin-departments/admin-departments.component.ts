@@ -2,6 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DepartmentsService } from '../../services/departments/departments.service';
 import { DepartmentModel } from '../../models/department.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
+import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
+import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
+import { AdminSection } from '../../enums/admin-section.enum';
 
 @Component({
   selector: 'app-admin-departments',
@@ -10,6 +14,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AdminDepartmentsComponent implements OnInit {
 
+  @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   newDepartment = new DepartmentModel()
   departments: DepartmentModel[]
   called: Boolean
@@ -21,7 +26,7 @@ export class AdminDepartmentsComponent implements OnInit {
   errorFile: string
   errorItem: string
 
-  constructor(private departmentsService: DepartmentsService, private router: Router) {
+  constructor(private dataReservationService: DataReservationService, private departmentsService: DepartmentsService, private router: Router) {
     this.called = false
   }
 
@@ -54,6 +59,14 @@ export class AdminDepartmentsComponent implements OnInit {
         reader.readAsText(input.files[index]);
     };
   }
+
+  openPopup() {
+    this.dataReservationService.changeAdminSelected(AdminSection.departments)
+      this.popup.open(PopupConfirmComponent, {
+        classNames: 'custom',
+        closeButton: true
+      })
+    }
 
   save() {
     if (this.textFile) {

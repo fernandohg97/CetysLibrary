@@ -3,6 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CubiclesService } from '../../services/cubicles/cubicles.service';
 import { CubicleModel } from '../../models/cubicle.model';
 import { FormGroup } from '@angular/forms';
+// Test
+import { AdminSection } from '../../enums/admin-section.enum';
+import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
+import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
+import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
 
 @Component({
   selector: 'app-admin-cubicles',
@@ -11,6 +16,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class AdminCubiclesComponent implements OnInit {
 
+  @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   newCubicle = new CubicleModel()
   cubicles: CubicleModel[]
   called: Boolean
@@ -21,7 +27,7 @@ export class AdminCubiclesComponent implements OnInit {
   errorFile: string
   errorItem: string
 
-  constructor(private cubiclesService: CubiclesService, private router: Router, private route: ActivatedRoute) {
+  constructor(private dataReservationService: DataReservationService, private cubiclesService: CubiclesService, private router: Router, private route: ActivatedRoute) {
     this.called = false
   }
 
@@ -54,6 +60,14 @@ export class AdminCubiclesComponent implements OnInit {
         reader.readAsText(input.files[index]);
     };
   }
+
+  openPopup() {
+    this.dataReservationService.changeAdminSelected(AdminSection.cubicles)
+      this.popup.open(PopupConfirmComponent, {
+        classNames: 'custom',
+        closeButton: true
+      })
+    }
 
   save() {
     if (this.textFile) {
