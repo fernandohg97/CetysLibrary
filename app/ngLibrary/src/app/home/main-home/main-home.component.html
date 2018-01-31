@@ -3,7 +3,7 @@
   <div class="grid-x grid-padding-x small-up-1 medium-up-3 large-up-4 text-center matrix-content">
     <a *ngFor="let cubicle of cubicles" routerLink="reservations-create/{{cubicle._id}}" class="cell button cubicle-option">
       <a routerLink="reservations-edit/{{cubicle._id}}" class="boton-edit">
-        <i class="fa fa-pencil" aria-hidden="true"></i>
+        <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
       </a>
       <p class="cubicle-number">{{cubicle.cubicleNumber}}</p>
       <ng-container *ngIf="cubicle.availability; else elseBlock">
