@@ -16,7 +16,9 @@ import { CareersService } from '../../../services/careers/careers.service';
 })
 export class PopupConfirmComponent implements OnInit {
 
+  adminSection: AdminSection
   adminSelected: AdminSection
+  adminSelectedText: string
 
   constructor(
     private router: Router,
@@ -33,46 +35,110 @@ export class PopupConfirmComponent implements OnInit {
     this.adminSelected = this.dataReservationService.getAdminSelected()
   }
 
+  getAdminText(adminChoosen) {
+    switch (adminChoosen) {
+      case AdminSection.students:
+        return 'estudiantes'
+      case AdminSection.reservations:
+        return 'reservaciones'
+      case AdminSection.employees:
+        return 'empleados'
+      case AdminSection.cubicles:
+        return 'cubiculos'
+      case AdminSection.careers:
+        return 'carreras'
+      case AdminSection.departments:
+        return 'departamentos'
+    }
+  }
+
   removeAll() {
     switch(this.adminSelected) {
     case AdminSection.students:
         console.log('Estudiantes!')
-        // this.usersService.removeAll().then(response => {
-        //   if (response.status == 200 || response.status == 204) this.router.navigateByUrl('/admin-site')
-        // }).catch(err => console.log(err))
+        this.usersService.removeAll().then(response => {
+          if (response.status == 200 || response.status == 204) {
+            this.router.navigateByUrl('/home')
+            setTimeout(() => {
+              alert('Estudiantes eliminados exitosamente')
+            }, 400)
+          }
+        }).catch(err => {
+          alert('Error:\nNo se ha podido eliminar los estudiantes')
+          console.log(err)
+        })
         break;
     case AdminSection.cubicles:
         console.log('Cubiculos!')
-        // this.cubiclesService.removeAll().then(response => {
-        //   if (response.status == 200 || response.status == 204) this.router.navigateByUrl('/admin-site')
-        // }).catch(err => console.log(err))
+        this.cubiclesService.removeAll().then(response => {
+          if (response.status == 200 || response.status == 204) {
+            this.router.navigateByUrl('/home')
+            setTimeout(() => {
+              alert('Cubiculos eliminados exitosamente')
+            }, 400)
+          }
+        }).catch(err => {
+          alert('Error:\nNo se ha podido eliminar los cubiculos')
+          console.log(err)
+        })
         break;
     case AdminSection.employees:
         console.log('Empleados!')
-        // this.employeesService.removeAll().then(response => {
-        //   if (response.status == 200 || response.status == 204) this.router.navigateByUrl('/admin-site')
-        // }).catch(err => console.log(err))
+        this.employeesService.removeAll().then(response => {
+          if (response.status == 200 || response.status == 204) {
+            this.router.navigateByUrl('/home')
+            setTimeout(() => {
+              alert('Empleados eliminados exitosamente')
+            }, 400)
+          }
+        }).catch(err => {
+          alert('Error:\nNo se ha podido eliminar los empleados')
+          console.log(err)
+        })
         break;
     case AdminSection.careers:
         console.log('Carreras!')
-        // this.careersService.removeAll().then(response => {
-        //   if (response.status == 200 || response.status == 204) this.router.navigateByUrl('/admin-site')
-        // }).catch(err => console.log(err))
+        this.careersService.removeAll().then(response => {
+          if (response.status == 200 || response.status == 204) {
+            this.router.navigateByUrl('/home')
+            setTimeout(() => {
+              alert('Carreras eliminadas exitosamente')
+            }, 400)
+          }
+        }).catch(err => {
+          alert('Error:\nNo se ha podido eliminar las carreras')
+          console.log(err)
+        })
         break;
     case AdminSection.departments:
         console.log('Departamentos!')
-        // this.departmentsService.removeAll().then(response => {
-        //   if (response.status == 200 || response.status == 204) this.router.navigateByUrl('/admin-site')
-        // }).catch(err => console.log(err))
+        this.departmentsService.removeAll().then(response => {
+          if (response.status == 200 || response.status == 204) {
+            this.router.navigateByUrl('/home')
+            setTimeout(() => {
+              alert('Departamentos eliminados exitosamente')
+            }, 400)
+          }
+        }).catch(err => {
+          alert('Error:\nNo se ha podido eliminar los departamentos')
+          console.log(err)
+        })
         break;
     case AdminSection.reservations:
         console.log('Reservaciones!')
-        // this.reservationsService.removeAll().then(response => {
-        //   if (response.status == 200 || response.status == 204) this.router.navigateByUrl('/home')
-        // }).catch(err => console.log(err))
+        this.reservationsService.removeAll().then(response => {
+          if (response.status == 200 || response.status == 204) {
+            this.router.navigateByUrl('/home')
+            setTimeout(() => {
+              alert('Reservaciones eliminadas exitosamente')
+            }, 400)
+          }
+        }).catch(err => {
+          alert('Error:\nNo se ha podido eliminar las reservaciones')
+          console.log(err)
+        })
         break;
-}
-
+      }
   }
 
 }
