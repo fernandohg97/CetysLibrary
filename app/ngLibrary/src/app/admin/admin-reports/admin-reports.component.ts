@@ -54,6 +54,7 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
   constructor(private reportsService: ReportsService, private reservationsService: ReservationsService) {}
 
   ngOnInit() {
+    console.log(this.reportsCubicle)
     this.reservationsService.getCount().then(data => {
       this.totalReservations = parseInt(JSON.parse(JSON.stringify(data))._body)
     })
@@ -98,6 +99,7 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
 
   ngAfterContentInit() {
     console.log(`${this.startDate2}, ${this.endDate2}`)
+    console.log(`${this.startDate}, ${this.endDate}`)
     if (this.startDate && this.endDate) {
       this.reportsService.getByDivision(this.startDate2, this.endDate2).then(data => {
         if (data) {

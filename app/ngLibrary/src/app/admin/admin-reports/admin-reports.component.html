@@ -6,9 +6,9 @@
   </div>
   <div class="grid-x grid-padding-x">
     <div class="small-6 cell">
-        <label>Fecha Inicio
-          <input type="date" name="startDate" [(ngModel)]="startDate" placeholder="Fecha" required>
-        </label>
+      <label>Fecha Inicio
+        <input type="date" name="startDate" [(ngModel)]="startDate" placeholder="Fecha" required>
+      </label>
     </div>
     <div class="small-6 cell">
       <label>Fecha Fin
@@ -24,32 +24,32 @@
       <h6><u><strong>Total de reservaciones: {{totalReservations}}</strong></u></h6>
     </div>
   </div>
-  <div *ngIf="reportsCubicle?.length != 0" class="grid-x grid-padding-x">
-    <div class="category-title cell">
-      <h4>Ingresos por cubiculo</h4>
+    <div *ngIf="reportsCubicle?.length != 0" class="grid-x grid-padding-x">
+      <div class="category-title cell">
+        <h4>Ingresos por cubiculo</h4>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Cubiculo</th>
+            <th>Cantidad de ingresos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let report of reportsCubicle">
+            <td>{{report._id}}</td>
+            <td>{{report.ingresos}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="display: block; margin: 0 auto;">
+        <canvas  width="300" height="300" *ngIf="pieChartLabelsCubicles && pieChartDataCubicles" baseChart
+                [data]="pieChartDataCubicles"
+                [labels]="pieChartLabelsCubicles"
+                [chartType]="pieChartType">
+        </canvas>
+      </div>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Cubiculo</th>
-          <th>Cantidad de ingresos</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let report of reportsCubicle">
-          <td>{{report._id}}</td>
-          <td>{{report.ingresos}}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div style="display: block; margin: 0 auto;">
-      <canvas  width="300" height="300" *ngIf="pieChartLabelsCubicles && pieChartDataCubicles" baseChart
-              [data]="pieChartDataCubicles"
-              [labels]="pieChartLabelsCubicles"
-              [chartType]="pieChartType">
-      </canvas>
-    </div>
-  </div>
   <div *ngIf="reportsDivision?.length != 0" class="grid-x grid-padding-x">
     <div class="category-title cell">
       <h4>Ingresos por division</h4>
