@@ -70,10 +70,23 @@ function removeCubicle (req, res) {
   })
 }
 
+// Testing
+function removeCubicles (req, res) {
+  let removeCubicles = Cubicle.remove({})
+
+  removeCubicles.then(response => {
+    res.json({message: 'Cubicles deleted successfully'})
+  })
+  .catch(err => {
+    res.status(500).send({message: `No se pudo eliminar los cubiculos: ${err}`})
+  })
+}
+
 module.exports = {
   getCubicles,
   getCubicle,
   createCubicle,
   updateCubicle,
-  removeCubicle
+  removeCubicle,
+  removeCubicles
 }
