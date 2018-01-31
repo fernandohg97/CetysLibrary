@@ -51,4 +51,8 @@ export class CubiclesService {
     console.log(id)
     return this.http.delete(`${this.url}/${id}`).toPromise()
   }
+
+  removeAll() {
+    return this.http.delete(`${this.url}`).toPromise()
+  }
 }
