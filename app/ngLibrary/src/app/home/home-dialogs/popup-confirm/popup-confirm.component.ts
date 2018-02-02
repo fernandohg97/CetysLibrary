@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReservationsService } from '../../../services/reservations/reservations.service';
 import { DataReservationService } from '../../../services/dataReservation/data-reservation.service';
@@ -8,6 +8,8 @@ import { DepartmentsService } from '../../../services/departments/departments.se
 import { UsersService } from '../../../services/users/users.service';
 import { EmployeesService } from '../../../services/employees/employees.service';
 import { CareersService } from '../../../services/careers/careers.service';
+import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
+
 
 @Component({
   selector: 'app-popup-confirm',
@@ -16,6 +18,7 @@ import { CareersService } from '../../../services/careers/careers.service';
 })
 export class PopupConfirmComponent implements OnInit {
 
+  @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   adminSection: AdminSection
   adminSelected: AdminSection
 
