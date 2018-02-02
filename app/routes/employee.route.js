@@ -15,4 +15,6 @@ employeeRouter.put('/employees/:employee_id', employeeCtrl.updateEmployee)
 
 employeeRouter.delete('/employees/:employee_id', employeeCtrl.removeEmployee)
 
+employeeRouter.delete('/employees', employeeCtrl.removeEmployees)
+
 module.exports = employeeRouter

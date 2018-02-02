@@ -19,4 +19,6 @@ userRouter.put('/users/:user_id', userCtrl.updateUser)
 
 userRouter.delete('/users/:user_id', userCtrl.removeUser)
 
+userRouter.delete('/users', userCtrl.removeUsers)
+
 module.exports = userRouter

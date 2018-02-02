@@ -63,4 +63,8 @@ export class CareersService {
     return this.http.delete(`${this.url}/${id}`).toPromise()
   }
 
+  removeAll() {
+    return this.http.delete(`${this.url}`).toPromise()
+  }
+
 }

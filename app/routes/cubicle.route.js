@@ -15,4 +15,6 @@ cubicleRouter.put('/cubicles/:cubicle_id', cubicleCtrl.updateCubicle)
 
 cubicleRouter.delete('/cubicles/:cubicle_id', cubicleCtrl.removeCubicle)
 
+cubicleRouter.delete('/cubicles', cubicleCtrl.removeCubicles)
+
 module.exports = cubicleRouter

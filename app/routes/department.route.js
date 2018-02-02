@@ -17,4 +17,6 @@ departmentRouter.put('/departments/:department_id', departmentCtrl.updateDepartm
 
 departmentRouter.delete('/departments/:department_id', departmentCtrl.removeDepartment)
 
+departmentRouter.delete('/departments', departmentCtrl.removeDepartments)
+
 module.exports = departmentRouter

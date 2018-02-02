@@ -17,4 +17,6 @@ careerRouter.put('/careers/:career_id', careerCtrl.updateCareer)
 
 careerRouter.delete('/careers/:career_id', careerCtrl.removeCareer)
 
+careerRouter.delete('/careers', careerCtrl.removeCareers)
+
 module.exports = careerRouter
