@@ -18,7 +18,6 @@ export class PopupConfirmComponent implements OnInit {
 
   adminSection: AdminSection
   adminSelected: AdminSection
-  adminSelectedText: string
 
   constructor(
     private router: Router,
