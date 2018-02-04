@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { EmployeesService } from '../../services/employees/employees.service';
 import { EmployeeModel } from '../../models/employee.model';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -12,7 +12,7 @@ import { AdminSection } from '../../enums/admin-section.enum';
   templateUrl: './admin-employees.component.html',
   styleUrls: ['./admin-employees.component.css']
 })
-export class AdminEmployeesComponent implements OnInit {
+export class AdminEmployeesComponent implements OnInit, OnDestroy {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   newEmployee = new EmployeeModel()
@@ -34,6 +34,11 @@ export class AdminEmployeesComponent implements OnInit {
     this.employeesService.getAll().then(data => {
       this.employees = data
     })
+    this.employeesService.createEmployeesDownloadFile()
+  }
+
+  ngOnDestroy() {
+    this.employeesService.removeEmployeesFile()
   }
 
   createEmployee() {
@@ -65,6 +70,15 @@ export class AdminEmployeesComponent implements OnInit {
       this.popup.open(PopupConfirmComponent, {
         classNames: 'custom',
         closeButton: true
+      })
+    }
+
+    downloadFile() {
+      this.employeesService.getDownloadFile().then(res => {
+        window.open(res.url)
+      }).catch(err => {
+        console.log(err)
+        alert('Hubo un error al descargar el archivo')
       })
     }
 

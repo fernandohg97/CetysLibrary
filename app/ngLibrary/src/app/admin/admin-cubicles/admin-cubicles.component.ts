@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CubiclesService } from '../../services/cubicles/cubicles.service';
 import { CubicleModel } from '../../models/cubicle.model';
@@ -14,7 +14,7 @@ import { DataReservationService } from '../../services/dataReservation/data-rese
   templateUrl: './admin-cubicles.component.html',
   styleUrls: ['./admin-cubicles.component.css']
 })
-export class AdminCubiclesComponent implements OnInit {
+export class AdminCubiclesComponent implements OnInit, OnDestroy {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   newCubicle = new CubicleModel()
@@ -26,6 +26,7 @@ export class AdminCubiclesComponent implements OnInit {
   anyErrors: any
   errorFile: string
   errorItem: string
+  cubiclesFile: any
 
   constructor(private dataReservationService: DataReservationService, private cubiclesService: CubiclesService, private router: Router, private route: ActivatedRoute) {
     this.called = false
@@ -34,7 +35,13 @@ export class AdminCubiclesComponent implements OnInit {
   ngOnInit() {
     this.cubiclesService.getAll().then(data => {
       this.cubicles = data
+      console.log(data)
     })
+    this.cubiclesService.createCubiclesDownloadFile()
+  }
+
+  ngOnDestroy() {
+    this.cubiclesService.removeCubiclesFile()
   }
 
   createCubicle() {
@@ -66,6 +73,15 @@ export class AdminCubiclesComponent implements OnInit {
       this.popup.open(PopupConfirmComponent, {
         classNames: 'custom',
         closeButton: true
+      })
+    }
+
+    downloadFile() {
+      this.cubiclesService.getDownloadFile().then(res => {
+        window.open(res.url)
+      }).catch(err => {
+        console.log(err)
+        alert('Hubo un error al descargar el archivo')
       })
     }
 
