@@ -1,7 +1,18 @@
 <div *ngIf="!called" class="grid-container table-content">
+  <h2>Empleados</h2>
   <div class="grid-x grid-padding-x">
-    <div class="cell">
-      <button type="button" class="button radius shadow float-right" name="button" (click)="createEmployee()">Nuevo empleado</button>
+    <div class="small-6 large-8 cell">
+      <button type="button" class="secondary button radius shadow" name="button" (click)="openPopup()">
+        <i class="fa fa-trash fa-lg" aria-hidden="true"></i>&nbsp;<span class="show-for-medium">Remover</span>
+      </button>
+    </div>
+    <div class="small-6 large-4 cell text-right">
+      <button type="button" class="button radius shadow download-btn" name="button" (click)="downloadFile()">
+        <i class="fa fa-download fa-lg"></i>&nbsp;<span class="show-for-medium">Descargar</span>
+      </button>
+      <button type="button" class="button radius shadow" name="button" (click)="createEmployee()">
+        <i class="fa fa-plus fa-lg"></i>&nbsp;<span class="show-for-medium">Nuevo empleado</span>
+      </button>
     </div>
   </div>
   <div class="grid-x grid-padding-x">
@@ -46,6 +57,8 @@
     </div>
   </div>
 </div>
+<ngui-popup #popup></ngui-popup>
+
 
 <form *ngIf="called">
   <div class="grid-container content">

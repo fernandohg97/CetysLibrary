@@ -38,6 +38,17 @@ export class DepartmentsService {
     .catch(DepartmentsService.handleError)
   }
 
+  getDownloadFile() {
+    return this.http.get(`${this.url}/download`).toPromise()
+  }
+
+  createDepartmentsDownloadFile() {
+    return this.http.get(`${this.url}/file`).toPromise()
+  }
+
+  removeDepartmentsFile() {
+    return this.http.get(`${this.url}/remove`).toPromise()
+  }
 
   create(newDepartment: DepartmentModel) {
     return this.http.post(this.url, newDepartment)
@@ -58,6 +69,10 @@ export class DepartmentsService {
   remove(id: String) {
     console.log(id)
     return this.http.delete(`${this.url}/${id}`).toPromise()
+  }
+
+  removeAll() {
+    return this.http.delete(`${this.url}`).toPromise()
   }
 
 }

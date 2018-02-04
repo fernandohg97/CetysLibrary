@@ -3,7 +3,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const validator = require('validator')
-const valid = require('./reservation.validation')
 
 var usersDetailSchema = new Schema({
   quantity: {type: Number, required: true},
@@ -39,7 +38,7 @@ var reservationSchema = new Schema({
     description: String
   },
   cubicle: {type: Number, required: true},
-  reservationDate: {type: Date, required: [true, 'La fecha de reservacion es requerida'], validate: valid.reservationDateValidation},
+  reservationDate: {type: Date, required: [true, 'La fecha de reservacion es requerida']},
   entryTime: {type: Date, default: Date.now, required: [true, 'La hora de entrada es requerida']},
   departureTime: {type: Date, required: [true, 'La hora de salida es requerida']},
   peopleQuantity: {type: Number, min: 0},

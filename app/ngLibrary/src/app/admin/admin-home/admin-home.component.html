@@ -31,8 +31,10 @@
       <span>{{totalExternals}} Elementos</span>
     </a>
   </div>
-  <div class="grid-x grid-padding-x">
-    <button type="button" class="button radius shadow" name="button" (click)="openPopup()">Reiniciar reservaciones</button>
+  <div class="grid-x grid-padding-x reset">
+    <div class="small-12 cell">
+      <button type="button" class="button radius shadow" name="button" (click)="openPopup()"><i class="fa fa-undo fa-lg"></i>&nbsp;<span class="show-for-medium">Reiniciar reservaciones</span></button>
+    </div>
   </div>
 </div>
 <ngui-popup #popup></ngui-popup>

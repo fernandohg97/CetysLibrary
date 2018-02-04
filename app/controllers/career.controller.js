@@ -2,6 +2,7 @@
 
 const express = require('express')
 const Career = require('../models/career/career.model')
+const fs = require('fs');
 
 function getCareers(req, res) {
   let findCareers = Career.find()
@@ -59,6 +60,31 @@ function createCareer(req, res) {
   }
 }
 
+function createCareersFile(req, res) {
+  let rootFile = `${__dirname}/carreras.json`
+  let content = Career.find({}, {_id: 0, __v: 0})
+  content.then(data => {
+    data = JSON.stringify(data)
+    fs.writeFile(rootFile, data, 'utf-8', (err) => {
+      if (err) return res.status(500).send('Error al crear el archivo ' + err)
+      return res.status(200).send({message: 'File was saved'})
+    })
+  }).catch(err => res.status(500).send({message: `Error del server ${err}`}))
+}
+
+function removeCareersFile(req, res) {
+  let rootFile = `${__dirname}/carreras.json`
+  fs.unlink(rootFile, (err) => {
+    if (err) throw err;
+    return res.status(200).send({message: 'carreras.json successfully deleted'})
+  });
+}
+
+function downloadCareersFile(req, res) {
+  let rootFile = `${__dirname}/carreras.json`
+  res.download(rootFile, 'carreras.json')
+}
+
 function updateCareer(req, res) {
   let updateCareer = Career.findByIdAndUpdate(req.params.career_id, req.body)
 
@@ -81,11 +107,26 @@ function removeCareer(req, res) {
   })
 }
 
+function removeCareers(req, res) {
+  let removeCareers = Career.remove({})
+
+  removeCareers.then(response => {
+    res.json({message: 'Careers deleted successfully'})
+  })
+  .catch(err => {
+    res.status(500).send({message: `No se pudo eliminar las carreras: ${err}`})
+  })
+}
+
 module.exports = {
   getCareers,
   getCareersByDivision,
   getCareer,
   createCareer,
+  createCareersFile,
+  downloadCareersFile,
+  removeCareersFile,
   updateCareer,
-  removeCareer
+  removeCareer,
+  removeCareers
 }

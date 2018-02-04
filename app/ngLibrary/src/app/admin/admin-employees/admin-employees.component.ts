@@ -1,15 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { EmployeesService } from '../../services/employees/employees.service';
 import { EmployeeModel } from '../../models/employee.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
+import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
+import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
+import { AdminSection } from '../../enums/admin-section.enum';
 
 @Component({
   selector: 'app-admin-employees',
   templateUrl: './admin-employees.component.html',
   styleUrls: ['./admin-employees.component.css']
 })
-export class AdminEmployeesComponent implements OnInit {
+export class AdminEmployeesComponent implements OnInit, OnDestroy {
 
+  @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   newEmployee = new EmployeeModel()
   employees: EmployeeModel[]
   called: Boolean
@@ -21,7 +26,7 @@ export class AdminEmployeesComponent implements OnInit {
   errorFile: string
   errorItem: string
 
-  constructor(private employeesService: EmployeesService, private router: Router) {
+  constructor(private dataReservationService: DataReservationService, private employeesService: EmployeesService, private router: Router) {
     this.called = false
   }
 
@@ -29,6 +34,11 @@ export class AdminEmployeesComponent implements OnInit {
     this.employeesService.getAll().then(data => {
       this.employees = data
     })
+    this.employeesService.createEmployeesDownloadFile()
+  }
+
+  ngOnDestroy() {
+    this.employeesService.removeEmployeesFile()
   }
 
   createEmployee() {
@@ -54,6 +64,23 @@ export class AdminEmployeesComponent implements OnInit {
         reader.readAsText(input.files[index]);
     };
   }
+
+  openPopup() {
+    this.dataReservationService.changeAdminSelected(AdminSection.employees)
+      this.popup.open(PopupConfirmComponent, {
+        classNames: 'custom',
+        closeButton: true
+      })
+    }
+
+    downloadFile() {
+      this.employeesService.getDownloadFile().then(res => {
+        window.open(res.url)
+      }).catch(err => {
+        console.log(err)
+        alert('Hubo un error al descargar el archivo')
+      })
+    }
 
   save() {
     if (this.textFile) {

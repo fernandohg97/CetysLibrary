@@ -54,6 +54,7 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
   constructor(private reportsService: ReportsService, private reservationsService: ReservationsService) {}
 
   ngOnInit() {
+    console.log(this.reportsCubicle)
     this.reservationsService.getCount().then(data => {
       this.totalReservations = parseInt(JSON.parse(JSON.stringify(data))._body)
     })

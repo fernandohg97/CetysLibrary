@@ -31,6 +31,18 @@ export class EmployeesService {
     .catch(EmployeesService.handleError)
   }
 
+  getDownloadFile() {
+    return this.http.get(`${this.url}/download`).toPromise()
+  }
+
+  createEmployeesDownloadFile() {
+    return this.http.get(`${this.url}/file`).toPromise()
+  }
+
+  removeEmployeesFile() {
+    return this.http.get(`${this.url}/remove`).toPromise()
+  }
+
   create(newEmployee: EmployeeModel) {
     return this.http.post(this.url, newEmployee)
     .map(res => res.json())
@@ -50,6 +62,10 @@ export class EmployeesService {
   remove(id: String) {
     console.log(id)
     return this.http.delete(`${this.url}/${id}`).toPromise()
+  }
+
+  removeAll() {
+    return this.http.delete(`${this.url}`).toPromise()
   }
 
 }

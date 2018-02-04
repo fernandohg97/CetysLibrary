@@ -47,6 +47,18 @@ export class UsersService {
     .catch(UsersService.handleError)
   }
 
+  getDownloadFile() {
+    return this.http.get(`${this.url}/download`).toPromise()
+  }
+
+  createUsersDownloadFile() {
+    return this.http.get(`${this.url}/file`).toPromise()
+  }
+
+  removeUsersFile() {
+    return this.http.get(`${this.url}/remove`).toPromise()
+  }
+
   create(newUser: UserModel) {
     return this.http.post(this.url, newUser)
     .map(res => res.json())
@@ -66,6 +78,10 @@ export class UsersService {
   remove(id: String) {
     console.log(id)
     return this.http.delete(`${this.url}/${id}`).toPromise()
+  }
+
+  removeAll() {
+    return this.http.delete(`${this.url}`).toPromise()
   }
 
 }

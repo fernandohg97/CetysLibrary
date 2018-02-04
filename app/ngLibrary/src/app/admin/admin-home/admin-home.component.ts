@@ -9,6 +9,7 @@ import { ReservationsService } from '../../services/reservations/reservations.se
 import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
 import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
 import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
+import { AdminSection } from '../../enums/admin-section.enum';
 
 @Component({
   selector: 'app-admin-home',
@@ -59,6 +60,7 @@ export class AdminHomeComponent implements OnInit {
   }
 
   openPopup() {
+    this.dataReservationService.changeAdminSelected(AdminSection.reservations)
       this.popup.open(PopupConfirmComponent, {
         classNames: 'custom',
         closeButton: true

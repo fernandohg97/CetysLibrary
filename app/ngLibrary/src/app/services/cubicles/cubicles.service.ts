@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, RequestOptions, ResponseContentType } from '@angular/http';
 import { CubicleModel } from '../../models/cubicle.model';
 import { environment } from '../../../environments/environment';
 import "rxjs/add/operator/map";
@@ -31,6 +31,18 @@ export class CubiclesService {
     .catch(CubiclesService.handleError)
   }
 
+  getDownloadFile() {
+    return this.http.get(`${this.url}/download`).toPromise()
+  }
+
+  createCubiclesDownloadFile() {
+    return this.http.get(`${this.url}/file`).toPromise()
+  }
+
+  removeCubiclesFile() {
+    return this.http.get(`${this.url}/remove`).toPromise()
+  }
+
   create(newCubicle: CubicleModel) {
     return this.http.post(this.url, newCubicle)
     .map(res => res.json())
@@ -50,5 +62,9 @@ export class CubiclesService {
   remove(id: String) {
     console.log(id)
     return this.http.delete(`${this.url}/${id}`).toPromise()
+  }
+
+  removeAll() {
+    return this.http.delete(`${this.url}`).toPromise()
   }
 }

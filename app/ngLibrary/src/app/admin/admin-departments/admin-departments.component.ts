@@ -1,15 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { DepartmentsService } from '../../services/departments/departments.service';
 import { DepartmentModel } from '../../models/department.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
+import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
+import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
+import { AdminSection } from '../../enums/admin-section.enum';
 
 @Component({
   selector: 'app-admin-departments',
   templateUrl: './admin-departments.component.html',
   styleUrls: ['./admin-departments.component.css']
 })
-export class AdminDepartmentsComponent implements OnInit {
+export class AdminDepartmentsComponent implements OnInit, OnDestroy {
 
+  @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   newDepartment = new DepartmentModel()
   departments: DepartmentModel[]
   called: Boolean
@@ -21,7 +26,7 @@ export class AdminDepartmentsComponent implements OnInit {
   errorFile: string
   errorItem: string
 
-  constructor(private departmentsService: DepartmentsService, private router: Router) {
+  constructor(private dataReservationService: DataReservationService, private departmentsService: DepartmentsService, private router: Router) {
     this.called = false
   }
 
@@ -29,6 +34,11 @@ export class AdminDepartmentsComponent implements OnInit {
     this.departmentsService.getAll().then(data => {
       this.departments = data
     })
+    this.departmentsService.createDepartmentsDownloadFile()
+  }
+
+  ngOnDestroy() {
+    this.departmentsService.removeDepartmentsFile()
   }
 
   createDepartment() {
@@ -53,6 +63,23 @@ export class AdminDepartmentsComponent implements OnInit {
         reader.readAsText(input.files[index]);
     };
   }
+
+  openPopup() {
+    this.dataReservationService.changeAdminSelected(AdminSection.departments)
+      this.popup.open(PopupConfirmComponent, {
+        classNames: 'custom',
+        closeButton: true
+      })
+    }
+
+    downloadFile() {
+      this.departmentsService.getDownloadFile().then(res => {
+        window.open(res.url)
+      }).catch(err => {
+        console.log(err)
+        alert('Hubo un error al descargar el archivo')
+      })
+    }
 
   save() {
     if (this.textFile) {

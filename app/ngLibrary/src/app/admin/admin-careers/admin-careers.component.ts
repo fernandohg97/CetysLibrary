@@ -1,16 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { CareersService } from '../../services/careers/careers.service';
 import { CareerModel } from '../../models/career.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SettingsService} from '../../services/settings/settings.service';
+import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
+import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
+import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
+import { AdminSection } from '../../enums/admin-section.enum';
 
 @Component({
   selector: 'app-admin-careers',
   templateUrl: './admin-careers.component.html',
   styleUrls: ['./admin-careers.component.css']
 })
-export class AdminCareersComponent implements OnInit {
+export class AdminCareersComponent implements OnInit, OnDestroy {
 
+  @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   newCareer = new CareerModel()
   divisions: any
   careers: CareerModel[]
@@ -23,7 +28,12 @@ export class AdminCareersComponent implements OnInit {
   errorFile: string
   errorItem: string
 
-  constructor(private settingsService: SettingsService, private careersService: CareersService, private router: Router) {
+  constructor(
+    private dataReservationService: DataReservationService,
+    private settingsService: SettingsService,
+    private careersService: CareersService,
+    private router: Router
+  ) {
     this.called = false
   }
 
@@ -35,6 +45,11 @@ export class AdminCareersComponent implements OnInit {
     this.careersService.getAll().then(data => {
       this.careers = data
     })
+    this.careersService.createCareersDownloadFile()
+  }
+
+  ngOnDestroy() {
+    this.careersService.removeCareersFile()
   }
 
   createCareer() {
@@ -64,6 +79,24 @@ export class AdminCareersComponent implements OnInit {
   areaChange(event) {
     this.newCareer.area = event.division
   }
+
+  openPopup() {
+    this.dataReservationService.changeAdminSelected(AdminSection.careers)
+      this.popup.open(PopupConfirmComponent, {
+        classNames: 'custom',
+        closeButton: true
+      })
+    }
+
+    downloadFile() {
+      this.careersService.getDownloadFile().then(res => {
+        console.log(res)
+        window.open(res.url)
+      }).catch(err => {
+        console.log(err)
+        alert('Hubo un error al descargar el archivo')
+      })
+    }
 
   save() {
     if (this.textFile) {

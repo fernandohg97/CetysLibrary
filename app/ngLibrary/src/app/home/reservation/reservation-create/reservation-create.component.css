@@ -18,11 +18,9 @@ form {
 
 .circle {
   position: relative;
-  /*font-size: 10px;*/
   width: 20px;
   height: 25px;
   margin-top: 5px;
-  /*border-radius: 80%;*/
 }
 .circle i {
   position: absolute;
@@ -39,7 +37,6 @@ form {
   margin-bottom: 20px;
 }
 .list-group {
-  /*border: solid green;*/
   margin-left: 20px;
   width: auto;
   position: relative;
@@ -50,7 +47,6 @@ form {
   top: 0;
   margin-left: 60px;
   font-size: 13px;
-  /*border: solid brown;*/
 }
 .department-list {
   margin-left: 20px;
@@ -63,7 +59,6 @@ form {
   top: 0;
   margin-left: 10px;
   font-size: 13px;
-  /*border: solid brown;*/
 }
 .hola {
   margin: 0 auto;

@@ -1,16 +1,22 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CubiclesService } from '../../services/cubicles/cubicles.service';
 import { CubicleModel } from '../../models/cubicle.model';
 import { FormGroup } from '@angular/forms';
+// Test
+import { AdminSection } from '../../enums/admin-section.enum';
+import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
+import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
+import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
 
 @Component({
   selector: 'app-admin-cubicles',
   templateUrl: './admin-cubicles.component.html',
   styleUrls: ['./admin-cubicles.component.css']
 })
-export class AdminCubiclesComponent implements OnInit {
+export class AdminCubiclesComponent implements OnInit, OnDestroy {
 
+  @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   newCubicle = new CubicleModel()
   cubicles: CubicleModel[]
   called: Boolean
@@ -20,15 +26,22 @@ export class AdminCubiclesComponent implements OnInit {
   anyErrors: any
   errorFile: string
   errorItem: string
+  cubiclesFile: any
 
-  constructor(private cubiclesService: CubiclesService, private router: Router, private route: ActivatedRoute) {
+  constructor(private dataReservationService: DataReservationService, private cubiclesService: CubiclesService, private router: Router, private route: ActivatedRoute) {
     this.called = false
   }
 
   ngOnInit() {
     this.cubiclesService.getAll().then(data => {
       this.cubicles = data
+      console.log(data)
     })
+    this.cubiclesService.createCubiclesDownloadFile()
+  }
+
+  ngOnDestroy() {
+    this.cubiclesService.removeCubiclesFile()
   }
 
   createCubicle() {
@@ -54,6 +67,23 @@ export class AdminCubiclesComponent implements OnInit {
         reader.readAsText(input.files[index]);
     };
   }
+
+  openPopup() {
+    this.dataReservationService.changeAdminSelected(AdminSection.cubicles)
+      this.popup.open(PopupConfirmComponent, {
+        classNames: 'custom',
+        closeButton: true
+      })
+    }
+
+    downloadFile() {
+      this.cubiclesService.getDownloadFile().then(res => {
+        window.open(res.url)
+      }).catch(err => {
+        console.log(err)
+        alert('Hubo un error al descargar el archivo')
+      })
+    }
 
   save() {
     if (this.textFile) {

@@ -1,7 +1,18 @@
 <div *ngIf="!called" class="grid-container table-content">
+  <h2>Usuarios</h2>
   <div class="grid-x grid-padding-x">
-    <div class="cell">
-      <button type="button" class="button radius shadow float-right" name="button" (click)="createUser()">Nuevo estudiante</button>
+    <div class="small-6 large-8 cell">
+      <button type="button" class="secondary button radius shadow" name="button" (click)="openPopup()">
+        <i class="fa fa-trash fa-lg" aria-hidden="true"></i>&nbsp;<span class="show-for-medium">Remover</span>
+      </button>
+    </div>
+    <div class="small-6 large-4 cell text-right">
+      <button type="button" class="button radius shadow download-btn" name="button" (click)="downloadFile()">
+        <i class="fa fa-download fa-lg"></i>&nbsp;<span class="show-for-medium">Descargar</span>
+      </button>
+      <button type="button" class="button radius shadow" name="button" (click)="createUser()">
+        <i class="fa fa-plus fa-lg"></i>&nbsp;<span class="show-for-medium">Nuevo estudiante</span>
+      </button>
     </div>
   </div>
   <div class="grid-x grid-padding-x">
@@ -31,24 +42,22 @@
           <td>{{user.career}}</td>
           <td class="text-center"><a routerLink="/admin-site/users/{{user._id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
           <td class="remove">
-              <button (click)="delete(user._id)" class="close-button remove-item" aria-label="Dismiss alert" type="button" data-close>
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <button (click)="delete(user._id)" class="close-button remove-item" aria-label="Dismiss alert" type="button" data-close>
+              <span aria-hidden="true">&times;</span>
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-  <!-- <ul>
-    <li *ngFor="let item of users | paginate: { itemsPerPage: 10, currentPage: page }"> {{item.name}} </li>
-  </ul> -->
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell text-center">
       <pagination-controls class="pagination-users" (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>
-
 </div>
+<ngui-popup #popup></ngui-popup>
+
 
 <!-- Create User Form -->
 <form *ngIf="called">

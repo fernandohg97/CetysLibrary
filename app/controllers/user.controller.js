@@ -3,6 +3,7 @@
 const express = require('express')
 const User = require('../models/user/user.model')
 const Employee = require('../models/employee/employee.model')
+const fs = require('fs');
 
 function getUsers(req, res) {
   let findUsers = User.find().sort({registrationNumber: -1})
@@ -87,6 +88,31 @@ function createUser(req, res) {
   }
 }
 
+function createUsersFile(req, res) {
+  let rootFile = `${__dirname}/usuarios.json`
+  let content = User.find({}, {_id: 0, __v: 0}).sort({registrationNumber: -1})
+  content.then(data => {
+    data = JSON.stringify(data)
+    fs.writeFile(rootFile, data, 'utf-8', (err) => {
+      if (err) return res.status(500).send(`Error al crear el archivo: ${err}`)
+      return res.status(200).send({message: 'File was saved'})
+    })
+  }).catch(err => res.status(500).send({message: `Error del server ${err}`}))
+}
+
+function removeUsersFile(req, res) {
+  let rootFile = `${__dirname}/usuarios.json`
+  fs.unlink(rootFile, (err) => {
+    if (err) throw err;
+    return res.status(200).send({message: 'usuarios.json successfully deleted'})
+  });
+}
+
+function downloadUsersFile(req, res) {
+  let rootFile = `${__dirname}/usuarios.json`
+  res.download(rootFile, 'usuarios.json')
+}
+
 function updateUser(req, res) {
   let updateUser = User.findByIdAndUpdate(req.params.user_id, req.body)
 
@@ -109,12 +135,27 @@ function removeUser(req, res) {
   })
 }
 
+function removeUsers(req, res) {
+  let removeUsers = User.remove({})
+
+  removeUsers.then(response => {
+    res.json({message: 'Students deleted successfully'})
+  })
+  .catch(err => {
+    res.status(500).send({message: `No se pudo eliminar los estudiantes: ${err}`})
+  })
+}
+
 module.exports = {
   getUsers,
   getUsersRecent,
   getUser,
   getUserByRegistrationNumber,
   createUser,
+  createUsersFile,
+  downloadUsersFile,
+  removeUsersFile,
   updateUser,
-  removeUser
+  removeUser,
+  removeUsers
 }

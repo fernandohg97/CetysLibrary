@@ -1,17 +1,22 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../services/users/users.service';
 import { SettingsService } from '../../services/settings/settings.service';
 import { UserModel } from '../../models/user.model';
 import { CareersService } from '../../services/careers/careers.service';
+import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
+import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
+import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
+import { AdminSection } from '../../enums/admin-section.enum';
 
 @Component({
   selector: 'app-admin-users',
   templateUrl: './admin-users.component.html',
   styleUrls: ['./admin-users.component.css']
 })
-export class AdminUsersComponent implements OnInit {
+export class AdminUsersComponent implements OnInit, OnDestroy {
 
+  @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   newUser = new UserModel()
   divisions: any
   users: UserModel[]
@@ -26,6 +31,7 @@ export class AdminUsersComponent implements OnInit {
   errorItem: string
 
   constructor(
+    private dataReservationService: DataReservationService,
     private usersService: UsersService,
     private settingService: SettingsService,
     private router: Router,
@@ -43,6 +49,13 @@ export class AdminUsersComponent implements OnInit {
     this.usersService.getAll().then(data => {
       this.users = data
     })
+    this.usersService.createUsersDownloadFile()
+  }
+
+  ngOnDestroy() {
+    this.usersService.removeUsersFile().then(response => {
+      if (response.status == 200) console.log('File was removed')
+    }).catch(err => console.log('Hubo un error: ' + err))
   }
 
   createUser() {
@@ -68,6 +81,23 @@ export class AdminUsersComponent implements OnInit {
         reader.readAsText(input.files[index]);
     };
   }
+
+  openPopup() {
+    this.dataReservationService.changeAdminSelected(AdminSection.students)
+      this.popup.open(PopupConfirmComponent, {
+        classNames: 'custom',
+        closeButton: true
+      })
+    }
+
+    downloadFile() {
+      this.usersService.getDownloadFile().then(res => {
+        window.open(res.url)
+      }).catch(err => {
+        console.log(err)
+        alert('Hubo un error al descargar el archivo')
+      })
+    }
 
   save() {
     if (this.textFile) {

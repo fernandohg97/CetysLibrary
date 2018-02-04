@@ -42,6 +42,18 @@ export class CareersService {
     .catch(CareersService.handleError)
   }
 
+  getDownloadFile() {
+    return this.http.get(`${this.url}/download`).toPromise()
+  }
+
+  createCareersDownloadFile() {
+    return this.http.get(`${this.url}/file`).toPromise()
+  }
+
+  removeCareersFile() {
+    return this.http.get(`${this.url}/remove`).toPromise()
+  }
+
   create(newCareer: CareerModel) {
     return this.http.post(this.url, newCareer)
     .map(res => res.json())
@@ -61,6 +73,10 @@ export class CareersService {
   remove(id: String) {
     console.log(id)
     return this.http.delete(`${this.url}/${id}`).toPromise()
+  }
+
+  removeAll() {
+    return this.http.delete(`${this.url}`).toPromise()
   }
 
 }
