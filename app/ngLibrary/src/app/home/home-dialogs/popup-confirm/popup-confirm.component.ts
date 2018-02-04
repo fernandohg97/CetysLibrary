@@ -8,8 +8,7 @@ import { DepartmentsService } from '../../../services/departments/departments.se
 import { UsersService } from '../../../services/users/users.service';
 import { EmployeesService } from '../../../services/employees/employees.service';
 import { CareersService } from '../../../services/careers/careers.service';
-import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
-
+import { NguiPopupComponent } from '@ngui/popup';
 
 @Component({
   selector: 'app-popup-confirm',

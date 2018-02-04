@@ -3,7 +3,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const validator = require('validator')
-// const valid = require('./reservation.validation')
 
 var usersDetailSchema = new Schema({
   quantity: {type: Number, required: true},

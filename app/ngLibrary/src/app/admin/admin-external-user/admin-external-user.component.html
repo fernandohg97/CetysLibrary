@@ -1,7 +1,10 @@
 <div *ngIf="!called" class="grid-container table-content">
+  <h2>Externos</h2>
   <div class="grid-x grid-padding-x">
     <div class="cell">
-      <button type="button" class="button radius shadow float-right" name="button" (click)="createExternalUser()">Nuevo usuario</button>
+      <button type="button" class="button radius shadow float-right" name="button" (click)="createExternalUser()">
+          <i class="fa fa-plus fa-lg"></i>&nbsp;<span class="show-for-medium">Nuevo usuario</span>
+      </button>
     </div>
   </div>
   <div class="grid-x grid-padding-x">

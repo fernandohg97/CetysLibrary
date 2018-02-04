@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { CareersService } from '../../services/careers/careers.service';
 import { CareerModel } from '../../models/career.model';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,7 +13,7 @@ import { AdminSection } from '../../enums/admin-section.enum';
   templateUrl: './admin-careers.component.html',
   styleUrls: ['./admin-careers.component.css']
 })
-export class AdminCareersComponent implements OnInit {
+export class AdminCareersComponent implements OnInit, OnDestroy {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   newCareer = new CareerModel()
@@ -45,6 +45,11 @@ export class AdminCareersComponent implements OnInit {
     this.careersService.getAll().then(data => {
       this.careers = data
     })
+    this.careersService.createCareersDownloadFile()
+  }
+
+  ngOnDestroy() {
+    this.careersService.removeCareersFile()
   }
 
   createCareer() {
@@ -80,6 +85,16 @@ export class AdminCareersComponent implements OnInit {
       this.popup.open(PopupConfirmComponent, {
         classNames: 'custom',
         closeButton: true
+      })
+    }
+
+    downloadFile() {
+      this.careersService.getDownloadFile().then(res => {
+        console.log(res)
+        window.open(res.url)
+      }).catch(err => {
+        console.log(err)
+        alert('Hubo un error al descargar el archivo')
       })
     }
 
