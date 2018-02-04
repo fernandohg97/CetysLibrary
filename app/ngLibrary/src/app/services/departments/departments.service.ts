@@ -38,6 +38,17 @@ export class DepartmentsService {
     .catch(DepartmentsService.handleError)
   }
 
+  getDownloadFile() {
+    return this.http.get(`${this.url}/download`).toPromise()
+  }
+
+  createDepartmentsDownloadFile() {
+    return this.http.get(`${this.url}/file`).toPromise()
+  }
+
+  removeDepartmentsFile() {
+    return this.http.get(`${this.url}/remove`).toPromise()
+  }
 
   create(newDepartment: DepartmentModel) {
     return this.http.post(this.url, newDepartment)
