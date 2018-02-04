@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CubiclesService } from '../../services/cubicles/cubicles.service';
 import { CubicleModel } from '../../models/cubicle.model';
 import { FormGroup } from '@angular/forms';
-// Test
 import { AdminSection } from '../../enums/admin-section.enum';
 import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
 import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
@@ -35,7 +34,6 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.cubiclesService.getAll().then(data => {
       this.cubicles = data
-      console.log(data)
     })
     this.cubiclesService.createCubiclesDownloadFile()
   }
@@ -80,7 +78,6 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
       this.cubiclesService.getDownloadFile().then(res => {
         window.open(res.url)
       }).catch(err => {
-        console.log(err)
         alert('Hubo un error al descargar el archivo')
       })
     }
