@@ -9,6 +9,12 @@ userRouter.get('/users', userCtrl.getUsers)
 
 userRouter.get('/users/recent', userCtrl.getUsersRecent)
 
+userRouter.get('/users/file', userCtrl.createUsersFile)
+
+userRouter.get('/users/download', userCtrl.downloadUsersFile)
+
+userRouter.get('/users/remove', userCtrl.removeUsersFile)
+
 userRouter.get('/users/:user_id', userCtrl.getUser)
 
 userRouter.get('/users/registrationNumber/:registrationNumber', userCtrl.getUserByRegistrationNumber)

@@ -7,6 +7,12 @@ const created = require('../middlewares/careerCreated')
 
 careerRouter.get('/careers', careerCtrl.getCareers)
 
+careerRouter.get('/careers/file', careerCtrl.createCareersFile)
+
+careerRouter.get('/careers/download', careerCtrl.downloadCareersFile)
+
+careerRouter.get('/careers/remove', careerCtrl.removeCareersFile)
+
 careerRouter.get('/careers/division', careerCtrl.getCareersByDivision)
 
 careerRouter.get('/careers/:career_id', careerCtrl.getCareer)

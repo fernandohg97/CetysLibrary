@@ -7,6 +7,12 @@ const created = require('../middlewares/departmentCreated')
 
 departmentRouter.get('/departments', departmentCtrl.getDepartments)
 
+departmentRouter.get('/departments/file', departmentCtrl.createDepartmentsFile)
+
+departmentRouter.get('/departments/download', departmentCtrl.downloadDepartmentsFile)
+
+departmentRouter.get('/departments/remove', departmentCtrl.removeDepartmentsFile)
+
 departmentRouter.get('/departments/:department_id', departmentCtrl.getDepartment)
 
 departmentRouter.get('/departments/number/:department', departmentCtrl.getDepartmentByNumber)
