@@ -2,6 +2,7 @@
 
 const express = require('express')
 const Department = require('../models/department/department.model')
+const fs = require('fs');
 
 function getDepartments(req, res) {
   let findDepartments = Department.find().sort({departmentCode: 1})
@@ -63,6 +64,31 @@ function createDepartment(req, res) {
   }
 }
 
+function createDepartmentsFile(req, res) {
+  let rootFile = `${__dirname}/departamentos.json`
+  let content = Department.find({}, {_id: 0, __v: 0}).sort({departmentCode: 1})
+  content.then(data => {
+    data = JSON.stringify(data)
+    fs.writeFile(rootFile, data, 'utf-8', (err) => {
+      if (err) return res.status(500).send('Error al crear el archivo ' + err)
+      return res.status(200).send({message: 'File was saved'})
+    })
+  }).catch(err => res.status(500).send({message: `Error del server ${err}`}))
+}
+
+function removeDepartmentsFile(req, res) {
+  let rootFile = `${__dirname}/departamentos.json`
+  fs.unlink(rootFile, (err) => {
+    if (err) throw err;
+    return res.status(200).send({message: 'departamentos.json successfully deleted'})
+  });
+}
+
+function downloadDepartmentsFile(req, res) {
+  let rootFile = `${__dirname}/departamentos.json`
+  res.download(rootFile, 'departamentos.json')
+}
+
 function updateDepartment(req, res) {
   let updateDepartment = Department.findByIdAndUpdate(req.params.department_id, req.body)
 
@@ -101,6 +127,9 @@ module.exports = {
   getDepartment,
   getDepartmentByNumber,
   createDepartment,
+  createDepartmentsFile,
+  downloadDepartmentsFile,
+  removeDepartmentsFile,
   updateDepartment,
   removeDepartment,
   removeDepartments

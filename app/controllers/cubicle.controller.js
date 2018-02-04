@@ -1,5 +1,7 @@
 'use strict'
 
+const fs = require('fs')
+const path = require('path')
 const express = require('express')
 const Cubicle = require('../models/cubicle/cubicle.model')
 
@@ -48,6 +50,31 @@ function createCubicle (req, res) {
   }
 }
 
+function createCubiclesFile(req, res) {
+  let rootFile = `${__dirname}/cubiculos.json`
+  let content = Cubicle.find({}, {_id: 0, __v: 0}).sort({cubicleNumber: 1})
+  content.then(data => {
+    data = JSON.stringify(data)
+    fs.writeFile(rootFile, data, 'utf-8', (err) => {
+      if (err) return res.status(500).send('Error al crear el archivo ' + err)
+      res.status(200).send({message: 'File was saved'})
+    })
+  }).catch(err => res.status(500).send({message: `Error del server ${err}`}))
+}
+
+function removeCubiclesFile(req, res) {
+  let rootFile = `${__dirname}/cubiculos.json`
+  fs.unlink(rootFile, (err) => {
+    if (err) throw err;
+    return res.status(200).send({message: 'cubiculos.json successfully deleted'})
+  });
+}
+
+function downloadCubiclesFile(req, res) {
+  let rootFile = `${__dirname}/cubiculos.json`
+  res.download(rootFile, 'cubiculos.json')
+}
+
 function updateCubicle (req, res) {
   let updateCubicle = Cubicle.findByIdAndUpdate(req.params.cubicle_id, req.body)
 
@@ -86,6 +113,9 @@ module.exports = {
   getCubicles,
   getCubicle,
   createCubicle,
+  createCubiclesFile,
+  downloadCubiclesFile,
+  removeCubiclesFile,
   updateCubicle,
   removeCubicle,
   removeCubicles
