@@ -53,9 +53,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.usersService.removeUsersFile().then(response => {
-      if (response.status == 200) console.log('File was removed')
-    }).catch(err => console.log('Hubo un error: ' + err))
+    this.usersService.removeUsersFile()
   }
 
   createUser() {
@@ -104,13 +102,23 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       let jsonFiles = JSON.parse(this.textFile)
       this.usersService.createFile(jsonFiles)
       .subscribe((response => {
-        this.router.navigateByUrl('/admin-site')
+        if (response.status == 200 || response.status == 204) {
+          setTimeout(() => {
+            alert(`Usuarios creados exitosamente`)
+          }, 500)
+          this.router.navigateByUrl('/admin-site')
+        }
       }), (err => this.errorFile = JSON.parse(err._body).existUsers)
       )
     } else {
       this.usersService.create(this.newUser)
       .subscribe((response => {
-        this.router.navigateByUrl('/admin-site')
+        if (response.status == 200 || response.status == 204) {
+          setTimeout(() => {
+            alert(`Usuario creado exitosamente`)
+          }, 500)
+          this.router.navigateByUrl('/admin-site')
+        }
       }), (err => {
         this.anyErrors = JSON.parse(err._body)
         this.errorItem = JSON.parse(err._body).existUser

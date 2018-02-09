@@ -87,13 +87,23 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
       let jsonFiles = JSON.parse(this.textFile)
       this.cubiclesService.createFile(jsonFiles)
       .subscribe((response => {
-        this.router.navigateByUrl('/admin-site')
+        if (response.status == 200 || response.status == 204) {
+          setTimeout(() => {
+            alert(`Cubiculos creados exitosamente`)
+          }, 500)
+          this.router.navigateByUrl('/admin-site')
+        }
       }), (err => this.errorFile = JSON.parse(err._body).existCubicles)
       )
     } else {
       this.cubiclesService.create(this.newCubicle)
       .subscribe((response => {
-        this.router.navigateByUrl('/admin-site')
+        if (response.status == 200 || response.status == 204) {
+          setTimeout(() => {
+            alert(`Cubiculo creado exitosamente`)
+          }, 500)
+          this.router.navigateByUrl('/admin-site')
+        }
       }), (err => {
           this.anyErrors = JSON.parse(err._body)
           this.errorItem = JSON.parse(err._body).existCubicle

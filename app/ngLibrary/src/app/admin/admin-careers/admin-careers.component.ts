@@ -103,13 +103,23 @@ export class AdminCareersComponent implements OnInit, OnDestroy {
       let jsonFiles = JSON.parse(this.textFile)
       this.careersService.createFile(jsonFiles)
       .subscribe((response => {
-        this.router.navigateByUrl('/admin-site')
+        if (response.status == 200 || response.status == 204) {
+          setTimeout(() => {
+            alert(`Carreras creadas exitosamente`)
+          }, 500)
+          this.router.navigateByUrl('/admin-site')
+        }
       }), (err => this.errorFile = JSON.parse(err._body).existCareers)
       )
     } else {
       this.careersService.create(this.newCareer)
       .subscribe((response => {
-        this.router.navigateByUrl('/admin-site')
+        if (response.status == 200 || response.status == 204) {
+          setTimeout(() => {
+            alert(`Carrera creada exitosamente`)
+          }, 500)
+          this.router.navigateByUrl('/admin-site')
+        }
       }), (err => {
         this.anyErrors = JSON.parse(err._body)
         this.errorItem = JSON.parse(err._body).existCareer
