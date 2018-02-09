@@ -97,4 +97,15 @@ export class ReportsComponent implements OnInit {
     })
   }
 
+  delete(id: string) {
+    this.reservationsService.remove(id).then(response => {
+      if (response.status == 200 || response.status == 204) {
+          setTimeout(() => {alert('Reservacion eliminada exitosamente')}, 600)
+      }
+    }).catch(err => {
+      alert(`Hubo un error al eliminar la reservacion`)
+      console.log(`Hay un error ${err}`)
+    })
+  }
+
 }
