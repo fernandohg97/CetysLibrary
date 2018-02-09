@@ -111,7 +111,7 @@ export class ReservationUpdateComponent implements OnInit {
       })
     })
   }
-
+  
   update() {
     console.log(this.employee)
     this.updateReservation.entryTime = new Date(`${this.currentDate} ${this.currentTime}`)
@@ -124,6 +124,9 @@ export class ReservationUpdateComponent implements OnInit {
             this.updateReservation.employee = employee
             this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
               if (response.status == 200 || response.status == 204) {
+                setTimeout(() => {
+                  alert(`Reservacion actualizada exitosamente`)
+                }, 500)
                 this.router.navigateByUrl('/')
               }
             }).catch(error => {
@@ -143,6 +146,9 @@ export class ReservationUpdateComponent implements OnInit {
           this.updateReservation.externalUser = external
           this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
             if (response.status == 200 || response.status == 204) {
+              setTimeout(() => {
+                alert(`Reservacion actualizada exitosamente`)
+              }, 500)
               this.router.navigateByUrl('/')
             }
           }).catch(error => {
@@ -164,6 +170,9 @@ export class ReservationUpdateComponent implements OnInit {
           this.updateReservation.user = student
           this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
             if (response.status == 200 || response.status == 204) {
+              setTimeout(() => {
+                alert(`Reservacion actualizada exitosamente`)
+              }, 500)
               this.router.navigateByUrl('/')
             }
           }).catch(error => {
@@ -183,6 +192,9 @@ export class ReservationUpdateComponent implements OnInit {
     this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
       if (response.status == 200 || response.status == 204) {
         console.log(response.json())
+        setTimeout(() => {
+          alert(`Reservacion actualizada exitosamente`)
+        }, 500)
         this.router.navigateByUrl('/')
       }
     }).catch(error => {

@@ -120,6 +120,9 @@ export class ReservationCreateComponent implements OnInit {
       this.reservationsService.create(this.newReservation)
       .subscribe(
         data => {
+          setTimeout(() => {
+            alert(`Reservacion realizada exitosamente`)
+          }, 500)
           console.log(data)
           this.router.navigateByUrl('/')
         },
