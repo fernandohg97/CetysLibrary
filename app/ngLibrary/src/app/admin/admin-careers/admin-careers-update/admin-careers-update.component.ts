@@ -44,9 +44,10 @@ export class AdminCareersUpdateComponent implements OnInit {
 
   update() {
     this.careersService.update(this.currentCareer._id, this.currentCareer).then(response => {
-      if (response.status == 200 || response.status == 204) {
+        setTimeout(() => {
+          alert(`Carrera actualizada exitosamente`)
+        }, 500)
         this.router.navigateByUrl('/admin-site')
-      }
     }).catch(err => console.log(`Error ${err}`))
   }
 

@@ -76,7 +76,6 @@ export class AdminDepartmentsComponent implements OnInit, OnDestroy {
       this.departmentsService.getDownloadFile().then(res => {
         window.open(res.url)
       }).catch(err => {
-        console.log(err)
         alert('Hubo un error al descargar el archivo')
       })
     }
@@ -86,13 +85,19 @@ export class AdminDepartmentsComponent implements OnInit, OnDestroy {
       let jsonFiles = JSON.parse(this.textFile)
       this.departmentsService.createFile(jsonFiles)
       .subscribe((response => {
-        this.router.navigateByUrl('/admin-site')
+          setTimeout(() => {
+            alert(`Departamentos creados exitosamente`)
+          }, 500)
+          this.router.navigateByUrl('/admin-site')
       }), (err => this.errorFile = JSON.parse(err._body).existDepartments)
       )
     } else {
       this.departmentsService.create(this.newDepartment)
       .subscribe((response => {
-        this.router.navigateByUrl('/admin-site')
+          setTimeout(() => {
+            alert(`Departamento creado exitosamente`)
+          }, 500)
+          this.router.navigateByUrl('/admin-site')
       }), (err => {
         this.anyErrors = JSON.parse(err._body)
         this.errorItem = JSON.parse(err._body).existDepartment

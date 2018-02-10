@@ -77,7 +77,6 @@ export class AdminEmployeesComponent implements OnInit, OnDestroy {
       this.employeesService.getDownloadFile().then(res => {
         window.open(res.url)
       }).catch(err => {
-        console.log(err)
         alert('Hubo un error al descargar el archivo')
       })
     }
@@ -87,7 +86,10 @@ export class AdminEmployeesComponent implements OnInit, OnDestroy {
       let jsonFiles = JSON.parse(this.textFile)
       this.employeesService.createFile(jsonFiles)
       .subscribe((response => {
-        this.router.navigateByUrl('/admin-site')
+          setTimeout(() => {
+            alert(`Empleados creados exitosamente`)
+          }, 500)
+          this.router.navigateByUrl('/admin-site')
       }), (err => {
         this.errorFile = JSON.parse(err._body).existEmployees
       })
@@ -95,7 +97,10 @@ export class AdminEmployeesComponent implements OnInit, OnDestroy {
     } else {
       this.employeesService.create(this.newEmployee)
       .subscribe((response => {
-        this.router.navigateByUrl('/admin-site')
+          setTimeout(() => {
+            alert(`Empleado creado exitosamente`)
+          }, 500)
+          this.router.navigateByUrl('/admin-site')
       }), (err => {
         this.anyErrors = JSON.parse(err._body)
         this.errorItem = JSON.parse(err._body).existEmployee

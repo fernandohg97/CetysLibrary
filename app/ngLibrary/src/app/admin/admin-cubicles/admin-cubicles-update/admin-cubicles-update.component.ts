@@ -18,10 +18,8 @@ export class AdminCubiclesUpdateComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       let cubicleId = params['id'] //
-      console.log(`Id del cubiculo: ${cubicleId}`)
       if (cubicleId) {
         this.cubiclesService.getById(cubicleId).then(cubicle => {
-          console.log(cubicle)
           this.currentCubicle = cubicle
         })
       }
@@ -30,10 +28,10 @@ export class AdminCubiclesUpdateComponent implements OnInit {
 
   update() {
     this.cubiclesService.update(this.currentCubicle._id, this.currentCubicle).then(response => {
-      console.log(response)
-      if (response.status == 200 || response.status == 204) {
+        setTimeout(() => {
+          alert(`Cubiculo actualizado exitosamente`)
+        }, 500)
         this.router.navigateByUrl('/admin-site')
-      }
     }).catch(err => console.log(`Error ${err}`))
   }
 

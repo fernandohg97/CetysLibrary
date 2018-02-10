@@ -60,7 +60,10 @@ export class AdminExternalUserComponent implements OnInit {
       let jsonFiles = JSON.parse(this.textFile)
       this.externalUserService.createFile(jsonFiles)
       .subscribe((response => {
-        this.router.navigateByUrl('/admin-site')
+          setTimeout(() => {
+            alert(`Externos creados exitosamente`)
+          }, 500)
+          this.router.navigateByUrl('/admin-site')
       }), (err => {
         this.errorFile = JSON.parse(err._body).existExternalUsers
       })
@@ -68,7 +71,10 @@ export class AdminExternalUserComponent implements OnInit {
     } else {
       this.externalUserService.create(this.newExternalUser)
       .subscribe((response => {
-        this.router.navigateByUrl('/admin-site')
+          setTimeout(() => {
+            alert(`Externo creado exitosamente`)
+          }, 500)
+          this.router.navigateByUrl('/admin-site')
       }), (err => {
         this.anyErrors = JSON.parse(err._body)
         this.errorItem = JSON.parse(err._body).existExternalUser
