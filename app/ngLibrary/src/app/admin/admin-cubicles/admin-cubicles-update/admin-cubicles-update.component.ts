@@ -30,10 +30,10 @@ export class AdminCubiclesUpdateComponent implements OnInit {
 
   update() {
     this.cubiclesService.update(this.currentCubicle._id, this.currentCubicle).then(response => {
-      console.log(response)
-      if (response.status == 200 || response.status == 204) {
+        setTimeout(() => {
+          alert(`Cubiculo actualizado exitosamente`)
+        }, 500)
         this.router.navigateByUrl('/admin-site')
-      }
     }).catch(err => console.log(`Error ${err}`))
   }
 

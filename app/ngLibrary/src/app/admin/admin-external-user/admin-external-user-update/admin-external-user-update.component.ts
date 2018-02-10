@@ -27,9 +27,10 @@ export class AdminExternalUserUpdateComponent implements OnInit {
 
   update() {
     this.externalUserService.update(this.currentUser._id, this.currentUser).then(response => {
-      if (response.status == 200 || response.status == 204) {
+        setTimeout(() => {
+          alert(`Externo actualizado exitosamente`)
+        }, 500)
         this.router.navigateByUrl('/admin-site')
-      }
     }).catch(err => console.log(`Error ${err}`))
   }
 

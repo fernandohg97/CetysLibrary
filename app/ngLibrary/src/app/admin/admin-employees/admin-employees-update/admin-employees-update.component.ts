@@ -35,9 +35,10 @@ export class AdminEmployeesUpdateComponent implements OnInit {
 
   update() {
     this.employeesService.update(this.currentEmployee._id, this.currentEmployee).then(response => {
-      if (response.status == 200 || response.status == 204) {
+        setTimeout(() => {
+          alert(`Empleado actualizado exitosamente`)
+        }, 500)
         this.router.navigateByUrl('/admin-site')
-      }
     }).catch(err => console.log(`Error ${err}`))
   }
 
