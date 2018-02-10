@@ -27,9 +27,10 @@ export class AdminDepartmentsUpdateComponent implements OnInit {
 
   update() {
     this.departmentsService.update(this.currentDepartment._id, this.currentDepartment).then(response => {
-      if (response.status == 200 || response.status == 204) {
+        setTimeout(() => {
+          alert(`Departamento actualizado exitosamente`)
+        }, 500)
         this.router.navigateByUrl('/admin-site')
-      }
     }).catch(err => console.log(`Error ${err}`))
   }
 

@@ -10,7 +10,7 @@
       <div class="grid-container content">
         <div class="grid-x grid-padding-x title-rs">
           <div class="cell">
-            <h2>Modificar reservacion</h2>
+            <h2>Modificar reservaci&oacute;n</h2>
           </div>
         </div>
 
@@ -31,7 +31,7 @@
 
         <div class="grid-x grid-padding-x">
           <div class="small-2 cell form-group">
-            <label>Cubiculo
+            <label>Cub&iacute;culo
               <input type="number" class="form-control" value="{{updateReservation?.cubicle}}">
             </label>
           </div>
@@ -56,7 +56,7 @@
 
         <div class="grid-x grid-padding-x">
           <div class="auto cell form-group">
-            <label>Division
+            <label>Divisi&oacute;n
               <select class="form-control" name="selectedDivision" [ngModel]="selectedDivision" (ngModelChange)="divisionChange($event)">
                 <option *ngFor="let division of divisions" [ngValue]="division">{{division.division}}</option>
               </select>
@@ -117,7 +117,7 @@
           </div>
           <div class="small-12 medium-10 large-10 cell">
             <label>
-              Prestamo de material
+              Pr&eacute;stamo de material
               <textarea name="borrowedMaterial" placeholder="Ingresar el material prestado" [(ngModel)]="updateReservation.borrowedMaterial"></textarea>
             </label>
           </div>

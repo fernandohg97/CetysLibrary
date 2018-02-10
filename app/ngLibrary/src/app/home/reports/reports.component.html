@@ -15,7 +15,7 @@
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell">
       <label>Buscar
-        <input type="text" placeholder="Ingrese matricula o codigo del usuario" [(ngModel)]="searchReservationNumber">
+        <input type="text" placeholder="Ingrese matr&iacute;cula o c&oacute;digo del usuario" [(ngModel)]="searchReservationNumber">
       </label>
     </div>
 
@@ -23,16 +23,17 @@
       <thead>
         <tr>
           <th>Usuario</th>
-          <th>Cubiculo</th>
+          <th>Cub&iacute;culo</th>
           <th>Entrada</th>
           <th>Salida</th>
           <th>Fecha</th>
           <th>Personas</th>
           <th>Material</th>
+          <th>Eliminar</th>
         </tr>
       </thead>
       <tbody>
-          <tr *ngFor="let reservation of reservations | paginate: { itemsPerPage: 30, currentPage: page } | searchReservation: searchReservationNumber">
+          <tr *ngFor="let reservation of reservations | paginate: { itemsPerPage: 30, currentPage: page } | searchReservation: searchReservationNumber" data-closable>
             <td class="clear button user-number" (click)="getCurrentUser(reservation.user || reservation.employee || reservation.externalUser)">{{reservation.user?.registrationNumber || reservation.employee?.employeeNumber || reservation.externalUser?.userCode}}</td>
             <td>{{reservation.cubicle}}</td>
             <td>{{reservation.entryTime | date: 'shortTime'}}</td>
@@ -41,6 +42,9 @@
             <td class="clear button user-people" (click)="getCurrentReservation(reservation)">{{reservation.peopleQuantity}}</td>
             <td *ngIf="reservation.borrowedMaterial; else elseBlock" (click)="getBorrowedMaterial(reservation.borrowedMaterial)"><i class="fa fa-check" aria-hidden="true"></i></td>
             <ng-template #elseBlock><td><i class="fa fa-times" aria-hidden="true"></i> </td></ng-template>
+            <td class="remove">
+              <a (click)="delete(reservation._id)" data-close><i class="fa fa-trash" aria-hidden="true"></i></a>
+            </td>
           </tr>
       </tbody>
     </table>

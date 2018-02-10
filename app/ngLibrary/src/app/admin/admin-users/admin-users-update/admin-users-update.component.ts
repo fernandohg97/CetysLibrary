@@ -72,10 +72,10 @@ export class AdminUsersUpdateComponent implements OnInit {
 
   update() {
     this.usersService.update(this.currentUser._id, this.currentUser).then(response => {
-      response
-      if (response.status == 200 || response.status == 204) {
-        this.router.navigateByUrl('/admin-site')
-      }
+          setTimeout(() => {
+            alert(`Usuario actualizado exitosamente`)
+          }, 500)
+          this.router.navigateByUrl('/admin-site')
     }).catch(err => console.log(`Error ${err}`))
   }
 
