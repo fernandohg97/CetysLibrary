@@ -14,7 +14,7 @@ export class ReservationsService {
   constructor(private http: Http) { }
 
   private static handleError(error: any): Promise<any> {
-    console.error("An error occurred", error); // for demo purposes only
+    // console.error("An error occurred", error); // for demo purposes only
     return Promise.reject(error.message || error);
   }
 
@@ -57,7 +57,6 @@ export class ReservationsService {
   }
 
   remove(id: String) {
-    console.log(id)
     return this.http.delete(`${this.url}/${id}`).toPromise()
   }
 

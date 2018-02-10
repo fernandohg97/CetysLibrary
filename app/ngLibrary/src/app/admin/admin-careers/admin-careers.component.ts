@@ -90,10 +90,8 @@ export class AdminCareersComponent implements OnInit, OnDestroy {
 
     downloadFile() {
       this.careersService.getDownloadFile().then(res => {
-        console.log(res)
         window.open(res.url)
       }).catch(err => {
-        console.log(err)
         alert('Hubo un error al descargar el archivo')
       })
     }

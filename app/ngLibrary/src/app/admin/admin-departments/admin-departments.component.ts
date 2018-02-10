@@ -76,7 +76,6 @@ export class AdminDepartmentsComponent implements OnInit, OnDestroy {
       this.departmentsService.getDownloadFile().then(res => {
         window.open(res.url)
       }).catch(err => {
-        console.log(err)
         alert('Hubo un error al descargar el archivo')
       })
     }
