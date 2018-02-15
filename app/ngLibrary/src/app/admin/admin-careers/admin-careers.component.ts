@@ -7,6 +7,9 @@ import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
 import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
 import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
 import { AdminSection } from '../../enums/admin-section.enum';
+import { ElementType } from '../../enums/element-type.enum';
+import { AdminDataService } from '../../services/adminData/admin-data.service';
+import { PopupConfirmElementComponent } from '../../home/home-dialogs/popup-confirm-element/popup-confirm-element.component';
 
 @Component({
   selector: 'app-admin-careers',
@@ -16,6 +19,7 @@ import { AdminSection } from '../../enums/admin-section.enum';
 export class AdminCareersComponent implements OnInit, OnDestroy {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
+  @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
   newCareer = new CareerModel()
   divisions: any
   careers: CareerModel[]
@@ -29,6 +33,7 @@ export class AdminCareersComponent implements OnInit, OnDestroy {
   errorItem: string
 
   constructor(
+    private adminDataService: AdminDataService,
     private dataReservationService: DataReservationService,
     private settingsService: SettingsService,
     private careersService: CareersService,
@@ -125,9 +130,12 @@ export class AdminCareersComponent implements OnInit, OnDestroy {
   }
 
   delete(id: string) {
-    this.careersService.remove(id).then(response => {
-      response
-    }).catch(err => console.log(`Hubo un error ${err}`))
+    this.adminDataService.changeId(id)
+    this.adminDataService.changeElement(ElementType.careers)
+    this.popup2.open(PopupConfirmElementComponent, {
+      classNames: 'custom',
+      closeButton: true
+    })
   }
 
 }

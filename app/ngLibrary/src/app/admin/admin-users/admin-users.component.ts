@@ -8,6 +8,9 @@ import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
 import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
 import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
 import { AdminSection } from '../../enums/admin-section.enum';
+import { AdminDataService } from '../../services/adminData/admin-data.service';
+import { ElementType } from '../../enums/element-type.enum';
+import { PopupConfirmElementComponent } from '../../home/home-dialogs/popup-confirm-element/popup-confirm-element.component';
 
 @Component({
   selector: 'app-admin-users',
@@ -17,6 +20,7 @@ import { AdminSection } from '../../enums/admin-section.enum';
 export class AdminUsersComponent implements OnInit, OnDestroy {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
+  @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
   newUser = new UserModel()
   divisions: any
   users: UserModel[]
@@ -31,6 +35,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   errorItem: string
 
   constructor(
+    private adminDataService: AdminDataService,
     private dataReservationService: DataReservationService,
     private usersService: UsersService,
     private settingService: SettingsService,
@@ -88,6 +93,15 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       })
     }
 
+    delete(id: string) {
+      this.adminDataService.changeId(id)
+      this.adminDataService.changeElement(ElementType.students)
+        this.popup2.open(PopupConfirmElementComponent, {
+          classNames: 'custom',
+          closeButton: true
+        })
+      }
+
     downloadFile() {
       this.usersService.getDownloadFile().then(res => {
         window.open(res.url)
@@ -123,11 +137,11 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
     }
   }
 
-  delete(id: string) {
-    this.usersService.remove(id).then(response => {
-      response
-    }).catch(err => console.log(`Hubo un error ${err}`))
-  }
+  // delete(id: string) {
+  //   this.usersService.remove(id).then(response => {
+  //     response
+  //   }).catch(err => console.log(`Hubo un error ${err}`))
+  // }
 
   divisionChange(event) {
     switch (event.division) {

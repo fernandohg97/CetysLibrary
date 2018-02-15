@@ -30,6 +30,7 @@ import { AdminExternalUserComponent } from './admin-external-user/admin-external
 import { AdminExternalUserUpdateComponent } from './admin-external-user/admin-external-user-update/admin-external-user-update.component';
 import { ExternalUserService } from '../services/externalUser/external-user.service';
 import { NguiPopupModule } from '@ngui/popup';
+import { AdminDataService } from '../services/adminData/admin-data.service';
 
 @NgModule({
   imports: [
@@ -67,7 +68,8 @@ import { NguiPopupModule } from '@ngui/popup';
     DepartmentsService,
     SettingsService,
     EmployeesService,
-    ExternalUserService
+    ExternalUserService,
+    AdminDataService
   ]
 })
 export class AdminModule { }
