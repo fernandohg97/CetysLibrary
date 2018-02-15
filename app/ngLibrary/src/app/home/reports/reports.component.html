@@ -36,7 +36,7 @@
             <td *ngIf="reservation.borrowedMaterial; else elseBlock" (click)="getBorrowedMaterial(reservation.borrowedMaterial)"><i class="fa fa-check" aria-hidden="true"></i></td>
             <ng-template #elseBlock><td><i class="fa fa-times" aria-hidden="true"></i> </td></ng-template>
             <td class="remove">
-              <a (click)="deletePopup(reservation._id)" data-close><i class="fa fa-trash" aria-hidden="true"></i></a>
+              <a (click)="deletePopup(reservation._id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
             </td>
           </tr>
       </tbody>
