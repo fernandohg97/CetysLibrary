@@ -9,6 +9,7 @@ import { ReservationsService } from '../../../services/reservations/reservations
 import { AdminDataService } from '../../../services/adminData/admin-data.service';
 import { ElementType } from '../../../enums/element-type.enum';
 import { NguiPopupComponent } from '@ngui/popup';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-popup-confirm-element',
@@ -23,6 +24,7 @@ export class PopupConfirmElementComponent implements OnInit {
   currentId: string
 
   constructor(
+    private router: Router,
     private usersService: UsersService,
     private cubiclesService: CubiclesService,
     private departmentsService: DepartmentsService,
@@ -44,8 +46,9 @@ export class PopupConfirmElementComponent implements OnInit {
           console.log('Estudiantes!')
           this.usersService.remove(this.currentId).then(response => {
             if (response.status == 200 || response.status == 204) {
+              this.router.navigateByUrl('/admin-site')
               setTimeout(() => {
-                alert('Estudiantes eliminados exitosamente')
+                alert('Estudiante eliminado exitosamente')
               }, 400)
             }
           }).catch(err => {
@@ -57,8 +60,9 @@ export class PopupConfirmElementComponent implements OnInit {
           console.log('Cubiculos!')
           this.cubiclesService.remove(this.currentId).then(response => {
             if (response.status == 200 || response.status == 204) {
+              this.router.navigateByUrl('/admin-site')
               setTimeout(() => {
-                alert('Cubiculos eliminados exitosamente')
+                alert('Cubiculo eliminado exitosamente')
               }, 400)
             }
           }).catch(err => {
@@ -70,8 +74,9 @@ export class PopupConfirmElementComponent implements OnInit {
           console.log('Empleados!')
           this.employeesService.remove(this.currentId).then(response => {
             if (response.status == 200 || response.status == 204) {
+              this.router.navigateByUrl('/admin-site')
               setTimeout(() => {
-                alert('Empleados eliminados exitosamente')
+                alert('Empleado eliminado exitosamente')
               }, 400)
             }
           }).catch(err => {
@@ -83,8 +88,9 @@ export class PopupConfirmElementComponent implements OnInit {
           console.log('Carreras!')
           this.careersService.remove(this.currentId).then(response => {
             if (response.status == 200 || response.status == 204) {
+              this.router.navigateByUrl('/admin-site')
               setTimeout(() => {
-                alert('Carreras eliminadas exitosamente')
+                alert('Carrera eliminada exitosamente')
               }, 400)
             }
           }).catch(err => {
@@ -96,8 +102,9 @@ export class PopupConfirmElementComponent implements OnInit {
           console.log('Departamentos!')
           this.departmentsService.remove(this.currentId).then(response => {
             if (response.status == 200 || response.status == 204) {
+              this.router.navigateByUrl('/admin-site')
               setTimeout(() => {
-                alert('Departamentos eliminados exitosamente')
+                alert('Departamento eliminado exitosamente')
               }, 400)
             }
           }).catch(err => {
@@ -109,8 +116,9 @@ export class PopupConfirmElementComponent implements OnInit {
           console.log('Reservaciones!')
           this.reservationsService.remove(this.currentId).then(response => {
             if (response.status == 200 || response.status == 204) {
+              this.router.navigateByUrl('/home')
               setTimeout(() => {
-                alert('Reservaciones eliminadas exitosamente')
+                alert('Reservacion eliminada exitosamente')
               }, 400)
             }
           }).catch(err => {
@@ -119,11 +127,12 @@ export class PopupConfirmElementComponent implements OnInit {
           })
           break;
       case ElementType.externals:
-          console.log('Reservaciones!')
+          console.log('Externos!')
           this.reservationsService.remove(this.currentId).then(response => {
             if (response.status == 200 || response.status == 204) {
+              this.router.navigateByUrl('/admin-site')
               setTimeout(() => {
-                alert('Reservaciones eliminadas exitosamente')
+                alert('Externo eliminado exitosamente')
                 }, 400)
               }
             }).catch(err => {
