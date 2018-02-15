@@ -21,7 +21,7 @@ var reservationSchema = new Schema({
     name: String,
     division: {
       type: String,
-      enum: ['PREP', 'PROF', 'POST', 'DOCT']
+      enum: ['PREP', 'PROF', 'POST', 'DOCT', 'TECN']
     },
     career: {type: String, uppercase: true}
   },

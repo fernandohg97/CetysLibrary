@@ -12,7 +12,7 @@ const userSchema = new Schema({
   name: {type: String, required: [true, 'El nombre es requerido']},
   division: {
     type: String,
-    enum: ['PREP', 'PROF', 'POST', 'DOCT'],
+    enum: ['PREP', 'PROF', 'POST', 'DOCT', 'TECN'],
     required: [true, 'La division es requerida']
   },
   career: {type: String, required: [true, 'La carrera es requerida'], uppercase: true}
