@@ -117,7 +117,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       this.usersService.createFile(jsonFiles)
       .subscribe((response => {
           setTimeout(() => {
-            alert(`Usuarios creados exitosamente`)
+            alert(`Estudiantes creados exitosamente`)
           }, 500)
           this.router.navigateByUrl('/admin-site')
       }), (err => this.errorFile = JSON.parse(err._body).existUsers)
@@ -126,7 +126,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       this.usersService.create(this.newUser)
       .subscribe((response => {
           setTimeout(() => {
-            alert(`Usuario creado exitosamente`)
+            alert(`Estudiante creado exitosamente`)
           }, 500)
           this.router.navigateByUrl('/admin-site')
       }), (err => {
