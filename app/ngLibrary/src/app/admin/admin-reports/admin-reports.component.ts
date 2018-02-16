@@ -2,6 +2,7 @@ import { Component, OnInit, AfterContentInit, ViewChild } from '@angular/core';
 import { ReportsService } from '../../services/reports/reports.service';
 import { BaseChartDirective } from 'chart.js';
 import { ReservationsService } from '../../services/reservations/reservations.service';
+import { DepartmentsService } from '../../services/departments/departments.service';
 
 @Component({
   selector: 'app-admin-reports',
@@ -51,7 +52,7 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
   countLabelsExternal: number
   countLabelsCompanions: number
 
-  constructor(private reportsService: ReportsService, private reservationsService: ReservationsService) {}
+  constructor(private departmentsService: DepartmentsService, private reportsService: ReportsService, private reservationsService: ReservationsService) {}
 
   ngOnInit() {
     console.log(this.reportsCubicle)
@@ -146,6 +147,7 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
         if (data) {
           let k = 0
           this.reportsCompanions = data
+          console.log(this.reportsCompanions)
           this.pieChartLabelsCompanions = []
           this.reportsCompanions.forEach(element => {
               if (element._id.userCareers.length > 0) {
@@ -286,6 +288,11 @@ export class AdminReportsComponent implements OnInit, AfterContentInit {
       this.reportsService.getByDepartment(this.startDate, this.endDate).then(data => {
         if (data) {
           this.reportsDepartment = data
+          data.forEach((element, index) => {
+            this.departmentsService.getByNumber(element._id).then(data => {
+              this.reportsDepartment[index]._id = data.departmentName
+            })
+          })
           this.insertChartItems(this.reportsDepartment, itemsDepartment, dataDepartmentClone)
           dataDepartmentClone.splice(0, this.countLabelsDepartments)
           this.countLabelsDepartments = dataDepartmentClone.length
