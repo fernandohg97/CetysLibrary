@@ -6,10 +6,22 @@
     </div>
   </div>
   <div class="grid-x grid-padding-x">
-    <div class="small-12 cell">
+    <div class="small-6 cell">
       <label>Buscar
         <input type="text" placeholder="Ingrese matr&iacute;cula o c&oacute;digo del usuario" [(ngModel)]="searchReservationNumber">
       </label>
+    </div>
+    <div class="small-6 cell">
+      <ul class="dropdown menu" data-dropdown-menu>
+        <li class="is-dropdown-submenu-parent">
+          <a href="#">Filtros</a>
+          <ul class="menu">
+            <li><a href="#">Matr&iacute;cula</a></li>
+            <li><a href="#">Cub&iacute;culo</a></li>
+            <li><a href="#">Fecha</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
 
     <table class="unstriped">
@@ -49,3 +61,4 @@
   </div>
 </div>
 <ngui-popup #popup></ngui-popup>
+<script type="text/javascript" src="assets/js/app.js"></script>
