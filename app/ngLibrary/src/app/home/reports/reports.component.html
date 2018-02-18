@@ -1,3 +1,6 @@
+<!-- <script type="text/javascript">
+  $(document).ready(function() { $(document).foundation(); });
+</script> -->
 <div class="grid-container">
   <div class="grid-x grid-padding-x">
     <div class="cell title">
@@ -5,26 +8,66 @@
       <h2 class="text-center">Reservaciones</h2>
     </div>
   </div>
-  <div class="grid-x grid-padding-x">
-    <div class="small-6 cell">
-      <label>Buscar
-        <input type="text" placeholder="Ingrese matr&iacute;cula o c&oacute;digo del usuario" [(ngModel)]="searchReservationNumber">
+  <!-- Filters -->
+  <div *ngIf="reservations?.length != 0" class="grid-x grid-padding-x">
+    <div class="small-12 cell">
+      <label><span class="filter-text">filtros:</span>
+        <!-- <input type="text" placeholder="Ingrese matr&iacute;cula o c&oacute;digo del usuario" [(ngModel)]="searchReservationNumber"> -->
+        <div class="expanded button-group">
+
+        <!-- Filter by user number -->
+        <button class="button" type="button" data-toggle="user">Matr&iacute;cula</button>
+          <div class="dropdown-pane" id="user" data-dropdown data-close-on-click="true" data-hover="true" data-hover-pane="true">
+            <p class="text-center">Matr&iacute;cula</p>
+            <hr>
+            <form>
+              <div class="row">
+                <div class="small-12 cell">
+                  <input type="text" placeholder="Ingrese matr&iacute;cula del usuario" name="userRegistrationNumber" [(ngModel)]="searchReservationNumber">
+                </div>
+              </div>
+            </form>
+          </div>
+        <!-- Filter by cubicle -->
+        <button class="button" type="button" data-toggle="cubicle">Cub&iacute;culo</button>
+          <div class="dropdown-pane" id="cubicle" data-dropdown data-close-on-click="true" data-hover="true" data-hover-pane="true">
+            <p class="text-center">Cub&iacute;culo</p>
+            <hr>
+            <form>
+              <div class="row">
+                <div class="small-12 cell">
+                  <input type="number" placeholder="Ingrese n&uacute;mero de cubiculo" name="reservationCubicle" [(ngModel)]="searchReservationCubicle">
+                </div>
+              </div>
+            </form>
+          </div>
+        <!-- Filter by date -->
+        <button class="button" type="button" data-toggle="date">Fecha</button>
+          <div class="dropdown-pane" id="date" data-dropdown data-close-on-click="true" data-hover="true" data-hover-pane="true">
+            <p class="text-center">Fecha</p>
+            <hr>
+            <form>
+              <div class="row">
+                <div class="small-12 medium-6 cell">
+                  <label>Inicio
+                    <input type="date" name="startDate" [(ngModel)]="startDate">
+                  </label>
+                </div>
+                <div class="small-12 medium-6 cell">
+                  <label>Fin
+                    <input type="date" name="endDate" [(ngModel)]="endDate">
+                  </label>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </label>
     </div>
-    <div class="small-6 cell">
-      <ul class="dropdown menu" data-dropdown-menu>
-        <li class="is-dropdown-submenu-parent">
-          <a href="#">Filtros</a>
-          <ul class="menu">
-            <li><a href="#">Matr&iacute;cula</a></li>
-            <li><a href="#">Cub&iacute;culo</a></li>
-            <li><a href="#">Fecha</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-    <table class="unstriped">
+  </div>
+    <!-- Reservations table -->
+    <div class="grid-x grid-padding-x table-content">
+    <table *ngIf="reservations?.length != 0; else elseBlock" class="unstriped">
       <thead>
         <tr>
           <th>Usuario</th>
@@ -38,7 +81,7 @@
         </tr>
       </thead>
       <tbody>
-          <tr *ngFor="let reservation of reservations | paginate: { itemsPerPage: 30, currentPage: page } | searchReservation: searchReservationNumber" data-closable>
+          <tr *ngFor="let reservation of reservations | paginate: { itemsPerPage: 30, currentPage: page } | searchReservation: searchReservationNumber | searchReservationCubicle: searchReservationCubicle | searchReservationDate: startDate: endDate" data-closable>
             <td class="clear button user-number" (click)="getCurrentUser(reservation.user || reservation.employee || reservation.externalUser)">{{reservation.user?.registrationNumber || reservation.employee?.employeeNumber || reservation.externalUser?.userCode}}</td>
             <td>{{reservation.cubicle}}</td>
             <td>{{reservation.entryTime | date: 'shortTime'}}</td>
@@ -54,11 +97,14 @@
       </tbody>
     </table>
   </div>
-  <div class="grid-x grid-padding-x">
+  <div *ngIf="reservations?.length != 0" class="grid-x grid-padding-x">
     <div class="small-12 cell text-center">
       <pagination-controls class="pagination-users" (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>
+  <ng-template #elseBlock>
+    <p class="none-message">no hay reservaciones</p>
+  </ng-template>
+
 </div>
 <ngui-popup #popup></ngui-popup>
-<script type="text/javascript" src="assets/js/app.js"></script>
