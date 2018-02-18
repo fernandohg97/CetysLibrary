@@ -47,8 +47,9 @@ h1 {
 .reports-button {
   margin: 0;
 }
-
 .admin-text {
   margin-top: 50px;
-  font-weight: bold;
+}
+strong {
+  font-variant: small-caps;
 }
