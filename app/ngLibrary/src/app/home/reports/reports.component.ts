@@ -34,6 +34,13 @@ export class ReportsComponent implements OnInit {
   page: number = 1
   currentReservation: UserDetailsModel
   currentPipe: string
+  user: Boolean = false
+  cubicle: Boolean = false
+  date: Boolean = false
+  startDate: string
+  endDate: string
+  searchReservationNumber: string
+  searchReservationCubicle: string
 
   constructor(private adminDataService: AdminDataService, private dataReservationService: DataReservationService, private reservationsService: ReservationsService, private usersService: UsersService) {
   this.currentPipe = 'searchReservation' }
@@ -42,6 +49,7 @@ export class ReportsComponent implements OnInit {
     this.reservationsService.getAll().then(data => {
       if (data) {
         this.reservations = data
+        console.log(data)
       }
     })
   }
@@ -63,6 +71,29 @@ export class ReportsComponent implements OnInit {
       this.openPopup4()
       this.dataReservationService.changeExternalUser(user)
     }
+  }
+
+  searchUser() {
+    this.user = true
+    this.cubicle = this.date = false
+    this.startDate = ''
+    this.endDate = ''
+    this.searchReservationCubicle = ''
+  }
+
+  searchCubicle() {
+    this.cubicle = true
+    this.user = this.date = false
+    this.searchReservationNumber = ''
+    this.startDate = ''
+    this.endDate = ''
+  }
+
+  searchDate() {
+    this.date = true
+    this.cubicle = this.user = false
+    this.searchReservationNumber = ''
+    this.searchReservationCubicle = ''
   }
 
   getBorrowedMaterial(material) {
