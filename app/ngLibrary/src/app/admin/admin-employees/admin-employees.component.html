@@ -18,7 +18,7 @@
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell">
       <label>Buscar
-        <input type="text" placeholder="Ingrese el numero del empleado" [(ngModel)]="searchEmployeeNumber">
+        <input type="text" placeholder="Ingrese el n&uacute;mero del empleado" [(ngModel)]="searchEmployeeNumber">
       </label>
     </div>
   </div>
@@ -35,7 +35,7 @@
           </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let employee of employees | paginate: { itemsPerPage: 50, currentPage: page } | searchEmployee: searchEmployeeNumber" data-closable>
+        <tr *ngFor="let employee of employees | searchEmployee: searchEmployeeNumber | paginate: { itemsPerPage: 50, currentPage: page }" data-closable>
           <td>{{employee.employeeNumber}}</td>
           <td>{{employee.name}}</td>
           <td>{{employee.department}}</td>

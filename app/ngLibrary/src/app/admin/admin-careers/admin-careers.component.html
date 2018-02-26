@@ -35,7 +35,7 @@
           </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let career of careers | paginate: { itemsPerPage: 50, currentPage: page } | searchCareer: searchCareerName" data-closable>
+        <tr *ngFor="let career of careers | searchCareer: searchCareerName | paginate: { itemsPerPage: 50, currentPage: page }" data-closable>
           <td>{{career.careerCode}}</td>
           <td>{{career.careerName}}</td>
           <td>{{career.division}}</td>

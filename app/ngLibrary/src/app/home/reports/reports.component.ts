@@ -42,7 +42,11 @@ export class ReportsComponent implements OnInit {
   searchReservationNumber: string
   searchReservationCubicle: string
 
-  constructor(private adminDataService: AdminDataService, private dataReservationService: DataReservationService, private reservationsService: ReservationsService, private usersService: UsersService) {
+  constructor(
+    private adminDataService: AdminDataService, 
+    private dataReservationService: DataReservationService,
+    private reservationsService: ReservationsService,
+    private usersService: UsersService) {
   this.currentPipe = 'searchReservation' }
 
   ngOnInit() {

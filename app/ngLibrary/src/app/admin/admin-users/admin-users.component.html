@@ -35,7 +35,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users | paginate: { itemsPerPage: 50, currentPage: page } | searchUser: searchUserNumber" data-closable>
+        <tr *ngFor="let user of users | searchUser: searchUserNumber | paginate: { itemsPerPage: 50, currentPage: page }" data-closable>
           <td>{{user.registrationNumber}}</td>
           <td>{{user.name}}</td>
           <td>{{user.division}}</td>
