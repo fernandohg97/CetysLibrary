@@ -43,6 +43,11 @@
       </div>
     </div>
   </div>
+  <div class="grid-x grid-padding-x">
+    <div class="small-12 cell text-right">
+      <h6><strong>Total de reservaciones: {{totalReservations}}</strong></h6>
+    </div>
+  </div>
     <!-- Reservations table -->
     <div class="grid-x grid-padding-x table-content">
     <table *ngIf="reservations?.length != 0; else elseBlock" class="unstriped">

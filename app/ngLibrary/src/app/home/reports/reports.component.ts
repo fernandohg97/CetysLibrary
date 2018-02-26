@@ -30,6 +30,7 @@ export class ReportsComponent implements OnInit {
   @ViewChild(NguiPopupComponent) popup5: NguiPopupComponent;
 
   reservations: ReservationModel[]
+  totalReservations: number
   searchByNumber: number
   page: number = 1
   currentReservation: UserDetailsModel
@@ -43,7 +44,7 @@ export class ReportsComponent implements OnInit {
   searchReservationCubicle: string
 
   constructor(
-    private adminDataService: AdminDataService, 
+    private adminDataService: AdminDataService,
     private dataReservationService: DataReservationService,
     private reservationsService: ReservationsService,
     private usersService: UsersService) {
@@ -51,10 +52,10 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit() {
     this.reservationsService.getAll().then(data => {
-      if (data) {
-        this.reservations = data
-        console.log(data)
-      }
+      if (data) this.reservations = data
+    })
+    this.reservationsService.getCount().then(data => {
+      this.totalReservations = parseInt(JSON.parse(JSON.stringify(data))._body)
     })
   }
 
