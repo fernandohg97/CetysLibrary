@@ -151,7 +151,7 @@ export class AdminReportsComponent implements OnInit {
           this.reportsDepartment = data
           data.forEach((element, index) => {
             this.departmentsService.getByNumber(element._id).then(data => {
-              this.reportsDepartment[index]._id = data.departmentName
+              this.reportsDepartment[index]._id = data.departmentName.concat(` - ${data.departmentCode.toString()}`)
             })
           })
           this.pieChartLabelsDepartments = []
