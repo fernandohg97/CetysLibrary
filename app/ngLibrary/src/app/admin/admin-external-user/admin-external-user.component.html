@@ -26,13 +26,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users | paginate: { itemsPerPage: 50, currentPage: page } | searchExternalUser: searchUserCode" data-closable>
+        <tr *ngFor="let user of users | searchExternalUser: searchUserCode | paginate: { itemsPerPage: 50, currentPage: page }" data-closable>
           <td>{{user.userCode}}</td>
           <td>{{user.name}}</td>
           <td>{{user.description}}</td>
           <td><a routerLink="/admin-site/externals/{{user._id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
           <td class="remove">
-              <button (click)="delete(user._id)" class="close-button remove-item" aria-label="Dismiss alert" type="button" data-close>
+              <button (click)="delete(user._id)" class="close-button remove-item" aria-label="Dismiss alert" type="button">
                 <span aria-hidden="true">&times;</span>
               </button>
           </td>
@@ -42,10 +42,12 @@
   </div>
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell text-center">
-      <pagination-controls class="pagination-users" (pageChange)="page = $event"></pagination-controls>
+      <pagination-controls class="pagination-users" (pageChange)="page = $event" previousLabel="Atras" nextLabel="Siguiente"></pagination-controls>
     </div>
   </div>
 </div>
+<ngui-popup #popup></ngui-popup>
+
 
 <form *ngIf="called">
   <div class="grid-container content">

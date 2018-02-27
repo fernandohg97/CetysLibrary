@@ -2,6 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ExternalUserService } from '../../services/externalUser/external-user.service';
 import { ExternalUserModel } from '../../models/externalUser.model';
+import { NguiPopupComponent } from '@ngui/popup';
+import { PopupConfirmElementComponent } from '../../home/home-dialogs/popup-confirm-element/popup-confirm-element.component';
+import { AdminDataService } from '../../services/adminData/admin-data.service';
+import { ElementType } from '../../enums/element-type.enum';
 
 @Component({
   selector: 'app-admin-external-user',
@@ -10,6 +14,7 @@ import { ExternalUserModel } from '../../models/externalUser.model';
 })
 export class AdminExternalUserComponent implements OnInit {
 
+  @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   newExternalUser = new ExternalUserModel()
   users: ExternalUserModel[]
   called: Boolean
@@ -21,7 +26,7 @@ export class AdminExternalUserComponent implements OnInit {
   errorFile: string
   errorItem: string
 
-  constructor(private externalUserService: ExternalUserService, private router: Router) {
+  constructor(private adminDataService: AdminDataService, private externalUserService: ExternalUserService, private router: Router) {
     this.called = false
   }
 
@@ -84,9 +89,12 @@ export class AdminExternalUserComponent implements OnInit {
   }
 
   delete(id: string) {
-    this.externalUserService.remove(id).then(response => {
-      response
-    }).catch(err => console.log(`Hubo un error ${err}`))
+    this.adminDataService.changeId(id)
+    this.adminDataService.changeElement(ElementType.externals)
+    this.popup.open(PopupConfirmElementComponent, {
+      classNames: 'custom',
+      closeButton: true
+    })
   }
 
 }

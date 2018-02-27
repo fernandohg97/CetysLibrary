@@ -1,5 +1,5 @@
 <div *ngIf="!called" class="grid-container table-content">
-  <h2>Usuarios</h2>
+  <h2>Estudiantes</h2>
   <div class="grid-x grid-padding-x">
     <div class="small-6 large-8 cell">
       <button type="button" class="secondary button radius shadow" name="button" (click)="openPopup()">
@@ -35,14 +35,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users | paginate: { itemsPerPage: 50, currentPage: page } | searchUser: searchUserNumber" data-closable>
+        <tr *ngFor="let user of users | searchUser: searchUserNumber | paginate: { itemsPerPage: 50, currentPage: page }" data-closable>
           <td>{{user.registrationNumber}}</td>
           <td>{{user.name}}</td>
           <td>{{user.division}}</td>
           <td>{{user.career}}</td>
           <td class="text-center"><a routerLink="/admin-site/users/{{user._id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
           <td class="remove">
-            <button (click)="delete(user._id)" class="close-button remove-item" aria-label="Dismiss alert" type="button" data-close>
+            <button (click)="delete(user._id)" class="close-button remove-item" aria-label="Dismiss alert" type="button">
               <span aria-hidden="true">&times;</span>
             </button>
           </td>
@@ -52,7 +52,7 @@
   </div>
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell text-center">
-      <pagination-controls class="pagination-users" (pageChange)="page = $event"></pagination-controls>
+      <pagination-controls class="pagination-users" (pageChange)="page = $event" previousLabel="Atras" nextLabel="Siguiente"></pagination-controls>
     </div>
   </div>
 </div>

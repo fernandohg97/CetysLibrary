@@ -18,7 +18,7 @@
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell">
       <label>Buscar
-        <input type="text" placeholder="Ingrese el numero del empleado" [(ngModel)]="searchEmployeeNumber">
+        <input type="text" placeholder="Ingrese el n&uacute;mero del empleado" [(ngModel)]="searchEmployeeNumber">
       </label>
     </div>
   </div>
@@ -35,7 +35,7 @@
           </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let employee of employees | paginate: { itemsPerPage: 50, currentPage: page } | searchEmployee: searchEmployeeNumber" data-closable>
+        <tr *ngFor="let employee of employees | searchEmployee: searchEmployeeNumber | paginate: { itemsPerPage: 50, currentPage: page }" data-closable>
           <td>{{employee.employeeNumber}}</td>
           <td>{{employee.name}}</td>
           <td>{{employee.department}}</td>
@@ -43,7 +43,7 @@
           <ng-template #elseBlock>No</ng-template>
           <td><a routerLink="/admin-site/employees/{{employee._id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
           <td class="remove">
-              <button (click)="delete(employee._id)" class="close-button remove-item" aria-label="Dismiss alert" type="button" data-close>
+              <button (click)="delete(employee._id)" class="close-button remove-item" aria-label="Dismiss alert" type="button">
                 <span aria-hidden="true">&times;</span>
               </button>
           </td>
@@ -53,7 +53,7 @@
   </div>
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell text-center">
-      <pagination-controls class="pagination-users" (pageChange)="page = $event"></pagination-controls>
+      <pagination-controls class="pagination-users" (pageChange)="page = $event" previousLabel="Atras" nextLabel="Siguiente"></pagination-controls>
     </div>
   </div>
 </div>

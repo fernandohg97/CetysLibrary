@@ -6,6 +6,9 @@ import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
 import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
 import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
 import { AdminSection } from '../../enums/admin-section.enum';
+import { ElementType } from '../../enums/element-type.enum';
+import { AdminDataService } from '../../services/adminData/admin-data.service';
+import { PopupConfirmElementComponent } from '../../home/home-dialogs/popup-confirm-element/popup-confirm-element.component';
 
 @Component({
   selector: 'app-admin-departments',
@@ -15,6 +18,7 @@ import { AdminSection } from '../../enums/admin-section.enum';
 export class AdminDepartmentsComponent implements OnInit, OnDestroy {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
+  @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
   newDepartment = new DepartmentModel()
   departments: DepartmentModel[]
   called: Boolean
@@ -26,7 +30,7 @@ export class AdminDepartmentsComponent implements OnInit, OnDestroy {
   errorFile: string
   errorItem: string
 
-  constructor(private dataReservationService: DataReservationService, private departmentsService: DepartmentsService, private router: Router) {
+  constructor(private adminDataService: AdminDataService, private dataReservationService: DataReservationService, private departmentsService: DepartmentsService, private router: Router) {
     this.called = false
   }
 
@@ -107,8 +111,11 @@ export class AdminDepartmentsComponent implements OnInit, OnDestroy {
   }
 
   delete(id: string) {
-    this.departmentsService.remove(id).then(response => {
-      response
-    }).catch(err => console.log(`Hubo un error ${err}`))
+    this.adminDataService.changeId(id)
+    this.adminDataService.changeElement(ElementType.departments)
+    this.popup2.open(PopupConfirmElementComponent, {
+      classNames: 'custom',
+      closeButton: true
+    })
   }
 }

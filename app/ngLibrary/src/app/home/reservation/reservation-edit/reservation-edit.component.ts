@@ -13,6 +13,9 @@ import { PopupEmployeeInfoComponent } from '../../home-dialogs/popup-employee-in
 import { PopupExternalInfoComponent } from '../../home-dialogs/popup-external-info/popup-external-info.component';
 import { DataReservationService } from '../../../services/dataReservation/data-reservation.service';
 import { PopupBorrowedMaterialComponent } from '../../home-dialogs/popup-borrowed-material/popup-borrowed-material.component';
+import { PopupConfirmElementComponent } from '../../home-dialogs/popup-confirm-element/popup-confirm-element.component';
+import { AdminDataService } from '../../../services/adminData/admin-data.service';
+import { ElementType } from '../../../enums/element-type.enum';
 
 @Component({
   selector: 'app-reservation-edit',
@@ -25,11 +28,13 @@ export class ReservationEditComponent implements OnInit {
   @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup3: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup4: NguiPopupComponent;
+  @ViewChild(NguiPopupComponent) popup5: NguiPopupComponent;
   reservations: ReservationModel[]
   cubicleReservationNumber: Number
   exist: Boolean
 
   constructor(
+    private adminDataService: AdminDataService,
     private dataReservationService: DataReservationService,
     private cubiclesService: CubiclesService,
     private reservationsService: ReservationsService,
@@ -106,11 +111,13 @@ export class ReservationEditComponent implements OnInit {
     })
   }
 
-  delete(id: string) {
-    this.reservationsService.remove(id).then(response => {
-      response
-    }).catch(err => console.log(`Hubo un error ${err}`))
-    this.exist = false
+  openPopup5(reservationId: string) {
+    this.adminDataService.changeId(reservationId)
+    this.adminDataService.changeElement(ElementType.reservations)
+    this.popup5.open(PopupConfirmElementComponent, {
+      classNames: 'custom',
+      closeButton: true
+    })
   }
 
 }

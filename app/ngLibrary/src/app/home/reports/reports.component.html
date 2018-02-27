@@ -1,10 +1,3 @@
-<!-- <div class="grid-container">
-  <div class="grid-x grid-padding-x">
-    <div class="cell">
-      <a routerLink="/" class="button"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
-    </div>
-  </div>
-</div> -->
 <div class="grid-container">
   <div class="grid-x grid-padding-x">
     <div class="cell title">
@@ -12,14 +5,52 @@
       <h2 class="text-center">Reservaciones</h2>
     </div>
   </div>
-  <div class="grid-x grid-padding-x">
+  <!-- Filters -->
+  <div *ngIf="reservations?.length != 0" class="grid-x grid-padding-x">
     <div class="small-12 cell">
-      <label>Buscar
-        <input type="text" placeholder="Ingrese matr&iacute;cula o c&oacute;digo del usuario" [(ngModel)]="searchReservationNumber">
+      <label><span class="filter-text">filtros:</span>
+          <div class="expanded button-group">
+          <!-- Filter by user number -->
+          <button class="button" type="button" (click)="searchUser()">Matr&iacute;cula</button>
+          <!-- Filter by cubicle -->
+          <button class="button" type="button" (click)="searchCubicle()">Cub&iacute;culo</button>
+          <!-- Filter by date -->
+          <button class="button" type="button" (click)="searchDate()">Fecha</button>
+        </div>
       </label>
     </div>
-
-    <table class="unstriped">
+  </div>
+  <!-- Inputs Filters -->
+  <div class="grid-x grid-padding-x">
+    <div class="small-12 cell">
+      <label *ngIf="user" for="">Buscar por usuario
+        <input type="text" placeholder="Ingrese matr&iacute;cula del usuario" name="userRegistrationNumber" [(ngModel)]="searchReservationNumber">
+      </label>
+      <label *ngIf="cubicle" for="">Buscar por cub&iacute;culo
+        <input type="text" placeholder="Ingrese n&uacute;mero de cub&iacute;culo" name="reservationCubicle" [(ngModel)]="searchReservationCubicle">
+      </label>
+      <div *ngIf="date" class="grid-x grid-padding-x">
+        <div class="small-6 cell">
+          <label>Fecha Inicio
+            <input type="date" name="startDate" [(ngModel)]="startDate" placeholder="Fecha" required>
+          </label>
+        </div>
+        <div class="small-6 cell">
+          <label>Fecha Fin
+            <input type="date" name="endDate" [(ngModel)]="endDate" placeholder="Fecha" required>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="small-12 cell text-right">
+      <h6><strong>Total de reservaciones: {{totalReservations}}</strong></h6>
+    </div>
+  </div>
+    <!-- Reservations table -->
+    <div class="grid-x grid-padding-x table-content">
+    <table *ngIf="reservations?.length != 0; else elseBlock" class="unstriped">
       <thead>
         <tr>
           <th>Usuario</th>
@@ -32,8 +63,9 @@
           <th>Eliminar</th>
         </tr>
       </thead>
+
       <tbody>
-          <tr *ngFor="let reservation of reservations | paginate: { itemsPerPage: 30, currentPage: page } | searchReservation: searchReservationNumber" data-closable>
+          <tr *ngFor="let reservation of reservations | searchReservation: searchReservationNumber | searchReservationCubicle: searchReservationCubicle | searchReservationDate: startDate: endDate | paginate: { itemsPerPage: 10, currentPage: page}" data-closable>
             <td class="clear button user-number" (click)="getCurrentUser(reservation.user || reservation.employee || reservation.externalUser)">{{reservation.user?.registrationNumber || reservation.employee?.employeeNumber || reservation.externalUser?.userCode}}</td>
             <td>{{reservation.cubicle}}</td>
             <td>{{reservation.entryTime | date: 'shortTime'}}</td>
@@ -43,16 +75,20 @@
             <td *ngIf="reservation.borrowedMaterial; else elseBlock" (click)="getBorrowedMaterial(reservation.borrowedMaterial)"><i class="fa fa-check" aria-hidden="true"></i></td>
             <ng-template #elseBlock><td><i class="fa fa-times" aria-hidden="true"></i> </td></ng-template>
             <td class="remove">
-              <a (click)="delete(reservation._id)" data-close><i class="fa fa-trash" aria-hidden="true"></i></a>
+              <a (click)="deletePopup(reservation._id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
             </td>
           </tr>
       </tbody>
     </table>
   </div>
-  <div class="grid-x grid-padding-x">
+  <div *ngIf="reservations?.length != 0" class="grid-x grid-padding-x">
     <div class="small-12 cell text-center">
-      <pagination-controls class="pagination-users" (pageChange)="page = $event"></pagination-controls>
+      <pagination-controls class="pagination-users" (pageChange)="page = $event" previousLabel="Atras" nextLabel="Siguiente"></pagination-controls>
     </div>
   </div>
+  <ng-template #elseBlock>
+    <p class="none-message">no hay reservaciones</p>
+  </ng-template>
+
 </div>
 <ngui-popup #popup></ngui-popup>
