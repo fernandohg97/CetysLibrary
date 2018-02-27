@@ -7,6 +7,9 @@ import { AdminSection } from '../../enums/admin-section.enum';
 import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
 import { PopupConfirmComponent } from '../../home/home-dialogs/popup-confirm/popup-confirm.component';
 import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
+import { ElementType } from '../../enums/element-type.enum';
+import { AdminDataService } from '../../services/adminData/admin-data.service';
+import { PopupConfirmElementComponent } from '../../home/home-dialogs/popup-confirm-element/popup-confirm-element.component';
 
 @Component({
   selector: 'app-admin-cubicles',
@@ -16,6 +19,7 @@ import { DataReservationService } from '../../services/dataReservation/data-rese
 export class AdminCubiclesComponent implements OnInit, OnDestroy {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
+  @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
   newCubicle = new CubicleModel()
   cubicles: CubicleModel[]
   called: Boolean
@@ -27,7 +31,7 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
   errorItem: string
   cubiclesFile: any
 
-  constructor(private dataReservationService: DataReservationService, private cubiclesService: CubiclesService, private router: Router, private route: ActivatedRoute) {
+  constructor(private adminDataService: AdminDataService, private dataReservationService: DataReservationService, private cubiclesService: CubiclesService, private router: Router, private route: ActivatedRoute) {
     this.called = false
   }
 
@@ -109,9 +113,12 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
   }
 
   delete(id: string) {
-    this.cubiclesService.remove(id).then(response => {
-      response
-    }).catch(err => console.log(`hubo un error ${err}`))
+    this.adminDataService.changeId(id)
+    this.adminDataService.changeElement(ElementType.cubicles)
+    this.popup2.open(PopupConfirmElementComponent, {
+      classNames: 'custom',
+      closeButton: true
+    })
   }
 
 }

@@ -186,7 +186,6 @@ export class ReservationUpdateComponent implements OnInit {
   updateInfo() {
     this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
       if (response.status == 200 || response.status == 204) {
-        console.log(response.json())
         setTimeout(() => {
           alert(`Reservacion actualizada exitosamente`)
         }, 500)

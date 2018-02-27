@@ -118,7 +118,6 @@ export class ReservationCreateComponent implements OnInit {
           setTimeout(() => {
             alert(`Reservacion realizada exitosamente`)
           }, 500)
-          console.log(data)
           this.router.navigateByUrl('/')
         },
         err => {
@@ -136,11 +135,14 @@ export class ReservationCreateComponent implements OnInit {
   }
 
   searchUser() {
+    this.anyErrors = ''
     this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => {
       this.currentUser = JSON.parse(JSON.stringify(data)).usuario || JSON.parse(JSON.stringify(data)).empleado
       if (this.currentUser.hasOwnProperty('department')) {
         this.departmentsService.getByNumber(this.currentUser.department).then(data => {
           this.departmentUser = data.departmentName
+        }).catch(err => {
+          this.anyErrors = JSON.parse(err._body)
         })
       }
     }).catch(err => {

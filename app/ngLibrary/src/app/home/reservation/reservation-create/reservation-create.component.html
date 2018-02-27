@@ -25,7 +25,7 @@
                 </div>
               </div>
             </label>
-            <p *ngIf="anyErrors?.messageUser" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors.messageUser}}</p>
+            <p *ngIf="anyErrors?.messageUser || anyErrors?.message" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors.messageUser || anyErrors.message}}</p>
             <p *ngIf="anyErrors?.msg" class="help-text" id="userHelpText" style="color: #3f9d51;">{{anyErrors.msg}}</p>
           </div>
           <div class="small-6 cell">
@@ -119,7 +119,7 @@
 
         <div class="grid-x grid-margin-x">
           <div class="small-2 cell title-people">
-            <label>Personas
+            <label>Acompañantes
               <input type="number" name="peopleQuantity" [(ngModel)]="newReservation.peopleQuantity">
             </label>
           </div>

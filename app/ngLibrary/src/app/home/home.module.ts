@@ -23,6 +23,7 @@ import { MainHomeComponent } from './main-home/main-home.component';
 import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
 import { ReportsComponent } from './reports/reports.component';
 import { HomeDialogsModule } from './home-dialogs/home-dialogs.module';
+import { AdminDataService } from '../services/adminData/admin-data.service';
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import { HomeDialogsModule } from './home-dialogs/home-dialogs.module';
     ReservationsService,
     UsersQuantityService,
     DataReservationService,
-    ExternalUserService
+    ExternalUserService,
+    AdminDataService
   ],
   exports: [
     ReservationModule,

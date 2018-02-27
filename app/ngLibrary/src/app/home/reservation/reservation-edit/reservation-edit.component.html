@@ -20,7 +20,7 @@
           <th>Entrada</th>
           <th>Salida</th>
           <th>Fecha</th>
-          <th>Personas</th>
+          <th>Acompañantes</th>
           <th>Material</th>
           <th>Modificar</th>
         </tr>
@@ -38,7 +38,7 @@
             <ng-template #elseBlock><td><i class="fa fa-times" aria-hidden="true"></i></td></ng-template>
             <td>
               <a routerLink="/home/reservations-update/{{reservation._id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-              <a (click)="delete(reservation._id)" data-close><i class="fa fa-trash" aria-hidden="true"></i></a>
+              <a (click)="openPopup5(reservation._id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
             </td>
           </tr>
         </ng-container>

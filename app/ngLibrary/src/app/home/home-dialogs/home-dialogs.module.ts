@@ -7,7 +7,7 @@ import { PopupUserDetailsComponent } from './popup-userDetails/popup-userDetails
 import { PopupUserInfoComponent } from './popup-user-info/popup-user-info.component';
 import { NguiPopupModule } from '@ngui/popup';
 import { PopupConfirmComponent } from './popup-confirm/popup-confirm.component';
-import { HomeDialogsComponent } from './home-dialogs.component';
+import { PopupConfirmElementComponent } from './popup-confirm-element/popup-confirm-element.component';
 
 @NgModule({
   imports: [
@@ -21,11 +21,19 @@ import { HomeDialogsComponent } from './home-dialogs.component';
     PopupEmployeeInfoComponent,
     PopupBorrowedMaterialComponent,
     PopupConfirmComponent,
-    HomeDialogsComponent
+    PopupConfirmElementComponent
   ],
   exports: [
     NguiPopupModule
   ],
-  entryComponents: [PopupUserDetailsComponent, PopupUserInfoComponent, PopupEmployeeInfoComponent, PopupExternalInfoComponent, PopupBorrowedMaterialComponent, PopupConfirmComponent]
+  entryComponents: [
+    PopupUserDetailsComponent,
+    PopupUserInfoComponent,
+    PopupEmployeeInfoComponent,
+    PopupExternalInfoComponent,
+    PopupBorrowedMaterialComponent,
+    PopupConfirmComponent,
+    PopupConfirmElementComponent
+  ]
 })
 export class HomeDialogsModule { }

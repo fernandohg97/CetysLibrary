@@ -5,13 +5,16 @@ import { ReservationModel } from '../../models/reservation.model';
 import { UsersService } from '../../services/users/users.service';
 import { UserModel } from '../../models/user.model';
 import { UserDetailsModel } from '../../models/userDetails.model';
-import { NguiPopupComponent, NguiMessagePopupComponent } from '@ngui/popup';
+import { NguiPopupComponent } from '@ngui/popup';
 import { PopupUserDetailsComponent } from '../home-dialogs/popup-userDetails/popup-userDetails.component';
 import { PopupUserInfoComponent } from '../home-dialogs/popup-user-info/popup-user-info.component';
 import { DataReservationService } from '../../services/dataReservation/data-reservation.service';
 import { PopupEmployeeInfoComponent } from '../home-dialogs/popup-employee-info/popup-employee-info.component';
 import { PopupExternalInfoComponent } from '../home-dialogs/popup-external-info/popup-external-info.component';
 import { PopupBorrowedMaterialComponent } from '../home-dialogs/popup-borrowed-material/popup-borrowed-material.component';
+import { PopupConfirmElementComponent } from '../home-dialogs/popup-confirm-element/popup-confirm-element.component';
+import { AdminDataService } from '../../services/adminData/admin-data.service';
+import { ElementType } from '../../enums/element-type.enum';
 
 @Component({
   selector: 'app-reports',
@@ -24,22 +27,35 @@ export class ReportsComponent implements OnInit {
   @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup3: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup4: NguiPopupComponent;
+  @ViewChild(NguiPopupComponent) popup5: NguiPopupComponent;
 
   reservations: ReservationModel[]
+  totalReservations: number
   searchByNumber: number
   page: number = 1
   currentReservation: UserDetailsModel
   currentPipe: string
+  user: Boolean = false
+  cubicle: Boolean = false
+  date: Boolean = false
+  startDate: string
+  endDate: string
   searchReservationNumber: string
+  searchReservationCubicle: string
 
-  constructor(private dataReservationService: DataReservationService, private reservationsService: ReservationsService, private usersService: UsersService) {
+  constructor(
+    private adminDataService: AdminDataService,
+    private dataReservationService: DataReservationService,
+    private reservationsService: ReservationsService,
+    private usersService: UsersService) {
   this.currentPipe = 'searchReservation' }
 
   ngOnInit() {
     this.reservationsService.getAll().then(data => {
-      if (data) {
-        this.reservations = data
-      }
+      if (data) this.reservations = data
+    })
+    this.reservationsService.getCount().then(data => {
+      this.totalReservations = parseInt(JSON.parse(JSON.stringify(data))._body)
     })
   }
 
@@ -60,6 +76,29 @@ export class ReportsComponent implements OnInit {
       this.openPopup4()
       this.dataReservationService.changeExternalUser(user)
     }
+  }
+
+  searchUser() {
+    this.user = true
+    this.cubicle = this.date = false
+    this.startDate = ''
+    this.endDate = ''
+    this.searchReservationCubicle = ''
+  }
+
+  searchCubicle() {
+    this.cubicle = true
+    this.user = this.date = false
+    this.searchReservationNumber = ''
+    this.startDate = ''
+    this.endDate = ''
+  }
+
+  searchDate() {
+    this.date = true
+    this.cubicle = this.user = false
+    this.searchReservationNumber = ''
+    this.searchReservationCubicle = ''
   }
 
   getBorrowedMaterial(material) {
@@ -98,15 +137,14 @@ export class ReportsComponent implements OnInit {
     })
   }
 
-  delete(id: string) {
-    this.reservationsService.remove(id).then(response => {
-      if (response.status == 200 || response.status == 204) {
-          setTimeout(() => {alert('Reservacion eliminada exitosamente')}, 500)
-      }
-    }).catch(err => {
-      alert(`Hubo un error al eliminar la reservacion`)
-      console.log(`Hay un error ${err}`)
+  deletePopup(id: string) {
+    this.adminDataService.changeId(id)
+    this.adminDataService.changeElement(ElementType.reservations)
+    this.popup5.open(PopupConfirmElementComponent, {
+      classNames: 'custom',
+      closeButton: true
     })
   }
+
 
 }

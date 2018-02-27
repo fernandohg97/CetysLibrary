@@ -18,7 +18,7 @@
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell">
       <label>Buscar
-        <input type="text" placeholder="Ingrese el numero o nombre del departamento" [(ngModel)]="searchDepartment">
+        <input type="text" placeholder="Ingrese el n&uacute;mero o nombre del departamento" [(ngModel)]="searchDepartment">
       </label>
     </div>
   </div>
@@ -33,12 +33,12 @@
           </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let department of departments | paginate: { itemsPerPage: 50, currentPage: page } | searchDepartment: searchDepartment" data-closable>
+        <tr *ngFor="let department of departments | searchDepartment: searchDepartment | paginate: { itemsPerPage: 50, currentPage: page }" data-closable>
           <td>{{department.departmentCode}}</td>
           <td>{{department.departmentName}}</td>
           <td><a routerLink="/admin-site/departments/{{department._id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
           <td class="remove">
-              <button (click)="delete(department._id)" class="close-button remove-item" aria-label="Dismiss alert" type="button" data-close>
+              <button (click)="delete(department._id)" class="close-button remove-item" aria-label="Dismiss alert" type="button">
                 <span aria-hidden="true">&times;</span>
               </button>
           </td>
@@ -48,7 +48,7 @@
   </div>
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell text-center">
-      <pagination-controls class="pagination-users" (pageChange)="page = $event"></pagination-controls>
+      <pagination-controls class="pagination-users" (pageChange)="page = $event" previousLabel="Atras" nextLabel="Siguiente"></pagination-controls>
     </div>
   </div>
 </div>

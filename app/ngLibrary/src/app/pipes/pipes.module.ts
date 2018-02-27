@@ -6,6 +6,8 @@ import { SearchCubiclePipe } from './searchCubicle/search-cubicle.pipe';
 import { SearchCareerPipe } from './searchCareer/search-career.pipe';
 import { SearchUserPipe } from './searchUser/search-user.pipe';
 import { SearchDepartmentPipe } from './searchDepartment/search-department.pipe';
+import { SearchReservationCubiclePipe } from './searchReservationCubicle/search-reservation-cubicle.pipe';
+import { SearchReservationDatePipe } from './searchReservationDate/search-reservation-date.pipe';
 
 @NgModule({
   // All components
@@ -16,7 +18,9 @@ import { SearchDepartmentPipe } from './searchDepartment/search-department.pipe'
     SearchUserPipe,
     SearchCareerPipe,
     SearchCubiclePipe,
-    SearchDepartmentPipe
+    SearchDepartmentPipe,
+    SearchReservationCubiclePipe,
+    SearchReservationDatePipe
   ],
   exports: [
     SearchReservationPipe,
@@ -25,7 +29,9 @@ import { SearchDepartmentPipe } from './searchDepartment/search-department.pipe'
     SearchUserPipe,
     SearchCareerPipe,
     SearchCubiclePipe,
-    SearchDepartmentPipe
+    SearchDepartmentPipe,
+    SearchReservationDatePipe,
+    SearchReservationCubiclePipe
   ],
   providers: [] // Services are here
 })

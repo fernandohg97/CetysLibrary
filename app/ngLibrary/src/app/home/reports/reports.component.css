@@ -1,6 +1,8 @@
-
+.table-content {
+  margin: 15px;
+}
 .title {
-  margin-top: 20px;
+  margin-top: 15px;
 }
 .pagination-users /deep/ .ngx-pagination .current {
   margin-top: 20px;
@@ -12,4 +14,21 @@
 }
 .fa-check {
   color: rgb(87, 156, 79);
+}
+hr {
+  border-width: 2px;
+}
+.none-message {
+  padding-top: 30px;
+  margin: 0 auto;
+  color: grey;
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 25px;
+}
+.filter-text {
+  color: #6a6a6a;
+  font-weight: bold;
+  font-variant: small-caps;
+  letter-spacing: 0.25em;
 }

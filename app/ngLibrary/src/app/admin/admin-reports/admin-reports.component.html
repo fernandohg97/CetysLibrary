@@ -26,13 +26,13 @@
   </div>
     <div *ngIf="reportsCubicle?.length != 0" class="grid-x grid-padding-x">
       <div class="category-title cell">
-        <h4>Ingresos por cubiculo</h4>
+        <h4>Reservaciones por cub&iacute;culo</h4>
       </div>
       <table>
         <thead>
           <tr>
-            <th>Cubiculo</th>
-            <th>Cantidad de ingresos</th>
+            <th>Cub&iacute;culo</th>
+            <th>Cantidad de reservaciones</th>
           </tr>
         </thead>
         <tbody>
@@ -43,7 +43,7 @@
         </tbody>
       </table>
       <div style="display: block; margin: 0 auto;">
-        <canvas  width="300" height="300" *ngIf="pieChartLabelsCubicles && pieChartDataCubicles" baseChart
+        <canvas  width="300" height="300" *ngIf="pieChartLabelsCubicles?.length > 0 && pieChartDataCubicles?.length > 0" baseChart
                 [data]="pieChartDataCubicles"
                 [labels]="pieChartLabelsCubicles"
                 [chartType]="pieChartType">
@@ -52,13 +52,13 @@
     </div>
   <div *ngIf="reportsDivision?.length != 0" class="grid-x grid-padding-x">
     <div class="category-title cell">
-      <h4>Ingresos por division</h4>
+      <h4>Reservaciones por divisi&oacute;n</h4>
     </div>
     <table>
       <thead>
         <tr>
-          <th>Division</th>
-          <th>Cantidad de ingresos</th>
+          <th>Divisi&oacute;n</th>
+          <th>Cantidad de reservaciones</th>
         </tr>
       </thead>
       <tbody>
@@ -69,7 +69,7 @@
       </tbody>
     </table>
     <div style="display: block; margin: 0 auto;">
-      <canvas width="300" height="300" *ngIf="pieChartLabelsDivision && pieChartDataDivision" baseChart
+      <canvas width="300" height="300" *ngIf="pieChartLabelsDivision?.length > 0 && pieChartDataDivision?.length > 0" baseChart
               [data]="pieChartDataDivision"
               [labels]="pieChartLabelsDivision"
               [chartType]="pieChartType">
@@ -78,13 +78,13 @@
   </div>
   <div *ngIf="reportsCareer?.length != 0" class="grid-x grid-padding-x">
     <div class="category-title cell">
-      <h4>Ingresos por carrera (lider)</h4>
+      <h4>Reservaciones por carrera (l&iacute;der)</h4>
     </div>
     <table>
       <thead>
         <tr>
           <th>Carrera</th>
-          <th>Cantidad de ingresos</th>
+          <th>Cantidad de reservaciones</th>
         </tr>
       </thead>
       <tbody>
@@ -95,7 +95,7 @@
       </tbody>
     </table>
     <div style="display: block; margin: 0 auto;">
-      <canvas width="300" height="300" *ngIf="pieChartLabelsCareers && pieChartDataCareers" baseChart
+      <canvas width="300" height="300" *ngIf="pieChartLabelsCareers?.length > 0 && pieChartDataCareers?.length > 0" baseChart
               [data]="pieChartDataCareers"
               [labels]="pieChartLabelsCareers"
               [chartType]="pieChartType">
@@ -104,13 +104,13 @@
   </div>
   <div *ngIf="reportsDepartment?.length != 0" class="grid-x grid-padding-x">
     <div class="category-title cell">
-      <h4>Ingresos por departamento (lider)</h4>
+      <h4>Reservaciones por departamento (l&iacute;der)</h4>
     </div>
     <table>
       <thead>
         <tr>
           <th>Departmento</th>
-          <th>Cantidad de ingresos</th>
+          <th>Cantidad de reservaciones</th>
         </tr>
       </thead>
       <tbody>
@@ -121,22 +121,22 @@
       </tbody>
     </table>
     <div style="display: block; margin: 0 auto;">
-      <canvas width="300" height="300" *ngIf="pieChartLabelsDepartments && pieChartDataDepartments" baseChart
+      <canvas width="300" height="300" *ngIf="pieChartLabelsDepartments?.length > 0 && pieChartDataDepartments?.length > 0" baseChart
               [data]="pieChartDataDepartments"
               [labels]="pieChartLabelsDepartments"
               [chartType]="pieChartType">
       </canvas>
     </div>
   </div>
-  <div *ngIf="reportsCompanions?.length != 0" class="grid-x grid-padding-x">
+  <div *ngIf="newArray?.length != 0" class="grid-x grid-padding-x">
     <div class="category-title cell">
-      <h4>Ingresos por carrera/departmento (acompañantes)</h4>
+      <h4>Reservaciones por carrera/departmento (acompañantes)</h4>
     </div>
     <table>
       <thead>
         <tr>
           <th>Carrera</th>
-          <th>Cantidad de ingresos</th>
+          <th>Cantidad de reservaciones</th>
         </tr>
       </thead>
       <tbody>
@@ -147,7 +147,7 @@
       </tbody>
     </table>
     <div style="display: block; margin: 0 auto;">
-      <canvas width="300" height="300" *ngIf="pieChartLabelsCompanions && pieChartDataCompanions" baseChart
+      <canvas width="300" height="300" *ngIf="pieChartLabelsCompanions?.length > 0 && pieChartDataCompanions?.length > 0" baseChart
               [data]="pieChartDataCompanions"
               [labels]="pieChartLabelsCompanions"
               [chartType]="pieChartType">
@@ -156,13 +156,13 @@
   </div>
   <div *ngIf="reportsExternal?.length != 0" class="grid-x grid-padding-x">
     <div class="category-title cell">
-      <h4>Ingresos por externo</h4>
+      <h4>Reservaciones por externo</h4>
     </div>
     <table>
       <thead>
         <tr>
           <th>Usuario</th>
-          <th>Cantidad de ingresos</th>
+          <th>Cantidad de reservaciones</th>
         </tr>
       </thead>
       <tbody>
@@ -173,7 +173,7 @@
       </tbody>
     </table>
     <div style="display: block; margin: 0 auto;">
-      <canvas width="300" height="300" *ngIf="pieChartLabelsExternal && pieChartDataExternal" baseChart
+      <canvas width="300" height="300" *ngIf="pieChartLabelsExternal?.length > 0 && pieChartDataExternal?.length > 0" baseChart
               [data]="pieChartDataExternal"
               [labels]="pieChartLabelsExternal"
               [chartType]="pieChartType">
@@ -184,25 +184,25 @@
 
   <div *ngIf="reportsDay?.length != 0" class="grid-x grid-padding-x">
     <div class="category-title cell">
-      <h4>Ingreso total por dia</h4>
+      <h4>Reservaciones total por d&iacute;a</h4>
     </div>
     <table>
       <thead>
         <tr>
           <th>Fecha</th>
-          <th>Cantidad de ingresos</th>
+          <th>Cantidad de reservaciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let report of reportsDay">
-          <td>{{report._id | date: 'shortDate'}}</td>
-          <td>{{report.ingresos}}</td>
+        <tr *ngFor="let report of reportsDay; let i = index">
+          <td>{{report?._id}}</td>
+          <td>{{report?.ingresos}}</td>
         </tr>
       </tbody>
     </table>
   </div>
   <div style="display: block; margin: 0 auto; padding: 20px;">
-    <canvas *ngIf="pieChartLabelsDays && pieChartDataDays" baseChart
+    <canvas *ngIf="pieChartLabelsDays?.length > 0 && pieChartDataDays?.length > 0" baseChart
             [data]="pieChartDataDays"
             [labels]="pieChartLabelsDays"
             [chartType]="pieChartType">
