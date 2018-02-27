@@ -37,7 +37,7 @@ function getDepartmentByNumber(req, res) {
     if (department) {
       res.status(200).json(department)
     } else {
-      res.status(404).send({message: 'Page not found'})
+      res.status(404).send({message: 'El departamento del empleado no existe'})
     }
   })
   .catch(err => {
