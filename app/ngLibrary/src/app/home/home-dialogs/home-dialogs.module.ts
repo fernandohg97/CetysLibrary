@@ -8,6 +8,7 @@ import { PopupUserInfoComponent } from './popup-user-info/popup-user-info.compon
 import { NguiPopupModule } from '@ngui/popup';
 import { PopupConfirmComponent } from './popup-confirm/popup-confirm.component';
 import { PopupConfirmElementComponent } from './popup-confirm-element/popup-confirm-element.component';
+import { HomeDialogsComponent } from './home-dialogs.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { PopupConfirmElementComponent } from './popup-confirm-element/popup-conf
     PopupEmployeeInfoComponent,
     PopupBorrowedMaterialComponent,
     PopupConfirmComponent,
-    PopupConfirmElementComponent
+    PopupConfirmElementComponent,
+    HomeDialogsComponent
   ],
   exports: [
     NguiPopupModule
