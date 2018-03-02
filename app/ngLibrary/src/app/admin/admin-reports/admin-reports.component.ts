@@ -51,6 +51,7 @@ export class AdminReportsComponent implements OnInit {
   countLabelsDays: number
   countLabelsExternal: number
   countLabelsCompanions: number
+  noData: Boolean = true
 
   constructor(private departmentsService: DepartmentsService, private reportsService: ReportsService, private reservationsService: ReservationsService) {}
 
@@ -342,7 +343,10 @@ export class AdminReportsComponent implements OnInit {
       })
     }
     // this.chart.ngOnDestroy()
-
+    if (this.reportsDivision.length == 0 && this.reportsDay.length == 0 && this.reportsCareer.length == 0 && this.reportsCubicle.length == 0 && this.reportsExternal.length == 0 && this.reportsCompanions.length == 0 &&
+      this.reportsDepartment.length == 0 && this.reportsCompanionsQuantity.length == 0) {
+        this.noData = false
+      }
   }
 
 }
