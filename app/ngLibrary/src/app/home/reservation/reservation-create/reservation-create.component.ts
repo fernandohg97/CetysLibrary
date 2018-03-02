@@ -129,7 +129,7 @@ export class ReservationCreateComponent implements OnInit {
         err => {
           this.anyErrors = JSON.parse(err._body)
           this.departureTimeError = JSON.parse(err._body)
-      }
+        }
       )
     }).catch(error => {
         this.anyErrors = JSON.parse(error._body)
