@@ -44,16 +44,46 @@
     </div>
   </div>
   <div class="grid-x grid-padding-x">
-    <div class="small-12 cell text-right">
+    <div class="small-4 cell">
+      <button id="tableButton" class="button" type="button" name="button" (click)="downloadTable()">Download csv</button>
+    </div>
+    <div class="small-4 cell">
+      <ul class="dropdown menu" data-dropdown-menu>
+        <li><a>Columnas</a>
+          <ul class="menu">
+            <li><a (click)="register = true">Registro</a></li>
+            <li><a (click)="career = true">Carrera</a></li>
+            <li><a (click)="div = true">Divisi&oacute;n</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="small-4 cell text-right">
       <h6><strong>Total de reservaciones: {{totalReservations}}</strong></h6>
+    </div>
+  </div>
+  <div class="grid-padding-x">
+    <div class="small-12 cell">
+      <div *ngIf="register">
+        Registro <a name="button" (click)="register = false"><i class="fa fa-times"></i></a>
+      </div>
+      <div *ngIf="career">
+        Carrera <a name="button" (click)="career = false"><i class="fa fa-times"></i></a>
+      </div>
+      <div *ngIf="div">
+        Divisi&oacute;n <a name="button" (click)="div = false"><i class="fa fa-times"></i></a>
+      </div>
     </div>
   </div>
     <!-- Reservations table -->
     <div class="grid-x grid-padding-x table-content">
-    <table *ngIf="reservations?.length != 0; else elseBlock" class="unstriped">
+    <table *ngIf="reservations?.length != 0; else elseBlock" #reservationsTable class="unstriped">
       <thead>
         <tr>
           <th>Usuario</th>
+          <td *ngIf="register">Registro</td>
+          <th *ngIf="career">Carrera</th>
+          <th *ngIf="div">Divisi&oacute;n</th>
           <th>Cub&iacute;culo</th>
           <th>Entrada</th>
           <th>Salida</th>
@@ -65,8 +95,11 @@
       </thead>
 
       <tbody>
-          <tr *ngFor="let reservation of reservations | searchReservation: searchReservationNumber | searchReservationCubicle: searchReservationCubicle | searchReservationDate: startDate: endDate | paginate: { itemsPerPage: 10, currentPage: page}" data-closable>
+          <tr *ngFor="let reservation of reservations | searchReservation: searchReservationNumber | searchReservationCubicle: searchReservationCubicle | searchReservationDate: startDate: endDate | paginate: { itemsPerPage: 30, currentPage: page}" data-closable>
             <td class="clear button user-number" (click)="getCurrentUser(reservation.user || reservation.employee || reservation.externalUser)">{{reservation.user?.registrationNumber || reservation.employee?.employeeNumber || reservation.externalUser?.userCode}}</td>
+            <td *ngIf="register">{{reservation?.createdAt || 'N/A'}}</td>
+            <td *ngIf="career">{{reservation?.user?.career || 'N/A'}}</td>
+            <td *ngIf="div">{{reservation?.user?.division || reservation?.employee?.department || 'N/A'}}</td>
             <td>{{reservation.cubicle}}</td>
             <td>{{reservation.entryTime | date: 'shortTime'}}</td>
             <td>{{reservation.departureTime | date: 'shortTime'}}</td>

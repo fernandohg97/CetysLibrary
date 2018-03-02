@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ReservationsService } from '../../services/reservations/reservations.service';
 import { ReservationModel } from '../../models/reservation.model';
@@ -15,6 +15,7 @@ import { PopupBorrowedMaterialComponent } from '../home-dialogs/popup-borrowed-m
 import { PopupConfirmElementComponent } from '../home-dialogs/popup-confirm-element/popup-confirm-element.component';
 import { AdminDataService } from '../../services/adminData/admin-data.service';
 import { ElementType } from '../../enums/element-type.enum';
+declare var $:any;
 
 @Component({
   selector: 'app-reports',
@@ -28,7 +29,10 @@ export class ReportsComponent implements OnInit {
   @ViewChild(NguiPopupComponent) popup3: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup4: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup5: NguiPopupComponent;
-
+  @ViewChild('reservationsTable') el: ElementRef;
+  div: Boolean = false
+  career: Boolean = false
+  register: Boolean = false
   reservations: ReservationModel[]
   totalReservations: number
   searchByNumber: number
@@ -63,6 +67,10 @@ export class ReportsComponent implements OnInit {
     this.currentReservation = reservation.usersDetails
     this.dataReservationService.addReservationsDetails(this.currentReservation)
     this.openPopup()
+  }
+
+  downloadTable() {
+    $(this.el.nativeElement).tableExport({type:'csv', escape:'false'});
   }
 
   getCurrentUser(user) {
