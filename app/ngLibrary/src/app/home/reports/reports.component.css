@@ -32,3 +32,9 @@ hr {
   font-variant: small-caps;
   letter-spacing: 0.25em;
 }
+.columns-selected div {
+  display: inline-block;
+}
+/*.dropdown-content {
+    display: none;
+}*/

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ReservationsService } from '../../services/reservations/reservations.service';
 import { ReservationModel } from '../../models/reservation.model';
