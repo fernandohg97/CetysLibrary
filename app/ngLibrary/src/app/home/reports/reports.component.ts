@@ -58,6 +58,7 @@ export class ReportsComponent implements OnInit {
   this.currentPipe = 'searchReservation' }
 
   ngOnInit() {
+    $(document).foundation();
     this.reservationsService.getAll().then(data => {
       if (data) this.reservations = data
     })
