@@ -29,8 +29,8 @@ export class ReportsComponent implements OnInit {
   @ViewChild(NguiPopupComponent) popup3: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup4: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup5: NguiPopupComponent;
-  @ViewChild('reservationsTable') el: ElementRef;
   @ViewChild('containerTable') containerTable: ElementRef;
+  @ViewChild('reservationsTable') el: ElementRef;
   div: Boolean = false
   career: Boolean = false
   register: Boolean = false
@@ -76,8 +76,6 @@ export class ReportsComponent implements OnInit {
     let classValue = this.containerTable.nativeElement.getAttribute('class')
     if (classValue == 'grid-container') this.containerTable.nativeElement.setAttribute('class', 'fluid')
     else this.containerTable.nativeElement.setAttribute('class', 'grid-container')
-
-
   }
 
   downloadTable() {
