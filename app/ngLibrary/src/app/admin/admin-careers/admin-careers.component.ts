@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { CareersService } from '../../services/careers/careers.service';
 import { CareerModel } from '../../models/career.model';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -20,6 +20,7 @@ export class AdminCareersComponent implements OnInit, OnDestroy {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
+  @ViewChild('careerTable') careerTable: ElementRef;
   newCareer = new CareerModel()
   divisions: any
   careers: CareerModel[]
@@ -55,6 +56,12 @@ export class AdminCareersComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.careersService.removeCareersFile()
+  }
+
+  expandTable() {
+    let classValue = this.careerTable.nativeElement.getAttribute('class')
+    if (classValue == 'grid-container') this.careerTable.nativeElement.setAttribute('class', 'fluid')
+    else this.careerTable.nativeElement.setAttribute('class', 'grid-container')
   }
 
   createCareer() {

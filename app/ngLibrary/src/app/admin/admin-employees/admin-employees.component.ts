@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { EmployeesService } from '../../services/employees/employees.service';
 import { EmployeeModel } from '../../models/employee.model';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -19,6 +19,7 @@ export class AdminEmployeesComponent implements OnInit, OnDestroy {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
+  @ViewChild('employeeTable') employeeTable: ElementRef;
   newEmployee = new EmployeeModel()
   employees: EmployeeModel[]
   called: Boolean
@@ -43,6 +44,12 @@ export class AdminEmployeesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.employeesService.removeEmployeesFile()
+  }
+
+  expandTable() {
+    let classValue = this.employeeTable.nativeElement.getAttribute('class')
+    if (classValue == 'grid-container') this.employeeTable.nativeElement.setAttribute('class', 'fluid')
+    else this.employeeTable.nativeElement.setAttribute('class', 'grid-container')
   }
 
   createEmployee() {

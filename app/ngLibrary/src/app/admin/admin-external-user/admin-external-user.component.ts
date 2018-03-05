@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ExternalUserService } from '../../services/externalUser/external-user.service';
 import { ExternalUserModel } from '../../models/externalUser.model';
@@ -15,6 +15,7 @@ import { ElementType } from '../../enums/element-type.enum';
 export class AdminExternalUserComponent implements OnInit {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
+  @ViewChild('externalTable') externalTable: ElementRef;
   newExternalUser = new ExternalUserModel()
   users: ExternalUserModel[]
   called: Boolean
@@ -34,6 +35,12 @@ export class AdminExternalUserComponent implements OnInit {
     this.externalUserService.getAll().then(data => {
       this.users = data
     })
+  }
+
+  expandTable() {
+    let classValue = this.externalTable.nativeElement.getAttribute('class')
+    if (classValue == 'grid-container') this.externalTable.nativeElement.setAttribute('class', 'fluid')
+    else this.externalTable.nativeElement.setAttribute('class', 'grid-container')
   }
 
   createExternalUser() {

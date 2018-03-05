@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { DepartmentsService } from '../../services/departments/departments.service';
 import { DepartmentModel } from '../../models/department.model';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -19,6 +19,7 @@ export class AdminDepartmentsComponent implements OnInit, OnDestroy {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
+  @ViewChild('departmentTable') departmentTable: ElementRef;
   newDepartment = new DepartmentModel()
   departments: DepartmentModel[]
   called: Boolean
@@ -43,6 +44,12 @@ export class AdminDepartmentsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.departmentsService.removeDepartmentsFile()
+  }
+
+  expandTable() {
+    let classValue = this.departmentTable.nativeElement.getAttribute('class')
+    if (classValue == 'grid-container') this.departmentTable.nativeElement.setAttribute('class', 'fluid')
+    else this.departmentTable.nativeElement.setAttribute('class', 'grid-container')
   }
 
   createDepartment() {

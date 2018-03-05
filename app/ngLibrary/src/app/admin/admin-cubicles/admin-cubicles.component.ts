@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CubiclesService } from '../../services/cubicles/cubicles.service';
 import { CubicleModel } from '../../models/cubicle.model';
@@ -20,6 +20,7 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
+  @ViewChild('cubicleTable') cubicleTable: ElementRef;
   newCubicle = new CubicleModel()
   cubicles: CubicleModel[]
   called: Boolean
@@ -44,6 +45,12 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.cubiclesService.removeCubiclesFile()
+  }
+
+  expandTable() {
+    let classValue = this.cubicleTable.nativeElement.getAttribute('class')
+    if (classValue == 'grid-container') this.cubicleTable.nativeElement.setAttribute('class', 'fluid')
+    else this.cubicleTable.nativeElement.setAttribute('class', 'grid-container')
   }
 
   createCubicle() {
