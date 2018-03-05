@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ReservationsService } from '../../services/reservations/reservations.service';
 import { ReservationModel } from '../../models/reservation.model';
@@ -15,6 +15,7 @@ import { PopupBorrowedMaterialComponent } from '../home-dialogs/popup-borrowed-m
 import { PopupConfirmElementComponent } from '../home-dialogs/popup-confirm-element/popup-confirm-element.component';
 import { AdminDataService } from '../../services/adminData/admin-data.service';
 import { ElementType } from '../../enums/element-type.enum';
+declare var $:any;
 
 @Component({
   selector: 'app-reports',
@@ -28,7 +29,11 @@ export class ReportsComponent implements OnInit {
   @ViewChild(NguiPopupComponent) popup3: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup4: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup5: NguiPopupComponent;
-
+  @ViewChild('reservationsTable') el: ElementRef;
+  @ViewChild('containerTable') containerTable: ElementRef;
+  div: Boolean = false
+  career: Boolean = false
+  register: Boolean = false
   reservations: ReservationModel[]
   totalReservations: number
   searchByNumber: number
@@ -38,10 +43,12 @@ export class ReportsComponent implements OnInit {
   user: Boolean = false
   cubicle: Boolean = false
   date: Boolean = false
+  career_Department: Boolean = false
   startDate: string
   endDate: string
   searchReservationNumber: string
   searchReservationCubicle: string
+  searchReservationCareer: string
 
   constructor(
     private adminDataService: AdminDataService,
@@ -65,6 +72,18 @@ export class ReportsComponent implements OnInit {
     this.openPopup()
   }
 
+  expandTable() {
+    let classValue = this.containerTable.nativeElement.getAttribute('class')
+    if (classValue == 'grid-container') this.containerTable.nativeElement.setAttribute('class', 'fluid')
+    else this.containerTable.nativeElement.setAttribute('class', 'grid-container')
+
+
+  }
+
+  downloadTable() {
+    $(this.el.nativeElement).tableExport({type:'csv', escape:'false'});
+  }
+
   getCurrentUser(user) {
     if (user.registrationNumber) {
       this.openPopup2()
@@ -80,25 +99,34 @@ export class ReportsComponent implements OnInit {
 
   searchUser() {
     this.user = true
-    this.cubicle = this.date = false
-    this.startDate = ''
-    this.endDate = ''
+    this.cubicle = this.date = this.career_Department = false
+    this.startDate = this.endDate = ''
     this.searchReservationCubicle = ''
+    this.searchReservationCareer = ''
   }
 
   searchCubicle() {
     this.cubicle = true
-    this.user = this.date = false
+    this.user = this.date = this.career_Department = false
     this.searchReservationNumber = ''
-    this.startDate = ''
-    this.endDate = ''
+    this.startDate = this.endDate = ''
+    this.searchReservationCareer = ''
   }
 
   searchDate() {
     this.date = true
-    this.cubicle = this.user = false
+    this.cubicle = this.user = this.career_Department = false
     this.searchReservationNumber = ''
     this.searchReservationCubicle = ''
+    this.searchReservationCareer = ''
+  }
+
+  searchCareer() {
+    this.career_Department = true
+    this.cubicle = this.user = this.date = false
+    this.searchReservationNumber = ''
+    this.searchReservationCubicle = ''
+    this.startDate = this.endDate = ''
   }
 
   getBorrowedMaterial(material) {

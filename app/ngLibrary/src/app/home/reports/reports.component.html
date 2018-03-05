@@ -5,7 +5,7 @@
       <h2 class="text-center">Reservaciones</h2>
     </div>
   </div>
-  <!-- Filters -->
+  <!-- Buttons Filters -->
   <div *ngIf="reservations?.length != 0" class="grid-x grid-padding-x">
     <div class="small-12 cell">
       <label><span class="filter-text">filtros:</span>
@@ -14,6 +14,8 @@
           <button class="button" type="button" (click)="searchUser()">Matr&iacute;cula</button>
           <!-- Filter by cubicle -->
           <button class="button" type="button" (click)="searchCubicle()">Cub&iacute;culo</button>
+          <!-- Filter by cubicle -->
+          <button class="button" type="button" (click)="searchCareer()">Carrera/Departamento</button>
           <!-- Filter by date -->
           <button class="button" type="button" (click)="searchDate()">Fecha</button>
         </div>
@@ -29,6 +31,9 @@
       <label *ngIf="cubicle" for="">Buscar por cub&iacute;culo
         <input type="text" placeholder="Ingrese n&uacute;mero de cub&iacute;culo" name="reservationCubicle" [(ngModel)]="searchReservationCubicle">
       </label>
+      <label *ngIf="career_Department" for="">Buscar por carrera/departamento
+        <input type="text" placeholder="Ingrese carrera o n&uacute;mero de departamento" name="reservationCareer" [(ngModel)]="searchReservationCareer">
+      </label>
       <div *ngIf="date" class="grid-x grid-padding-x">
         <div class="small-6 cell">
           <label>Fecha Inicio
@@ -43,17 +48,56 @@
       </div>
     </div>
   </div>
+  <!-- Table options -->
   <div class="grid-x grid-padding-x">
-    <div class="small-12 cell text-right">
+    <div class="small-3 cell">
+      <button class="button radius shadow" type="button" name="button" (click)="downloadTable()">Descargar</button>
+    </div>
+    <div class="show-for-large small-3 cell columns-button">
+      <button type="button" class="button hollow" (click)="expandTable()" name="button"><i class="fa fa-expand"></i></button>
+    </div>
+    <div class="small-3 cell">
+      <ul class="dropdown menu" data-dropdown-menu>
+        <li class="is-dropdown-submenu-parent">
+          <a class="show-for-medium">Columnas</a>
+          <a class="show-for-small-only"><i class="fa fa-list"></i></a>
+          <ul class="menu dropdown-content">
+            <li><a (click)="register = true">Registro</a></li>
+            <li><a (click)="career = true">Carrera</a></li>
+            <li><a (click)="div = true">Divisi&oacute;n/Departamento</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="small-12 medium-3 cell reservations-text">
       <h6><strong>Total de reservaciones: {{totalReservations}}</strong></h6>
     </div>
   </div>
+  <div class="grid-padding-x">
+    <div class="small-12 cell columns-selected">
+      <div *ngIf="register">
+        Registro <a name="button" (click)="register = false"><i class="fa fa-times"></i></a>
+      </div>
+      <div *ngIf="career">
+        Carrera <a name="button" (click)="career = false"><i class="fa fa-times"></i></a>
+      </div>
+      <div *ngIf="div">
+        Divisi&oacute;n/Depto <a name="button" (click)="div = false"><i class="fa fa-times"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+
     <!-- Reservations table -->
+    <div id="containerTable" #containerTable class="grid-container">
     <div class="grid-x grid-padding-x table-content">
-    <table *ngIf="reservations?.length != 0; else elseBlock" class="unstriped">
+    <table *ngIf="reservations?.length != 0; else elseBlock" #reservationsTable class="unstriped">
       <thead>
         <tr>
           <th>Usuario</th>
+          <td *ngIf="register">Registro</td>
+          <th *ngIf="career">Carrera</th>
+          <th *ngIf="div">Divisi&oacute;n/Depto</th>
           <th>Cub&iacute;culo</th>
           <th>Entrada</th>
           <th>Salida</th>
@@ -63,10 +107,12 @@
           <th>Eliminar</th>
         </tr>
       </thead>
-
       <tbody>
-          <tr *ngFor="let reservation of reservations | searchReservation: searchReservationNumber | searchReservationCubicle: searchReservationCubicle | searchReservationDate: startDate: endDate | paginate: { itemsPerPage: 10, currentPage: page}" data-closable>
+          <tr *ngFor="let reservation of reservations | searchReservation: searchReservationNumber | searchReservationCubicle: searchReservationCubicle | searchReservationCareer: searchReservationCareer | searchReservationDate: startDate: endDate | paginate: { itemsPerPage: 100, currentPage: page}" data-closable>
             <td class="clear button user-number" (click)="getCurrentUser(reservation.user || reservation.employee || reservation.externalUser)">{{reservation.user?.registrationNumber || reservation.employee?.employeeNumber || reservation.externalUser?.userCode}}</td>
+            <td *ngIf="register">{{reservation?.createdAt || 'N/A' | date: 'short'}}</td>
+            <td *ngIf="career">{{reservation?.user?.career || 'N/A'}}</td>
+            <td *ngIf="div">{{reservation?.user?.division || reservation?.employee?.department || 'N/A'}}</td>
             <td>{{reservation.cubicle}}</td>
             <td>{{reservation.entryTime | date: 'shortTime'}}</td>
             <td>{{reservation.departureTime | date: 'shortTime'}}</td>
@@ -81,6 +127,8 @@
       </tbody>
     </table>
   </div>
+</div>
+
   <div *ngIf="reservations?.length != 0" class="grid-x grid-padding-x">
     <div class="small-12 cell text-center">
       <pagination-controls class="pagination-users" (pageChange)="page = $event" previousLabel="Atras" nextLabel="Siguiente"></pagination-controls>
@@ -90,5 +138,4 @@
     <p class="none-message">no hay reservaciones</p>
   </ng-template>
 
-</div>
 <ngui-popup #popup></ngui-popup>

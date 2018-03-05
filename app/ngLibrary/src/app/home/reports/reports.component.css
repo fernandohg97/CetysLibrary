@@ -32,3 +32,20 @@ hr {
   font-variant: small-caps;
   letter-spacing: 0.25em;
 }
+.columns-selected div {
+  display: inline-block;
+}
+/*.dropdown-content {
+    display: none;
+}*/
+.columns-button {
+  margin: 0 auto;
+}
+.reservations-text {
+  text-align: right;
+}
+@media screen  and (max-width: 63.9375em) {
+  .reservations-text {
+    text-align: left;
+  }
+}

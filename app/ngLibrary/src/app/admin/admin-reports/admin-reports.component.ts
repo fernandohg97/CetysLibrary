@@ -51,6 +51,7 @@ export class AdminReportsComponent implements OnInit {
   countLabelsDays: number
   countLabelsExternal: number
   countLabelsCompanions: number
+  noData: Boolean = true
 
   constructor(private departmentsService: DepartmentsService, private reportsService: ReportsService, private reservationsService: ReservationsService) {}
 
