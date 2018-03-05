@@ -109,12 +109,15 @@ export class ReservationCreateExternalComponent implements OnInit {
       this.reservationsService.create(this.newReservation)
       .subscribe(
         data => {
+          setTimeout(() => {
+            alert(`Reservacion realizada exitosamente`)
+          }, 500)
           this.router.navigateByUrl('/')
         },
         err => {
           this.anyErrors = JSON.parse(err._body)
           this.departureTimeError = JSON.parse(err._body)
-      }
+        }
       )
     }).catch(error => {
         this.anyErrors = JSON.parse(error._body)
@@ -122,6 +125,7 @@ export class ReservationCreateExternalComponent implements OnInit {
   }
 
   searchUser() {
+    this.anyErrors = ''
     this.externalUserService.getByUserCode(this.registrationNumber).then(data => {
       this.currentUser = JSON.parse(JSON.stringify(data)).usuario
     }).catch(err => {

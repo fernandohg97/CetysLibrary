@@ -5,7 +5,7 @@ const Reservation = require('../models/reservation/reservation.model')
 const app = require('../app.config')
 
 function getReservations(req, res) {
-  let findReservations = Reservation.find().sort({createdAt: -1})
+  let findReservations = Reservation.find().sort({reservationDate: -1})
   findReservations.then(reservations => {
     res.json(reservations)
   })
