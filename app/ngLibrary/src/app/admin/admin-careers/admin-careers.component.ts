@@ -32,6 +32,7 @@ export class AdminCareersComponent implements OnInit, OnDestroy {
   anyErrors: any
   errorFile: string
   errorItem: string
+  totalCareers: number
 
   constructor(
     private adminDataService: AdminDataService,
@@ -44,6 +45,9 @@ export class AdminCareersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.careersService.getCount().then(data => {
+      this.totalCareers = parseInt(JSON.parse(JSON.stringify(data))._body)
+    })
     this.settingsService.loadSchoolSettings().subscribe(res => {
       res.splice(res.length - 1, 1)
       this.divisions = res

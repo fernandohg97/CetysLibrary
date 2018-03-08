@@ -31,12 +31,16 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
   errorFile: string
   errorItem: string
   cubiclesFile: any
+  totalCubicles: number
 
   constructor(private adminDataService: AdminDataService, private dataReservationService: DataReservationService, private cubiclesService: CubiclesService, private router: Router, private route: ActivatedRoute) {
     this.called = false
   }
 
   ngOnInit() {
+    this.cubiclesService.getCount().then(data => {
+      this.totalCubicles = parseInt(JSON.parse(JSON.stringify(data))._body)
+    })
     this.cubiclesService.getAll().then(data => {
       this.cubicles = data
     })

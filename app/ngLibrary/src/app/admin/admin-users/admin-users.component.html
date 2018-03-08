@@ -1,5 +1,5 @@
 <div *ngIf="!called" class="grid-container table-content">
-  <h2>Estudiantes</h2>
+  <h2>{{totalUsers}} Estudiantes</h2>
   <div class="grid-x grid-padding-x">
     <div class="small-6 large-8 cell">
       <button type="button" class="secondary button radius shadow" name="button" (click)="openPopup()">
@@ -21,7 +21,7 @@
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell">
       <label>Buscar
-        <input type="text" placeholder="Ingrese la matricula o nombre del usuario" [(ngModel)]="searchUserNumber">
+        <input type="text" placeholder="Ingrese la matr&iacute;cula o nombre del usuario" [(ngModel)]="searchUserNumber">
       </label>
     </div>
   </div>

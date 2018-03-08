@@ -34,6 +34,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   anyErrors: any
   errorFile: string
   errorItem: string
+  totalUsers: number
 
   constructor(
     private adminDataService: AdminDataService,
@@ -48,6 +49,9 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.usersService.getCount().then(data => {
+      this.totalUsers = parseInt(JSON.parse(JSON.stringify(data))._body)
+    })
     this.settingService.loadSchoolSettings().subscribe(res => {
       res.splice(res.length - 1, 1)
       this.divisions = res

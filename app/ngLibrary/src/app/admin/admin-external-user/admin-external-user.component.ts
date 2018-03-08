@@ -26,12 +26,16 @@ export class AdminExternalUserComponent implements OnInit {
   anyErrors: any
   errorFile: string
   errorItem: string
+  totalExternals: number
 
   constructor(private adminDataService: AdminDataService, private externalUserService: ExternalUserService, private router: Router) {
     this.called = false
   }
 
   ngOnInit() {
+    this.externalUserService.getCount().then(data => {
+      this.totalExternals = parseInt(JSON.parse(JSON.stringify(data))._body)
+    })
     this.externalUserService.getAll().then(data => {
       this.users = data
     })

@@ -30,12 +30,16 @@ export class AdminDepartmentsComponent implements OnInit, OnDestroy {
   anyErrors: any
   errorFile: string
   errorItem: string
+  totalDepartments: number
 
   constructor(private adminDataService: AdminDataService, private dataReservationService: DataReservationService, private departmentsService: DepartmentsService, private router: Router) {
     this.called = false
   }
 
   ngOnInit() {
+    this.departmentsService.getCount().then(data => {
+      this.totalDepartments = parseInt(JSON.parse(JSON.stringify(data))._body)
+    })
     this.departmentsService.getAll().then(data => {
       this.departments = data
     })
