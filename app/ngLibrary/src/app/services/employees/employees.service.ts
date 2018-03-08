@@ -24,6 +24,13 @@ export class EmployeesService {
     .catch(EmployeesService.handleError)
   }
 
+  getCount(): Promise<number> {
+    return this.http.get(`${this.url}/count`)
+    .toPromise()
+    .then()
+    .catch(EmployeesService.handleError)
+  }
+
   getById(_id: String): Promise<EmployeeModel> {
     return this.http.get(`${this.url}/${_id}`)
     .toPromise()
