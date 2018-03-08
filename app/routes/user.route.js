@@ -7,6 +7,8 @@ const created = require('../middlewares/userCreated')
 
 userRouter.get('/users', userCtrl.getUsers)
 
+userRouter.get('/users/count', reservationCtrl.getUsersCount)
+
 userRouter.get('/users/recent', userCtrl.getUsersRecent)
 
 userRouter.get('/users/file', userCtrl.createUsersFile)
