@@ -41,3 +41,10 @@ header {
 .title-left a:hover {
   color: rgba(17, 18, 17, 0.86);
 }
+.user-link {
+  border-left: solid rgb(193, 193, 193);
+  border-width: thin;
+}
+.has-tip {
+  cursor: pointer;
+}

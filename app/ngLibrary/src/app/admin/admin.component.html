@@ -2,11 +2,12 @@
   <div class="top-bar admin-bar">
     <button type="button" class=" clear button" data-toggle="offCanvasLeft"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
     <div class="top-bar-left title-left show-for-large">
-      <a class="clear button" routerLink="/admin-site"><i class="fa fa-home fa-lg" aria-hidden="true"></i></a>
+      <a data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="1" title="Inicio" class="clear button has-tip" routerLink="/home"><i class="fa fa-home fa-lg" aria-hidden="true"></i></a>
     </div>
   <div class="top-bar-right show-for-large">
     <ul class="menu menu-bar">
-      <li><a class="clear button" routerLink="users"><i class="fa fa-user" aria-hidden="true"></i>Estudiantes</a></li>
+      <li><a data-tooltip aria-haspopup="true" data-disable-hover="false" tabindex="2" title="Admin principal" data-position="bottom" data-alignment="left" class="clear button has-tip" routerLink="/admin-site"><i class="fa fa-arrow-circle-o-left fa-lg"></i></a></li>
+      <li class="user-link"><a class="clear button" routerLink="users"><i class="fa fa-user" aria-hidden="true"></i>Estudiantes</a></li>
       <li><a class="clear button" routerLink="cubicles"><i class="fa fa-briefcase" aria-hidden="true"></i>Cub&iacute;culos</a></li>
       <li><a class="clear button" routerLink="careers"><i class="fa fa-graduation-cap" aria-hidden="true"></i>Carreras</a></li>
       <li><a class="clear button" routerLink="departments"><i class="fa fa-id-card-o" aria-hidden="true"></i>Departamentos</a></li>
