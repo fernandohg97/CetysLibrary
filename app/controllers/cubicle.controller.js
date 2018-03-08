@@ -16,6 +16,16 @@ function getCubicles (req, res) {
   })
 }
 
+function getCubiclesCount(req, res) {
+  let countCubicles = Cubicle.find().count()
+  countCubicles.then(cubicles => {
+    res.json(cubicles)
+  })
+  .catch(err => {
+    res.status(500).send({message: `Error del servidor: ${err}`})
+  })
+}
+
 function getCubicle (req, res) {
   let findCubicle = Cubicle.findById(req.params.cubicle_id)
 
@@ -111,6 +121,7 @@ function removeCubicles (req, res) {
 
 module.exports = {
   getCubicles,
+  getCubiclesCount,
   getCubicle,
   createCubicle,
   createCubiclesFile,

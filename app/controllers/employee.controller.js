@@ -15,6 +15,16 @@ function getEmployees(req, res) {
   })
 }
 
+function getEmployeesCount(req, res) {
+  let countEmployees = Employee.find().count()
+  countEmployees.then(employees => {
+    res.json(employees)
+  })
+  .catch(err => {
+    res.status(500).send({message: `Error del servidor: ${err}`})
+  })
+}
+
 function getEmployee(req, res) {
   let findEmployee = Employee.findById(req.params.employee_id)
 
@@ -109,6 +119,7 @@ function removeEmployees(req, res) {
 
 module.exports = {
   getEmployees,
+  getEmployeesCount,
   getEmployee,
   createEmployee,
   createEmployeesFile,
