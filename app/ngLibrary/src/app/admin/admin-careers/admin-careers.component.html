@@ -26,7 +26,7 @@
     </div>
   </div>
 </div>
-<div id="careerTable" #careerTable class="grid-container">
+<div *ngIf="!called" id="careerTable" #careerTable class="grid-container">
   <div class="grid-x grid-padding-x">
     <table class="unstriped table-info">
       <thead>

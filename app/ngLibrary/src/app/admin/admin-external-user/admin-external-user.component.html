@@ -18,7 +18,7 @@
     </div>
   </div>
 </div>
-<div id="externalTable" #externalTable class="grid-container">
+<div *ngIf="!called" id="externalTable" #externalTable class="grid-container">
   <div class="grid-x grid-padding-x">
     <table class="unstriped table-info">
       <thead>
