@@ -16,6 +16,16 @@ function getUsers(req, res) {
   })
 }
 
+function getUsersCount(req, res) {
+  let countUsers = User.find().count()
+  countUsers.then(users => {
+    res.json(users)
+  })
+  .catch(err => {
+    res.status(500).send({message: `Error del servidor: ${err}`})
+  })
+}
+
 function getUsersRecent(req, res) {
   let findUsers = User.find().sort({registrationNumber: -1}).limit(100)
 
@@ -148,6 +158,7 @@ function removeUsers(req, res) {
 
 module.exports = {
   getUsers,
+  getUsersCount,
   getUsersRecent,
   getUser,
   getUserByRegistrationNumber,

@@ -7,6 +7,8 @@ const created = require('../middlewares/careerCreated')
 
 careerRouter.get('/careers', careerCtrl.getCareers)
 
+careerRouter.get('/careers/count', careerCtrl.getCareersCount)
+
 careerRouter.get('/careers/file', careerCtrl.createCareersFile)
 
 careerRouter.get('/careers/download', careerCtrl.downloadCareersFile)

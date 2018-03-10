@@ -18,13 +18,13 @@ form {
 .table-content {
   margin-top: 50px;
 }
-.table-info {
+/* .table-info {
   display: block;
   height: 600px;
   width: auto;
   margin: 0 auto;
   overflow: auto;
-}
+} */
 .pagination-users /deep/ .ngx-pagination .current {
   margin-top: 20px;
 }

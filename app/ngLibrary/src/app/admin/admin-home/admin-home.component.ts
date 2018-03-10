@@ -39,23 +39,23 @@ export class AdminHomeComponent implements OnInit {
   ) { this.message = false }
 
   ngOnInit() {
-    this.usersService.getAll().then(data => {
-      this.totalUsers = data.length
+    this.usersService.getCount().then(data => {
+      this.totalUsers = parseInt(JSON.parse(JSON.stringify(data))._body)
     })
-    this.cubiclesService.getAll().then(data => {
-      this.totalCubicles = data.length
+    this.cubiclesService.getCount().then(data => {
+      this.totalCubicles = parseInt(JSON.parse(JSON.stringify(data))._body)
     })
-    this.careersService.getAll().then(data => {
-      this.totalCareers = data.length
+    this.careersService.getCount().then(data => {
+      this.totalCareers = parseInt(JSON.parse(JSON.stringify(data))._body)
     })
-    this.departmentsService.getAll().then(data => {
-      this.totalDepartments = data.length
+    this.departmentsService.getCount().then(data => {
+      this.totalDepartments = parseInt(JSON.parse(JSON.stringify(data))._body)
     })
-    this.employeesService.getAll().then(data => {
-      this.totalEmployees = data.length
+    this.employeesService.getCount().then(data => {
+      this.totalEmployees = parseInt(JSON.parse(JSON.stringify(data))._body)
     })
-    this.externalUserService.getAll().then(data => {
-      this.totalExternals = data.length
+    this.externalUserService.getCount().then(data => {
+      this.totalExternals = parseInt(JSON.parse(JSON.stringify(data))._body)
     })
   }
 

@@ -15,6 +15,16 @@ function getCareers(req, res) {
   })
 }
 
+function getCareersCount(req, res) {
+  let countCareers = Career.find().count()
+  countCareers.then(career => {
+    res.json(career)
+  })
+  .catch(err => {
+    res.status(500).send({message: `Error del servidor: ${err}`})
+  })
+}
+
 function getCareersByDivision (req, res) {
   let findCareersByDivision = Career.find({area: req.query.area, active: true})
 
@@ -121,6 +131,7 @@ function removeCareers(req, res) {
 module.exports = {
   getCareers,
   getCareersByDivision,
+  getCareersCount,
   getCareer,
   createCareer,
   createCareersFile,

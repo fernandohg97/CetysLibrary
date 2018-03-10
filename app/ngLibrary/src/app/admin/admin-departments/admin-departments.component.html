@@ -1,9 +1,12 @@
 <div *ngIf="!called" class="grid-container table-content">
-  <h2>Departamentos</h2>
+  <h2>{{totalDepartments}} Departamentos</h2>
   <div class="grid-x grid-padding-x">
     <div class="small-6 large-7 cell">
       <button type="button" class="secondary button radius shadow" name="button" (click)="openPopup()">
         <i class="fa fa-trash fa-lg" aria-hidden="true"></i>&nbsp;<span class="show-for-medium">Remover</span>
+      </button>
+      <button type="button" class="show-for-large button radius shadow hollow" (click)="expandTable()" name="button">
+        <i class="fa fa-expand"></i>
       </button>
     </div>
     <div class="small-6 large-5 cell text-right">
@@ -22,6 +25,8 @@
       </label>
     </div>
   </div>
+</div>
+<div *ngIf="!called" id="departmentTable" #departmentTable class="grid-container">
   <div class="grid-x grid-padding-x">
     <table class="unstriped table-info">
       <thead>
@@ -52,6 +57,7 @@
     </div>
   </div>
 </div>
+
 <ngui-popup #popup></ngui-popup>
 
 

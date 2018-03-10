@@ -7,6 +7,8 @@ const created = require('../middlewares/externalUserCreated')
 
 externalUserRouter.get('/externalUsers', externalUserCtrl.getExternalUsers)
 
+externalUserRouter.get('/externalUsers/count', externalUserCtrl.getExternalUsersCount)
+
 externalUserRouter.get('/externalUsers/:externalUser_id', externalUserCtrl.getExternalUser)
 
 externalUserRouter.get('/externalUsers/userCode/:userCode', externalUserCtrl.getByUserCode)

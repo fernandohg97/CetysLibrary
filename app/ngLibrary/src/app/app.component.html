@@ -1,3 +1,24 @@
+<div class="off-canvas position-left" id="offCanvasLeft" data-off-canvas data-transition="overlap">
+<!-- Your menu or Off-canvas content goes here -->
+  <ul class="vertical menu">
+    <li><a routerLink="/" class="links">Inicio</a></li>
+    <li><a routerLink="/admin-site" class="links">Admin</a></li>
+    <ul class="nested vertical menu">
+      <li><a routerLink="/admin-site/users">Estudiantes</a></li>
+      <li><a routerLink="/admin-site/cubicles">Cub&iacute;culos</a></li>
+      <li><a routerLink="/admin-site/careers">Carreras</a></li>
+      <li><a routerLink="/admin-site/departments">Departamentos</a></li>
+      <li><a routerLink="/admin-site/employees">Empleados</a></li>
+      <li><a routerLink="/admin-site/externals">Externos</a></li>
+    </ul>
+    <li><a routerLink="/admin-site/reports" class="links">Reportes</a></li>
+    <li><a routerLink="/home/reservations" class="links">Reservaciones</a></li>
+  </ul>
+</div>
+
+<div class="off-canvas-content" data-off-canvas-content>
+<!-- Your page content lives here -->
+</div>
 <router-outlet></router-outlet>
 <footer class="grid-container fluid">
   <div class="grid-x grid-padding-x">

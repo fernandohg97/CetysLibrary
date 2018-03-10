@@ -24,6 +24,13 @@ export class DepartmentsService {
     .catch(DepartmentsService.handleError)
   }
 
+  getCount(): Promise<number> {
+    return this.http.get(`${this.url}/count`)
+    .toPromise()
+    .then()
+    .catch(DepartmentsService.handleError)
+  }
+
   getById(_id: String): Promise<DepartmentModel> {
     return this.http.get(`${this.url}/${_id}`)
     .toPromise()

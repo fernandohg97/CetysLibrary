@@ -15,8 +15,8 @@ function getReservations(req, res) {
 }
 
 function getReservationsCount(req, res) {
-  let findReservations = Reservation.find().count()
-  findReservations.then(reservations => {
+  let countReservations = Reservation.find().count()
+  countReservations.then(reservations => {
     res.json(reservations)
   })
   .catch(err => {
