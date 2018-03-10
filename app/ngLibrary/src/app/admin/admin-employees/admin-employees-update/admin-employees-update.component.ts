@@ -25,11 +25,11 @@ export class AdminEmployeesUpdateComponent implements OnInit {
     })
   }
 
-  isActiveCareer(event: any) {
+  isActiveEmployee(event: any) {
     this.currentEmployee.active = event.target.value
   }
 
-  isNotActiveCareer(event: any) {
+  isNotActiveEmployee(event: any) {
     this.currentEmployee.active = event.target.value
   }
 
