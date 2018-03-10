@@ -24,6 +24,13 @@ export class CareersService {
     .catch(CareersService.handleError)
   }
 
+  getCount(): Promise<number> {
+    return this.http.get(`${this.url}/count`)
+    .toPromise()
+    .then()
+    .catch(CareersService.handleError)
+  }
+
   getByDivision(area: String): Promise<CareerModel[]> {
     return this.http.get(`${this.url}/division`, {
       params: {

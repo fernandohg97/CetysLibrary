@@ -24,6 +24,13 @@ export class ExternalUserService {
     .catch(ExternalUserService.handleError)
   }
 
+  getCount(): Promise<number> {
+    return this.http.get(`${this.url}/count`)
+    .toPromise()
+    .then()
+    .catch(ExternalUserService.handleError)
+  }
+
   getById(_id: String): Promise<ExternalUserModel> {
     return this.http.get(`${this.url}/${_id}`)
     .toPromise()

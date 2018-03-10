@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../services/users/users.service';
 import { SettingsService } from '../../services/settings/settings.service';
@@ -21,6 +21,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
+  @ViewChild('usersTable') usersTable: ElementRef;
   newUser = new UserModel()
   divisions: any
   users: UserModel[]
@@ -33,6 +34,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   anyErrors: any
   errorFile: string
   errorItem: string
+  totalUsers: number
 
   constructor(
     private adminDataService: AdminDataService,
@@ -47,6 +49,9 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.usersService.getCount().then(data => {
+      this.totalUsers = parseInt(JSON.parse(JSON.stringify(data))._body)
+    })
     this.settingService.loadSchoolSettings().subscribe(res => {
       res.splice(res.length - 1, 1)
       this.divisions = res
@@ -59,6 +64,12 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.usersService.removeUsersFile()
+  }
+
+  expandTable() {
+    let classValue = this.usersTable.nativeElement.getAttribute('class')
+    if (classValue == 'grid-container') this.usersTable.nativeElement.setAttribute('class', 'fluid')
+    else this.usersTable.nativeElement.setAttribute('class', 'grid-container')
   }
 
   createUser() {

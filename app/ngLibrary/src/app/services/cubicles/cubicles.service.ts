@@ -24,6 +24,13 @@ export class CubiclesService {
     .catch(CubiclesService.handleError)
   }
 
+  getCount(): Promise<number> {
+    return this.http.get(`${this.url}/count`)
+    .toPromise()
+    .then()
+    .catch(CubiclesService.handleError)
+  }
+
   getById(_id: String): Promise<CubicleModel> {
     return this.http.get(`${this.url}/${_id}`)
     .toPromise()

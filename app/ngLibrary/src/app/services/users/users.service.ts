@@ -26,6 +26,13 @@ export class UsersService {
     .catch(UsersService.handleError)
   }
 
+  getCount(): Promise<number> {
+    return this.http.get(`${this.url}/count`)
+    .toPromise()
+    .then()
+    .catch(UsersService.handleError)
+  }
+
   getRecent(): Promise<UserModel[]> {
     return this.http.get(`${this.url}/recent`)
     .toPromise()

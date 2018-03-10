@@ -15,12 +15,6 @@ html {
 *:after {
   box-sizing: inherit;
 }
-.text {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin: -60px 5px 5px -60px;
-}
 .loading {
   position: absolute;
   left: 50%;

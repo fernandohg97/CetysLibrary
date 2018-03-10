@@ -6,3 +6,15 @@ footer {
   bottom: 0;
   padding: 1rem;
 }
+.links {
+  color: #000000;
+}
+.links:hover {
+  color: rgb(25, 45, 38);
+}
+.nested a{
+  color: rgb(107, 111, 88);
+}
+.nested a:hover {
+  color: rgb(118, 135, 104);
+}
