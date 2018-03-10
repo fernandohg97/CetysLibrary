@@ -14,6 +14,16 @@ function getExternalUsers(req, res) {
   })
 }
 
+function getExternalUsersCount(req, res) {
+  let countExternals = ExternalUser.find().count()
+  countExternals.then(externals => {
+    res.json(externals)
+  })
+  .catch(err => {
+    res.status(500).send({message: `Error del servidor: ${err}`})
+  })
+}
+
 function getExternalUser(req, res) {
   let findCareer = ExternalUser.findById(req.params.externalUser_id)
 
@@ -88,6 +98,7 @@ function removeExternalUser(req, res) {
 
 module.exports = {
   getExternalUsers,
+  getExternalUsersCount,
   getExternalUser,
   getByUserCode,
   createExternalUser,

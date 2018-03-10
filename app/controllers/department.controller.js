@@ -15,6 +15,16 @@ function getDepartments(req, res) {
   })
 }
 
+function getDepartmentsCount(req, res) {
+  let countDepartments = Department.find().count()
+  countDepartments.then(departments => {
+    res.json(departments)
+  })
+  .catch(err => {
+    res.status(500).send({message: `Error del servidor: ${err}`})
+  })
+}
+
 function getDepartment(req, res) {
   let findDepartment = Department.findById(req.params.department_id)
 
@@ -124,6 +134,7 @@ function removeDepartments(req, res) {
 
 module.exports = {
   getDepartments,
+  getDepartmentsCount,
   getDepartment,
   getDepartmentByNumber,
   createDepartment,

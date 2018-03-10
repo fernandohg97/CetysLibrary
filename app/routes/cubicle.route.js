@@ -7,6 +7,8 @@ const created = require('../middlewares/cubicleCreated')
 
 cubicleRouter.get('/cubicles', cubicleCtrl.getCubicles)
 
+cubicleRouter.get('/cubicles/count', cubicleCtrl.getCubiclesCount)
+
 cubicleRouter.get('/cubicles/file', cubicleCtrl.createCubiclesFile)
 
 cubicleRouter.get('/cubicles/download', cubicleCtrl.downloadCubiclesFile)

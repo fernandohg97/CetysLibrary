@@ -7,6 +7,8 @@ const created = require('../middlewares/employeeCreated')
 
 employeeRouter.get('/employees', employeeCtrl.getEmployees)
 
+employeeRouter.get('/employees/count', employeeCtrl.getEmployeesCount)
+
 employeeRouter.get('/employees/file', employeeCtrl.createEmployeesFile)
 
 employeeRouter.get('/employees/download', employeeCtrl.downloadEmployeesFile)

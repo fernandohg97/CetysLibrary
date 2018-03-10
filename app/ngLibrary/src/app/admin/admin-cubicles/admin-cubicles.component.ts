@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CubiclesService } from '../../services/cubicles/cubicles.service';
 import { CubicleModel } from '../../models/cubicle.model';
@@ -20,6 +20,7 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
+  @ViewChild('cubicleTable') cubicleTable: ElementRef;
   newCubicle = new CubicleModel()
   cubicles: CubicleModel[]
   called: Boolean
@@ -30,12 +31,16 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
   errorFile: string
   errorItem: string
   cubiclesFile: any
+  totalCubicles: number
 
   constructor(private adminDataService: AdminDataService, private dataReservationService: DataReservationService, private cubiclesService: CubiclesService, private router: Router, private route: ActivatedRoute) {
     this.called = false
   }
 
   ngOnInit() {
+    this.cubiclesService.getCount().then(data => {
+      this.totalCubicles = parseInt(JSON.parse(JSON.stringify(data))._body)
+    })
     this.cubiclesService.getAll().then(data => {
       this.cubicles = data
     })
@@ -44,6 +49,12 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.cubiclesService.removeCubiclesFile()
+  }
+
+  expandTable() {
+    let classValue = this.cubicleTable.nativeElement.getAttribute('class')
+    if (classValue == 'grid-container') this.cubicleTable.nativeElement.setAttribute('class', 'fluid')
+    else this.cubicleTable.nativeElement.setAttribute('class', 'grid-container')
   }
 
   createCubicle() {
