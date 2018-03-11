@@ -96,7 +96,7 @@ function getReportsByCareerCompanions(req, res) {
   findReservationsCareerCompanions.then(data => {
     if (data) {
       let newData = data.filter(value => value._id.length != 0)
-      console.log(newData)
+      // console.log(newData)
       return res.json(newData)
     }
     return res.status(404).send({message: 'Page not found'})
@@ -126,8 +126,6 @@ function getReportsByQuantityCompanions(req, res) {
 
 
 function getReportsByDay(req, res) {
-  console.log(req.query.start);
-  console.log(req.query.end);
   let findReservationsDay = Reservation.aggregate( [
     { $project: { shortDate: { $dateToString: { format: "%G-%m-%d", date: "$reservationDate" } } } },
     { $match: { shortDate: { $gte: req.query.start, $lte: req.query.end } } },
@@ -135,7 +133,6 @@ function getReportsByDay(req, res) {
 
   findReservationsDay.then(data => {
     if (data) {
-      console.log(data);
       return res.json(data)
     }
     return res.status(404).send({message: 'Page not found'})
