@@ -212,6 +212,15 @@ export class AdminReportsComponent implements OnInit {
       this.reportsService.getByCompanions(this.startDate, shortDate).then(data => {
         if (data) {
           let k = 0
+          console.log(data)
+          // data.forEach(element => {
+          //   element._id.forEach((el, index) => {
+          //     itemsCompanions.push(el)
+          //     this.newArray.push({
+          //       careers: el
+          //     })
+          //   })
+          // })
           this.reportsCompanions = data
           this.reportsCompanions.forEach(element => {
               if (element._id.userCareers.length > 0) {
@@ -221,7 +230,10 @@ export class AdminReportsComponent implements OnInit {
                       labels: value
                     })
                   } else {
-                    this.newArray.splice(k,0,{labels: value})
+                    // In case label is repeated dont include it in array, the number of incomes will be added
+                    // if (value != this.newArray[k-1].labels) {
+                      this.newArray.splice(k,0,{labels: value})
+                    // }
                   }
                   this.pieChartLabelsCompanions.push(value)
                   itemsCompanions.push(value)
@@ -235,7 +247,9 @@ export class AdminReportsComponent implements OnInit {
                       labels: value
                     })
                   } else {
-                    this.newArray.splice(k,0,{labels: value})
+                    // if (value != this.newArray[k-1].labels) {
+                      this.newArray.splice(k,0,{labels: value})
+                    // }
                   }
                   this.pieChartLabelsCompanions.push(value)
                   itemsCompanions.push(value)

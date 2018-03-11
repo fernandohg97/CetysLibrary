@@ -96,6 +96,7 @@ function getReportsByCareerCompanions(req, res) {
   findReservationsCareerCompanions.then(data => {
     if (data) {
       let newData = data.filter(value => value._id.length != 0)
+      // console.log(newData)
       return res.json(newData)
     }
     return res.status(404).send({message: 'Page not found'})
