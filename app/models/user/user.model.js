@@ -1,8 +1,8 @@
 'use strict'
 
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-
+const mongoose = require('mongoose') // import mongoose library
+const Schema = mongoose.Schema // declare schema with mongoose
+// Create user schema
 const userSchema = new Schema({
   registrationNumber: {
     type: Number,

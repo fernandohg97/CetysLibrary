@@ -1,10 +1,9 @@
 'use strict'
 
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-const validator = require('validator')
-// const valid = require('./reservation.validation')
+const mongoose = require('mongoose') // import mongoose library
+const Schema = mongoose.Schema // Declare schema with mongoose
 
+// Create usersDetail schema
 var usersDetailSchema = new Schema({
   quantity: {type: Number, required: true},
   registrationNumber: Number,
@@ -13,7 +12,7 @@ var usersDetailSchema = new Schema({
   career: String,
   department: String
 })
-
+// Create reservation schema
 var reservationSchema = new Schema({
   user: {
     _id: {type: Schema.Types.ObjectId, ref: 'User'},

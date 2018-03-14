@@ -1,8 +1,8 @@
 'use strict'
 
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-
+const mongoose = require('mongoose') // import mongoose library
+const Schema = mongoose.Schema // Declare schema with mongoose
+// Create department schema
 const departmentSchema = new Schema({
   departmentCode: {
     type: Number,
