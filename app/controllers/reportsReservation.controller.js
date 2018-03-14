@@ -1,7 +1,8 @@
 'use strict'
 
-const Reservation = require('../models/reservation/reservation.model')
+const Reservation = require('../models/reservation/reservation.model') // import reservation model
 
+// Get reservation reports by division
 function getReportsByDivision(req, res) {
   let findReservationsDivision = Reservation.aggregate( [
     { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
@@ -20,7 +21,7 @@ function getReportsByDivision(req, res) {
     res.status(500).send({message: `Error del server: ${err}`})
   })
 }
-
+// Get reservation reports by department
 function getReportsByDepartment(req, res) {
   let findReservationsDepartment = Reservation.aggregate( [
     { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
@@ -39,7 +40,7 @@ function getReportsByDepartment(req, res) {
     res.status(500).send({message: `Error del server: ${err}`})
   })
 }
-
+// Get reservation reports by cubicle
 function getReportsByCubicle(req, res) {
   let findReservationsCubicle = Reservation.aggregate( [
     { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
@@ -54,7 +55,7 @@ function getReportsByCubicle(req, res) {
     res.status(500).send({message: `Error del server ${err}`})
   })
 }
-
+// Get reservation reports by career
 function getReportsByCareer(req, res) {
   let findReservationsCareer = Reservation.aggregate( [
     { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
@@ -70,7 +71,7 @@ function getReportsByCareer(req, res) {
     res.status(500).send({message: `Error del server ${err}`})
   })
 }
-
+// Get reservation reports by external user
 function getReportsByExternalUser(req, res) {
   let findReservationsExternal = Reservation.aggregate( [
     { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
@@ -86,7 +87,7 @@ function getReportsByExternalUser(req, res) {
     res.status(500).send({message: `Error del server ${err}`})
   })
 }
-
+// Get reservation reports by career name companions
 function getReportsByCareerCompanions(req, res) {
 
   let findReservationsCareerCompanions = Reservation.aggregate( [
@@ -104,7 +105,7 @@ function getReportsByCareerCompanions(req, res) {
     res.status(500).send({message: `Error del server ${err}`})
   })
 }
-
+// Get reservation reports by career quantity companions
 function getReportsByQuantityCompanions(req, res) {
 
   let findReservationsQuantityCompanions = Reservation.aggregate( [
@@ -123,8 +124,7 @@ function getReportsByQuantityCompanions(req, res) {
   })
 }
 
-
-
+// Get reservation reports by day
 function getReportsByDay(req, res) {
   let findReservationsDay = Reservation.aggregate( [
     { $project: { shortDate: { $dateToString: { format: "%G-%m-%d", date: "$reservationDate" } } } },
