@@ -215,16 +215,58 @@ export class AdminReportsComponent implements OnInit {
       this.reportsService.getByCompanions(this.startDate, shortDate).then(data => {
         if (data) {
           let k = 0
+          let j = 0
           console.log(data)
-          // data.forEach(element => {
-          //   element._id.forEach((el, index) => {
-          //     itemsCompanions.push(el)
-          //     this.newArray.push({
-          //       careers: el
-          //     })
-          //   })
-          // })
           this.reportsCompanions = data
+          if (this.pieChartDataCompanions.length == 0) {
+            this.reportsCompanions.forEach(element => {
+                if (element._id.userCareers.length > 0) {
+                  element._id.userCareers.forEach((value, ind) => {
+                    if (this.newArray.length == 0) {
+                      this.newArray.push({
+                        labels: value
+                      })
+                    } else {
+                      // In case label is repeated dont include it in array, the number of incomes will be added
+                      // if (value != this.newArray[k-1].labels) {
+                        this.newArray.splice(k,0,{labels: value})
+                      // }
+                    }
+                    this.pieChartLabelsCompanions.push(value)
+                    itemsCompanions.push(value)
+                    k++
+                  })
+                }
+                if (element._id.userDepartments.length > 0) {
+                  element._id.userDepartments.forEach((value, ind) => {
+                    if (this.newArray.length == 0) {
+                      this.newArray.push({
+                        labels: value
+                      })
+                    } else {
+                      // if (value != this.newArray[k-1].labels) {
+                        this.newArray.splice(k,0,{labels: value})
+                      // }
+                    }
+                    this.pieChartLabelsCompanions.push(value)
+                    itemsCompanions.push(value)
+                    k++
+                  })
+                }
+                  if (element.ingresos.length > 0) {
+                    console.log('hola')
+                    element.ingresos.forEach((value, ind) => {
+                        value.forEach(val => {
+                          this.newArray[j].ingresos = val
+                          this.pieChartDataCompanions.push(val)
+                          j++
+                        })
+
+                    });
+                  }
+                  this.countLabelsCompanions = this.pieChartDataCompanions.length
+            })
+        } else {
           this.reportsCompanions.forEach(element => {
               if (element._id.userCareers.length > 0) {
                 element._id.userCareers.forEach((value, ind) => {
@@ -238,7 +280,7 @@ export class AdminReportsComponent implements OnInit {
                       this.newArray.splice(k,0,{labels: value})
                     // }
                   }
-                  this.pieChartLabelsCompanions.push(value)
+                  // this.pieChartLabelsCompanions.push(value)
                   itemsCompanions.push(value)
                   k++
                 })
@@ -254,52 +296,24 @@ export class AdminReportsComponent implements OnInit {
                       this.newArray.splice(k,0,{labels: value})
                     // }
                   }
-                  this.pieChartLabelsCompanions.push(value)
                   itemsCompanions.push(value)
                   k++
                 })
               }
-              console.log(this.pieChartLabelsCompanions)
-              console.log(this.newArray)
-          })
-          this.reportsService.getByQuantityCompanions(this.startDate, shortDate).then(data => {
-            if (data) {
-              console.log(data)
-              let j = 0
-              this.reportsCompanionsQuantity = data
-              this.pieChartDataCompanions = []
-              if (this.pieChartDataCompanions.length == 0) {
-                for (let i = 0; i < this.reportsCompanionsQuantity.length; i++) {
-                    this.reportsCompanionsQuantity[i]._id.forEach((element, index) => {
-                      this.newArray[j].ingresos = element
-                      this.pieChartDataCompanions.push(element)
-                      j++
-                    });
+                if (element.ingresos.length > 0) {
+                  console.log('hola')
+                  element.ingresos.forEach((value, ind) => {
+                      value.forEach(val => {
+                        this.newArray[j].ingresos = val
+                        dataCompanionsClone.push(val)
+                        j++
+                      })
+                  });
                 }
-                console.log(this.pieChartDataCompanions)
-                console.log(this.newArray)
-                this.countLabelsCompanions = this.pieChartDataCompanions.length
-              } else {
-                for (let i = 0; i < this.reportsCompanionsQuantity.length; i++) {
-                    this.reportsCompanionsQuantity[i]._id.forEach((element, index) => {
-                      this.newArray[j].ingresos = element
-                      dataCompanionsClone.push(element)
-                      j++
-                    });
-                }
-                dataCompanionsClone.splice(0, this.countLabelsCompanions)
-                this.countLabelsCompanions = labelsCompanionsClone.length
-                labelsCompanionsClone = itemsCompanions
-                console.log(labelsCompanionsClone)
-                this.pieChartLabelsCompanions = labelsCompanionsClone
-                this.pieChartDataCompanions = dataCompanionsClone
-                console.log('labels days: ' + this.pieChartLabelsCompanions)
-              }
+              })
             }
-          })
-        }
+          }
       })
-
       this.reportsService.getByExternal(this.startDate, shortDate).then(data => {
         if (data) {
           this.reportsExternal = data
@@ -320,16 +334,11 @@ export class AdminReportsComponent implements OnInit {
       })
       this.reportsService.getByDay(this.startDate, this.endDate).then(data => {
         if (data) {
-          // data.forEach(element => {
-          //   element._id = new Date(element._id).toLocaleDateString()
-          // })
           console.log(data)
-          // console.log('Arreglo' + this.pieChartDataDays.length)
           this.reportsDay = data
           this.pieChartLabelsDays = []
           this.pieChartDataDays = []
           if (this.pieChartDataDays.length == 0) {
-            console.log('hola')
             this.insertChartItems(this.reportsDay, this.pieChartLabelsDays, this.pieChartDataDays)
             this.countLabelsDays = this.pieChartDataDays.length
           } else {
@@ -343,8 +352,6 @@ export class AdminReportsComponent implements OnInit {
             this.pieChartLabelsDays = labelsDaysClone
             this.pieChartDataDays = dataDaysClone
           }
-          // console.log(this.reportsDay)
-          // console.log(this.pieChartDataDays,this.pieChartLabelsDays)
         }
       })
     }
