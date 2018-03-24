@@ -18,6 +18,4 @@ reportsRouter.get('/reportsExternal', reportsCtrl.getReportsByExternalUser) // G
 
 reportsRouter.get('/reportsCompanionsCareer', reportsCtrl.getReportsByCareerCompanions) // Get reports by career name companions
 
-reportsRouter.get('/reportsCompanionsQuantity', reportsCtrl.getReportsByQuantityCompanions) // Get reports by career quantity companions
-
 module.exports = reportsRouter
