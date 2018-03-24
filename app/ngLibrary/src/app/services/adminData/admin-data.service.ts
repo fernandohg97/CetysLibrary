@@ -5,30 +5,30 @@ import { ElementType } from '../../enums/element-type.enum';
 @Injectable()
 export class AdminDataService {
 
-  element: ElementType
+  element: ElementType // declare element
   private elementSource = new BehaviorSubject<ElementType>(this.element)
   curentElement = this.elementSource.asObservable()
 
-  id: string
+  id: string // declare id
   private idSource = new BehaviorSubject<string>(this.id)
   curentId = this.idSource.asObservable()
 
   constructor() { }
 
-  public getCurrentElement(): ElementType {
+  public getCurrentElement(): ElementType { // get current element type selected
     return this.element
   }
 
-  public changeElement(message: ElementType) {
+  public changeElement(message: ElementType) { // change element type
     this.element = message
     this.elementSource.next(this.element)
   }
 
-  public getCurrentId(): string {
+  public getCurrentId(): string { // get current id
     return this.id
   }
 
-  public changeId(message: string) {
+  public changeId(message: string) { // change id
     this.id = message
     this.idSource.next(this.id)
   }

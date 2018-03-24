@@ -8,7 +8,7 @@ import "rxjs/add/operator/toPromise";
 @Injectable()
 export class CubiclesService {
 
-  private url = `${environment.baseUrl}/api/cubicles`
+  private url = `${environment.baseUrl}/api/cubicles` // Api endpoint to call database
 
   constructor(private http: Http) { }
 
@@ -17,61 +17,61 @@ export class CubiclesService {
     return Promise.reject(error.message || error);
   }
 
-  getAll(): Promise<CubicleModel[]> {
+  getAll(): Promise<CubicleModel[]> { // Get all cubicles from database
     return this.http.get(this.url)
     .toPromise()
     .then(res => res.json() as CubicleModel[])
     .catch(CubiclesService.handleError)
   }
 
-  getCount(): Promise<number> {
+  getCount(): Promise<number> { // Get the maximun number of documents in database
     return this.http.get(`${this.url}/count`)
     .toPromise()
     .then()
     .catch(CubiclesService.handleError)
   }
 
-  getById(_id: String): Promise<CubicleModel> {
+  getById(_id: String): Promise<CubicleModel> { // Get cubicle by id from database
     return this.http.get(`${this.url}/${_id}`)
     .toPromise()
     .then(res => res.json() as CubicleModel)
     .catch(CubiclesService.handleError)
   }
 
-  getDownloadFile() {
+  getDownloadFile() { // Download local file with all cubicles
     return this.http.get(`${this.url}/download`).toPromise()
   }
 
-  createCubiclesDownloadFile() {
+  createCubiclesDownloadFile() { // Create local file with all cubicles from database
     return this.http.get(`${this.url}/file`).toPromise()
   }
 
-  removeCubiclesFile() {
+  removeCubiclesFile() { // Remove local file with all cubicles
     return this.http.get(`${this.url}/remove`).toPromise()
   }
 
-  create(newCubicle: CubicleModel) {
+  create(newCubicle: CubicleModel) { // Create new cubicle
     return this.http.post(this.url, newCubicle)
     .map(res => res.json())
     .catch(err => CubiclesService.handleError(err))
   }
 
-  createFile(newCubicles: CubicleModel[]) {
+  createFile(newCubicles: CubicleModel[]) { // Create upload file cubicles
     return this.http.post(this.url, newCubicles)
     .map(res => res.json())
     .catch(err => CubiclesService.handleError(err))
   }
 
-  update(id: String, cubicleModel: CubicleModel) {
+  update(id: String, cubicleModel: CubicleModel) { // Update specific cubicle from database
     return this.http.put(`${this.url}/${id}`, cubicleModel).toPromise()
   }
 
-  remove(id: String) {
+  remove(id: String) { // Delete specific cubicle from database
     console.log(id)
     return this.http.delete(`${this.url}/${id}`).toPromise()
   }
 
-  removeAll() {
+  removeAll() { // Delete all careers from database
     return this.http.delete(`${this.url}`).toPromise()
   }
 }
