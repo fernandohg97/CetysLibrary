@@ -1,21 +1,20 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'searchReservation'
+  name: 'searchReservation' // Pipe name
 })
 export class SearchReservationPipe implements PipeTransform {
-
+  // Filter reservation data
   transform(items: any, code: string): any {
-    if (!code) return items
-    let codeUpper = code.toUpperCase()
-    let matricula = parseInt(code)
-    let user
+    if (!code) return items // In case input reservation data is empty
+    let codeUpper = code.toUpperCase() // String to upper case
+    let matricula = parseInt(code) // String code parse to int
     return items.filter(value => {
-      if (value.hasOwnProperty('user')) {
+      if (value.hasOwnProperty('user')) { // In case reservation has user property
         if (value.user.registrationNumber == matricula) return value
-      } else if (value.hasOwnProperty('employee')) {
+      } else if (value.hasOwnProperty('employee')) { // In case reservation has employee property
         if (value.employee.employeeNumber == matricula) return value
-      } else {
+      } else { //  In case reservation has externalUser property
         if (value.externalUser.userCode == codeUpper) return value
       }
     })
