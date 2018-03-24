@@ -5,7 +5,7 @@ const Schema = mongoose.Schema // Declare schema with mongoose
 
 // Create usersDetail schema
 var usersDetailSchema = new Schema({
-  quantity: {type: Number, required: true},
+  quantity: Number,
   registrationNumber: Number,
   userCode: String,
   division: String,
