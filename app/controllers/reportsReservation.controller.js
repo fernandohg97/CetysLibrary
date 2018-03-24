@@ -92,32 +92,10 @@ function getReportsByCareerCompanions(req, res) {
 
   let findReservationsCareerCompanions = Reservation.aggregate( [
     { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
-    { $group: { _id: { userCareers: "$usersDetails.career", userDepartments: "$usersDetails.department" } } } ])
+    { $group: { _id: { userCareers: "$usersDetails.career", userDepartments: "$usersDetails.department" }, ingresos:  { $push: '$usersDetails.quantity' } } } ])
 
   findReservationsCareerCompanions.then(data => {
-    if (data) {
-      let newData = data.filter(value => value._id.length != 0)
-      // console.log(newData)
-      return res.json(newData)
-    }
-    return res.status(404).send({message: 'Page not found'})
-  }).catch(err => {
-    res.status(500).send({message: `Error del server ${err}`})
-  })
-}
-// Get reservation reports by career quantity companions
-function getReportsByQuantityCompanions(req, res) {
-
-  let findReservationsQuantityCompanions = Reservation.aggregate( [
-    { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
-    { $group: { _id: "$usersDetails.quantity" } } ])
-
-  findReservationsQuantityCompanions.then(data => {
-    if (data) {
-      let newData = data.filter(value => value._id.length != 0)
-      console.log(newData);
-      return res.json(newData)
-    }
+    if (data) return res.json(data)
     return res.status(404).send({message: 'Page not found'})
   }).catch(err => {
     res.status(500).send({message: `Error del server ${err}`})
@@ -148,6 +126,5 @@ module.exports = {
   getReportsByDay,
   getReportsByDepartment,
   getReportsByCareerCompanions,
-  getReportsByQuantityCompanions,
   getReportsByExternalUser
 }
