@@ -104,6 +104,7 @@ function downloadDepartmentsFile(req, res) {
   res.download(rootFile, 'departamentos.json')
 }
 
+// Update specific department
 function updateDepartment(req, res) {
   let updateDepartment = Department.findByIdAndUpdate(req.params.department_id, req.body)
 
@@ -114,7 +115,7 @@ function updateDepartment(req, res) {
     res.status(500).send({message: `No se pudo actualizar el departmento: ${err}`})
   })
 }
-
+// Remove department by id
 function removeDepartment(req, res) {
   let removeDepartment = Department.findByIdAndRemove(req.params.department_id)
 
@@ -125,7 +126,7 @@ function removeDepartment(req, res) {
     res.status(500).send({message: `No se pudo eliminar el departmento: ${err}`})
   })
 }
-
+// Remove all departments
 function removeDepartments(req, res) {
   let removeDepartments = Department.remove({})
 

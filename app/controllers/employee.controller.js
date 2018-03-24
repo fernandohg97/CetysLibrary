@@ -3,6 +3,7 @@
 const express = require('express')
 const Employee = require('../models/employee/employee.model')
 const fs = require('fs');
+
 // Get all employees from database
 function getEmployees(req, res) {
   let findEmployees = Employee.find().sort({employeeNumber: -1})
