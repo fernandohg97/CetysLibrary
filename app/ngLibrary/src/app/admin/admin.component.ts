@@ -8,11 +8,8 @@ import {ActivatedRoute, Router } from '@angular/router';
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private route: Router, private router: ActivatedRoute) {
-    // this.route.navigateByUrl('/admin/home')
- }
+  constructor(private route: Router, private router: ActivatedRoute) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }
