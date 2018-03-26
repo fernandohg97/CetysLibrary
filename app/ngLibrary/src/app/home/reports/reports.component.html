@@ -15,7 +15,7 @@
           <!-- Filter by cubicle -->
           <button class="button" type="button" (click)="searchCubicle()">Cub&iacute;culo</button>
           <!-- Filter by cubicle -->
-          <button class="button" type="button" (click)="searchCareer()">Carrera/Departamento</button>
+          <button class="button" type="button" (click)="searchCareerDepartment()">Carrera/Departamento</button>
           <!-- Filter by date -->
           <button class="button" type="button" (click)="searchDate()">Fecha</button>
         </div>
@@ -73,6 +73,7 @@
       <h6><strong>Total de reservaciones: {{totalReservations}}</strong></h6>
     </div>
   </div>
+  <!-- Columns displayed -->
   <div class="grid-padding-x">
     <div class="small-12 cell columns-selected">
       <div *ngIf="register">
@@ -128,7 +129,7 @@
     </table>
   </div>
 </div>
-
+  <!-- Pagination -->
   <div *ngIf="reservations?.length != 0" class="grid-x grid-padding-x">
     <div class="small-12 cell text-center">
       <pagination-controls class="pagination-users" (pageChange)="page = $event" previousLabel="Atras" nextLabel="Siguiente"></pagination-controls>
