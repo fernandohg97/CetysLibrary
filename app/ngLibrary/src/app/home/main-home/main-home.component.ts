@@ -20,28 +20,26 @@ export class MainHomeComponent implements OnInit {
     this.iconElement = 'fa fa-check-circle'
   }
 
-  ngOnInit() {
-    this.cubiclesService.getAll()
+  ngOnInit() { // Execute when component initialize
+    this.cubiclesService.getAll() // Get all cubicles
     .then(data => {
       if (data) {
         this.cubicles = data
-        console.log('Cubiculos:')
-        console.log(data)
-        this.reservationsService.getAll().then(data => {
+        this.reservationsService.getAll().then(data => { // Get all reservations
           if (data) {
             this.reservations = data
             this.reservations.forEach(reservation => {
               let initialDate = new Date(reservation.reservationDate)
               let finishTime = new Date(reservation.departureTime)
-              if (this.currentDate >= initialDate && this.currentDate <= finishTime) {
+              if (this.currentDate >= initialDate && this.currentDate <= finishTime) { // In case currentDate is between initialDate and finishTime
                 this.cubicles.forEach(cubicle => {
-                  if (cubicle.cubicleNumber == reservation.cubicle) {
+                  if (cubicle.cubicleNumber == reservation.cubicle) { // In case cubicleNumber is equal to reservation cubicle it will set availability to false
                     cubicle.availability = false
                   }
                 })
               }
-              else if (this.currentDate > finishTime) {
-                if (reservation.enable) {
+              else if (this.currentDate > finishTime) { // In case currentDate is bigger than finishTime
+                if (reservation.enable) { // In case reservation enable it will set enable to false
                   reservation.enable = false
                   this.updateReservation(reservation)
                 }
@@ -53,7 +51,7 @@ export class MainHomeComponent implements OnInit {
     })
   }
 
-  updateReservation(reservation) {
+  updateReservation(reservation) { // Update reservation to change enable property
     this.reservationsService.update(reservation._id, reservation).then(response => {
       if (response.status == 200 || response.status == 204) {
         response
