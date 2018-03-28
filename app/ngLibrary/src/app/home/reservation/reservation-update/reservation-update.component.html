@@ -1,3 +1,4 @@
+    <!-- Form reservation update -->
     <form #reservationForm="ngForm">
       <div class="grid-container">
         <div class="grid-x grid-padding-x">
@@ -6,14 +7,14 @@
           </div>
         </div>
       </div>
-
+      <!-- Title form -->
       <div class="grid-container content">
         <div class="grid-x grid-padding-x title-rs">
           <div class="cell">
             <h2>Modificar reservaci&oacute;n</h2>
           </div>
         </div>
-
+        <!-- User registration number input -->
         <div class="grid-x grid-padding-x">
           <div class="cell form-group">
             <label>Usuario
@@ -28,14 +29,14 @@
             <p *ngIf="anyErrors?.msg" class="help-text" id="userHelpText" style="color: #3f9d51;">{{anyErrors.msg}}</p>
           </div>
         </div>
-
+<!-- Cubicle input -->
         <div class="grid-x grid-padding-x">
           <div class="small-2 cell form-group">
             <label>Cub&iacute;culo
               <input type="number" class="form-control" value="{{updateReservation?.cubicle}}">
             </label>
           </div>
-
+<!-- Entry time input -->
           <div class="small-5 cell form-group">
             <label>Hora de entrada
               <input type="time" class="form-control" name="entryTime" [(ngModel)]="currentTime">
@@ -43,7 +44,7 @@
 
             </label>
           </div>
-
+<!-- Departure time input -->
           <div class="small-5 cell form-group">
             <label>Hora de salida
               <input type="time" class="form-control" [(ngModel)]="currentDepartureTime" name="departureTime">
@@ -53,7 +54,7 @@
             </label>
           </div>
         </div>
-
+<!-- Division input -->
         <div class="grid-x grid-padding-x">
           <div class="auto cell form-group">
             <label>Divisi&oacute;n
@@ -62,7 +63,7 @@
               </select>
             </label>
           </div>
-
+<!-- Department input -->
           <div class="auto cell form-group">
             <label>Departamento
               <select class="form-control" name="selectedDepartment" data-open="quantity-department" [ngModel]="departmentSelected" (ngModelChange)="departmentChange($event)">
@@ -70,7 +71,7 @@
               </select>
             </label>
           </div>
-
+<!-- Date input -->
           <div class="auto cell">
             <label>Fecha
               <input type="date" name="dateReservation" [(ngModel)]="currentDate" placeholder="Fecha">
@@ -108,7 +109,7 @@
             </li>
           </ul>
         </div>
-
+<!-- Total quantity companions -->
         <div class="grid-x grid-padding-x">
           <div class="small-2 cell title-people">
             <label>Acompañantes
@@ -122,7 +123,7 @@
             </label>
           </div>
         </div>
-
+<!-- Update reservation button -->
         <div class="grid-x grid-padding-x">
           <div class="small-6 medium-6 large-4 cell text-center hola">
             <button type="button" class="button" name="button" [disabled]="!reservationForm.form.valid" (click)="update()">Actualizar</button>
