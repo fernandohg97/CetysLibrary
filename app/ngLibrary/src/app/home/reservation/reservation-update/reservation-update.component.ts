@@ -54,7 +54,7 @@ export class ReservationUpdateComponent implements OnInit {
     this.quantityDepartment = 1
     this.externalUser = false
   }
-
+  // Execute when component initialize
   ngOnInit() {
     this.settingService.loadSchoolSettings().subscribe(res => {
       this.divisions = res
@@ -111,7 +111,7 @@ export class ReservationUpdateComponent implements OnInit {
       })
     })
   }
-  
+  // Update and valid info reservation
   update() {
     console.log(this.employee)
     this.updateReservation.entryTime = new Date(`${this.currentDate} ${this.currentTime}`)
@@ -187,7 +187,7 @@ export class ReservationUpdateComponent implements OnInit {
       }
     }
   }
-
+  // Update reservation
   updateInfo() {
     this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
       if (response.status == 200 || response.status == 204) {
@@ -202,7 +202,7 @@ export class ReservationUpdateComponent implements OnInit {
       console.log(this.anyErrors)
     })
   }
-
+  // Change user number input
   changeUserNumber(newValue) {
     if (this.externalUser) {
       this.externalUserCode = newValue
@@ -210,7 +210,7 @@ export class ReservationUpdateComponent implements OnInit {
       this.registrationNumber = newValue
     }
   }
-
+  // Validate if users exists in database
   searchUser() {
     if (this.externalUser) {
       this.externalUserService.getByUserCode(this.externalUserCode).then(data => {
@@ -222,7 +222,7 @@ export class ReservationUpdateComponent implements OnInit {
       }).catch(err => this.anyErrors = JSON.parse(err._body))
     }
   }
-
+  // When you select a department
   departmentChange(event) {
     this.selectedDivision = {}
     let sigue: boolean = false
@@ -239,7 +239,7 @@ export class ReservationUpdateComponent implements OnInit {
     this.departmentSelected = event
     this.usersQuantity.setDepartmentSelected(event)
   }
-
+  // When you select a division
   divisionChange(newDivision) {
     this.departmentSelected = ''
     this.currentCareers = new Array
@@ -263,7 +263,7 @@ export class ReservationUpdateComponent implements OnInit {
       }
     })
   }
-
+  // Execute when minus button of career is clic
   decrement(career: string) {
     if (this.usersQuantity.getCareer() == null || undefined) {
 
@@ -324,7 +324,7 @@ export class ReservationUpdateComponent implements OnInit {
       this.updateReservation.peopleQuantity-=1
     }
   }
-
+ // Execute when plus button of career is clic
   increment(career: string) {
     if (this.usersQuantity.getCareer() == null || undefined) {
       this.usersQuantity.setCareer(career)
@@ -390,7 +390,7 @@ export class ReservationUpdateComponent implements OnInit {
     }
     this.updateReservation.peopleQuantity+=1
   }
-
+  // Execute when minus button of department is clic
   decrementDepartment() {
     this.quantityDepartment -= 1
     this.updateReservation.usersDetails.forEach((e, index) => {
@@ -405,7 +405,7 @@ export class ReservationUpdateComponent implements OnInit {
       this.updateReservation.peopleQuantity-=1
     }
   }
-
+ // Execute when plus button of department is clic
   incrementDepartment() {
     let exist = false
     this.quantityDepartment += 1

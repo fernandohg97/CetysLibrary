@@ -1,3 +1,4 @@
+<!-- Form reservation create -->
     <form *ngIf="!called" #reservationForm="ngForm">
       <div class="grid-container">
         <div class="grid-x grid-padding-x">
@@ -7,14 +8,14 @@
           </div>
         </div>
       </div>
-
+<!-- Title reservation create -->
       <div class="grid-container content">
         <div class="grid-x grid-padding-x title-rs">
           <div class="cell">
             <h2>Nueva reservaci&oacute;n</h2>
           </div>
         </div>
-
+<!-- User input reservation create -->
         <div class="grid-x grid-padding-x">
           <div class="small-6 cell form-group">
             <label>Usuario
@@ -36,31 +37,30 @@
             </ul>
           </div>
         </div>
-
+<!-- Cubicle input -->
         <div class="grid-x grid-padding-x">
           <div class="small-2 cell form-group">
             <label>Cub&iacute;culo
               <input type="number" class="form-control" value="{{newReservation?.cubicle}}">
             </label>
           </div>
-
+<!-- Entry time input -->
           <div class="small-5 cell form-group">
             <label>Hora de entrada
               <input type="time" class="form-control" name="entryTime" [(ngModel)]="currentTime">
               <p *ngIf="anyErrors?.errors?.entryTime" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.entryTime.message}}</p>
             </label>
           </div>
-
+<!-- Departure time input -->
           <div class="small-5 cell form-group">
             <label>Hora de salida
               <input type="time" class="form-control" name="departureTime" [(ngModel)]="departureTime">
               <p *ngIf="anyErrors?.errors?.departureTime" class="help-text" id="userHelpText" style="color: #b53535;">{{anyErrors?.errors?.departureTime.message}}</p>
               <p *ngIf="departureTimeError" class="help-text" id="userHelpText" style="color: #b53535;">{{departureTimeError.departureTimeMsg}}</p>
-
             </label>
           </div>
         </div>
-
+<!-- Division input -->
         <div class="grid-x grid-padding-x">
           <div class="auto cell form-group">
             <label>Divisi&oacute;n
@@ -69,7 +69,7 @@
               </select>
             </label>
           </div>
-
+<!-- Department input -->
           <div class="auto cell form-group">
             <label>Departamento
               <select class="form-control" name="selectedDepartment" [ngModel]="departmentSelected" (ngModelChange)="departmentChange($event)">
@@ -77,7 +77,7 @@
               </select>
             </label>
           </div>
-
+<!-- Date reservation input -->
           <div class="auto cell">
             <label>Fecha
               <input type="date" name="dateReservation" [(ngModel)]="currentDate" placeholder="Fecha">
@@ -116,7 +116,7 @@
             </li>
           </ul>
         </div>
-
+<!-- Total companions quantity -->
         <div class="grid-x grid-margin-x">
           <div class="small-2 cell title-people">
             <label>Acompañantes
@@ -129,13 +129,13 @@
             </label>
           </div>
         </div>
-
+<!-- Reservation create button -->
         <div class="grid-x grid-padding-x">
-          <div class="small-6 medium-6 large-4 cell text-center hola">
+          <div class="small-6 medium-6 large-4 cell text-center reservation-create-btn">
             <button type="button" class="button" name="button" [disabled]="!reservationForm.form.valid" (click)="save()">Reservar</button>
           </div>
         </div>
       </div>
     </form>
-
+<!-- Reservation create external user template -->
     <app-reservation-create-external *ngIf="called"></app-reservation-create-external>

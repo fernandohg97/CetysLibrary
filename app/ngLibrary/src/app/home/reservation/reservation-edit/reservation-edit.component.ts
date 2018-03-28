@@ -41,7 +41,7 @@ export class ReservationEditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) { }
-
+  // Execute when component initialize
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       let cubicleNumberId = params['id'] //
@@ -56,7 +56,7 @@ export class ReservationEditComponent implements OnInit {
       }
     })
   }
-
+ // Depending of user type get user info
   getCurrentUser(user) {
     if (user.registrationNumber) {
       this.openPopup2()
@@ -69,12 +69,12 @@ export class ReservationEditComponent implements OnInit {
       this.dataReservationService.changeExternalUser(user)
     }
   }
-
+  // Get user details reservation when companions is clic
   getCurrentReservation(reservation) {
     this.dataReservationService.addReservationsDetails(reservation.usersDetails)
     this.openPopup()
   }
-
+  // Get material description
   getBorrowedMaterial(material) {
     this.dataReservationService.changeBorrowedMaterial(material)
     this.popup.open(PopupBorrowedMaterialComponent, {
@@ -82,35 +82,35 @@ export class ReservationEditComponent implements OnInit {
       closeButton: true
     })
   }
-
+  // Popup for user details component
   openPopup() {
     this.popup.open(PopupUserDetailsComponent, {
       classNames: 'custom',
       closeButton: true
     })
   }
-
+  // Pop up user (student) info component
   openPopup2() {
     this.popup2.open(PopupUserInfoComponent, {
       classNames: 'custom',
       closeButton: true
     })
   }
-
+  // Pop up employee info component
   openPopup3() {
     this.popup3.open(PopupEmployeeInfoComponent, {
       classNames: 'custom',
       closeButton: true
     })
   }
-
+  // Pop up external user info
   openPopup4() {
     this.popup4.open(PopupExternalInfoComponent, {
       classNames: 'custom',
       closeButton: true
     })
   }
-
+  // Pop up confirm delete element component
   openPopup5(reservationId: string) {
     this.adminDataService.changeId(reservationId)
     this.adminDataService.changeElement(ElementType.reservations)
@@ -119,12 +119,5 @@ export class ReservationEditComponent implements OnInit {
       closeButton: true
     })
   }
-
-  // delete(id: string) {
-  //   this.reservationsService.remove(id).then(response => {
-  //     response
-  //   }).catch(err => console.log(`Hubo un error ${err}`))
-  //   this.exist = false
-  // }
 
 }

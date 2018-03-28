@@ -55,6 +55,7 @@ export class ReservationCreateComponent implements OnInit {
     private route: ActivatedRoute
   ){ this.called = false }
 
+  // Execute when component initialize
   ngOnInit() {
     let hour = this.newReservation.entryTime.getHours().toString()
     let minutes = this.newReservation.entryTime.getMinutes()
@@ -98,7 +99,7 @@ export class ReservationCreateComponent implements OnInit {
       }
     })
   }
-
+  // Create and save new reservation
   save() {
     console.log(this.currentDate)
     console.log(this.currentTime)
@@ -135,11 +136,11 @@ export class ReservationCreateComponent implements OnInit {
         this.anyErrors = JSON.parse(error._body)
     })
   }
-
+  // In case you will create a reservation for external user
   reservateExternalUser() {
     this.called = true
   }
-
+  // Validate if user exist in database
   searchUser() {
     this.anyErrors = ''
     this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => {
@@ -156,7 +157,7 @@ export class ReservationCreateComponent implements OnInit {
       this.anyErrors = JSON.parse(err._body)
     })
   }
-
+  // When you select a division
   divisionChange(newDivision) {
     this.departmentSelected = ''
     this.currentCareers = new Array
@@ -180,7 +181,7 @@ export class ReservationCreateComponent implements OnInit {
     })
     this.usersQuantity.setDivisionSelected(newDivision.division)
   }
-
+  // When you select a department
   departmentChange(event) {
     this.selectedDivision = {}
     let sigue: boolean = false
@@ -197,7 +198,7 @@ export class ReservationCreateComponent implements OnInit {
     this.departmentSelected = event
     this.usersQuantity.setDepartmentSelected(event)
   }
-
+  // Execute when minus button of career is clic
   decrementCareer(career: string) {
     if (this.usersQuantity.getCareer() == null || undefined) {
 
@@ -257,7 +258,7 @@ export class ReservationCreateComponent implements OnInit {
       this.newReservation.peopleQuantity-=1
     }
   }
-
+ // Execute when plus button of career is clic
   incrementCareer(career: string) {
     if (this.usersQuantity.getCareer() == null || undefined) {
       this.usersQuantity.setCareer(career)
@@ -324,7 +325,7 @@ export class ReservationCreateComponent implements OnInit {
     this.newReservation.peopleQuantity+=1
   }
 
-
+  // Execute when minus button of department is clic
   decrementDepartment() {
     this.quantityDepartment -= 1
     this.newReservation.usersDetails.forEach((e, index) => {
@@ -339,7 +340,7 @@ export class ReservationCreateComponent implements OnInit {
       this.newReservation.peopleQuantity-=1
     }
   }
-
+  // Execute when plus button of department is clic
   incrementDepartment() {
     let exist = false
     this.quantityDepartment += 1
