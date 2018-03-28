@@ -31,11 +31,11 @@ export class PopupConfirmComponent implements OnInit {
     private departmentsService: DepartmentsService,
     private cubiclesService: CubiclesService
   ) { }
-
+  // Execute when component initialize
   ngOnInit() {
-    this.adminSelected = this.dataReservationService.getAdminSelected()
+    this.adminSelected = this.dataReservationService.getAdminSelected() 
   }
-
+  // Get admin type text depending on admin selected
   getAdminText(adminChoosen) {
     switch (adminChoosen) {
       case AdminSection.students:
@@ -52,7 +52,7 @@ export class PopupConfirmComponent implements OnInit {
         return 'departamentos'
     }
   }
-
+ // Remove admin elements
   removeAll() {
     switch(this.adminSelected) {
     case AdminSection.students:
@@ -66,7 +66,6 @@ export class PopupConfirmComponent implements OnInit {
           }
         }).catch(err => {
           alert('Error:\nNo se ha podido eliminar los estudiantes')
-          console.log(err)
         })
         break;
     case AdminSection.cubicles:
@@ -80,7 +79,6 @@ export class PopupConfirmComponent implements OnInit {
           }
         }).catch(err => {
           alert('Error:\nNo se ha podido eliminar los cubiculos')
-          console.log(err)
         })
         break;
     case AdminSection.employees:
@@ -94,7 +92,6 @@ export class PopupConfirmComponent implements OnInit {
           }
         }).catch(err => {
           alert('Error:\nNo se ha podido eliminar los empleados')
-          console.log(err)
         })
         break;
     case AdminSection.careers:
@@ -108,7 +105,6 @@ export class PopupConfirmComponent implements OnInit {
           }
         }).catch(err => {
           alert('Error:\nNo se ha podido eliminar las carreras')
-          console.log(err)
         })
         break;
     case AdminSection.departments:
@@ -122,7 +118,6 @@ export class PopupConfirmComponent implements OnInit {
           }
         }).catch(err => {
           alert('Error:\nNo se ha podido eliminar los departamentos')
-          console.log(err)
         })
         break;
     case AdminSection.reservations:
@@ -136,7 +131,6 @@ export class PopupConfirmComponent implements OnInit {
           }
         }).catch(err => {
           alert('Error:\nNo se ha podido eliminar las reservaciones')
-          console.log(err)
         })
         break;
       }

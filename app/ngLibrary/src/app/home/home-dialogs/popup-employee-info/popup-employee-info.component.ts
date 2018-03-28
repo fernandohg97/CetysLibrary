@@ -12,9 +12,9 @@ export class PopupEmployeeInfoComponent implements OnInit {
   currentEmployee: EmployeeModel
 
   constructor(private dataReservationService: DataReservationService) { }
-
+  // Execute when component initialize
   ngOnInit() {
-    this.currentEmployee = this.dataReservationService.getCurrentEmployee()
+    this.currentEmployee = this.dataReservationService.getCurrentEmployee() // get selected employee
   }
 
 }

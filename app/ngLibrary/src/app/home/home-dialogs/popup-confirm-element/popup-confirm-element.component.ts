@@ -34,12 +34,12 @@ export class PopupConfirmElementComponent implements OnInit {
     private employeesService: EmployeesService,
     private adminDataService: AdminDataService
   ) { }
-
+  // Execute when component initialize
   ngOnInit() {
     this.currentId = this.adminDataService.getCurrentId()
     this.currentElementType = this.adminDataService.getCurrentElement()
   }
-
+  // Remove one selected element
   remove() {
     switch(this.currentElementType) {
       case ElementType.students:
@@ -53,7 +53,6 @@ export class PopupConfirmElementComponent implements OnInit {
             }
           }).catch(err => {
             alert('Error:\nNo se ha podido eliminar los estudiantes')
-            console.log(err)
           })
           break;
       case ElementType.cubicles:
@@ -67,7 +66,6 @@ export class PopupConfirmElementComponent implements OnInit {
             }
           }).catch(err => {
             alert('Error:\nNo se ha podido eliminar cubiculos')
-            console.log(err)
           })
           break;
       case ElementType.employees:
@@ -81,7 +79,6 @@ export class PopupConfirmElementComponent implements OnInit {
             }
           }).catch(err => {
             alert('Error:\nNo se ha podido eliminar los empleados')
-            console.log(err)
           })
           break;
       case ElementType.careers:
@@ -95,7 +92,6 @@ export class PopupConfirmElementComponent implements OnInit {
             }
           }).catch(err => {
             alert('Error:\nNo se ha podido eliminar las carreras')
-            console.log(err)
           })
           break;
       case ElementType.departments:
@@ -109,7 +105,6 @@ export class PopupConfirmElementComponent implements OnInit {
             }
           }).catch(err => {
             alert('Error:\nNo se ha podido eliminar los departamentos')
-            console.log(err)
           })
           break;
       case ElementType.reservations:
@@ -123,7 +118,6 @@ export class PopupConfirmElementComponent implements OnInit {
             }
           }).catch(err => {
             alert('Error:\nNo se ha podido eliminar las reservaciones')
-            console.log(err)
           })
           break;
       case ElementType.externals:
@@ -137,12 +131,8 @@ export class PopupConfirmElementComponent implements OnInit {
               }
             }).catch(err => {
               alert('Error:\nNo se ha podido eliminar las reservaciones')
-              console.log(err)
             })
             break;
-
     }
-
   }
-
 }
