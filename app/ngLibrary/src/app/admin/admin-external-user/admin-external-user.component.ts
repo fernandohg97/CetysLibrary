@@ -31,7 +31,7 @@ export class AdminExternalUserComponent implements OnInit {
   constructor(private adminDataService: AdminDataService, private externalUserService: ExternalUserService, private router: Router) {
     this.called = false
   }
-
+  // Execute when component initialize
   ngOnInit() {
     this.externalUserService.getCount().then(data => {
       this.totalExternals = parseInt(JSON.parse(JSON.stringify(data))._body)
@@ -40,23 +40,23 @@ export class AdminExternalUserComponent implements OnInit {
       this.users = data
     })
   }
-
+  // Expand table button
   expandTable() {
     let classValue = this.externalTable.nativeElement.getAttribute('class')
     if (classValue == 'grid-container') this.externalTable.nativeElement.setAttribute('class', 'fluid')
     else this.externalTable.nativeElement.setAttribute('class', 'grid-container')
   }
-
+  // Show form template when add user is clic
   createExternalUser() {
     this.called = true
   }
-
+  // Remove current uploaded file
   removeFile() {
     this.myInputVariable.nativeElement.value = "";
     this.nameFile = ''
     this.textFile = undefined
   }
-
+  // Execute when you select a different file
   fileChange(event) {
     let input = event.target;
     this.nameFile = input.files[0].name
@@ -70,9 +70,9 @@ export class AdminExternalUserComponent implements OnInit {
         reader.readAsText(input.files[index]);
     };
   }
-
+  // Create new external user
   save() {
-    if (this.textFile) {
+    if (this.textFile) {  // In case you create external users from an uploaded file
       let jsonFiles = JSON.parse(this.textFile)
       this.externalUserService.createFile(jsonFiles)
       .subscribe((response => {
@@ -84,7 +84,7 @@ export class AdminExternalUserComponent implements OnInit {
         this.errorFile = JSON.parse(err._body).existExternalUsers
       })
       )
-    } else {
+    } else { // In case you create only one external user
       this.externalUserService.create(this.newExternalUser)
       .subscribe((response => {
           setTimeout(() => {
@@ -98,7 +98,7 @@ export class AdminExternalUserComponent implements OnInit {
       )
     }
   }
-
+  // Show popup confirm delete when you want to remove just one element
   delete(id: string) {
     this.adminDataService.changeId(id)
     this.adminDataService.changeElement(ElementType.externals)
@@ -107,5 +107,4 @@ export class AdminExternalUserComponent implements OnInit {
       closeButton: true
     })
   }
-
 }

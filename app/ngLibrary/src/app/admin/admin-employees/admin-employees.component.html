@@ -1,6 +1,7 @@
 <div *ngIf="!called" class="grid-container table-content">
   <h2>{{totalEmployees}} Empleados</h2>
   <div class="grid-x grid-padding-x">
+    <!-- Remove and expand table button -->
     <div class="small-6 large-8 cell">
       <button type="button" class="secondary button radius shadow" name="button" (click)="openPopup()">
         <i class="fa fa-trash fa-lg" aria-hidden="true"></i>&nbsp;<span class="show-for-medium">Remover</span>
@@ -9,6 +10,7 @@
         <i class="fa fa-expand"></i>
       </button>
     </div>
+    <!-- Download and new employee button -->
     <div class="small-6 large-4 cell text-right">
       <button type="button" class="button radius shadow download-btn" name="button" (click)="downloadFile()">
         <i class="fa fa-download fa-lg"></i>&nbsp;<span class="show-for-medium">Descargar</span>
@@ -18,6 +20,7 @@
       </button>
     </div>
   </div>
+  <!-- Search filter -->
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell">
       <label>Buscar
@@ -26,7 +29,7 @@
     </div>
   </div>
 </div>
-
+<!-- Table -->
 <div *ngIf="!called" id="employeeTable" #employeeTable class="grid-container">
   <div class="grid-x grid-padding-x">
     <table class="unstriped table-info">
@@ -57,6 +60,7 @@
       </tbody>
     </table>
   </div>
+  <!-- Pagination -->
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell text-center">
       <pagination-controls class="pagination-users" (pageChange)="page = $event" previousLabel="Atras" nextLabel="Siguiente"></pagination-controls>
@@ -66,7 +70,7 @@
 
 <ngui-popup #popup></ngui-popup>
 
-
+<!-- Create employee form -->
 <form *ngIf="called">
   <div class="grid-container content">
     <button type="button" class="button radius shadow" name="button" (click)="called = false"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
@@ -75,6 +79,7 @@
         <h2>Nuevo empleado</h2>
       </div>
     </div>
+    <!-- Employee number input -->
       <div class="grid-x grid-padding-x">
         <div class="medium-6 cell">
           <label>N&uacute;mero
@@ -86,6 +91,7 @@
           </label>
         </div>
       </div>
+      <!-- Name employee input -->
       <div class="grid-x grid-padding-x">
         <div class="medium-6 cell">
           <label>Nombre
@@ -94,6 +100,7 @@
           </label>
         </div>
       </div>
+      <!-- Department employee input -->
       <div class="grid-x grid-padding-x">
         <div class="medium-6 cell">
           <label>Departamento
@@ -102,7 +109,7 @@
           </label>
         </div>
       </div>
-
+      <!-- Upload file elements input -->
       <div class="grid-x grid-padding-x file-btn">
         <div class="small-12 cell uploadFile-btn">
           <label for="exampleFileUpload" class="button radius shadow">Adjuntar archivo</label>
@@ -114,6 +121,7 @@
           <button type="button" class="button radius shadow" name="button" *ngIf="nameFile" (click)="removeFile()">Remover archivo</button>
         </div>
       </div>
+      <!-- Save employee button -->
       <div class="grid-x grid-padding-x submit-btn">
         <div class="small-6 medium-6 large-4 cell text-center save-btn">
           <button type="button" class="button radius shadow" name="button" (click)="save()">Guardar</button>

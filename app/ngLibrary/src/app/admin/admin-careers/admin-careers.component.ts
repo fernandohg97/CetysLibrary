@@ -43,7 +43,7 @@ export class AdminCareersComponent implements OnInit, OnDestroy {
   ) {
     this.called = false
   }
-
+  // Execute when component initialize
   ngOnInit() {
     this.careersService.getCount().then(data => {
       this.totalCareers = parseInt(JSON.parse(JSON.stringify(data))._body)
@@ -55,29 +55,29 @@ export class AdminCareersComponent implements OnInit, OnDestroy {
     this.careersService.getAll().then(data => {
       this.careers = data
     })
-    this.careersService.createCareersDownloadFile()
+    this.careersService.createCareersDownloadFile() // Create careers file in your local system
   }
-
+  // Execute when you change or move to other component
   ngOnDestroy() {
     this.careersService.removeCareersFile()
   }
-
+  // Expand table button
   expandTable() {
     let classValue = this.careerTable.nativeElement.getAttribute('class')
     if (classValue == 'grid-container') this.careerTable.nativeElement.setAttribute('class', 'fluid')
     else this.careerTable.nativeElement.setAttribute('class', 'grid-container')
   }
-
+  // Show form template when add career button is clic
   createCareer() {
     this.called = true
   }
-
+  // Remove current uploaded file
   removeFile() {
     this.myInputVariable.nativeElement.value = "";
     this.nameFile = ''
     this.textFile = undefined
   }
-
+  // Execute when you select a different file
   fileChange(event) {
     let input = event.target;
     this.nameFile = input.files[0].name
@@ -91,11 +91,11 @@ export class AdminCareersComponent implements OnInit, OnDestroy {
       reader.readAsText(input.files[index]);
     }
   }
-
+  // Change area depending in the division selected
   areaChange(event) {
     this.newCareer.area = event.division
   }
-
+  // Show pop up confirm delete all careers
   openPopup() {
     this.dataReservationService.changeAdminSelected(AdminSection.careers)
       this.popup.open(PopupConfirmComponent, {
@@ -103,7 +103,7 @@ export class AdminCareersComponent implements OnInit, OnDestroy {
         closeButton: true
       })
     }
-
+    // Download all careers
     downloadFile() {
       this.careersService.getDownloadFile().then(res => {
         console.log(res)
@@ -113,9 +113,9 @@ export class AdminCareersComponent implements OnInit, OnDestroy {
         alert('Hubo un error al descargar el archivo')
       })
     }
-
+ // Create new career
   save() {
-    if (this.textFile) {
+    if (this.textFile) { // In case you create careers from an uploaded file
       let jsonFiles = JSON.parse(this.textFile)
       this.careersService.createFile(jsonFiles)
       .subscribe((response => {
@@ -125,7 +125,7 @@ export class AdminCareersComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/admin-site')
       }), (err => this.errorFile = JSON.parse(err._body).existCareers)
       )
-    } else {
+    } else { // In case you create only one career
       this.careersService.create(this.newCareer)
       .subscribe((response => {
           setTimeout(() => {
@@ -139,7 +139,7 @@ export class AdminCareersComponent implements OnInit, OnDestroy {
       )
     }
   }
-
+  // Show popup confirm delete when you want to remove just one element
   delete(id: string) {
     this.adminDataService.changeId(id)
     this.adminDataService.changeElement(ElementType.careers)
