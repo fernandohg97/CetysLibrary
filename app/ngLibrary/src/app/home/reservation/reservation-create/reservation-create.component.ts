@@ -22,7 +22,7 @@ import { DataReservationService } from '../../../services/dataReservation/data-r
 })
 export class ReservationCreateComponent implements OnInit {
 
-  valores: Array<any> = new Array
+  values: Array<any> = new Array
   newReservation = new ReservationModel()
   newUser = new UserModel()
   registrationNumber: number
@@ -59,10 +59,11 @@ export class ReservationCreateComponent implements OnInit {
   ngOnInit() {
     let hour = this.newReservation.entryTime.getHours().toString()
     let minutes = this.newReservation.entryTime.getMinutes()
-
+    // Add '0' before the hour
     if (parseInt(hour) >= 0 && parseInt(hour) <= 9) {
       hour = '0' + hour
     }
+    // Add '0' before minutes
     if (minutes >= 0 && minutes <= 9) {
       this.currentTime = `${hour}:0${minutes}`
     } else {
@@ -72,26 +73,28 @@ export class ReservationCreateComponent implements OnInit {
     let day = this.newReservation.reservationDate.getDate().toString()
     let month = this.newReservation.reservationDate.getMonth()+1
     let year = this.newReservation.reservationDate.getFullYear()
-
+    // Add '0' before day
     if (parseInt(day) >= 1 && parseInt(day) <= 9) {
       day = '0' + day
     }
+    // Add '0' before month
     if (month >= 1 && month <= 9) {
       this.currentDate = `${year}-0${month}-${day}`
     } else {
       this.currentDate = `${year}-${month}-${day}`
     }
 
-    this.settingService.loadSchoolSettings().subscribe(res => {
+    this.settingService.loadSchoolSettings().subscribe(res => { // Get the divisions data
       this.divisions = res
     })
-    this.departmentsService.getAll().then(data => {
+    this.departmentsService.getAll().then(data => { // Get departments data
       data.forEach(department => {
-        this.departments.push(department.departmentName)
+        this.departments.push(department.departmentName) // Add departments name to departments array
       })
     })
+    // Get cubicle by his id
     this.route.params.subscribe((params: Params) => {
-      let cubicleNumberId = params['id'] //
+      let cubicleNumberId = params['id']
       if (cubicleNumberId) {
         this.cubiclesService.getById(cubicleNumberId).then(cubicle => {
           this.newReservation.cubicle = cubicle.cubicleNumber
@@ -101,24 +104,19 @@ export class ReservationCreateComponent implements OnInit {
   }
   // Create and save new reservation
   save() {
-    console.log(this.currentDate)
-    console.log(this.currentTime)
     this.newReservation.entryTime = new Date(`${this.currentDate} ${this.currentTime}`)
     this.newReservation.departureTime = new Date(`${this.currentDate} ${this.departureTime}`)
     this.newReservation.reservationDate = new Date(`${this.currentDate} ${this.currentTime}`)
-    console.log(this.newReservation.entryTime)
-    console.log(this.newReservation.departureTime)
-    console.log(this.newReservation.reservationDate)
 
-    this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
+    this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => { // Get user by registration number input
       let student = JSON.parse(JSON.stringify(user)).usuario
       let employee = JSON.parse(JSON.stringify(user)).empleado
-      if (student) {
+      if (student) { // In case is a student
         this.newReservation.user = student
-      } else {
+      } else { // In case is an employee
         this.newReservation.employee = employee
       }
-      this.reservationsService.create(this.newReservation)
+      this.reservationsService.create(this.newReservation) // Create data
       .subscribe(
         data => {
           setTimeout(() => {
@@ -143,10 +141,10 @@ export class ReservationCreateComponent implements OnInit {
   // Validate if user exist in database
   searchUser() {
     this.anyErrors = ''
-    this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => {
-      this.currentUser = JSON.parse(JSON.stringify(data)).usuario || JSON.parse(JSON.stringify(data)).empleado
-      if (this.currentUser.hasOwnProperty('department')) {
-        this.departmentsService.getByNumber(this.currentUser.department).then(data => {
+    this.usersService.getByRegistrationNumber(this.registrationNumber).then(data => { // get user bu his registration number
+      this.currentUser = JSON.parse(JSON.stringify(data)).usuario || JSON.parse(JSON.stringify(data)).empleado // Set student or employee
+      if (this.currentUser.hasOwnProperty('department')) { // In case it has department property
+        this.departmentsService.getByNumber(this.currentUser.department).then(data => { // Get department by department number
           this.departmentUser = data.departmentName
         }).catch(err => {
           this.anyErrors = JSON.parse(err._body)
@@ -161,32 +159,32 @@ export class ReservationCreateComponent implements OnInit {
   divisionChange(newDivision) {
     this.departmentSelected = ''
     this.currentCareers = new Array
-    this.valores = []
-    this.careersService.getByDivision(newDivision.division).then(data => {
-      if (data.length >= 1) {
+    this.values = []
+    this.careersService.getByDivision(newDivision.division).then(data => { // Get careers by division
+      if (data.length >= 1) { // In case data contains 1 or more elements
         data.forEach(career => {
           this.currentCareers.push(career.careerCode)
-          this.valores.push({
+          this.values.push({
             career: career.careerCode,
             count: 0
           })
         })
-      } else {
+      } else { // In case data is empty
         this.currentCareers.push('EXT')
-        this.valores.push({
+        this.values.push({
           career: 'EXT',
           count: 0
         })
       }
     })
-    this.usersQuantity.setDivisionSelected(newDivision.division)
+    this.usersQuantity.setDivisionSelected(newDivision.division) // Set the division input selected
   }
   // When you select a department
   departmentChange(event) {
     this.selectedDivision = {}
     let sigue: boolean = false
     this.currentCareers = []
-    if (this.newReservation.usersDetails) {
+    if (this.newReservation.usersDetails) { // In case the reservations has companions
       this.newReservation.usersDetails.forEach((e, index) => {
         if (event == e.department) {
           this.quantityDepartment = e.quantity
@@ -196,21 +194,23 @@ export class ReservationCreateComponent implements OnInit {
     }
     if (!sigue) this.quantityDepartment = 0
     this.departmentSelected = event
-    this.usersQuantity.setDepartmentSelected(event)
+    this.usersQuantity.setDepartmentSelected(event) // Set the department input selected
   }
   // Execute when minus button of career is clic
+  // The users quantity service is using to
+  // store the career and department that selects the user
   decrementCareer(career: string) {
-    if (this.usersQuantity.getCareer() == null || undefined) {
-
-    } else {
-        if (this.usersQuantity.getCareer() != career) {
+    if (this.usersQuantity.getCareer() == null || undefined) { // In case the current career selected is null or undefined
+      // dont do anything
+    } else { // In case the current career selected returns a value
+        if (this.usersQuantity.getCareer() != career) { // In case the previous career selected is different from the current selected career
           let sigue = false
-          this.newReservation.usersDetails.forEach((carrera, index) => {
-            if (career == carrera.career) {
+          this.newReservation.usersDetails.forEach((carrera, index) => { // Each companions reservation career
+            if (career == carrera.career) { // In case is the same, remove 1
                 carrera.quantity-=1
-                this.valores.forEach(element => {
+                this.values.forEach(element => {
                   if (element.career == career) {
-                    element.count = carrera.quantity
+                    element.count = carrera.quantity // set the new count
                   }
                 })
                 if (carrera.quantity == 0) {
@@ -219,34 +219,34 @@ export class ReservationCreateComponent implements OnInit {
                 sigue = true
             }
           })
-          if (sigue == false) {
-              this.usersQuantity.setCareer(career)
+          if (sigue == false) { // In case is false
+              this.usersQuantity.setCareer(career) // Set the new career
               let selectedCareer = career
-              let quantity = this.usersQuantity.getUsersCounter() - 1
-              this.valores.forEach(element => {
-                if (element.career == career) {
-                  element.count = quantity
+              let quantity = this.usersQuantity.getUsersCounter() - 1 // Remove 1
+              this.values.forEach(element => {
+                if (element.career == career) { // In case is the same career selected to the previous one
+                  element.count = quantity // Update quantity
                 }
               })
-              if (quantity > 0) {
+              if (quantity > 0) { // In case quantity is higher than 0, create new division student companion
                 let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
                 this.newReservation.usersDetails.push(newDivisionUser)
               }
           }
-        } else {
+        } else { // In case is not different the career selected to the previous one
           this.newReservation.usersDetails.forEach((carrera, index) => {
-            if (career == carrera.career) {
-                carrera.quantity-=1
-                this.valores.forEach(element => {
+            if (career == carrera.career) { // In case the career selected is the same to one of the userDetails reservation
+                carrera.quantity-=1 // Update quantity
+                this.values.forEach(element => {
                   if (element.career == career) {
-                    element.count = carrera.quantity
+                    element.count = carrera.quantity // Update quantity
                   }
                 })
-                if (carrera.quantity == 0) {
-                  if (this.newReservation.usersDetails.length == 1) {
+                if (carrera.quantity == 0) { // In case quantity is 0
+                  if (this.newReservation.usersDetails.length == 1) { // In case userDetails has length of 1
                     this.newReservation.usersDetails.splice(index, 1)
-                  } else {
-                    this.usersQuantity.setCareer(this.newReservation.usersDetails[index-1].career)
+                  } else { // In case userDetails is higher than 1
+                    this.usersQuantity.setCareer(this.newReservation.usersDetails[index-1].career) // Set career selected to the previos one
                     this.newReservation.usersDetails.splice(index, 1)
                   }
                 }
@@ -254,67 +254,69 @@ export class ReservationCreateComponent implements OnInit {
           })
         }
     }
-    if (this.newReservation.peopleQuantity > 0) {
-      this.newReservation.peopleQuantity-=1
+    if (this.newReservation.peopleQuantity > 0) { // In case peopleQuantity is higher than 0
+      this.newReservation.peopleQuantity-=1 // Minus 1 peopleQuantity property
     }
   }
  // Execute when plus button of career is clic
   incrementCareer(career: string) {
-    if (this.usersQuantity.getCareer() == null || undefined) {
+    if (this.usersQuantity.getCareer() == null || undefined) { // In case the current career selected is null or undefined
       this.usersQuantity.setCareer(career)
       let selectedCareer = career
       let quantity = this.usersQuantity.getUsersCounter() + 1
-      this.valores.forEach(element => {
+      this.values.forEach(element => {
         if (element.career == career) {
           element.count = quantity
         }
       })
       let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
       this.newReservation.usersDetails.push(newDivisionUser)
-    } else {
-        if (this.usersQuantity.getCareer() != career) {
+    } else { // In case the current career selected returns a value
+        if (this.usersQuantity.getCareer() != career) { // In case the previous career selected is different from the current selected career
           let sigue = false
-          this.newReservation.usersDetails.forEach(carrera => {
-            if (career == carrera.career) {
-                carrera.quantity+=1
-                this.valores.forEach(element => {
+          this.newReservation.usersDetails.forEach(carrera => { // Each companions reservation career
+            if (career == carrera.career) {  // In case is the same, remove 1
+                carrera.quantity+=1 // Update quantity
+                this.values.forEach(element => {
                   if (element.career == career) {
-                    element.count = carrera.quantity
+                    element.count = carrera.quantity // set the new count
                   }
                 })
                 sigue = true
             }
           })
-          if (sigue == false) {
-              this.usersQuantity.setCareer(career)
+          if (sigue == false) { // In case is false
+              this.usersQuantity.setCareer(career) // Set the new career
               let selectedCareer = career
-              let quantity = this.usersQuantity.getUsersCounter() + 1
-              this.valores.forEach(element => {
-                if (element.career == career) {
-                  element.count = quantity
+              let quantity = this.usersQuantity.getUsersCounter() + 1 // Remove 1
+              this.values.forEach(element => {
+                if (element.career == career) { // In case is the same career selected to the previous one
+                  element.count = quantity // Update quantity
                 }
               })
+              // create new division student companion and add it to reservation user details property
               let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
               this.newReservation.usersDetails.push(newDivisionUser)
           }
-        } else {
-          if (this.newReservation.usersDetails.length == 0) {
+        } else { // In case is not different the career selected to the previous one
+          if (this.newReservation.usersDetails.length == 0) { // In case the reservation doesnt have companions
             let selectedCareer = career
-            let quantity = this.usersQuantity.getUsersCounter() + 1
-            this.valores.forEach(element => {
-              if (element.career == career) {
-                element.count = quantity
+            let quantity = this.usersQuantity.getUsersCounter() + 1 // Add 1 to users counter
+            this.values.forEach(element => {
+              if (element.career == career) { // In case the career selected is the same to one of the predefined careers
+                element.count = quantity // set new count value
               }
             })
+            // Create new student companion
             let newDivisionUser = new UserDivisionModel(quantity, this.usersQuantity.getDivisionSelected(), selectedCareer, this.registrationNumber)
             this.newReservation.usersDetails.push(newDivisionUser)
-          } else {
+          } else { // In case the reservation contains companions
             this.newReservation.usersDetails.forEach(carrera => {
-              if (career == carrera.career) {
-                  carrera.quantity+=1
-                  this.valores.forEach(element => {
-                    if (element.career == career) {
-                      element.count = carrera.quantity
+              if (career == carrera.career) { // In case is the same career selected to the previous one
+                  carrera.quantity+=1 // Update quantity
+                  this.values.forEach(element => {
+                    if (element.career == career) { // In case the career selected is the same to one of the predefined careers
+                      element.count = carrera.quantity // set new count value
                     }
                   })
               }
@@ -322,38 +324,38 @@ export class ReservationCreateComponent implements OnInit {
           }
         }
     }
-    this.newReservation.peopleQuantity+=1
+    this.newReservation.peopleQuantity+=1 // Add 1 to peopleQuantity property
   }
 
   // Execute when minus button of department is clic
   decrementDepartment() {
-    this.quantityDepartment -= 1
+    this.quantityDepartment -= 1 // Minus 1 to department
     this.newReservation.usersDetails.forEach((e, index) => {
-      if (this.usersQuantity.getDepartmentSelected() == e.department) {
-          e.quantity -= 1
-          if (e.quantity == 0) {
-            this.newReservation.usersDetails.splice(index, 1)
+      if (this.usersQuantity.getDepartmentSelected() == e.department) { // In case is the same department selected to the previous one
+          e.quantity -= 1 // Update quantity
+          if (e.quantity == 0) { // In case is 0
+            this.newReservation.usersDetails.splice(index, 1) // Remove the department
           }
       }
     })
-    if (this.newReservation.peopleQuantity > 0) {
-      this.newReservation.peopleQuantity-=1
+    if (this.newReservation.peopleQuantity > 0) { // In case peopleQuantity is higher than 0
+      this.newReservation.peopleQuantity-=1 // Update quantity
     }
   }
   // Execute when plus button of department is clic
   incrementDepartment() {
     let exist = false
-    this.quantityDepartment += 1
+    this.quantityDepartment += 1 // PLus 1 to department
     this.newReservation.usersDetails.forEach((e, index) => {
-      if (this.usersQuantity.getDepartmentSelected() == e.department) {
-          e.quantity += 1
-          exist = true
+      if (this.usersQuantity.getDepartmentSelected() == e.department) { // In case is the same department selected to the previous one
+          e.quantity += 1 // Update quantity
+          exist = true // Change boolean value
       }
     })
-    if (!exist) {
+    if (!exist) { // In case exist variable is false, create new department user companion
       let newDepartmentUser = new UserDepartmentModel(this.quantityDepartment, this.usersQuantity.getDepartmentSelected(), this.registrationNumber)
       this.newReservation.usersDetails.push(newDepartmentUser)
     }
-    this.newReservation.peopleQuantity += 1
+    this.newReservation.peopleQuantity += 1 // Add 1 to peopleQuantity property
   }
 }

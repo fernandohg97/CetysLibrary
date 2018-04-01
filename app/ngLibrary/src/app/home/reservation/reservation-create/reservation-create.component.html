@@ -106,10 +106,10 @@
           <ul class="menu">
             <li *ngFor="let career of currentCareers; let i = index" class="input-group list-group">
               <span>{{career}}</span>
-              <button type="button" class="button hollow circle" [disabled]="!registrationNumber || valores[i].count == 0" (click)="decrementCareer(career)" data-quantity="minus" data-field="quantity">
+              <button type="button" class="button hollow circle" [disabled]="!registrationNumber || values[i].count == 0" (click)="decrementCareer(career)" data-quantity="minus" data-field="quantity">
                 <i class="fa fa-minus" aria-hidden="true"></i>
               </button>
-              <input class="text-center input-quantity" type="number" name="quantity" [value]="valores[i].count">
+              <input class="text-center input-quantity" type="number" name="quantity" [value]="values[i].count">
               <button type="button" class="button hollow circle" [disabled]="!registrationNumber" (click)="incrementCareer(career)" data-quantity="plus" data-field="quantity">
                 <i class="fa fa-plus" aria-hidden="true"></i>
               </button>
