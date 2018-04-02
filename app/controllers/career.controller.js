@@ -1,9 +1,10 @@
 'use strict'
 
-const express = require('express')
-const Career = require('../models/career/career.model')
-const fs = require('fs');
+const express = require('express') // import express library
+const Career = require('../models/career/career.model') // Import career model
+const fs = require('fs'); // import file system library
 
+// Get all careers from database
 function getCareers(req, res) {
   let findCareers = Career.find()
 
@@ -15,6 +16,7 @@ function getCareers(req, res) {
   })
 }
 
+// Get the maximun number of documents in database
 function getCareersCount(req, res) {
   let countCareers = Career.find().count()
   countCareers.then(career => {
@@ -25,6 +27,7 @@ function getCareersCount(req, res) {
   })
 }
 
+// Get careers specifying the division (PREPARATORIA, INGENIERIA, ADMINISTRACION Y NEGOCIOS, ETC.)
 function getCareersByDivision (req, res) {
   let findCareersByDivision = Career.find({area: req.query.area, active: true})
 
@@ -36,6 +39,7 @@ function getCareersByDivision (req, res) {
   })
 }
 
+// Get career by id
 function getCareer(req, res) {
   let findCareer = Career.findById(req.params.career_id)
 
@@ -51,15 +55,16 @@ function getCareer(req, res) {
   })
 }
 
+// Create new career
 function createCareer(req, res) {
-  let careers = req.body
-  if (careers.length > 1) {
+  let careers = req.body // get the request form data
+  if (careers.length > 1) { // In case we upload a file with new careers
     Career.insertMany(careers).then(careers => {
       res.status(200).json({message: 'Careers successfully created'})
     }).catch(err => {
       res.status(500).send({message: `Error del server ${err}`})
     })
-  } else {
+  } else { // In case we only create one career
     let newCareer = new Career(careers)
     let createCareer = newCareer.save()
     createCareer.then(career => {
@@ -70,6 +75,7 @@ function createCareer(req, res) {
   }
 }
 
+// Create local file with all careers from database
 function createCareersFile(req, res) {
   let rootFile = `${__dirname}/carreras.json`
   let content = Career.find({}, {_id: 0, __v: 0})
@@ -82,6 +88,7 @@ function createCareersFile(req, res) {
   }).catch(err => res.status(500).send({message: `Error del server ${err}`}))
 }
 
+// Remove local file with all careers
 function removeCareersFile(req, res) {
   let rootFile = `${__dirname}/carreras.json`
   fs.unlink(rootFile, (err) => {
@@ -90,11 +97,13 @@ function removeCareersFile(req, res) {
   });
 }
 
+// Download local file with all careers
 function downloadCareersFile(req, res) {
   let rootFile = `${__dirname}/carreras.json`
   res.download(rootFile, 'carreras.json')
 }
 
+// Update specific career from database
 function updateCareer(req, res) {
   let updateCareer = Career.findByIdAndUpdate(req.params.career_id, req.body)
 
@@ -105,7 +114,7 @@ function updateCareer(req, res) {
     res.status(500).send({message: `No se pudo actualizar la carrera: ${err}`})
   })
 }
-
+// Delete specific career from database
 function removeCareer(req, res) {
   let removeCareer = Career.findByIdAndRemove(req.params.career_id)
 
@@ -116,7 +125,7 @@ function removeCareer(req, res) {
     res.status(500).send({message: `No se pudo eliminar ela carrera: ${err}`})
   })
 }
-
+// Delete all careers from database
 function removeCareers(req, res) {
   let removeCareers = Career.remove({})
 

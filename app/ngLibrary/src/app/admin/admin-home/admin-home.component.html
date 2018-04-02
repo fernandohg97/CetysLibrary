@@ -1,10 +1,13 @@
+<!-- Admin home -->
 <div class="grid-container admin-home">
+  <!-- Admin home title -->
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell">
       <h2 class="admin-title">Administrador</h2><h4>Bienvenido</h4>
       <hr>
     </div>
   </div>
+  <!-- Admin elements section -->
   <div class="grid-x grid-margin-x small-up-1 medium-up-2 large-up-2 blocks">
     <a routerLink="users" class="cell callout button">
       <h6 class="font-bold">Estudiantes</h6>
@@ -31,6 +34,7 @@
       <span>{{totalExternals}} Elementos</span>
     </a>
   </div>
+  <!-- Delete reservations button -->
   <div class="grid-x grid-padding-x reset">
     <div class="small-12 cell">
       <button type="button" class="button radius shadow" name="button" (click)="openPopup()"><i class="fa fa-undo fa-lg"></i>&nbsp;<span class="show-for-medium">Reiniciar reservaciones</span></button>

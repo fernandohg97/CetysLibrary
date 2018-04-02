@@ -57,7 +57,7 @@ export class ReportsComponent implements OnInit {
     private usersService: UsersService) {
   this.currentPipe = 'searchReservation' }
 
-  ngOnInit() {
+  ngOnInit() { // Execute when component initialize
     $(document).foundation();
     this.reservationsService.getAll().then(data => {
       if (data) this.reservations = data
@@ -67,23 +67,23 @@ export class ReportsComponent implements OnInit {
     })
   }
 
-  getCurrentReservation(reservation) {
+  getCurrentReservation(reservation) { // Display reservation user details
     this.currentReservation = reservation.usersDetails
     this.dataReservationService.addReservationsDetails(this.currentReservation)
     this.openPopup()
   }
 
-  expandTable() {
+  expandTable() { // To expand table the whole width
     let classValue = this.containerTable.nativeElement.getAttribute('class')
     if (classValue == 'grid-container') this.containerTable.nativeElement.setAttribute('class', 'fluid')
     else this.containerTable.nativeElement.setAttribute('class', 'grid-container')
   }
 
-  downloadTable() {
+  downloadTable() { // Download table elements. Only the ones that are displayed in the current page
     $(this.el.nativeElement).tableExport({type:'csv', escape:'false'});
   }
 
-  getCurrentUser(user) {
+  getCurrentUser(user) { // Display reservation user. (student, employee, externalUser)
     if (user.registrationNumber) {
       this.openPopup2()
       this.dataReservationService.changeUser(user)
@@ -96,7 +96,7 @@ export class ReportsComponent implements OnInit {
     }
   }
 
-  searchUser() {
+  searchUser() { // Search filter user
     this.user = true
     this.cubicle = this.date = this.career_Department = false
     this.startDate = this.endDate = ''
@@ -104,7 +104,7 @@ export class ReportsComponent implements OnInit {
     this.searchReservationCareer = ''
   }
 
-  searchCubicle() {
+  searchCubicle() { // Search filter cubicle
     this.cubicle = true
     this.user = this.date = this.career_Department = false
     this.searchReservationNumber = ''
@@ -112,7 +112,7 @@ export class ReportsComponent implements OnInit {
     this.searchReservationCareer = ''
   }
 
-  searchDate() {
+  searchDate() { // Search filter date
     this.date = true
     this.cubicle = this.user = this.career_Department = false
     this.searchReservationNumber = ''
@@ -120,7 +120,7 @@ export class ReportsComponent implements OnInit {
     this.searchReservationCareer = ''
   }
 
-  searchCareer() {
+  searchCareerDepartment() { // Search filter career or department
     this.career_Department = true
     this.cubicle = this.user = this.date = false
     this.searchReservationNumber = ''
@@ -128,7 +128,7 @@ export class ReportsComponent implements OnInit {
     this.startDate = this.endDate = ''
   }
 
-  getBorrowedMaterial(material) {
+  getBorrowedMaterial(material) { // Get borrowed material of specific user
     this.dataReservationService.changeBorrowedMaterial(material)
     this.popup.open(PopupBorrowedMaterialComponent, {
       classNames: 'custom',
@@ -136,35 +136,35 @@ export class ReportsComponent implements OnInit {
     })
   }
 
-  openPopup() {
+  openPopup() { // Display user details of specific user
     this.popup.open(PopupUserDetailsComponent, {
       classNames: 'custom',
       closeButton: true
     })
   }
 
-  openPopup2() {
+  openPopup2() { // Display user info
     this.popup2.open(PopupUserInfoComponent, {
       classNames: 'custom',
       closeButton: true
     })
   }
 
-  openPopup3() {
+  openPopup3() { // Display employee info
     this.popup3.open(PopupEmployeeInfoComponent, {
       classNames: 'custom',
       closeButton: true
     })
   }
 
-  openPopup4() {
+  openPopup4() { // Display external user info
     this.popup4.open(PopupExternalInfoComponent, {
       classNames: 'custom',
       closeButton: true
     })
   }
 
-  deletePopup(id: string) {
+  deletePopup(id: string) { // Display confirm window to delete element
     this.adminDataService.changeId(id)
     this.adminDataService.changeElement(ElementType.reservations)
     this.popup5.open(PopupConfirmElementComponent, {

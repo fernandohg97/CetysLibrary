@@ -1,24 +1,23 @@
 'use strict'
 
-const express = require('express')
-const reservationRouter = express.Router()
-const app = express()
-const reservationCtrl = require('../controllers/reservation.controller')
+const express = require('express') // import express library
+const reservationRouter = express.Router() //delcare router with express
+const reservationCtrl = require('../controllers/reservation.controller') // import reservations controller
+// Endpoints
+reservationRouter.get('/reservations', reservationCtrl.getReservations) // Get all reservations
 
-reservationRouter.get('/reservations', reservationCtrl.getReservations)
+reservationRouter.get('/reservations/count', reservationCtrl.getReservationsCount) // Get the maximun number of reservations
 
-reservationRouter.get('/reservations/count', reservationCtrl.getReservationsCount)
+reservationRouter.get('/reservations/:reservation_id', reservationCtrl.getReservation) // Get reservation by id
 
-reservationRouter.get('/reservations/:reservation_id', reservationCtrl.getReservation)
+reservationRouter.get('/reservations/cubicle/:cubicle', reservationCtrl.getReservationsByCubicle) // Get reservations by cubicle
 
-reservationRouter.get('/reservations/cubicle/:cubicle', reservationCtrl.getReservationsByCubicle)
+reservationRouter.post('/reservations', reservationCtrl.createReservation) // Create reservation
 
-reservationRouter.post('/reservations', reservationCtrl.createReservation)
+reservationRouter.put('/reservations/:reservation_id', reservationCtrl.updateReservation) // Update reservation
 
-reservationRouter.put('/reservations/:reservation_id', reservationCtrl.updateReservation)
+reservationRouter.delete('/reservations/:reservation_id', reservationCtrl.removeReservation) // Delete reservation by id
 
-reservationRouter.delete('/reservations/:reservation_id', reservationCtrl.removeReservation)
-
-reservationRouter.delete('/reservations', reservationCtrl.removeReservations)
+reservationRouter.delete('/reservations', reservationCtrl.removeReservations) // Delete all reservations
 
 module.exports = reservationRouter

@@ -9,7 +9,6 @@ form {
 }
 .remove {
   position: relative;
-  /*background: inherit;*/
 }
 .remove-item {
   position: absolute;
@@ -18,15 +17,9 @@ form {
 .table-content {
   margin-top: 50px;
 }
-/* .table-info {
-  height: 600px;
-  margin: 0 auto;
-  overflow: scroll;
-} */
 .pagination-users /deep/ .ngx-pagination .current {
   margin-top: 20px;
 }
-
 .ng-valid[required], .ng-valid.required {
   border-left: 5px solid rgb(43, 147, 72);
 }

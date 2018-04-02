@@ -1,10 +1,11 @@
+<!-- Title reservations cubicle -->
 <div class="grid-container">
   <div class="grid-x grid-padding-x">
     <div class="title cell">
       <h2 class="text-center">Reservaciones cub&iacute;culo {{cubicleReservationNumber}}</h2>
     </div>
   </div>
-
+<!-- User filter input -->
   <div *ngIf="exist" class="grid-x grid-padding-x">
     <a routerLink="/" class="button radius shadow"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
     <div class="small-12 cell">
@@ -12,6 +13,7 @@
         <input type="text" placeholder="Ingrese matricula del usuario" [(ngModel)]="searchReservationUser">
       </label>
     </div>
+    <!-- Table data -->
     <table class="unstriped">
       <thead>
         <tr>
@@ -45,6 +47,7 @@
       </tbody>
     </table>
   </div>
+  <!-- No data message -->
   <div *ngIf="!exist" class="grid-x grid-padding-x message">
     <a routerLink="/" class="button"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
     <div class="small-12 cell text-center">

@@ -33,7 +33,7 @@ import { NguiPopupModule } from '@ngui/popup';
 import { AdminDataService } from '../services/adminData/admin-data.service';
 
 @NgModule({
-  imports: [
+  imports: [ // All modules
     CommonModule,
     FormsModule,
     AdminRoutingModule,
@@ -43,7 +43,7 @@ import { AdminDataService } from '../services/adminData/admin-data.service';
     NguiPopupModule,
     PipesModule.forRoot()
   ],
-  declarations: [
+  declarations: [ // All components
     AdminComponent,
     AdminHomeComponent,
     AdminUsersComponent,
@@ -60,7 +60,7 @@ import { AdminDataService } from '../services/adminData/admin-data.service';
     AdminExternalUserComponent,
     AdminExternalUserUpdateComponent
   ],
-  providers: [
+  providers: [ // All services
     UsersService,
     CubiclesService,
     CareersService,

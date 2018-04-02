@@ -35,7 +35,7 @@ export class AdminDepartmentsComponent implements OnInit, OnDestroy {
   constructor(private adminDataService: AdminDataService, private dataReservationService: DataReservationService, private departmentsService: DepartmentsService, private router: Router) {
     this.called = false
   }
-
+  // Execute when component initialize
   ngOnInit() {
     this.departmentsService.getCount().then(data => {
       this.totalDepartments = parseInt(JSON.parse(JSON.stringify(data))._body)
@@ -45,27 +45,27 @@ export class AdminDepartmentsComponent implements OnInit, OnDestroy {
     })
     this.departmentsService.createDepartmentsDownloadFile()
   }
-
+  // Execute when you change or move to other component
   ngOnDestroy() {
     this.departmentsService.removeDepartmentsFile()
   }
-
+  // Expand table button
   expandTable() {
     let classValue = this.departmentTable.nativeElement.getAttribute('class')
     if (classValue == 'grid-container') this.departmentTable.nativeElement.setAttribute('class', 'fluid')
     else this.departmentTable.nativeElement.setAttribute('class', 'grid-container')
   }
-
+  // Show form template when add department button is clic
   createDepartment() {
     this.called = true
   }
-
+  // Remove current uploaded file
   removeFile() {
     this.myInputVariable.nativeElement.value = "";
     this.nameFile = ''
     this.textFile = undefined
   }
-
+  // Execute when you select a different file
   fileChange(event) {
     let input = event.target;
     this.nameFile = input.files[0].name
@@ -78,7 +78,7 @@ export class AdminDepartmentsComponent implements OnInit, OnDestroy {
         reader.readAsText(input.files[index]);
     };
   }
-
+  // Show pop up confirm delete all departments
   openPopup() {
     this.dataReservationService.changeAdminSelected(AdminSection.departments)
       this.popup.open(PopupConfirmComponent, {
@@ -86,7 +86,7 @@ export class AdminDepartmentsComponent implements OnInit, OnDestroy {
         closeButton: true
       })
     }
-
+    // Download all departments
     downloadFile() {
       this.departmentsService.getDownloadFile().then(res => {
         window.open(res.url)
@@ -94,9 +94,9 @@ export class AdminDepartmentsComponent implements OnInit, OnDestroy {
         alert('Hubo un error al descargar el archivo')
       })
     }
-
+  // Create new department
   save() {
-    if (this.textFile) {
+    if (this.textFile) { // In case you create departments from an uploaded file
       let jsonFiles = JSON.parse(this.textFile)
       this.departmentsService.createFile(jsonFiles)
       .subscribe((response => {
@@ -106,7 +106,7 @@ export class AdminDepartmentsComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/admin-site')
       }), (err => this.errorFile = JSON.parse(err._body).existDepartments)
       )
-    } else {
+    } else { // In case you create only one department
       this.departmentsService.create(this.newDepartment)
       .subscribe((response => {
           setTimeout(() => {
@@ -120,7 +120,7 @@ export class AdminDepartmentsComponent implements OnInit, OnDestroy {
       )
     }
   }
-
+  // Show popup confirm delete when you want to remove just one element
   delete(id: string) {
     this.adminDataService.changeId(id)
     this.adminDataService.changeElement(ElementType.departments)

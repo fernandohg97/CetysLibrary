@@ -36,7 +36,7 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
   constructor(private adminDataService: AdminDataService, private dataReservationService: DataReservationService, private cubiclesService: CubiclesService, private router: Router, private route: ActivatedRoute) {
     this.called = false
   }
-
+  // Execute when component initialize
   ngOnInit() {
     this.cubiclesService.getCount().then(data => {
       this.totalCubicles = parseInt(JSON.parse(JSON.stringify(data))._body)
@@ -44,29 +44,29 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
     this.cubiclesService.getAll().then(data => {
       this.cubicles = data
     })
-    this.cubiclesService.createCubiclesDownloadFile()
+    this.cubiclesService.createCubiclesDownloadFile() // Create cubicles file in your local system
   }
-
+  // Execute when you change or move to other component
   ngOnDestroy() {
     this.cubiclesService.removeCubiclesFile()
   }
-
+  // Expand table button
   expandTable() {
     let classValue = this.cubicleTable.nativeElement.getAttribute('class')
     if (classValue == 'grid-container') this.cubicleTable.nativeElement.setAttribute('class', 'fluid')
     else this.cubicleTable.nativeElement.setAttribute('class', 'grid-container')
   }
-
+  // Show form template when add cubicle button is clic
   createCubicle() {
     this.called = true
   }
-
+  // Remove current uploaded file
   removeFile() {
     this.myInputVariable.nativeElement.value = "";
     this.nameFile = ''
     this.textFile = undefined
   }
-
+  // Execute when you select a different file
   fileChange(event) {
     let input = event.target;
     this.nameFile = input.files[0].name
@@ -80,7 +80,7 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
         reader.readAsText(input.files[index]);
     };
   }
-
+  // Show pop up confirm delete all cubicles
   openPopup() {
     this.dataReservationService.changeAdminSelected(AdminSection.cubicles)
       this.popup.open(PopupConfirmComponent, {
@@ -88,7 +88,7 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
         closeButton: true
       })
     }
-
+    // Download all cubicles
     downloadFile() {
       this.cubiclesService.getDownloadFile().then(res => {
         window.open(res.url)
@@ -96,9 +96,9 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
         alert('Hubo un error al descargar el archivo')
       })
     }
-
+    // Create new cubicle
   save() {
-    if (this.textFile) {
+    if (this.textFile) { // In case you create cubicles from an uploaded file
       let jsonFiles = JSON.parse(this.textFile)
       this.cubiclesService.createFile(jsonFiles)
       .subscribe((response => {
@@ -108,7 +108,7 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/admin-site')
       }), (err => this.errorFile = JSON.parse(err._body).existCubicles)
       )
-    } else {
+    } else { // In case you create only one cubicle
       this.cubiclesService.create(this.newCubicle)
       .subscribe((response => {
           setTimeout(() => {
@@ -122,7 +122,7 @@ export class AdminCubiclesComponent implements OnInit, OnDestroy {
       )
     }
   }
-
+  // Show popup confirm delete when you want to remove just one element
   delete(id: string) {
     this.adminDataService.changeId(id)
     this.adminDataService.changeElement(ElementType.cubicles)

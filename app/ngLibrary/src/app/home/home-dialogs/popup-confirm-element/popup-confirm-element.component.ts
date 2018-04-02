@@ -34,12 +34,12 @@ export class PopupConfirmElementComponent implements OnInit {
     private employeesService: EmployeesService,
     private adminDataService: AdminDataService
   ) { }
-
+  // Execute when component initialize
   ngOnInit() {
     this.currentId = this.adminDataService.getCurrentId()
     this.currentElementType = this.adminDataService.getCurrentElement()
   }
-
+  // Remove one selected element
   remove() {
     switch(this.currentElementType) {
       case ElementType.students:
@@ -126,9 +126,6 @@ export class PopupConfirmElementComponent implements OnInit {
               alert('Error:\nNo se ha podido eliminar las reservaciones')
             })
             break;
-
     }
-
   }
-
 }

@@ -1,10 +1,10 @@
 'use strict'
 
-const fs = require('fs')
-const path = require('path')
-const express = require('express')
-const Cubicle = require('../models/cubicle/cubicle.model')
+const fs = require('fs') // import filesystem library
+const express = require('express') // import express library
+const Cubicle = require('../models/cubicle/cubicle.model') // import cubicle model
 
+// Get all cubicles from database
 function getCubicles (req, res) {
   let findCubicles = Cubicle.find().sort({cubicleNumber: 1})
 
@@ -16,6 +16,7 @@ function getCubicles (req, res) {
   })
 }
 
+// Get the maximun number of documents in database
 function getCubiclesCount(req, res) {
   let countCubicles = Cubicle.find().count()
   countCubicles.then(cubicles => {
@@ -26,6 +27,7 @@ function getCubiclesCount(req, res) {
   })
 }
 
+// Get cubicle by id from database
 function getCubicle (req, res) {
   let findCubicle = Cubicle.findById(req.params.cubicle_id)
 
@@ -41,15 +43,16 @@ function getCubicle (req, res) {
   })
 }
 
+// Create new cubicle
 function createCubicle (req, res) {
-  let cubicles = req.body
-  if (cubicles.length > 1) {
+  let cubicles = req.body // get the request form data
+  if (cubicles.length > 1) { // in case we upload a file with new cubicles
     Cubicle.insertMany(cubicles).then(cubicles => {
       res.status(200).json({message: 'Cubicles successfully created'})
     }).catch(err => {
       res.status(500).send({message: `Error del server ${err}`})
     })
-  } else {
+  } else { // in case we only create one cubicle
     let newCubicle = new Cubicle(cubicles)
     let createCubicle = newCubicle.save()
     createCubicle.then(cubicle => {
@@ -60,6 +63,7 @@ function createCubicle (req, res) {
   }
 }
 
+// Create local file with all cubicles from database
 function createCubiclesFile(req, res) {
   let rootFile = `${__dirname}/cubiculos.json`
   let content = Cubicle.find({}, {_id: 0, __v: 0}).sort({cubicleNumber: 1})
@@ -72,6 +76,7 @@ function createCubiclesFile(req, res) {
   }).catch(err => res.status(500).send({message: `Error del server ${err}`}))
 }
 
+// Remove local file with all cubicles
 function removeCubiclesFile(req, res) {
   let rootFile = `${__dirname}/cubiculos.json`
   fs.unlink(rootFile, (err) => {
@@ -80,11 +85,13 @@ function removeCubiclesFile(req, res) {
   });
 }
 
+// Download local file with all cubicles
 function downloadCubiclesFile(req, res) {
   let rootFile = `${__dirname}/cubiculos.json`
   res.download(rootFile, 'cubiculos.json')
 }
 
+// Update specific cubicle from database
 function updateCubicle (req, res) {
   let updateCubicle = Cubicle.findByIdAndUpdate(req.params.cubicle_id, req.body)
 
@@ -96,6 +103,7 @@ function updateCubicle (req, res) {
   })
 }
 
+// Delete specific cubicle from database
 function removeCubicle (req, res) {
   let removeCubicle = Cubicle.findByIdAndRemove(req.params.cubicle_id)
 
@@ -107,6 +115,7 @@ function removeCubicle (req, res) {
   })
 }
 
+// Delete all careers from database
 function removeCubicles (req, res) {
   let removeCubicles = Cubicle.remove({})
 

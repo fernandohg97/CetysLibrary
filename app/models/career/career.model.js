@@ -1,8 +1,9 @@
 'use strict'
 
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require('mongoose') // import mongoose library
+const Schema = mongoose.Schema // Declare schema with mongoose
 
+// Create career schema
 const careerSchema = new Schema({
   careerCode: {type: String, required: [true, 'La clave de la carrera es requerido'], unique: true, uppercase: true},
   careerName: {type: String, required: [true, 'El nombre de la carrera es requerido'], uppercase: true},

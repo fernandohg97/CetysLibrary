@@ -1,9 +1,10 @@
 'use strict'
 
-const express = require('express')
-const Department = require('../models/department/department.model')
-const fs = require('fs');
+const express = require('express') // import express library
+const Department = require('../models/department/department.model') // import department model
+const fs = require('fs'); // import file system library
 
+// Get all departments from database
 function getDepartments(req, res) {
   let findDepartments = Department.find().sort({departmentCode: 1})
 
@@ -14,7 +15,7 @@ function getDepartments(req, res) {
     res.status(500).send({message: `Error del server: ${err}`})
   })
 }
-
+// Get the maximun number of documents in database
 function getDepartmentsCount(req, res) {
   let countDepartments = Department.find().count()
   countDepartments.then(departments => {
@@ -24,7 +25,7 @@ function getDepartmentsCount(req, res) {
     res.status(500).send({message: `Error del servidor: ${err}`})
   })
 }
-
+// Get department by id
 function getDepartment(req, res) {
   let findDepartment = Department.findById(req.params.department_id)
 
@@ -39,7 +40,7 @@ function getDepartment(req, res) {
     res.status(500).send({message: `Error del server: ${err}`})
   })
 }
-
+// Get department from database by a specific department number
 function getDepartmentByNumber(req, res) {
   let findDepartment = Department.findOne({departmentCode: req.params.department})
 
@@ -55,15 +56,16 @@ function getDepartmentByNumber(req, res) {
   })
 }
 
+// Create new department
 function createDepartment(req, res) {
-  let departments = req.body
-  if (departments.length > 1) {
+  let departments = req.body // get the request form data
+  if (departments.length > 1) { // in case we upload a file with new departments
     Department.insertMany(departments).then(departments => {
       res.status(200).json({message: 'Departments successfully created'})
     }).catch(err => {
       res.status(500).send({message: `Error del server ${err}`})
     })
-  } else {
+  } else { // in case we only create one department
     let newDepartment = new Department(departments)
     let createDepartment = newDepartment.save()
     createDepartment.then(department => {
@@ -74,6 +76,7 @@ function createDepartment(req, res) {
   }
 }
 
+// Create local file with all departments from database
 function createDepartmentsFile(req, res) {
   let rootFile = `${__dirname}/departamentos.json`
   let content = Department.find({}, {_id: 0, __v: 0}).sort({departmentCode: 1})
@@ -86,6 +89,7 @@ function createDepartmentsFile(req, res) {
   }).catch(err => res.status(500).send({message: `Error del server ${err}`}))
 }
 
+// Remove local file with all departments
 function removeDepartmentsFile(req, res) {
   let rootFile = `${__dirname}/departamentos.json`
   fs.unlink(rootFile, (err) => {
@@ -94,11 +98,13 @@ function removeDepartmentsFile(req, res) {
   });
 }
 
+// Download local file with all departments
 function downloadDepartmentsFile(req, res) {
   let rootFile = `${__dirname}/departamentos.json`
   res.download(rootFile, 'departamentos.json')
 }
 
+// Update specific department
 function updateDepartment(req, res) {
   let updateDepartment = Department.findByIdAndUpdate(req.params.department_id, req.body)
 
@@ -109,7 +115,7 @@ function updateDepartment(req, res) {
     res.status(500).send({message: `No se pudo actualizar el departmento: ${err}`})
   })
 }
-
+// Remove department by id
 function removeDepartment(req, res) {
   let removeDepartment = Department.findByIdAndRemove(req.params.department_id)
 
@@ -120,7 +126,7 @@ function removeDepartment(req, res) {
     res.status(500).send({message: `No se pudo eliminar el departmento: ${err}`})
   })
 }
-
+// Remove all departments
 function removeDepartments(req, res) {
   let removeDepartments = Department.remove({})
 

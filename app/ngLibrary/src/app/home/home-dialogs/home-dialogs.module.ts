@@ -11,11 +11,11 @@ import { PopupConfirmElementComponent } from './popup-confirm-element/popup-conf
 import { HomeDialogsComponent } from './home-dialogs.component';
 
 @NgModule({
-  imports: [
+  imports: [ // All modules
     CommonModule,
     NguiPopupModule
   ],
-  declarations: [
+  declarations: [ // All components
     PopupUserInfoComponent,
     PopupUserDetailsComponent,
     PopupExternalInfoComponent,
@@ -25,10 +25,10 @@ import { HomeDialogsComponent } from './home-dialogs.component';
     PopupConfirmElementComponent,
     HomeDialogsComponent
   ],
-  exports: [
+  exports: [ // All modules visible for other components
     NguiPopupModule
   ],
-  entryComponents: [
+  entryComponents: [ // Components that are not referencing in the template explicity
     PopupUserDetailsComponent,
     PopupUserInfoComponent,
     PopupEmployeeInfoComponent,

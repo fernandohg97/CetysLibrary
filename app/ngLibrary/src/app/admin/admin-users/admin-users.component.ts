@@ -47,7 +47,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
   ) {
     this.called = false
   }
-
+  // Execute when component initialize
   ngOnInit() {
     this.usersService.getCount().then(data => {
       this.totalUsers = parseInt(JSON.parse(JSON.stringify(data))._body)
@@ -59,29 +59,29 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
     this.usersService.getAll().then(data => {
       this.users = data
     })
-    this.usersService.createUsersDownloadFile()
+    this.usersService.createUsersDownloadFile() // Create users file in your local system
   }
-
+  // Execute when you change or move to other component
   ngOnDestroy() {
     this.usersService.removeUsersFile()
   }
-
+  // Expand table button
   expandTable() {
     let classValue = this.usersTable.nativeElement.getAttribute('class')
     if (classValue == 'grid-container') this.usersTable.nativeElement.setAttribute('class', 'fluid')
     else this.usersTable.nativeElement.setAttribute('class', 'grid-container')
   }
-
+  // Show form template when add user button is clic
   createUser() {
     this.called = true
   }
-
+  // Remove current uploaded file
   removeFile() {
     this.myInputVariable.nativeElement.value = "";
     this.nameFile = ''
     this.textFile = undefined
   }
-
+  // Execute when you select a different file
   fileChange(event) {
     let input = event.target;
     this.nameFile = input.files[0].name
@@ -95,7 +95,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
         reader.readAsText(input.files[index]);
     };
   }
-
+  // Show pop up confirm delete all users
   openPopup() {
     this.dataReservationService.changeAdminSelected(AdminSection.students)
       this.popup.open(PopupConfirmComponent, {
@@ -103,7 +103,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
         closeButton: true
       })
     }
-
+    // Show popup confirm delete when you want to remove just one element
     delete(id: string) {
       this.adminDataService.changeId(id)
       this.adminDataService.changeElement(ElementType.students)
@@ -112,7 +112,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
           closeButton: true
         })
       }
-
+      // Download all users
     downloadFile() {
       this.usersService.getDownloadFile().then(res => {
         window.open(res.url)
@@ -120,9 +120,9 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
         alert('Hubo un error al descargar el archivo')
       })
     }
-
+  // Create new user
   save() {
-    if (this.textFile) {
+    if (this.textFile) { // In case you create users from an uploaded file
       let jsonFiles = JSON.parse(this.textFile)
       this.usersService.createFile(jsonFiles)
       .subscribe((response => {
@@ -132,7 +132,7 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/admin-site')
       }), (err => this.errorFile = JSON.parse(err._body).existUsers)
       )
-    } else {
+    } else { // In case you create only one user
       this.usersService.create(this.newUser)
       .subscribe((response => {
           setTimeout(() => {
@@ -146,7 +146,12 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       )
     }
   }
+<<<<<<< HEAD
 
+=======
+  // Change the division value to only valid division values
+  // Depending in the division selected it will show the corresponding careers
+>>>>>>> fernando
   divisionChange(event) {
     switch (event.division) {
       case 'DOCTORADO':
@@ -172,5 +177,4 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
         })
     }).catch(err => console.log(`Error ${err}`))
   }
-
 }

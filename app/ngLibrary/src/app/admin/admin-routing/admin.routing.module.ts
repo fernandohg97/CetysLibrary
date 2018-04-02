@@ -17,27 +17,25 @@ import { AdminEmployeesUpdateComponent } from '../admin-employees/admin-employee
 import { AdminExternalUserComponent } from '../admin-external-user/admin-external-user.component';
 import { AdminExternalUserUpdateComponent } from '../admin-external-user/admin-external-user-update/admin-external-user-update.component';
 
-const adminRoutes: Routes = [{
+const adminRoutes: Routes = [{ // Admin routes
   path: 'admin-site',
-  component: AdminComponent,
+  component: AdminComponent, // '/admin-site' path
   children: [
-    { path: '', component: AdminHomeComponent },
-    { path: 'users', component: AdminUsersComponent },
-    { path: 'users/:id', component: AdminUsersUpdateComponent },
-    { path: 'cubicles', component: AdminCubiclesComponent },
-    { path: 'cubicles/:id', component: AdminCubiclesUpdateComponent },
-    { path: 'careers', component: AdminCareersComponent },
-    { path: 'careers/:id', component: AdminCareersUpdateComponent },
-    { path: 'departments', component: AdminDepartmentsComponent },
-    { path: 'departments/:id', component: AdminDepartmentsUpdateComponent },
-    { path: 'employees', component: AdminEmployeesComponent },
-    { path: 'employees/:id', component: AdminEmployeesUpdateComponent },
-    { path: 'externals', component: AdminExternalUserComponent },
-    { path: 'externals/:id', component: AdminExternalUserUpdateComponent },
-    { path: 'reports', component: AdminReportsComponent }
-  ]
-
-}
+    { path: '', component: AdminHomeComponent }, // '/admin-site' path
+    { path: 'users', component: AdminUsersComponent }, // '/admin-site/users' path
+    { path: 'users/:id', component: AdminUsersUpdateComponent }, // '/admin-site/users/id' path
+    { path: 'cubicles', component: AdminCubiclesComponent }, // '/admin-site/cubicles' path
+    { path: 'cubicles/:id', component: AdminCubiclesUpdateComponent }, // '/admin-site/cubicles/id' path
+    { path: 'careers', component: AdminCareersComponent }, // '/admin-site/careers' path
+    { path: 'careers/:id', component: AdminCareersUpdateComponent }, // '/admin-site/careers/id' path
+    { path: 'departments', component: AdminDepartmentsComponent },// '/admin-site/departments' path
+    { path: 'departments/:id', component: AdminDepartmentsUpdateComponent }, // '/admin-site/departments/id' path
+    { path: 'employees', component: AdminEmployeesComponent }, // '/admin-site/employees' path
+    { path: 'employees/:id', component: AdminEmployeesUpdateComponent }, // '/admin-site/employees/id' path
+    { path: 'externals', component: AdminExternalUserComponent }, // '/admin-site/externals' path
+    { path: 'externals/:id', component: AdminExternalUserUpdateComponent }, // '/admin-site/externals/id' path
+    { path: 'reports', component: AdminReportsComponent } // '/admin-site/reports'
+  ]}
 ]
 
 @NgModule({

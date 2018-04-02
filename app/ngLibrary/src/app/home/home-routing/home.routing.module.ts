@@ -8,14 +8,14 @@ import { AdminComponent } from '../../admin/admin.component';
 import { MainHomeComponent } from '../main-home/main-home.component';
 import { HomeComponent } from '../home.component';
 
-const homeRoutes: Routes = [
-  { path: 'home', component: HomeComponent,
+const homeRoutes: Routes = [ // Home routes
+  { path: 'home', component: HomeComponent, // '/home' path
   children: [
-    { path: '', component: MainHomeComponent },
-    { path: 'reservations', component: ReportsComponent },
-    { path: 'reservations-create/:id', component: ReservationCreateComponent },
-    { path: 'reservations-update/:id', component: ReservationUpdateComponent },
-    { path: 'reservations-edit/:id', component: ReservationEditComponent },
+    { path: '', component: MainHomeComponent }, // '/home' path
+    { path: 'reservations', component: ReportsComponent }, // '/home/reservations'
+    { path: 'reservations-create/:id', component: ReservationCreateComponent }, // 'home/reservations-create/id' path
+    { path: 'reservations-update/:id', component: ReservationUpdateComponent }, // 'home/reservations-update/id' path
+    { path: 'reservations-edit/:id', component: ReservationEditComponent }, // 'home/reservations-edit/id' path
     { path: '**', redirectTo: '', pathMatch: 'full' } // Route in case page is not found
   ]},
 
