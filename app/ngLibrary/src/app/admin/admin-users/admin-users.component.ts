@@ -146,12 +146,8 @@ export class AdminUsersComponent implements OnInit, OnDestroy {
       )
     }
   }
-<<<<<<< HEAD
-
-=======
   // Change the division value to only valid division values
   // Depending in the division selected it will show the corresponding careers
->>>>>>> fernando
   divisionChange(event) {
     switch (event.division) {
       case 'DOCTORADO':
