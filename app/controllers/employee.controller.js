@@ -4,6 +4,7 @@ const express = require('express')
 const Employee = require('../models/employee/employee.model')
 const fs = require('fs');
 
+// Get all employees from database
 function getEmployees(req, res) {
   let findEmployees = Employee.find().sort({employeeNumber: -1})
 
@@ -14,7 +15,7 @@ function getEmployees(req, res) {
     res.status(500).send({message: `Error del server: ${err}`})
   })
 }
-
+// Get the maximun number of documents in database
 function getEmployeesCount(req, res) {
   let countEmployees = Employee.find().count()
   countEmployees.then(employees => {
@@ -25,6 +26,7 @@ function getEmployeesCount(req, res) {
   })
 }
 
+// Get employee by id
 function getEmployee(req, res) {
   let findEmployee = Employee.findById(req.params.employee_id)
 
@@ -40,15 +42,16 @@ function getEmployee(req, res) {
   })
 }
 
+// Create new employee
 function createEmployee(req, res) {
-  let employees = req.body
-  if (employees.length > 1) {
+  let employees = req.body // get the request form data
+  if (employees.length > 1) { // in case we upload a file with new employees
     Employee.insertMany(employees).then(employees => {
       res.status(200).json({message: 'Employees successfully created'})
     }).catch(err => {
       res.status(500).send({message: `Error del server ${err}`})
     })
-  } else {
+  } else { // in case we only create one employee
     let newEmployee = new Employee(employees)
     let createEmployee = newEmployee.save()
     createEmployee.then(employee => {
@@ -59,6 +62,7 @@ function createEmployee(req, res) {
   }
 }
 
+// Create a local file with all employees from database
 function createEmployeesFile(req, res) {
   let rootFile = `${__dirname}/empleados.json`
   let content = Employee.find({}, {_id: 0, __v: 0}).sort({employeeNumber: -1})
@@ -71,6 +75,7 @@ function createEmployeesFile(req, res) {
   }).catch(err => res.status(500).send({message: `Error del server ${err}`}))
 }
 
+// Remove local file with all employees
 function removeEmployeesFile(req, res) {
   let rootFile = `${__dirname}/empleados.json`
   fs.unlink(rootFile, (err) => {
@@ -79,11 +84,13 @@ function removeEmployeesFile(req, res) {
   });
 }
 
+// Download local file with all employees
 function downloadEmployeesFile(req, res) {
   let rootFile = `${__dirname}/empleados.json`
   res.download(rootFile, 'empleados.json')
 }
 
+// Update specific employee from database
 function updateEmployee(req, res) {
   let updateEmployee = Employee.findByIdAndUpdate(req.params.employee_id, req.body)
 
@@ -95,6 +102,7 @@ function updateEmployee(req, res) {
   })
 }
 
+// Delete specific employee from database
 function removeEmployee(req, res) {
   let removeEmployee = Employee.findByIdAndRemove(req.params.employee_id)
 
@@ -106,6 +114,7 @@ function removeEmployee(req, res) {
   })
 }
 
+// Delete all employees from database
 function removeEmployees(req, res) {
   let removeEmployees = Employee.remove({})
 

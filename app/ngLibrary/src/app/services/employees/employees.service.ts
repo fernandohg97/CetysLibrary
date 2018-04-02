@@ -8,7 +8,7 @@ import "rxjs/add/operator/toPromise";
 @Injectable()
 export class EmployeesService {
 
-  private url = `${environment.baseUrl}/api/employees`
+  private url = `${environment.baseUrl}/api/employees` // Api endpoint to call database
 
   constructor(private http: Http) { }
 
@@ -17,40 +17,40 @@ export class EmployeesService {
     return Promise.reject(error.message || error);
   }
 
-  getAll(): Promise<EmployeeModel[]> {
+  getAll(): Promise<EmployeeModel[]> { // Get all employees from database
     return this.http.get(this.url)
     .toPromise()
     .then(res => res.json() as EmployeeModel[])
     .catch(EmployeesService.handleError)
   }
 
-  getCount(): Promise<number> {
+  getCount(): Promise<number> { // Get the maximun number of documents in database
     return this.http.get(`${this.url}/count`)
     .toPromise()
     .then()
     .catch(EmployeesService.handleError)
   }
 
-  getById(_id: String): Promise<EmployeeModel> {
+  getById(_id: String): Promise<EmployeeModel> { // Get employee by id
     return this.http.get(`${this.url}/${_id}`)
     .toPromise()
     .then(res => res.json() as EmployeeModel)
     .catch(EmployeesService.handleError)
   }
 
-  getDownloadFile() {
+  getDownloadFile() { // Download local file with all employees
     return this.http.get(`${this.url}/download`).toPromise()
   }
 
-  createEmployeesDownloadFile() {
+  createEmployeesDownloadFile() { // Create a local file with all employees from database
     return this.http.get(`${this.url}/file`).toPromise()
   }
 
-  removeEmployeesFile() {
+  removeEmployeesFile() { // Remove local file with all employees
     return this.http.get(`${this.url}/remove`).toPromise()
   }
 
-  create(newEmployee: EmployeeModel) {
+  create(newEmployee: EmployeeModel) { // Create new employee
     return this.http.post(this.url, newEmployee)
     .map(res => res.json())
     .catch(err => EmployeesService.handleError(err))
@@ -62,15 +62,15 @@ export class EmployeesService {
     .catch(err => EmployeesService.handleError(err))
   }
 
-  update(id: String, employeeModel: EmployeeModel) {
+  update(id: String, employeeModel: EmployeeModel) { // Update specific employee from database
     return this.http.put(`${this.url}/${id}`, employeeModel).toPromise()
   }
 
-  remove(id: String) {
+  remove(id: String) { // Delete specific employee from database
     return this.http.delete(`${this.url}/${id}`).toPromise()
   }
 
-  removeAll() {
+  removeAll() { // Delete all employees from database
     return this.http.delete(`${this.url}`).toPromise()
   }
 

@@ -24,7 +24,7 @@ import { SearchReservationCareerPipe } from './searchReservationCareer/search-re
     SearchReservationDatePipe,
     SearchReservationCareerPipe
   ],
-  exports: [
+  exports: [ // Visible in other components
     SearchReservationPipe,
     SearchEmployeePipe,
     SearchExternalUserPipe,

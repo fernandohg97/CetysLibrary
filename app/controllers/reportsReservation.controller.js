@@ -1,7 +1,8 @@
 'use strict'
 
-const Reservation = require('../models/reservation/reservation.model')
+const Reservation = require('../models/reservation/reservation.model') // import reservation model
 
+// Get reservation reports by division
 function getReportsByDivision(req, res) {
   let findReservationsDivision = Reservation.aggregate( [
     { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
@@ -20,7 +21,7 @@ function getReportsByDivision(req, res) {
     res.status(500).send({message: `Error del server: ${err}`})
   })
 }
-
+// Get reservation reports by department
 function getReportsByDepartment(req, res) {
   let findReservationsDepartment = Reservation.aggregate( [
     { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
@@ -39,7 +40,7 @@ function getReportsByDepartment(req, res) {
     res.status(500).send({message: `Error del server: ${err}`})
   })
 }
-
+// Get reservation reports by cubicle
 function getReportsByCubicle(req, res) {
   let findReservationsCubicle = Reservation.aggregate( [
     { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
@@ -54,7 +55,7 @@ function getReportsByCubicle(req, res) {
     res.status(500).send({message: `Error del server ${err}`})
   })
 }
-
+// Get reservation reports by career
 function getReportsByCareer(req, res) {
   let findReservationsCareer = Reservation.aggregate( [
     { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
@@ -70,7 +71,7 @@ function getReportsByCareer(req, res) {
     res.status(500).send({message: `Error del server ${err}`})
   })
 }
-
+// Get reservation reports by external user
 function getReportsByExternalUser(req, res) {
   let findReservationsExternal = Reservation.aggregate( [
     { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
@@ -86,44 +87,22 @@ function getReportsByExternalUser(req, res) {
     res.status(500).send({message: `Error del server ${err}`})
   })
 }
-
+// Get reservation reports by career name companions
 function getReportsByCareerCompanions(req, res) {
 
   let findReservationsCareerCompanions = Reservation.aggregate( [
     { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
-    { $group: { _id: { userCareers: "$usersDetails.career", userDepartments: "$usersDetails.department" } } } ])
+    { $group: { _id: { userCareers: "$usersDetails.career", userDepartments: "$usersDetails.department" }, ingresos:  { $push: '$usersDetails.quantity' } } } ])
 
   findReservationsCareerCompanions.then(data => {
-    if (data) {
-      let newData = data.filter(value => value._id.length != 0)
-      // console.log(newData)
-      return res.json(newData)
-    }
+    if (data) return res.json(data)
     return res.status(404).send({message: 'Page not found'})
   }).catch(err => {
     res.status(500).send({message: `Error del server ${err}`})
   })
 }
 
-function getReportsByQuantityCompanions(req, res) {
-
-  let findReservationsQuantityCompanions = Reservation.aggregate( [
-    { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
-    { $group: { _id: "$usersDetails.quantity" } } ])
-
-  findReservationsQuantityCompanions.then(data => {
-    if (data) {
-      let newData = data.filter(value => value._id.length != 0)
-      return res.json(newData)
-    }
-    return res.status(404).send({message: 'Page not found'})
-  }).catch(err => {
-    res.status(500).send({message: `Error del server ${err}`})
-  })
-}
-
-
-
+// Get reservation reports by day
 function getReportsByDay(req, res) {
   let findReservationsDay = Reservation.aggregate( [
     { $project: { shortDate: { $dateToString: { format: "%G-%m-%d", date: "$reservationDate" } } } },
@@ -147,6 +126,5 @@ module.exports = {
   getReportsByDay,
   getReportsByDepartment,
   getReportsByCareerCompanions,
-  getReportsByQuantityCompanions,
   getReportsByExternalUser
 }

@@ -37,7 +37,8 @@ export class AdminHomeComponent implements OnInit {
     private reservationsService: ReservationsService,
     private dataReservationService: DataReservationService
   ) { this.message = false }
-
+   // Execute when component initialize
+   // Get maximun number of documents in each admin type
   ngOnInit() {
     this.usersService.getCount().then(data => {
       this.totalUsers = parseInt(JSON.parse(JSON.stringify(data))._body)
@@ -58,7 +59,7 @@ export class AdminHomeComponent implements OnInit {
       this.totalExternals = parseInt(JSON.parse(JSON.stringify(data))._body)
     })
   }
-
+ // Popup confirm delete component
   openPopup() {
     this.dataReservationService.changeAdminSelected(AdminSection.reservations)
       this.popup.open(PopupConfirmComponent, {

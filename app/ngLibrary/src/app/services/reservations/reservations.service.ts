@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable'
 @Injectable()
 export class ReservationsService {
 
-  private url = `${environment.baseUrl}/api/reservations`
+  private url = `${environment.baseUrl}/api/reservations` // Api endpoint to call database
 
   constructor(private http: Http) { }
 
@@ -18,49 +18,49 @@ export class ReservationsService {
     return Promise.reject(error.message || error);
   }
 
-  getAll(): Promise<ReservationModel[]> {
+  getAll(): Promise<ReservationModel[]> { // Get all reservations from database
     return this.http.get(`${this.url}`)
     .toPromise()
     .then(res => res.json() as ReservationModel[])
     .catch(ReservationsService.handleError)
   }
 
-  getCount(): Promise<number> {
+  getCount(): Promise<number> { // Get the maximun number of documents in database
     return this.http.get(`${this.url}/count`)
     .toPromise()
     .then()
     .catch(ReservationsService.handleError)
   }
 
-  getById(_id: String): Promise<ReservationModel> {
+  getById(_id: String): Promise<ReservationModel> { // Get reservation by id
     return this.http.get(`${this.url}/${_id}`)
     .toPromise()
     .then(res => res.json() as ReservationModel)
     .catch(ReservationsService.handleError)
   }
 
-  getByCubicle(cubicle: String): Promise<ReservationModel[]> {
+  getByCubicle(cubicle: String): Promise<ReservationModel[]> { // Get reservations by cubicle number
     return this.http.get(`${this.url}/cubicle/${cubicle}`)
     .toPromise()
     .then(res => res.json() as ReservationModel[])
     .catch(ReservationsService.handleError)
   }
 
-  create(newReservation: ReservationModel) {
+  create(newReservation: ReservationModel) { // Create new reservation
     return this.http.post(this.url, newReservation)
     .map(response => response.json())
     .catch(err => ReservationsService.handleError(err))
   }
 
-  update(id: String, reservationModel: ReservationModel) {
+  update(id: String, reservationModel: ReservationModel) { // Update specific reservation from database
     return this.http.put(`${this.url}/${id}`, reservationModel).toPromise()
   }
 
-  remove(id: String) {
+  remove(id: String) { // Delete specific reservation from database
     return this.http.delete(`${this.url}/${id}`).toPromise()
   }
 
-  removeAll() {
+  removeAll() { // Delete all reservations from database
     return this.http.delete(`${this.url}`).toPromise()
   }
 

@@ -26,7 +26,7 @@ import { HomeDialogsModule } from './home-dialogs/home-dialogs.module';
 import { AdminDataService } from '../services/adminData/admin-data.service';
 
 @NgModule({
-  imports: [
+  imports: [ // All modules
     CommonModule,
     HttpModule,
     FormsModule,
@@ -36,7 +36,7 @@ import { AdminDataService } from '../services/adminData/admin-data.service';
     HomeDialogsModule,
     PipesModule.forRoot()
   ],
-  declarations: [
+  declarations: [ // All components
     HomeComponent,
     ReservationCreateComponent,
     ReservationUpdateComponent,
@@ -45,7 +45,7 @@ import { AdminDataService } from '../services/adminData/admin-data.service';
     ReservationCreateExternalComponent,
     MainHomeComponent
   ],
-  providers: [
+  providers: [ // All services
     CubiclesService,
     UsersService,
     CareersService,
@@ -57,7 +57,7 @@ import { AdminDataService } from '../services/adminData/admin-data.service';
     ExternalUserService,
     AdminDataService
   ],
-  exports: [
+  exports: [ // Visible for other components
     ReservationModule,
     ReservationEditComponent
   ]

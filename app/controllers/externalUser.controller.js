@@ -1,8 +1,9 @@
 'use strict'
 
-const express = require('express')
-const ExternalUser = require('../models/externalUser/externalUser.model')
+const express = require('express') // import express library
+const ExternalUser = require('../models/externalUser/externalUser.model') // import external user model
 
+// Get all external users from database
 function getExternalUsers(req, res) {
   let findExternalUsers = ExternalUser.find()
 
@@ -13,7 +14,7 @@ function getExternalUsers(req, res) {
     res.status(500).send({message: `Error del server: ${err}`})
   })
 }
-
+// Get the maximun number of documents in database
 function getExternalUsersCount(req, res) {
   let countExternals = ExternalUser.find().count()
   countExternals.then(externals => {
@@ -24,6 +25,7 @@ function getExternalUsersCount(req, res) {
   })
 }
 
+// Get external user by id
 function getExternalUser(req, res) {
   let findCareer = ExternalUser.findById(req.params.externalUser_id)
 
@@ -39,6 +41,7 @@ function getExternalUser(req, res) {
   })
 }
 
+// Get external user by user code
 function getByUserCode(req, res) {
   let findUserByCode = ExternalUser.findOne(req.params)
 
@@ -55,6 +58,7 @@ function getByUserCode(req, res) {
   })
 }
 
+// Create new external user
 function createExternalUser(req, res) {
   let users = req.body
   if (users.length > 1) {
@@ -74,6 +78,7 @@ function createExternalUser(req, res) {
   }
 }
 
+// Update specific external user from database
 function updateExternalUser(req, res) {
   let updateExternalUser = ExternalUser.findByIdAndUpdate(req.params.externalUser_id, req.body)
 
@@ -85,6 +90,7 @@ function updateExternalUser(req, res) {
   })
 }
 
+// Delete specific external user from database
 function removeExternalUser(req, res) {
   let removeExternalUser = ExternalUser.findByIdAndRemove(req.params.externalUser_id)
 

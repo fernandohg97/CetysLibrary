@@ -12,9 +12,9 @@ export class PopupBorrowedMaterialComponent implements OnInit {
   currentMaterial: String
 
   constructor(private dataReservationService: DataReservationService) { }
-
+  // Execute when initialize component
   ngOnInit() {
-    this.currentMaterial = this.dataReservationService.getCurrentBorrowedMaterial()
+    this.currentMaterial = this.dataReservationService.getCurrentBorrowedMaterial() // set current material depending of user selected
   }
 
 }

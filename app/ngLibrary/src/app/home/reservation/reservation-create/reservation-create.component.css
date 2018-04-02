@@ -1,21 +1,33 @@
+/* Validate form reservation create */
 .ng-valid[required], .ng-valid.required {
   border-left: 5px solid rgb(43, 147, 72);
 }
 .ng-invalid:not(form) {
   border-left: 5px solid rgb(152, 57, 57);
 }
-
+/* Form reservation create */
 form {
   margin-top: 70px;
 }
+/* Title reservation create */
 .title-rs {
   padding: 20px 0;
 }
+
 .content {
   border: solid #000000;
   background-color: #ffffff;
 }
 
+/* input option career and department */
+.plus-minus-group {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.input-quantity {
+  margin: 0px 20px;
+  width: 60px;
+}
 .circle {
   position: relative;
   width: 20px;
@@ -28,14 +40,7 @@ form {
   left: 0;
   top: 5px;
 }
-.input-quantity {
-  margin: 0px 20px;
-  width: 60px;
-}
-.plus-minus-group {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
+/* input option careers */
 .list-group {
   margin-left: 20px;
   width: auto;
@@ -48,6 +53,7 @@ form {
   margin-left: 60px;
   font-size: 13px;
 }
+/* input option departments */
 .department-list {
   margin-left: 20px;
   width: auto;
@@ -60,7 +66,8 @@ form {
   margin-left: 10px;
   font-size: 13px;
 }
-.hola {
+/* reservation create button */
+.reservation-create-btn {
   margin: 0 auto;
 }
 .user-list-info {

@@ -12,9 +12,9 @@ export class PopupExternalInfoComponent implements OnInit {
   currentExternalUser: ExternalUserModel
 
   constructor(private dataReservationService: DataReservationService) { }
-
+  // Execute when component initialize
   ngOnInit() {
-    this.currentExternalUser = this.dataReservationService.getCurrentExternalUser()
+    this.currentExternalUser = this.dataReservationService.getCurrentExternalUser() // get selected external user
   }
 
 }

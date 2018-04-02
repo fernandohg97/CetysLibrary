@@ -31,11 +31,11 @@ export class PopupConfirmComponent implements OnInit {
     private departmentsService: DepartmentsService,
     private cubiclesService: CubiclesService
   ) { }
-
+  // Execute when component initialize
   ngOnInit() {
-    this.adminSelected = this.dataReservationService.getAdminSelected()
+    this.adminSelected = this.dataReservationService.getAdminSelected() 
   }
-
+  // Get admin type text depending on admin selected
   getAdminText(adminChoosen) {
     switch (adminChoosen) {
       case AdminSection.students:
@@ -52,7 +52,7 @@ export class PopupConfirmComponent implements OnInit {
         return 'departamentos'
     }
   }
-
+ // Remove admin elements
   removeAll() {
     switch(this.adminSelected) {
     case AdminSection.students:

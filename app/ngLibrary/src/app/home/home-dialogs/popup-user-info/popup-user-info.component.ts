@@ -12,9 +12,9 @@ export class PopupUserInfoComponent implements OnInit {
   currentUser: UserModel
 
   constructor(private dataReservationService: DataReservationService) { }
-
+  // Execute when component initialize
   ngOnInit() {
-    this.currentUser = this.dataReservationService.getCurrentUser()
+    this.currentUser = this.dataReservationService.getCurrentUser() // get selected user (student)
   }
 
 }

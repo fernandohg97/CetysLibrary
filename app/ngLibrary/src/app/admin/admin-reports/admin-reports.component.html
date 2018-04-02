@@ -1,25 +1,31 @@
+<!-- Admin Reports -->
 <div class="grid-container reports-content">
+  <!-- Admin reports title -->
   <div class="grid-x grid-padding-x">
     <div class="small-12 cell">
       <h2 class="text-center">Reporte estad&iacute;stico</h2>
     </div>
   </div>
+  <!-- Initial Date input -->
   <div class="grid-x grid-padding-x">
     <div class="small-6 cell">
       <label>Fecha Inicio
         <input type="date" name="startDate" [(ngModel)]="startDate" placeholder="Fecha" required>
       </label>
     </div>
+    <!-- Last date input -->
     <div class="small-6 cell">
       <label>Fecha Fin
         <input type="date" name="endDate" [(ngModel)]="endDate" placeholder="Fecha" required>
       </label>
     </div>
   </div>
+  <!-- Search button -->
   <div class="grid-x grid-padding-x">
     <div class="small-6 cell">
       <button type="button" class="button radius shadow" name="button" (click)="searchReports()">Buscar</button>
     </div>
+    <!-- Total reservations message -->
     <div class="small-6 cell text-right">
       <h6><u><strong>Total de reservaciones: {{totalReservations}}</strong></u></h6>
     </div>
@@ -81,7 +87,6 @@
         </div>
       </div>
       <!-- Careers Reports -->
-
       <div *ngIf="reportsCareer?.length != 0" class="grid-x grid-padding-x">
         <div class="category-title cell">
           <h4>Reservaciones por carrera (l&iacute;der)</h4>
@@ -154,7 +159,7 @@
             </tr>
           </tbody>
         </table>
-        <div style="display: block; margin: 0 auto;">
+        <div style="display: block; margin: 0 auto;"> <!-- Companions Chart -->
           <canvas width="300" height="300" *ngIf="pieChartLabelsCompanions?.length > 0 && pieChartDataCompanions?.length > 0" baseChart
                   [data]="pieChartDataCompanions"
                   [labels]="pieChartLabelsCompanions"
@@ -162,7 +167,7 @@
           </canvas>
         </div>
       </div>
-      <!-- External Reports -->
+      <!-- External users Reports -->
       <div *ngIf="reportsExternal?.length != 0" class="grid-x grid-padding-x">
         <div class="category-title cell">
           <h4>Reservaciones por externo</h4>
@@ -189,9 +194,7 @@
           </canvas>
         </div>
       </div>
-
       <!-- Per day Reports -->
-
       <div *ngIf="reportsDay?.length != 0" class="grid-x grid-padding-x">
         <div class="category-title cell">
           <h4>Reservaciones total por d&iacute;a</h4>
@@ -220,4 +223,4 @@
     </div>
   </div>
 </div>
-<ng-template #elseBlock>No hay resultados</ng-template>
+<ng-template #elseBlock>No hay resultados</ng-template> <!-- No result message -->

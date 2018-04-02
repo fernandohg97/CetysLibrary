@@ -17,9 +17,9 @@ export class PopupUserDetailsComponent implements OnInit {
     private usersQuantityService: UsersQuantityService,
     private dataReservationService: DataReservationService
   ) { }
-
+  // Execute when component initialize
   ngOnInit() {
-    this.currentReservation = this.dataReservationService.getCurrentReservations()
+    this.currentReservation = this.dataReservationService.getCurrentReservations() // get selected reservation
   }
 
 }

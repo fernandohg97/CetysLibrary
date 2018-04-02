@@ -35,7 +35,7 @@ export class AdminEmployeesComponent implements OnInit, OnDestroy {
   constructor(private adminDataService: AdminDataService, private dataReservationService: DataReservationService, private employeesService: EmployeesService, private router: Router) {
     this.called = false
   }
-
+  // Execute when component initialize
   ngOnInit() {
     this.employeesService.getCount().then(data => {
       this.totalEmployees = parseInt(JSON.parse(JSON.stringify(data))._body)
@@ -43,29 +43,29 @@ export class AdminEmployeesComponent implements OnInit, OnDestroy {
     this.employeesService.getAll().then(data => {
       this.employees = data
     })
-    this.employeesService.createEmployeesDownloadFile()
+    this.employeesService.createEmployeesDownloadFile() // Create employees file in your local system
   }
-
+  // Execute when you change or move to other component
   ngOnDestroy() {
     this.employeesService.removeEmployeesFile()
   }
-
+  // Expand table button
   expandTable() {
     let classValue = this.employeeTable.nativeElement.getAttribute('class')
     if (classValue == 'grid-container') this.employeeTable.nativeElement.setAttribute('class', 'fluid')
     else this.employeeTable.nativeElement.setAttribute('class', 'grid-container')
   }
-
+  // Show form template when add employee button is clic
   createEmployee() {
     this.called = true
   }
-
+  // Remove current uploaded file
   removeFile() {
     this.myInputVariable.nativeElement.value = "";
     this.nameFile = ''
     this.textFile = undefined
   }
-
+  // Execute when you select a different file
   fileChange(event) {
     let input = event.target;
     this.nameFile = input.files[0].name
@@ -79,7 +79,7 @@ export class AdminEmployeesComponent implements OnInit, OnDestroy {
         reader.readAsText(input.files[index]);
     };
   }
-
+  // Show pop up confirm delete all employees
   openPopup() {
     this.dataReservationService.changeAdminSelected(AdminSection.employees)
       this.popup.open(PopupConfirmComponent, {
@@ -87,7 +87,7 @@ export class AdminEmployeesComponent implements OnInit, OnDestroy {
         closeButton: true
       })
     }
-
+    // Download all employees
     downloadFile() {
       this.employeesService.getDownloadFile().then(res => {
         window.open(res.url)
@@ -95,9 +95,9 @@ export class AdminEmployeesComponent implements OnInit, OnDestroy {
         alert('Hubo un error al descargar el archivo')
       })
     }
-
+// Create new employee
   save() {
-    if (this.textFile) {
+    if (this.textFile) { // In case you create employees from an uploaded file
       let jsonFiles = JSON.parse(this.textFile)
       this.employeesService.createFile(jsonFiles)
       .subscribe((response => {
@@ -109,7 +109,7 @@ export class AdminEmployeesComponent implements OnInit, OnDestroy {
         this.errorFile = JSON.parse(err._body).existEmployees
       })
       )
-    } else {
+    } else { // In case you create only one user
       this.employeesService.create(this.newEmployee)
       .subscribe((response => {
           setTimeout(() => {
@@ -123,7 +123,7 @@ export class AdminEmployeesComponent implements OnInit, OnDestroy {
       )
     }
   }
-
+  // Show popup confirm delete when you want to remove just one element
   delete(id: string) {
     this.adminDataService.changeId(id)
     this.adminDataService.changeElement(ElementType.employees)

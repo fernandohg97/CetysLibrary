@@ -10,11 +10,11 @@ import { PopupConfirmComponent } from './popup-confirm/popup-confirm.component';
 import { PopupConfirmElementComponent } from './popup-confirm-element/popup-confirm-element.component';
 
 @NgModule({
-  imports: [
+  imports: [ // All modules
     CommonModule,
     NguiPopupModule
   ],
-  declarations: [
+  declarations: [ // All components
     PopupUserInfoComponent,
     PopupUserDetailsComponent,
     PopupExternalInfoComponent,
@@ -23,10 +23,10 @@ import { PopupConfirmElementComponent } from './popup-confirm-element/popup-conf
     PopupConfirmComponent,
     PopupConfirmElementComponent
   ],
-  exports: [
+  exports: [ // All modules visible for other components
     NguiPopupModule
   ],
-  entryComponents: [
+  entryComponents: [ // Components that are not referencing in the template explicity
     PopupUserDetailsComponent,
     PopupUserInfoComponent,
     PopupEmployeeInfoComponent,
