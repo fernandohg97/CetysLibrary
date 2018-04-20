@@ -46,6 +46,18 @@ export class ReservationsService {
     .catch(ReservationsService.handleError)
   }
 
+  getDownloadFile() { // Download local file with all reservations
+    return this.http.get(`${this.url}/download`).toPromise()
+  }
+
+  createReservationDownloadFile() { //  Create local file with all reservations from database
+    return this.http.get(`${this.url}/file`).toPromise()
+  }
+
+  removeReservationFile() { // Remove local file with all reservations
+    return this.http.get(`${this.url}/remove`).toPromise()
+  }
+
   create(newReservation: ReservationModel) { // Create new reservation
     return this.http.post(this.url, newReservation)
     .map(response => response.json())
