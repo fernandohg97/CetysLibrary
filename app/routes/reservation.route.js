@@ -8,6 +8,12 @@ reservationRouter.get('/reservations', reservationCtrl.getReservations) // Get a
 
 reservationRouter.get('/reservations/count', reservationCtrl.getReservationsCount) // Get the maximun number of reservations
 
+reservationRouter.get('/reservations/file', reservationCtrl.createReservationFile) // Create users local file
+
+reservationRouter.get('/reservations/download', reservationCtrl.downloadReservationFile) // Download users local file
+
+reservationRouter.get('/reservations/remove', reservationCtrl.removeReservationFile) // Remove users local file
+
 reservationRouter.get('/reservations/:reservation_id', reservationCtrl.getReservation) // Get reservation by id
 
 reservationRouter.get('/reservations/cubicle/:cubicle', reservationCtrl.getReservationsByCubicle) // Get reservations by cubicle
