@@ -49,3 +49,6 @@ hr {
     text-align: left;
   }
 }
+.fa-check {
+  cursor: pointer;
+}
