@@ -2,6 +2,7 @@
 
 const express = require('express') // import express library
 const Reservation = require('../models/reservation/reservation.model') // import reservation model
+const fs = require('fs')
 
 // Get all reservations from database
 function getReservations(req, res) {
@@ -74,6 +75,33 @@ function createReservation(req, res) {
     })
   }
 }
+
+//  Create local file with all reservations from database
+function createReservationFile(req, res) {
+  let rootFile = `${__dirname}/reservaciones.json`
+  let content = Reservation.find({}, {_id: 0, __v: 0}).sort({reservationDate: -1})
+  content.then(data => {
+    data = JSON.stringify(data)
+    fs.writeFile(rootFile, data, 'utf-8', (err) => {
+      if (err) return res.status(500).send(`Error al crear el archivo: ${err}`)
+      return res.status(200).send({message: 'File was saved'})
+    })
+  }).catch(err => res.status(500).send({message: `Error del server ${err}`}))
+}
+// Remove local file with all reservations
+function removeReservationFile(req, res) {
+  let rootFile = `${__dirname}/reservaciones.json`
+  fs.unlink(rootFile, (err) => {
+    if (err) throw err;
+    return res.status(200).send({message: 'reservaciones.json successfully deleted'})
+  });
+}
+// Download local file with all reservations
+function downloadReservationFile(req, res) {
+  let rootFile = `${__dirname}/reservaciones.json`
+  res.download(rootFile, 'reservaciones.json')
+}
+
 // Update specific reservation from database
 function updateReservation(req, res) {
   let updateReservation = Reservation.findByIdAndUpdate(req.params.reservation_id, req.body)
@@ -113,6 +141,9 @@ module.exports = {
   getReservationsCount,
   getReservation,
   getReservationsByCubicle,
+  createReservationFile,
+  downloadReservationFile,
+  removeReservationFile,
   createReservation,
   updateReservation,
   removeReservation,

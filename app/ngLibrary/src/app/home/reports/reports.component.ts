@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ReservationsService } from '../../services/reservations/reservations.service';
 import { ReservationModel } from '../../models/reservation.model';
@@ -22,7 +22,7 @@ declare var $:any;
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.css']
 })
-export class ReportsComponent implements OnInit {
+export class ReportsComponent implements OnInit, OnDestroy {
 
   @ViewChild(NguiPopupComponent) popup: NguiPopupComponent;
   @ViewChild(NguiPopupComponent) popup2: NguiPopupComponent;
@@ -65,6 +65,12 @@ export class ReportsComponent implements OnInit {
     this.reservationsService.getCount().then(data => {
       this.totalReservations = parseInt(JSON.parse(JSON.stringify(data))._body)
     })
+    this.reservationsService.createReservationDownloadFile() // Create reservations file in your local system
+  }
+
+  // Execute when you change or move to other component
+  ngOnDestroy() {
+    this.reservationsService.removeReservationFile()
   }
 
   getCurrentReservation(reservation) { // Display reservation user details
@@ -78,9 +84,15 @@ export class ReportsComponent implements OnInit {
     if (classValue == 'grid-container') this.containerTable.nativeElement.setAttribute('class', 'fluid')
     else this.containerTable.nativeElement.setAttribute('class', 'grid-container')
   }
-
+  // Download all reservations to your local system
   downloadTable() { // Download table elements. Only the ones that are displayed in the current page
-    $(this.el.nativeElement).tableExport({type:'csv', escape:'false'});
+    // $(this.el.nativeElement).tableExport({type:'csv', escape:'false'});
+    this.reservationsService.getDownloadFile().then(res => {
+      window.open(res.url)
+    }).catch(err => {
+      console.log(err)
+      alert('Hubo un error al descargar el archivo')
+    })
   }
 
   getCurrentUser(user) { // Display reservation user. (student, employee, externalUser)
