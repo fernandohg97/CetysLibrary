@@ -47,7 +47,6 @@ function getReportsByCubicle(req, res) {
     { $group: { _id: "$cubicle", ingresos: { $sum: 1 } } },
     { $sort: { _id: 1 } }
     ])
-
   findReservationsCubicle.then(data => {
     if (data) return res.json(data)
     return res.status(404).send({message: 'Page not found'})

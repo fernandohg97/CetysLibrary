@@ -122,7 +122,7 @@
             <td>{{reservation.reservationDate | date: 'mediumDate'}}</td>
             <td class="clear button user-people" (click)="getCurrentReservation(reservation)">{{reservation.peopleQuantity}}</td>
             <td *ngIf="reservation.borrowedMaterial; else elseBlock" (click)="getBorrowedMaterial(reservation.borrowedMaterial)"><i class="fa fa-check" aria-hidden="true"></i></td>
-            <ng-template #elseBlock><td><i class="fa fa-times" aria-hidden="true"></i> </td></ng-template>
+            <ng-template #elseBlock><td><i class="fa fa-times" aria-hidden="true"></i></td></ng-template>
             <td class="remove">
               <a (click)="deletePopup(reservation._id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
             </td>
