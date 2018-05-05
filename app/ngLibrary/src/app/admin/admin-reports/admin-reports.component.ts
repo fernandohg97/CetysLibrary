@@ -251,6 +251,7 @@ export class AdminReportsComponent implements OnInit {
         if (data) { // In case data is received
           let k = 0 // counter variable 1
           let j = 0 // counter variable 2
+          console.log(data)
           this.totalSumCompanions = 0
           this.reportsCompanions = data
           if (this.pieChartDataCompanions.length == 0) { // In case the array is empty
