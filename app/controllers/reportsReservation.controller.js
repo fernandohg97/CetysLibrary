@@ -94,7 +94,11 @@ function getReportsByCareerCompanions(req, res) {
     { $group: { _id: { userCareers: "$usersDetails.career", userDepartments: "$usersDetails.department" }, ingresos:  { $push: '$usersDetails.quantity' } } } ])
 
   findReservationsCareerCompanions.then(data => {
-    if (data) return res.json(data)
+    if (data) {
+      let newData = data.filter(value => value.ingresos[0].length > 0)
+      return res.json(newData)
+    }
+
     return res.status(404).send({message: 'Page not found'})
   }).catch(err => {
     res.status(500).send({message: `Error del server ${err}`})
