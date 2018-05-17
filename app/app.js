@@ -12,7 +12,7 @@ const departmentRouter = require('./routes/department.route')
 const employeeRouter = require('./routes/employee.route')
 const reportsRouter = require('./routes/reports.route')
 const externalUserRouter = require('./routes/externalUser.route')
-
+const companionRouter = require('./routes/companion.route')
 // Body parser let us get the form data with req.body
 // Limit size post data with body-parser
 app.use(bodyParser.json({limit: "50mb"}));
@@ -37,6 +37,7 @@ app.use('/api', departmentRouter)
 app.use('/api', employeeRouter)
 app.use('/api', reportsRouter)
 app.use('/api', externalUserRouter)
+app.use('/api', companionRouter)
 
 // Redirect to index.html automatically
 app.all('*', (req, res) => {
