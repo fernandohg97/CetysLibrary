@@ -1,6 +1,7 @@
 'use strict'
 
 const Reservation = require('../models/reservation/reservation.model') // import reservation model
+const Companion = require('../models/companion/companion.model') // import companion model
 
 // Get reservation reports by division
 function getReportsByDivision(req, res) {
@@ -86,24 +87,25 @@ function getReportsByExternalUser(req, res) {
     res.status(500).send({message: `Error del server ${err}`})
   })
 }
+
 // Get reservation reports by career name companions
-function getReportsByCareerCompanions(req, res) {
-
-  let findReservationsCareerCompanions = Reservation.aggregate( [
-    { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
-    { $group: { _id: { userCareers: "$usersDetails.career", userDepartments: "$usersDetails.department" }, ingresos:  { $push: '$usersDetails.quantity' } } } ])
-
-  findReservationsCareerCompanions.then(data => {
-    if (data) {
-      let newData = data.filter(value => value.ingresos[0].length > 0)
-      return res.json(newData)
-    }
-
-    return res.status(404).send({message: 'Page not found'})
-  }).catch(err => {
-    res.status(500).send({message: `Error del server ${err}`})
-  })
-}
+// function getReportsByCareerCompanions(req, res) {
+//
+//   let findReservationsCareerCompanions = Reservation.aggregate( [
+//     { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
+//     { $group: { _id: { userCareers: "$usersDetails.career", userDepartments: "$usersDetails.department" }, ingresos:  { $push: '$usersDetails.quantity' } } } ])
+//
+//   findReservationsCareerCompanions.then(data => {
+//     if (data) {
+//       let newData = data.filter(value => value.ingresos[0].length > 0)
+//       return res.json(newData)
+//     }
+//
+//     return res.status(404).send({message: 'Page not found'})
+//   }).catch(err => {
+//     res.status(500).send({message: `Error del server ${err}`})
+//   })
+// }
 
 // Get reservation reports by day
 function getReportsByDay(req, res) {
@@ -122,12 +124,43 @@ function getReportsByDay(req, res) {
   })
 }
 
+function getReportsByCompanionsCareer(req, res) {
+  let findCompanions = Companion.aggregate([
+    { $match: { $or: [ {division: "PREPARATORIA"}, { division: "INGENIERIA" }, { division: "ADMINISTRACION Y NEGOCIOS"}, { division: "POSGRADO"}, { division: "DOCTORADO"} ] } },
+    { $group: { _id: "$career", total: { $sum: "$quantity" } } }
+  ])
+
+  findCompanions.then(data => {
+    if (data) return res.json(data)
+    else return res.status(404).send({message: 'Page not found'})
+  }).catch(err => {
+    return res.status(500).send({message: `Error del server ${err}`})
+  })
+}
+
+function getReportsByCompanionsDepartment(req, res) {
+  let findCompanions = Companion.aggregate([
+    { $group: { _id: "$department", total: { $sum: "$quantity" } } }
+  ])
+
+  findCompanions.then(data => {
+    if (data) {
+      let newData = data.filter(value => value._id != null)
+      return res.json(newData)
+    }
+    else return res.status(404).send({message: 'Page not found'})
+  }).catch(err => {
+    return res.status(500).send({message: `Error del server ${err}`})
+  })
+}
+
 module.exports = {
   getReportsByCareer,
   getReportsByCubicle,
   getReportsByDivision,
   getReportsByDay,
   getReportsByDepartment,
-  getReportsByCareerCompanions,
+  getReportsByCompanionsCareer,
+  getReportsByCompanionsDepartment,
   getReportsByExternalUser
 }
