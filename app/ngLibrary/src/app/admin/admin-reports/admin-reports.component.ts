@@ -3,6 +3,8 @@ import { ReportsService } from '../../services/reports/reports.service';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 import { ReservationsService } from '../../services/reservations/reservations.service';
 import { DepartmentsService } from '../../services/departments/departments.service';
+import { CareersService } from '../../services/careers/careers.service';
+import { CareerModel } from '../../models/career.model';
 
 @Component({
   selector: 'app-admin-reports',
@@ -13,6 +15,7 @@ export class AdminReportsComponent implements OnInit {
 
   @ViewChild("baseChart") chart: BaseChartDirective;
   totalReservations: number = 0
+  careers: CareerModel[] = []
   startDate: string
   endDate: string
   startDate2: string
@@ -63,11 +66,17 @@ export class AdminReportsComponent implements OnInit {
   totalSumExternal: number = 0
   totalSumCompanions: number = 0
 
-  constructor(private departmentsService: DepartmentsService, private reportsService: ReportsService, private reservationsService: ReservationsService) {}
+  constructor(private careersService: CareersService, private departmentsService: DepartmentsService, private reportsService: ReportsService, private reservationsService: ReservationsService) {}
   // Execute when component initialize
   ngOnInit() {
     this.reservationsService.getCount().then(data => { // Get the maximun number of reservations
       this.totalReservations = parseInt(JSON.parse(JSON.stringify(data))._body)
+    })
+    this.careersService.getAll().then(data => {
+      data.forEach(e => {
+        if (e.active) this.careers.push(e)
+      })
+      console.log(this.careers)
     })
   }
 // Create name labels and data of each report
@@ -249,24 +258,47 @@ export class AdminReportsComponent implements OnInit {
       })
       this.reportsService.getByCompanions(this.startDate, shortDate).then(data => { // Get companions data between dates input
         if (data) { // In case data is received
-          let self = this
           let k = 0 // counter variable 1
           let j = 0 // counter variable 2
           console.log(data)
-          self.totalSumCompanions = 0
-          self.reportsCompanions = data
-          if (self.pieChartDataCompanions.length == 0) { // In case the array is empty
-            self.reportsCompanions.forEach(element => {
+          this.totalSumCompanions = 0
+          this.reportsCompanions = data
+
+
+
+                  // this.careers.forEach(career => {
+                  //   if (career.active) {
+                  //     this.reportsCompanions.forEach(element => {
+                  //       element._id.userCareers.forEach(value => {
+                  //         if (career == value) {
+                  //           console.log(value)
+                  //           // return value
+                  //         }
+                  //       })
+                  //     })
+                  //
+                  //   }
+                  // })
+
+
+          if (this.pieChartDataCompanions.length == 0) { // In case the array is empty
+            this.reportsCompanions.forEach(element => {
                 if (element._id.userCareers.length > 0) { // In case the userCareers contains user elements
                   element._id.userCareers.forEach((value, ind) => {
-                    if (self.newArray.length == 0) { // In case the new array is empty
-                      self.newArray.push({ // add user careers values inside the labels property
-                        labels: value
+                    if (this.newArray.length == 0) { // In case the new array is empty
+                      this.careers.forEach(e => {
+                        if (value == e) {
+                          this.newArray.push({ // add user careers values inside the labels property
+                            labels: value
+                          })
+                          return
+                        }
                       })
+
                     } else { // In case the new arrays is not empty
-                        self.newArray.splice(k,0,{labels: value}) // Add the new values to newArray variable
+                        this.newArray.splice(k,0,{labels: value}) // Add the new values to newArray variable
                     }
-                    self.pieChartLabelsCompanions.push(value) // Add the userCareers value to label chart array
+              this.pieChartLabelsCompanions.push(value) // Add the userCareers value to label chart array
                     itemsCompanions.push(value) // Add to itemsCompanions array
                     k++ // Add 1 to counter
                     // this.totalSumCompanions += value
@@ -274,14 +306,14 @@ export class AdminReportsComponent implements OnInit {
                 }
                 if (element._id.userDepartments.length > 0) { // In case the userDepartments contains department elements
                   element._id.userDepartments.forEach((value, ind) => {
-                    if (self.newArray.length == 0) { // In case the new array is empty
-                      self.newArray.push({ // add user departments values inside the labels property
+                    if (this.newArray.length == 0) { // In case the new array is empty
+                      this.newArray.push({ // add user departments values inside the labels property
                         labels: value
                       })
                     } else { // In case the new arrays is not empty
-                        self.newArray.splice(k,0,{labels: value})  // Add the new values to newArray variable
+                        this.newArray.splice(k,0,{labels: value})  // Add the new values to newArray variable
                     }
-                    self.pieChartLabelsCompanions.push(value) // Add the userDepartments value to label chart array
+                    this.pieChartLabelsCompanions.push(value) // Add the userDepartments value to label chart array
                     itemsCompanions.push(value) // Add to itemsCompanions array
                     k++ // Add 1 to counter
                     // this.totalSumCompanions += value
@@ -291,28 +323,29 @@ export class AdminReportsComponent implements OnInit {
                   if (element.ingresos.length > 0) { // In case the "ingresos" array contains elements
                     element.ingresos.forEach((value, ind) => {
                         value.forEach(val => { // Each value we set or add to the newArray variable property "ingresos".
-                          self.newArray[j].ingresos = val
-                          self.pieChartDataCompanions.push(val) // Add to chart data array
+                          this.newArray[j].ingresos = val
+                          this.pieChartDataCompanions.push(val) // Add to chart data array
                           j++ // Add 1 to counter
-                          self.totalSumCompanions += val
+                          this.totalSumCompanions += val
                         })
                     });
                   }
-                  self.countLabelsCompanions = self.pieChartDataCompanions.length // We pass the data length to other variable
+                  this.countLabelsCompanions = this.pieChartDataCompanions.length // We pass the data length to other variable
+                  console.log(this.newArray)
             })
         } else { // In case chart data array is not empty
-          self.totalSumCompanions = 0
+          this.totalSumCompanions = 0
           // We do the same logic but
           // We have to set another variables to update the labels and data information
-          self.reportsCompanions.forEach(element => {
+          this.reportsCompanions.forEach(element => {
               if (element._id.userCareers.length > 0) {
                 element._id.userCareers.forEach((value, ind) => {
-                  if (self.newArray.length == 0) {
-                    self.newArray.push({
+                  if (this.newArray.length == 0) {
+                    this.newArray.push({
                       labels: value
                     })
                   } else {
-                      self.newArray.splice(k,0,{labels: value})
+                      this.newArray.splice(k,0,{labels: value})
                   }
                   itemsCompanions.push(value)
                   k++
@@ -320,12 +353,12 @@ export class AdminReportsComponent implements OnInit {
               }
               if (element._id.userDepartments.length > 0) {
                 element._id.userDepartments.forEach((value, ind) => {
-                  if (self.newArray.length == 0) {
-                    self.newArray.push({
+                  if (this.newArray.length == 0) {
+                    this.newArray.push({
                       labels: value
                     })
                   } else {
-                      self.newArray.splice(k,0,{labels: value})
+                      this.newArray.splice(k,0,{labels: value})
                   }
                   itemsCompanions.push(value)
                   k++
@@ -334,10 +367,10 @@ export class AdminReportsComponent implements OnInit {
                 if (element.ingresos.length > 0) {
                   element.ingresos.forEach((value, ind) => {
                       value.forEach(val => {
-                        self.newArray[j].ingresos = val
+                        this.newArray[j].ingresos = val
                         dataCompanionsClone.push(val)
                         j++
-                        self.totalSumCompanions += val
+                        this.totalSumCompanions += val
                       })
                   });
                 }
