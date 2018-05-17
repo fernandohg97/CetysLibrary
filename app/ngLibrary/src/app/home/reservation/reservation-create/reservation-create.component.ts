@@ -119,6 +119,7 @@ export class ReservationCreateComponent implements OnInit {
       this.reservationsService.create(this.newReservation) // Create data
       .subscribe(
         data => {
+          console.log(data)
           setTimeout(() => {
             alert(`Reservacion realizada exitosamente`)
           }, 500)
