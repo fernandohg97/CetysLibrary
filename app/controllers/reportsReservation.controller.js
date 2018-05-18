@@ -111,7 +111,7 @@ function getReportsByExternalUser(req, res) {
 function getReportsByDay(req, res) {
   let findReservationsDay = Reservation.aggregate( [
     { $project: { shortDate: { $dateToString: { format: "%G-%m-%d", date: "$reservationDate" } } } },
-    { $match: { shortDate: { $gte: req.query.start, $lte: req.query.end } } },
+    { $match: { shortDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
     { $group: { _id: "$shortDate", ingresos: { $sum: 1 } } }  ]).sort({_id: 1})
 
   findReservationsDay.then(data => {
@@ -126,8 +126,13 @@ function getReportsByDay(req, res) {
 
 function getReportsByCompanionsCareer(req, res) {
   let findCompanions = Companion.aggregate([
-    { $match: { $or: [ {division: "PREPARATORIA"}, { division: "INGENIERIA" }, { division: "ADMINISTRACION Y NEGOCIOS"}, { division: "POSGRADO"}, { division: "DOCTORADO"} ] } },
-    { $group: { _id: "$career", total: { $sum: "$quantity" } } }
+    { $match: {
+        $and: [
+          { $or: [ {division: "PREPARATORIA"}, { division: "INGENIERIA" }, { division: "ADMINISTRACION Y NEGOCIOS"}, { division: "POSGRADO"}, { division: "DOCTORADO"} ] },
+          { reservationDate: {$gte: new Date(req.query.start), $lte: new Date(req.query.end) } }
+        ]},
+    },
+    { $group: { _id: "$career", ingresos: { $sum: "$quantity" } } }
   ])
 
   findCompanions.then(data => {
@@ -140,7 +145,8 @@ function getReportsByCompanionsCareer(req, res) {
 
 function getReportsByCompanionsDepartment(req, res) {
   let findCompanions = Companion.aggregate([
-    { $group: { _id: "$department", total: { $sum: "$quantity" } } }
+    { $match: { reservationDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
+    { $group: { _id: "$department", ingresos: { $sum: "$quantity" } } }
   ])
 
   findCompanions.then(data => {
