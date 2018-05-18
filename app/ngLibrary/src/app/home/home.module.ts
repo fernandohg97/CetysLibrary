@@ -19,6 +19,7 @@ import { UsersQuantityService } from '../services/usersQuantity/users.quantity.s
 import { DataReservationService } from '../services/dataReservation/data-reservation.service';
 import { PipesModule } from '../pipes/pipes.module';
 import { ExternalUserService } from '../services/externalUser/external-user.service';
+import { CompanionsService} from '../services/companions/companions.service';
 import { MainHomeComponent } from './main-home/main-home.component';
 import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
 import { ReportsComponent } from './reports/reports.component';
@@ -55,7 +56,8 @@ import { AdminDataService } from '../services/adminData/admin-data.service';
     UsersQuantityService,
     DataReservationService,
     ExternalUserService,
-    AdminDataService
+    AdminDataService,
+    CompanionsService
   ],
   exports: [ // Visible for other components
     ReservationModule,
