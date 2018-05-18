@@ -65,6 +65,7 @@ export class AdminReportsComponent implements OnInit {
   totalSumDay: number = 0
   totalSumExternal: number = 0
   totalSumCompanions: number = 0
+  sumCareers: Array<any> = new Array()
 
   constructor(private careersService: CareersService, private departmentsService: DepartmentsService, private reportsService: ReportsService, private reservationsService: ReservationsService) {}
   // Execute when component initialize
@@ -239,6 +240,7 @@ export class AdminReportsComponent implements OnInit {
         if (data) { // In case data is received
         this.totalSumCareer = 0
           this.reportsCareer = data
+          console.log(data)
           this.pieChartLabelsCareers = []
           this.pieChartDataCareers = []
           if (this.pieChartDataCareers.length == 0) { // In case the array is empty
@@ -264,6 +266,27 @@ export class AdminReportsComponent implements OnInit {
           this.totalSumCompanions = 0
           this.reportsCompanions = data
 
+          if (this.pieChartDataCareers.length == 0) { // In case the array is empty
+            this.totalSumCompanions = this.insertChartItems(this.reportsCompanions, this.pieChartLabelsCompanions, this.pieChartDataCompanions)
+            this.countLabelsCompanions = this.pieChartDataCompanions.length // We pass the data length to other variable
+          } else {
+          // We call the method with different variables
+          // We have to set another variables to update the labels and data information
+            this.totalSumCompanions = this.insertChartItems(this.reportsCompanions, itemsCompanions, dataCompanionsClone)
+            dataCompanionsClone.splice(0, this.countLabelsCompanions) // We remove the elements that were in the previous search
+            this.countLabelsCompanions = dataCompanionsClone.length
+            labelsCompanionsClone = itemsCompanions
+            this.pieChartLabelsCompanions = labelsCompanionsClone
+            this.pieChartDataCompanions = dataCompanionsClone
+          }
+
+          this.reportsCompanions.forEach(element => {
+            this.reportsCareer.forEach(e => {
+              if (element._id === e._id) {
+                this.sumCareers.push({name: element._id, count: element.ingresos + e.ingresos})
+              }
+            })
+          })
 
 
                   // this.careers.forEach(career => {
@@ -281,101 +304,101 @@ export class AdminReportsComponent implements OnInit {
                   // })
 
 
-          if (this.pieChartDataCompanions.length == 0) { // In case the array is empty
-            this.reportsCompanions.forEach(element => {
-                if (element._id.userCareers.length > 0) { // In case the userCareers contains user elements
-                  element._id.userCareers.forEach((value, ind) => {
-                    if (this.newArray.length == 0) { // In case the new array is empty
-                      this.careers.forEach(e => {
-                        if (value == e) {
-                          this.newArray.push({ // add user careers values inside the labels property
-                            labels: value
-                          })
-                          return
-                        }
-                      })
-
-                    } else { // In case the new arrays is not empty
-                        this.newArray.splice(k,0,{labels: value}) // Add the new values to newArray variable
-                    }
-              this.pieChartLabelsCompanions.push(value) // Add the userCareers value to label chart array
-                    itemsCompanions.push(value) // Add to itemsCompanions array
-                    k++ // Add 1 to counter
-                    // this.totalSumCompanions += value
-                  })
-                }
-                if (element._id.userDepartments.length > 0) { // In case the userDepartments contains department elements
-                  element._id.userDepartments.forEach((value, ind) => {
-                    if (this.newArray.length == 0) { // In case the new array is empty
-                      this.newArray.push({ // add user departments values inside the labels property
-                        labels: value
-                      })
-                    } else { // In case the new arrays is not empty
-                        this.newArray.splice(k,0,{labels: value})  // Add the new values to newArray variable
-                    }
-                    this.pieChartLabelsCompanions.push(value) // Add the userDepartments value to label chart array
-                    itemsCompanions.push(value) // Add to itemsCompanions array
-                    k++ // Add 1 to counter
-                    // this.totalSumCompanions += value
-                  })
-                }
-                  // This represents the quantity data for each userCareer or userDepartment
-                  if (element.ingresos.length > 0) { // In case the "ingresos" array contains elements
-                    element.ingresos.forEach((value, ind) => {
-                        value.forEach(val => { // Each value we set or add to the newArray variable property "ingresos".
-                          this.newArray[j].ingresos = val
-                          this.pieChartDataCompanions.push(val) // Add to chart data array
-                          j++ // Add 1 to counter
-                          this.totalSumCompanions += val
-                        })
-                    });
-                  }
-                  this.countLabelsCompanions = this.pieChartDataCompanions.length // We pass the data length to other variable
-                  console.log(this.newArray)
-            })
-        } else { // In case chart data array is not empty
-          this.totalSumCompanions = 0
-          // We do the same logic but
-          // We have to set another variables to update the labels and data information
-          this.reportsCompanions.forEach(element => {
-              if (element._id.userCareers.length > 0) {
-                element._id.userCareers.forEach((value, ind) => {
-                  if (this.newArray.length == 0) {
-                    this.newArray.push({
-                      labels: value
-                    })
-                  } else {
-                      this.newArray.splice(k,0,{labels: value})
-                  }
-                  itemsCompanions.push(value)
-                  k++
-                })
-              }
-              if (element._id.userDepartments.length > 0) {
-                element._id.userDepartments.forEach((value, ind) => {
-                  if (this.newArray.length == 0) {
-                    this.newArray.push({
-                      labels: value
-                    })
-                  } else {
-                      this.newArray.splice(k,0,{labels: value})
-                  }
-                  itemsCompanions.push(value)
-                  k++
-                })
-              }
-                if (element.ingresos.length > 0) {
-                  element.ingresos.forEach((value, ind) => {
-                      value.forEach(val => {
-                        this.newArray[j].ingresos = val
-                        dataCompanionsClone.push(val)
-                        j++
-                        this.totalSumCompanions += val
-                      })
-                  });
-                }
-              })
-            }
+        //   if (this.pieChartDataCompanions.length == 0) { // In case the array is empty
+        //     this.reportsCompanions.forEach(element => {
+        //         if (element._id.userCareers.length > 0) { // In case the userCareers contains user elements
+        //           element._id.userCareers.forEach((value, ind) => {
+        //             if (this.newArray.length == 0) { // In case the new array is empty
+        //               this.careers.forEach(e => {
+        //                 if (value == e) {
+        //                   this.newArray.push({ // add user careers values inside the labels property
+        //                     labels: value
+        //                   })
+        //                   return
+        //                 }
+        //               })
+        //
+        //             } else { // In case the new arrays is not empty
+        //                 this.newArray.splice(k,0,{labels: value}) // Add the new values to newArray variable
+        //             }
+        //       this.pieChartLabelsCompanions.push(value) // Add the userCareers value to label chart array
+        //             itemsCompanions.push(value) // Add to itemsCompanions array
+        //             k++ // Add 1 to counter
+        //             // this.totalSumCompanions += value
+        //           })
+        //         }
+        //         if (element._id.userDepartments.length > 0) { // In case the userDepartments contains department elements
+        //           element._id.userDepartments.forEach((value, ind) => {
+        //             if (this.newArray.length == 0) { // In case the new array is empty
+        //               this.newArray.push({ // add user departments values inside the labels property
+        //                 labels: value
+        //               })
+        //             } else { // In case the new arrays is not empty
+        //                 this.newArray.splice(k,0,{labels: value})  // Add the new values to newArray variable
+        //             }
+        //             this.pieChartLabelsCompanions.push(value) // Add the userDepartments value to label chart array
+        //             itemsCompanions.push(value) // Add to itemsCompanions array
+        //             k++ // Add 1 to counter
+        //             // this.totalSumCompanions += value
+        //           })
+        //         }
+        //           // This represents the quantity data for each userCareer or userDepartment
+        //           if (element.ingresos.length > 0) { // In case the "ingresos" array contains elements
+        //             element.ingresos.forEach((value, ind) => {
+        //                 value.forEach(val => { // Each value we set or add to the newArray variable property "ingresos".
+        //                   this.newArray[j].ingresos = val
+        //                   this.pieChartDataCompanions.push(val) // Add to chart data array
+        //                   j++ // Add 1 to counter
+        //                   this.totalSumCompanions += val
+        //                 })
+        //             });
+        //           }
+        //           this.countLabelsCompanions = this.pieChartDataCompanions.length // We pass the data length to other variable
+        //           console.log(this.newArray)
+        //     })
+        // } else { // In case chart data array is not empty
+        //   this.totalSumCompanions = 0
+        //   // We do the same logic but
+        //   // We have to set another variables to update the labels and data information
+        //   this.reportsCompanions.forEach(element => {
+        //       if (element._id.userCareers.length > 0) {
+        //         element._id.userCareers.forEach((value, ind) => {
+        //           if (this.newArray.length == 0) {
+        //             this.newArray.push({
+        //               labels: value
+        //             })
+        //           } else {
+        //               this.newArray.splice(k,0,{labels: value})
+        //           }
+        //           itemsCompanions.push(value)
+        //           k++
+        //         })
+        //       }
+        //       if (element._id.userDepartments.length > 0) {
+        //         element._id.userDepartments.forEach((value, ind) => {
+        //           if (this.newArray.length == 0) {
+        //             this.newArray.push({
+        //               labels: value
+        //             })
+        //           } else {
+        //               this.newArray.splice(k,0,{labels: value})
+        //           }
+        //           itemsCompanions.push(value)
+        //           k++
+        //         })
+        //       }
+        //         if (element.ingresos.length > 0) {
+        //           element.ingresos.forEach((value, ind) => {
+        //               value.forEach(val => {
+        //                 this.newArray[j].ingresos = val
+        //                 dataCompanionsClone.push(val)
+        //                 j++
+        //                 this.totalSumCompanions += val
+        //               })
+        //           });
+        //         }
+        //       })
+        //     }
           }
       })
       this.reportsService.getByExternal(this.startDate, shortDate).then(data => { // Get external users data between dates input

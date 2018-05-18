@@ -141,7 +141,7 @@
         </div>
       </div>
       <!-- Companions Reports -->
-      <div *ngIf="newArray?.length != 0" class="grid-x grid-padding-x">
+      <div *ngIf="reportsCompanions?.length != 0" class="grid-x grid-padding-x">
         <div class="category-title cell">
           <h4>Reservaciones por carrera/departmento (acompañantes) - {{totalSumCompanions}}</h4>
         </div>
@@ -153,9 +153,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let report of newArray; let i = index">
-              <td>{{report?.labels}}</td>
-              <td *ngIf="report?.ingresos">{{report?.ingresos}}</td>
+            <tr *ngFor="let report of reportsCompanions; let i = index">
+              <td>{{report._id}}</td>
+              <td>{{report.ingresos}}</td>
             </tr>
           </tbody>
         </table>
@@ -233,6 +233,10 @@
           <li>Total de acompañantes: {{totalSumCompanions}} </li>
           <li>Total de reservaciones por d&iacute;a: {{totalSumDay}}</li>
           <li>Total de reservaciones por externo/visitante: {{totalSumExternal}}</li>
+          <li>Total de estudiantes por carrera (incluye acompanantes y lideres):</li>
+            <ul *ngFor="let career of sumCareers">
+              <li>{{career.name}}: {{career.count}}</li>
+            </ul>
         </ul>
       </div>
   </div>
