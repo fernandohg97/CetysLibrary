@@ -11,9 +11,11 @@ import { UsersService } from '../../../services/users/users.service';
 import { ReservationModel } from '../../../models/reservation.model';
 import { UserDepartmentModel } from '../../../models/userDetails.model';
 import { UserDivisionModel } from '../../../models/userDetails.model';
+import { CompanionModel } from '../../../models/companion.model';
 import { UserModel } from '../../../models/user.model';
 import { CareersService } from '../../../services/careers/careers.service';
 import { DataReservationService } from '../../../services/dataReservation/data-reservation.service';
+import { CompanionsService } from '../../../services/companions/companions.service';
 
 @Component({
   selector: 'app-reservation-create',
@@ -24,6 +26,7 @@ export class ReservationCreateComponent implements OnInit {
 
   values: Array<any> = new Array
   newReservation = new ReservationModel()
+  companions: Array<CompanionModel> = new Array
   newUser = new UserModel()
   registrationNumber: number
   departureTime: string
@@ -44,6 +47,7 @@ export class ReservationCreateComponent implements OnInit {
 
   constructor(
     private dataReservationService: DataReservationService,
+    private companionsService: CompanionsService,
     private departmentsService: DepartmentsService,
     private usersService: UsersService,
     private usersQuantity: UsersQuantityService,
@@ -106,7 +110,22 @@ export class ReservationCreateComponent implements OnInit {
   save() {
     this.newReservation.entryTime = new Date(`${this.currentDate} ${this.currentTime}`)
     this.newReservation.departureTime = new Date(`${this.currentDate} ${this.departureTime}`)
-    this.newReservation.reservationDate = new Date(`${this.currentDate} ${this.currentTime}`)
+    // this.newReservation.reservationDate = new Date(`${this.currentDate} ${this.currentTime}`)
+    this.newReservation.reservationDate = new Date(this.currentDate)
+
+    // Set companions
+    for (let i = 0; i < this.newReservation.usersDetails.length; i++) {
+      let companion = new CompanionModel(
+        this.newReservation.reservationDate,
+        this.newReservation.usersDetails[i].quantity,
+        this.newReservation.usersDetails[i].registrationNumber,
+        this.newReservation.usersDetails[i].userCode,
+        this.newReservation.usersDetails[i].division,
+        this.newReservation.usersDetails[i].career,
+        this.newReservation.usersDetails[i].division
+        )
+      this.companions.push(companion)
+    }
 
     this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => { // Get user by registration number input
       let student = JSON.parse(JSON.stringify(user)).usuario
@@ -119,6 +138,19 @@ export class ReservationCreateComponent implements OnInit {
       this.reservationsService.create(this.newReservation) // Create data
       .subscribe(
         data => {
+          if (this.companions.length > 1) { // create one companion
+            this.companionsService.createMany(this.companions)
+            .subscribe(
+              (response => console.log(response)),
+              (err => console.log(err))
+            )
+          } else { // create many companions
+            this.companionsService.create(this.companions[0])
+            .subscribe(
+              (response => console.log(response)),
+              (err => console.log(err))
+            )
+          }
           console.log(data)
           setTimeout(() => {
             alert(`Reservacion realizada exitosamente`)
