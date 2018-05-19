@@ -41,8 +41,20 @@ export class ReportsService {
     .catch(ReportsService.handleError)
   }
   // Get reservation reports by career name companions
-  getByCompanions(startDate: any, endDate: any): Promise<any> {
+  getByCompanionsCareer(startDate: any, endDate: any): Promise<any> {
     return this.http.get(`${this.url}CompanionsCareer`, {
+      params: {
+        start: startDate,
+        end: endDate
+      },
+    })
+    .toPromise()
+    .then(res => res.json())
+    .catch(ReportsService.handleError)
+  }
+  // Get reservation reports by career name companions
+  getByCompanionsDepartment(startDate: any, endDate: any): Promise<any> {
+    return this.http.get(`${this.url}CompanionsDepartment`, {
       params: {
         start: startDate,
         end: endDate
