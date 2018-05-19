@@ -29,6 +29,8 @@ export class AdminReportsComponent implements OnInit {
   reportsDay: any = []
   reportsExternal: any = []
   reportsCompanions: any = []
+  reportsCompanionsCareer: any = []
+  reportsCompanionsDepartment: any = []
   reportsCompanionsQuantity: any = []
   newArray: Array<any> = new Array()
   currentDate: Date = new Date()
@@ -42,6 +44,10 @@ export class AdminReportsComponent implements OnInit {
   pieChartDataCareers: number[]
   pieChartLabelsCompanions: string[]
   pieChartDataCompanions: number[]
+  pieChartLabelsCompanionsCareer: string[]
+  pieChartDataCompanionsCareer: number[]
+  pieChartLabelsCompanionsDep: string[]
+  pieChartDataCompanionsDep: number[]
   pieChartLabelsExternal: string[]
   pieChartDataExternal: number[]
   pieChartLabelsDays: string[]
@@ -55,7 +61,10 @@ export class AdminReportsComponent implements OnInit {
   countLabelsCareers: number
   countLabelsDays: number
   countLabelsExternal: number
-  countLabelsCompanions: number
+  // countLabelsCompanions: number
+  countLabelsCompanionsCareer: number
+  countLabelsCompanionsDep: number
+
   noData: Boolean = true
   // Total sums variables
   totalSumCubicle: number = 0
@@ -66,6 +75,8 @@ export class AdminReportsComponent implements OnInit {
   totalSumExternal: number = 0
   totalSumCompanions: number = 0
   sumCareers: Array<any> = new Array()
+  sumDepartments: Array<any> = new Array()
+
 
   constructor(private careersService: CareersService, private departmentsService: DepartmentsService, private reportsService: ReportsService, private reservationsService: ReservationsService) {}
   // Execute when component initialize
@@ -95,6 +106,8 @@ export class AdminReportsComponent implements OnInit {
     let date = new Date(this.endDate)
     date.setDate(date.getDate()+1)
     let shortDate = date.toISOString().split('T')[0]
+    this.sumCareers = []
+    this.totalSumCompanions = 0
     this.reportsCubicle = []
     this.reportsCareer = []
     this.reportsDivision = []
@@ -102,6 +115,8 @@ export class AdminReportsComponent implements OnInit {
     this.reportsDay = []
     this.reportsExternal = []
     this.reportsCompanions = []
+    this.reportsCompanionsCareer = []
+    this.reportsCompanionsDepartment = []
     this.reportsCompanionsQuantity = []
     this.newArray = new Array()
     this.pieChartLabelsDivision = []
@@ -118,8 +133,10 @@ export class AdminReportsComponent implements OnInit {
     this.pieChartDataDays = [
       {data: [], label: 'Ingresos'}
     ]
-    this.pieChartDataCompanions = []
-    this.pieChartLabelsCompanions = []
+    this.pieChartDataCompanionsCareer = []
+    this.pieChartLabelsCompanionsCareer = []
+    this.pieChartDataCompanionsDep = []
+    this.pieChartLabelsCompanionsDep = []
 
     // This variables are declare for each reports
     // This is because when you make another reports search
@@ -147,9 +164,13 @@ export class AdminReportsComponent implements OnInit {
     let dataExternalClone = this.pieChartDataExternal
     let itemsExternal = []
 
-    let labelsCompanionsClone = this.pieChartLabelsCompanions
-    let dataCompanionsClone = this.pieChartDataCompanions
-    let itemsCompanions = []
+    let labelsCompanionsCloneCareer = this.pieChartLabelsCompanionsCareer
+    let dataCompanionsCloneCareer = this.pieChartDataCompanionsCareer
+    let itemsCompanionsCareer = []
+
+    let labelsCompanionsCloneDep = this.pieChartLabelsCompanionsDep
+    let dataCompanionsCloneDep = this.pieChartDataCompanionsDep
+    let itemsCompanionsDep = []
     // We declare this variable to set initial properties with the
     // new data and be able to bind it to the template
     // We use it in the companions reports
@@ -258,35 +279,37 @@ export class AdminReportsComponent implements OnInit {
           }
         }
       })
-      this.reportsService.getByCompanions(this.startDate, shortDate).then(data => { // Get companions data between dates input
+      this.reportsService.getByCompanionsCareer(this.startDate, shortDate).then(data => { // Get companions data between dates input
         if (data) { // In case data is received
-          let k = 0 // counter variable 1
-          let j = 0 // counter variable 2
           console.log(data)
-          this.totalSumCompanions = 0
-          this.reportsCompanions = data
+          // this.totalSumCompanions = 0
+          let countCompanionsCareer = 0
+          // this.reportsCompanions = data
+          this.reportsCompanionsCareer = data
 
           if (this.pieChartDataCareers.length == 0) { // In case the array is empty
-            this.totalSumCompanions = this.insertChartItems(this.reportsCompanions, this.pieChartLabelsCompanions, this.pieChartDataCompanions)
-            this.countLabelsCompanions = this.pieChartDataCompanions.length // We pass the data length to other variable
+            countCompanionsCareer = this.insertChartItems(this.reportsCompanionsCareer, this.pieChartLabelsCompanionsCareer, this.pieChartDataCompanionsCareer)
+            this.countLabelsCompanionsCareer = this.pieChartDataCompanionsCareer.length // We pass the data length to other variable
           } else {
           // We call the method with different variables
           // We have to set another variables to update the labels and data information
-            this.totalSumCompanions = this.insertChartItems(this.reportsCompanions, itemsCompanions, dataCompanionsClone)
-            dataCompanionsClone.splice(0, this.countLabelsCompanions) // We remove the elements that were in the previous search
-            this.countLabelsCompanions = dataCompanionsClone.length
-            labelsCompanionsClone = itemsCompanions
-            this.pieChartLabelsCompanions = labelsCompanionsClone
-            this.pieChartDataCompanions = dataCompanionsClone
+            countCompanionsCareer = this.insertChartItems(this.reportsCompanionsCareer, itemsCompanionsCareer, dataCompanionsCloneCareer)
+            dataCompanionsCloneCareer.splice(0, this.countLabelsCompanionsCareer) // We remove the elements that were in the previous search
+            this.countLabelsCompanionsCareer = dataCompanionsCloneCareer.length
+            labelsCompanionsCloneCareer = itemsCompanionsCareer
+            this.pieChartLabelsCompanionsCareer = labelsCompanionsCloneCareer
+            this.pieChartDataCompanionsCareer = dataCompanionsCloneCareer
           }
 
-          this.reportsCompanions.forEach(element => {
-            this.reportsCareer.forEach(e => {
-              if (element._id === e._id) {
-                this.sumCareers.push({name: element._id, count: element.ingresos + e.ingresos})
-              }
-            })
-          })
+          this.totalSumCompanions += countCompanionsCareer
+
+          // this.reportsCompanions.forEach(element => {
+          //   this.reportsCareer.forEach(e => {
+          //     if (element._id === e._id) {
+          //       this.sumCareers.push({name: element._id, count: element.ingresos + e.ingresos})
+          //     }
+          //   })
+          // })
 
 
                   // this.careers.forEach(career => {
@@ -399,6 +422,50 @@ export class AdminReportsComponent implements OnInit {
         //         }
         //       })
         //     }
+          }
+      })
+      this.reportsService.getByCompanionsDepartment(this.startDate, shortDate).then(data => { // Get companions data between dates input
+        if (data) { // In case data is received
+          console.log(data)
+          // this.totalSumCompanions = 0
+          let countCompanionsDepartment = 0
+          // this.reportsCompanions = []
+          this.reportsCompanionsDepartment = data
+
+          if (this.pieChartDataCareers.length == 0) { // In case the array is empty
+            countCompanionsDepartment = this.insertChartItems(this.reportsCompanionsDepartment, this.pieChartLabelsCompanionsDep, this.pieChartDataCompanionsDep)
+            this.countLabelsCompanionsDep = this.pieChartDataCompanionsDep.length // We pass the data length to other variable
+          } else {
+          // We call the method with different variables
+          // We have to set another variables to update the labels and data information
+            countCompanionsDepartment = this.insertChartItems(this.reportsCompanionsDepartment, itemsCompanionsDep, dataCompanionsCloneDep)
+            dataCompanionsCloneDep.splice(0, this.countLabelsCompanionsDep) // We remove the elements that were in the previous search
+            this.countLabelsCompanionsDep = dataCompanionsCloneDep.length
+            labelsCompanionsCloneDep = itemsCompanionsDep
+            this.pieChartLabelsCompanionsDep = labelsCompanionsCloneDep
+            this.pieChartDataCompanionsDep = dataCompanionsCloneDep
+          }
+
+          this.pieChartLabelsCompanions = this.pieChartLabelsCompanionsCareer.concat(this.pieChartLabelsCompanionsDep)
+          this.pieChartDataCompanions = this.pieChartDataCompanionsCareer.concat(this.pieChartDataCompanionsDep)
+
+          this.totalSumCompanions += countCompanionsDepartment
+          this.reportsCompanions = this.reportsCompanionsCareer.concat(this.reportsCompanionsDepartment)
+          console.log(this.reportsCompanions)
+          // Sum companions and leaders by careers
+          this.reportsCompanions.forEach(element => {
+            this.reportsCareer.forEach(e => {
+              if (element._id === e._id) this.sumCareers.push({name: element._id, count: element.ingresos + e.ingresos})
+            })
+          })
+          // Sum companions and leaders by department
+          this.reportsCompanions.forEach(element => {
+            this.reportsDepartment.forEach(e => {
+              if (element._id === e._id) {
+                this.sumDepartments.push({name: element._id, count: element.ingresos + e.ingresos})
+              }
+            })
+          })
           }
       })
       this.reportsService.getByExternal(this.startDate, shortDate).then(data => { // Get external users data between dates input
