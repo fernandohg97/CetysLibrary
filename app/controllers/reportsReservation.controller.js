@@ -111,7 +111,7 @@ function getReportsByExternalUser(req, res) {
 function getReportsByDay(req, res) {
   let findReservationsDay = Reservation.aggregate( [
     { $project: { shortDate: { $dateToString: { format: "%G-%m-%d", date: "$reservationDate" } } } },
-    { $match: { shortDate: { $gte: new Date(req.query.start), $lte: new Date(req.query.end) } } },
+    { $match: { shortDate: { $gte: req.query.start, $lte: req.query.end } } },
     { $group: { _id: "$shortDate", ingresos: { $sum: 1 } } }  ]).sort({_id: 1})
 
   findReservationsDay.then(data => {
