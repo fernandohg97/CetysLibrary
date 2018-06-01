@@ -9,6 +9,7 @@ import { SearchDepartmentPipe } from './searchDepartment/search-department.pipe'
 import { SearchReservationCubiclePipe } from './searchReservationCubicle/search-reservation-cubicle.pipe';
 import { SearchReservationDatePipe } from './searchReservationDate/search-reservation-date.pipe';
 import { SearchReservationCareerPipe } from './searchReservationCareer/search-reservation-career.pipe';
+import { DateFormatPipe } from './dateFormat/date-format.pipe';
 
 @NgModule({
   // All components
@@ -22,7 +23,8 @@ import { SearchReservationCareerPipe } from './searchReservationCareer/search-re
     SearchDepartmentPipe,
     SearchReservationCubiclePipe,
     SearchReservationDatePipe,
-    SearchReservationCareerPipe
+    SearchReservationCareerPipe,
+    DateFormatPipe
   ],
   exports: [ // Visible in other components
     SearchReservationPipe,
@@ -34,7 +36,8 @@ import { SearchReservationCareerPipe } from './searchReservationCareer/search-re
     SearchDepartmentPipe,
     SearchReservationDatePipe,
     SearchReservationCubiclePipe,
-    SearchReservationCareerPipe
+    SearchReservationCareerPipe,
+    DateFormatPipe
   ],
   providers: [] // Services are here
 })
