@@ -13,6 +13,10 @@ export class AdminDataService {
   private idSource = new BehaviorSubject<string>(this.id)
   curentId = this.idSource.asObservable()
 
+  reservationId: string
+  private reservationIdSource = new BehaviorSubject<string>(this.reservationId)
+  currentReservationId = this.reservationIdSource.asObservable()
+
   constructor() { }
 
   public getCurrentElement(): ElementType { // get current element type selected
@@ -31,6 +35,15 @@ export class AdminDataService {
   public changeId(message: string) { // change id
     this.id = message
     this.idSource.next(this.id)
+  }
+
+  public getCurrentReservationId(): string { // get current id
+    return this.reservationId
+  }
+
+  public changeReservationId(message: string) { // change id
+    this.reservationId = message
+    this.reservationIdSource.next(this.reservationId)
   }
 
 }
