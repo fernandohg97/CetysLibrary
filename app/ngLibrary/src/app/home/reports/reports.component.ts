@@ -60,6 +60,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
   ngOnInit() { // Execute when component initialize
     $(document).foundation();
     this.reservationsService.getAll().then(data => {
+      console.log(data)
       if (data) this.reservations = data
     })
     this.reservationsService.getCount().then(data => {
@@ -177,6 +178,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
   }
 
   deletePopup(id: string) { // Display confirm window to delete element
+    this.adminDataService.changeReservationId(id)
     this.adminDataService.changeId(id)
     this.adminDataService.changeElement(ElementType.reservations)
     this.popup5.open(PopupConfirmElementComponent, {
