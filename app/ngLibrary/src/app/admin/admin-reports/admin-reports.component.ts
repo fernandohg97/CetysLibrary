@@ -457,19 +457,19 @@ export class AdminReportsComponent implements OnInit {
           this.reportsCompanions = this.reportsCompanionsCareer.concat(this.reportsCompanionsDepartment)
           console.log(this.reportsCompanions)
           // Sum companions and leaders by careers
-          this.reportsCompanions.forEach(element => {
-            this.reportsCareer.forEach(e => {
-              if (element._id === e._id) this.sumCareers.push({name: element._id, count: element.ingresos + e.ingresos})
-            })
-          })
+          // this.reportsCompanions.forEach(element => {
+          //   this.reportsCareer.forEach(e => {
+          //     if (element._id === e._id) this.sumCareers.push({name: element._id, count: element.ingresos + e.ingresos})
+          //   })
+          // })
           // Sum companions and leaders by department
-          this.reportsCompanions.forEach(element => {
-            this.reportsDepartment.forEach(e => {
-              if (element._id === e._id) {
-                this.sumDepartments.push({name: element._id, count: element.ingresos + e.ingresos})
-              }
-            })
-          })
+          // this.reportsCompanions.forEach(element => {
+          //   this.reportsDepartment.forEach(e => {
+          //     if (element._id === e._id) {
+          //       this.sumDepartments.push({name: element._id, count: element.ingresos + e.ingresos})
+          //     }
+          //   })
+          // })
           }
       })
       this.reportsService.getByExternal(this.startDate, this.endDate).then(data => { // Get external users data between dates input
