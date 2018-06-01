@@ -6,7 +6,9 @@ import { DepartmentsService } from '../../../services/departments/departments.se
 import { CareersService } from '../../../services/careers/careers.service';
 import { CubiclesService } from '../../../services/cubicles/cubicles.service';
 import { ReservationsService } from '../../../services/reservations/reservations.service';
+import { CompanionsService } from '../../../services/companions/companions.service';
 import { AdminDataService } from '../../../services/adminData/admin-data.service';
+import { CompanionModel } from '../../../models/companion.model';
 import { ElementType } from '../../../enums/element-type.enum';
 import { NguiPopupComponent } from '@ngui/popup';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -22,6 +24,7 @@ export class PopupConfirmElementComponent implements OnInit {
   currentElementType: ElementType
   ElementType: ElementType
   currentId: string
+  currentCompanion: CompanionModel
 
   constructor(
     private router: Router,
@@ -32,10 +35,16 @@ export class PopupConfirmElementComponent implements OnInit {
     private reservationsService: ReservationsService,
     private externalUserService: ExternalUserService,
     private employeesService: EmployeesService,
-    private adminDataService: AdminDataService
+    private adminDataService: AdminDataService,
+    private companionsService: CompanionsService
   ) { }
   // Execute when component initialize
   ngOnInit() {
+    this.companionsService.getByReservation(this.adminDataService.getCurrentReservationId()).then(companion => {
+      console.log(companion)
+      console.log(companion._id)
+      this.currentCompanion = companion
+    })
     this.currentId = this.adminDataService.getCurrentId()
     this.currentElementType = this.adminDataService.getCurrentElement()
   }
@@ -104,14 +113,16 @@ export class PopupConfirmElementComponent implements OnInit {
           break;
       case ElementType.reservations:
           this.reservationsService.remove(this.currentId).then(response => {
-            if (response.status == 200 || response.status == 204) {
-              this.router.navigateByUrl('/home')
-              setTimeout(() => {
-                alert('Reservacion eliminada exitosamente')
-              }, 400)
-            }
+            this.companionsService.remove(this.currentCompanion._id).then(response => {
+              if (response.status == 200 || response.status == 204) {
+                this.router.navigateByUrl('/home')
+                setTimeout(() => {
+                  alert('Reservacion eliminada exitosamente')
+                }, 400)
+              }
+            }).catch(err => err)
           }).catch(err => {
-            alert('Error:\nNo se ha podido eliminar las reservaciones')
+            alert('Error:\nNo se ha podido eliminar la reservacion')
           })
           break;
       case ElementType.externals:
@@ -123,7 +134,7 @@ export class PopupConfirmElementComponent implements OnInit {
                 }, 400)
               }
             }).catch(err => {
-              alert('Error:\nNo se ha podido eliminar las reservaciones')
+              alert('Error:\nNo se ha podido eliminar los usuarios externos')
             })
             break;
     }
