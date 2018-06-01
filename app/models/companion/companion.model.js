@@ -10,7 +10,8 @@ const companionSchema = new Schema({
   userCode: String,
   division: {type: String, uppercase: true},
   career: {type: String, uppercase: true},
-  department: {type: String, uppercase: true}
+  department: {type: String, uppercase: true},
+  reservation: {type: Schema.Types.ObjectId, ref: 'Reservation'}
 })
 
 module.exports = mongoose.model('Companion', companionSchema)
