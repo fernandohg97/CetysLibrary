@@ -7,10 +7,12 @@ import { SettingsService } from '../../../services/settings/settings.service';
 import { ReservationModel } from '../../../models/reservation.model';
 import { UserDivisionModel } from '../../../models/userDetails.model';
 import { UserDepartmentModel } from '../../../models/userDetails.model';
+import { CompanionModel } from '../../../models/companion.model';
 import { UsersService } from '../../../services/users/users.service';
 import { DepartmentsService } from '../../../services/departments/departments.service';
 import { UserModel } from '../../../models/user.model';
 import { CareersService } from '../../../services/careers/careers.service';
+import { CompanionsService } from '../../../services/companions/companions.service';
 import { ExternalUserService } from '../../../services/externalUser/external-user.service';
 
 @Component({
@@ -39,6 +41,8 @@ export class ReservationUpdateComponent implements OnInit {
   valores: Array<any> = new Array
   employee: Boolean = false
   externalUser: Boolean
+  companion: CompanionModel
+  companions: Array<CompanionModel> = new Array()
 
   constructor(
     private route: ActivatedRoute,
@@ -49,7 +53,8 @@ export class ReservationUpdateComponent implements OnInit {
     private usersService: UsersService,
     private careersService: CareersService,
     private departmentsService: DepartmentsService,
-    private externalUserService: ExternalUserService
+    private externalUserService: ExternalUserService,
+    private companionsService: CompanionsService
   ) {
     this.quantityDepartment = 1
     this.externalUser = false
@@ -62,7 +67,12 @@ export class ReservationUpdateComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.reservationId = params['id'] //
       if (this.reservationId) {
+        this.companionsService.getByReservation(this.reservationId).then(companion => {
+          this.companion = companion
+          console.log(this.companion)
+        })
         this.reservationsService.getById(this.reservationId).then(reservation => {
+          console.log(reservation)
             let entryTime = new Date(reservation.entryTime)
             let hour = entryTime.getHours().toString()
             if (parseInt(hour) >= 0 && parseInt(hour) <= 9) {
@@ -71,17 +81,8 @@ export class ReservationUpdateComponent implements OnInit {
             let minutes = entryTime.getMinutes() < 10 ? `0${entryTime.getMinutes()}` : entryTime.getMinutes()
             this.currentTime = `${hour}:${minutes}`
             let reservationDate = new Date(reservation.reservationDate)
-            let day = reservationDate.getDate().toString()
-            let month = reservationDate.getMonth()+1
-            let year = reservationDate.getFullYear()
-            if (parseInt(day) >= 1 && parseInt(day) <= 9) {
-              day = '0' + day
-            }
-            if (month >= 1 && month <= 9) {
-              this.currentDate = `${year}-0${month}-${day}`
-            } else {
-              this.currentDate = `${year}-${month}-${day}`
-            }
+            this.currentDate = reservationDate.toISOString().split('T')[0]
+            console.log(this.currentDate)
             let departureTime = new Date(reservation.departureTime)
             let departureHour = departureTime.getHours().toString()
             if (parseInt(departureHour) >= 0 && parseInt(departureHour) <= 9) {
@@ -115,13 +116,42 @@ export class ReservationUpdateComponent implements OnInit {
   update() {
     this.updateReservation.entryTime = new Date(`${this.currentDate} ${this.currentTime}`)
     this.updateReservation.departureTime = new Date(`${this.currentDate} ${this.currentDepartureTime}`)
-    this.updateReservation.reservationDate = new Date(`${this.currentDate} ${this.currentTime}`)
+    this.updateReservation.reservationDate = new Date(this.currentDate)
     if (this.employee) {
         if (this.registrationNumber != this.updateReservation.employee.employeeNumber) {
           this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => {
             let employee = JSON.parse(JSON.stringify(user)).empleado
             this.updateReservation.employee = employee
             this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
+              console.log(response['_body'].reservationUpdated)
+              let currentReservation = JSON.parse(response['_body'].reservationUpdated)
+              // Set companions
+              // for (let i = 0; i < currentReservation.usersDetails.length; i++) {
+              //   let companion = new CompanionModel(
+              //     currentReservation.reservationDate,
+              //     currentReservation.usersDetails[i].quantity,
+              //     currentReservation._id,
+              //     currentReservation.usersDetails[i].registrationNumber,
+              //     currentReservation.usersDetails[i].userCode,
+              //     currentReservation.usersDetails[i].division,
+              //     currentReservation.usersDetails[i].career,
+              //     currentReservation.usersDetails[i].department
+              //     )
+              //   this.companions.push(companion)
+              // }
+              // if (this.companions.length > 1) { // create one companion
+              //   this.companionsService.createMany(this.companions)
+              //   .subscribe(
+              //     (response => console.log(response)),
+              //     (err => console.log(err))
+              //   )
+              // } else if (this.companions.length == 1) { // create many companions
+              //   this.companionsService.create(this.companions[0])
+              //   .subscribe(
+              //     (response => console.log(response)),
+              //     (err => console.log(err))
+              //   )
+              // }
               if (response.status == 200 || response.status == 204) {
                 setTimeout(() => {
                   alert(`Reservacion actualizada exitosamente`)
@@ -143,6 +173,7 @@ export class ReservationUpdateComponent implements OnInit {
           let external = JSON.parse(JSON.stringify(user)).usuario
           this.updateReservation.externalUser = external
           this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
+            console.log(response)
             if (response.status == 200 || response.status == 204) {
               setTimeout(() => {
                 alert(`Reservacion actualizada exitosamente`)
@@ -165,6 +196,7 @@ export class ReservationUpdateComponent implements OnInit {
           let student = JSON.parse(JSON.stringify(user)).usuario
           this.updateReservation.user = student
           this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
+            console.log(response)
             if (response.status == 200 || response.status == 204) {
               setTimeout(() => {
                 alert(`Reservacion actualizada exitosamente`)
@@ -185,6 +217,8 @@ export class ReservationUpdateComponent implements OnInit {
   // Update reservation
   updateInfo() {
     this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
+      console.log(JSON.parse(response['_body']).reservationUpdated)
+
       if (response.status == 200 || response.status == 204) {
         setTimeout(() => {
           alert(`Reservacion actualizada exitosamente`)
