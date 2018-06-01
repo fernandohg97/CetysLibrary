@@ -111,8 +111,9 @@ export class ReservationEditComponent implements OnInit {
     })
   }
   // Pop up confirm delete element component
-  openPopup5(reservationId: string) {
-    this.adminDataService.changeId(reservationId)
+  openPopup5(id: string) {
+    this.adminDataService.changeReservationId(id)
+    this.adminDataService.changeId(id)
     this.adminDataService.changeElement(ElementType.reservations)
     this.popup5.open(PopupConfirmElementComponent, {
       classNames: 'custom',
