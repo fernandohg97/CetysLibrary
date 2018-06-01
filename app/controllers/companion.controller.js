@@ -55,12 +55,28 @@ function getCompanion(req, res) {
   })
 }
 
+// Get companion by reservation id
+function getCompanionByReservation(req, res) {
+  let findCompanion = Companion.findOne(req.params)
+
+  findCompanion.then(companion => {
+    if (companion) {
+      res.status(200).json(companion)
+    } else {
+      res.status(404).send({message: 'Page not found'})
+    }
+  })
+  .catch(err => {
+    res.status(500).send({message: `Error del server: ${err}`})
+  })
+}
+
 // Create new companion
 function createCompanion(req, res) {
   let companions = req.body // get the request form data
   if (companions.length > 1) { // In case we upload a file with new companions
     Companion.insertMany(companions).then(companions => {
-      res.status(200).json({message: 'Companions successfully created'})
+      res.status(200).json({message: 'Companions successfully created', companions: companions})
     }).catch(err => {
       res.status(500).send({message: `Error del server ${err}`})
     })
@@ -68,7 +84,7 @@ function createCompanion(req, res) {
     let newCompanion = new Companion(companions)
     let createCompanion = newCompanion.save()
     createCompanion.then(companion => {
-      return res.status(200).json({message: 'Companion successfully created'})
+      return res.status(200).json({message: 'Companion successfully created', companion: companion})
     }).catch(err => {
       return res.status(500).send(err)
     })
@@ -142,6 +158,7 @@ module.exports = {
   // getCareersByDivision,
   getCompanionsCount,
   getCompanion,
+  getCompanionByReservation,
   createCompanion,
   // createCareersFile,
   // downloadCareersFile,
