@@ -110,22 +110,7 @@ export class ReservationCreateComponent implements OnInit {
   save() {
     this.newReservation.entryTime = new Date(`${this.currentDate} ${this.currentTime}`)
     this.newReservation.departureTime = new Date(`${this.currentDate} ${this.departureTime}`)
-    // this.newReservation.reservationDate = new Date(`${this.currentDate} ${this.currentTime}`)
     this.newReservation.reservationDate = new Date(this.currentDate)
-
-    // Set companions
-    for (let i = 0; i < this.newReservation.usersDetails.length; i++) {
-      let companion = new CompanionModel(
-        this.newReservation.reservationDate,
-        this.newReservation.usersDetails[i].quantity,
-        this.newReservation.usersDetails[i].registrationNumber,
-        this.newReservation.usersDetails[i].userCode,
-        this.newReservation.usersDetails[i].division,
-        this.newReservation.usersDetails[i].career,
-        this.newReservation.usersDetails[i].division
-        )
-      this.companions.push(companion)
-    }
 
     this.usersService.getByRegistrationNumber(this.registrationNumber).then(user => { // Get user by registration number input
       let student = JSON.parse(JSON.stringify(user)).usuario
@@ -138,13 +123,27 @@ export class ReservationCreateComponent implements OnInit {
       this.reservationsService.create(this.newReservation) // Create data
       .subscribe(
         data => {
+          // Set companions
+          for (let i = 0; i < data.reservation.usersDetails.length; i++) {
+            let companion = new CompanionModel(
+              data.reservation.reservationDate,
+              data.reservation.usersDetails[i].quantity,
+              data.reservation._id,
+              data.reservation.usersDetails[i].registrationNumber,
+              data.reservation.usersDetails[i].userCode,
+              data.reservation.usersDetails[i].division,
+              data.reservation.usersDetails[i].career,
+              data.reservation.usersDetails[i].department
+              )
+            this.companions.push(companion)
+          }
           if (this.companions.length > 1) { // create one companion
             this.companionsService.createMany(this.companions)
             .subscribe(
               (response => console.log(response)),
               (err => console.log(err))
             )
-          } else { // create many companions
+          } else if (this.companions.length == 1) { // create many companions
             this.companionsService.create(this.companions[0])
             .subscribe(
               (response => console.log(response)),
