@@ -19,6 +19,8 @@ companionRouter.get('/companions/count', companionCtrl.getCompanionsCount) // Ge
 
 companionRouter.get('/companions/:companion_id', companionCtrl.getCompanion) // Get companion by id
 
+companionRouter.get('/companions/reservation/:reservation', companionCtrl.getCompanionByReservation) // Get companion by id
+
 companionRouter.post('/companions', companionCtrl.createCompanion) // Create companion
 
 companionRouter.put('/companions/:companion_id', companionCtrl.updateCompanion) // Update companion
