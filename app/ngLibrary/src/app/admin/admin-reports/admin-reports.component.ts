@@ -88,7 +88,6 @@ export class AdminReportsComponent implements OnInit {
       data.forEach(e => {
         if (e.active) this.careers.push(e)
       })
-      console.log(this.careers)
     })
   }
 // Create name labels and data of each report
@@ -103,9 +102,13 @@ export class AdminReportsComponent implements OnInit {
   }
   // Execute when search button is clic
   searchReports() {
+    console.log(this.endDate)
     let date = new Date(this.endDate)
+    console.log(date)
     date.setDate(date.getDate()+1)
+    console.log(date)
     let shortDate = date.toISOString().split('T')[0]
+    console.log(shortDate)
     this.sumCareers = []
     this.totalSumCompanions = 0
     this.reportsCubicle = []
@@ -177,7 +180,7 @@ export class AdminReportsComponent implements OnInit {
     this.newArray = []
 
     if (this.startDate && this.endDate) { // In case dates inputs are fill in
-      this.reportsService.getByDivision(this.startDate, shortDate).then(data => { // Get division data between dates input
+      this.reportsService.getByDivision(this.startDate, this.endDate).then(data => { // Get division data between dates input
         if (data) { // In case data is received
         this.totalSumDivision = 0
           this.reportsDivision = data
@@ -198,7 +201,7 @@ export class AdminReportsComponent implements OnInit {
           }
         }
       })
-      this.reportsService.getByDepartment(this.startDate, shortDate).then(data => { // Get department data between dates input
+      this.reportsService.getByDepartment(this.startDate, this.endDate).then(data => { // Get department data between dates input
         if (data) { // In case data is received
         this.totalSumDepartment = 0
           this.reportsDepartment = data
@@ -226,8 +229,9 @@ export class AdminReportsComponent implements OnInit {
           }
         }
       })
-      this.reportsService.getByCubicle(this.startDate, shortDate).then(data => { // Get cubicle data between dates input
+      this.reportsService.getByCubicle(this.startDate, this.endDate).then(data => { // Get cubicle data between dates input
         if (data) { // In case data is received
+          console.log(data)
         this.totalSumCubicle = 0
         this.reportsCubicle = data
         this.pieChartDataCubicles = []
@@ -257,7 +261,7 @@ export class AdminReportsComponent implements OnInit {
           }
         }
       })
-      this.reportsService.getByCareer(this.startDate, shortDate).then(data => { // Get career data between dates input
+      this.reportsService.getByCareer(this.startDate, this.endDate).then(data => { // Get career data between dates input
         if (data) { // In case data is received
         this.totalSumCareer = 0
           this.reportsCareer = data
@@ -279,7 +283,7 @@ export class AdminReportsComponent implements OnInit {
           }
         }
       })
-      this.reportsService.getByCompanionsCareer(this.startDate, shortDate).then(data => { // Get companions data between dates input
+      this.reportsService.getByCompanionsCareer(this.startDate, this.endDate).then(data => { // Get companions data between dates input
         if (data) { // In case data is received
           console.log(data)
           // this.totalSumCompanions = 0
@@ -424,7 +428,7 @@ export class AdminReportsComponent implements OnInit {
         //     }
           }
       })
-      this.reportsService.getByCompanionsDepartment(this.startDate, shortDate).then(data => { // Get companions data between dates input
+      this.reportsService.getByCompanionsDepartment(this.startDate, this.endDate).then(data => { // Get companions data between dates input
         if (data) { // In case data is received
           console.log(data)
           // this.totalSumCompanions = 0
@@ -468,7 +472,7 @@ export class AdminReportsComponent implements OnInit {
           })
           }
       })
-      this.reportsService.getByExternal(this.startDate, shortDate).then(data => { // Get external users data between dates input
+      this.reportsService.getByExternal(this.startDate, this.endDate).then(data => { // Get external users data between dates input
         if (data) { // In case data is received
         this.totalSumExternal = 0
           this.reportsExternal = data

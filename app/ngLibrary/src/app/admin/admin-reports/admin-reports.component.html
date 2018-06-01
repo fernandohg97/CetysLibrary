@@ -149,7 +149,7 @@
           <thead>
             <tr>
               <th>Carrera</th>
-              <th>Cantidad de reservaciones</th>
+              <th>Cantidad de ingresos</th>
             </tr>
           </thead>
           <tbody>
@@ -233,11 +233,11 @@
           <li>Total de acompañantes: {{totalSumCompanions}} </li>
           <li>Total de reservaciones por d&iacute;a: {{totalSumDay}}</li>
           <li>Total de reservaciones por externo/visitante: {{totalSumExternal}}</li>
-          <li>Total de estudiantes por carrera (incluye acompanantes y lideres):</li>
+          <li>Total de estudiantes por carrera (incluye acompañantes y lideres):</li>
             <ul *ngFor="let career of sumCareers">
               <li>{{career.name}}: {{career.count}}</li>
             </ul>
-          <li>Total de empleados por departamento (incluye acompanantes y lideres):</li>
+          <li>Total de empleados por departamento (incluye acompañantes y lideres):</li>
           <ng-template *ngIf="sumDepartments.length > 0; else elseBlock">
             <ul *ngFor="let department of sumDepartments">
               <li>{{department.name}}: {{department.count}}</li>
