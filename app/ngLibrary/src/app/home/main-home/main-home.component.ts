@@ -29,8 +29,10 @@ export class MainHomeComponent implements OnInit {
           if (data) {
             this.reservations = data
             this.reservations.forEach(reservation => {
-              let initialDate = new Date(reservation.reservationDate)
+              let initialDate = new Date(reservation.entryTime)
               let finishTime = new Date(reservation.departureTime)
+              // console.log(initialDate, finishTime)
+              // console.log(``)
               if (this.currentDate >= initialDate && this.currentDate <= finishTime) { // In case currentDate is between initialDate and finishTime
                 this.cubicles.forEach(cubicle => {
                   if (cubicle.cubicleNumber == reservation.cubicle) { // In case cubicleNumber is equal to reservation cubicle it will set availability to false
