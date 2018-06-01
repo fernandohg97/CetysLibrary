@@ -3,6 +3,7 @@
 const express = require('express') // import express library
 const Reservation = require('../models/reservation/reservation.model') // import reservation model
 const fs = require('fs')
+const moment = require('moment')
 
 // Get all reservations from database
 function getReservations(req, res) {
@@ -59,6 +60,7 @@ function getReservationsByCubicle(req, res) {
 
 // Create new reservation
 function createReservation(req, res) {
+  console.log(req.body);
   let reservation = new Reservation(req.body) // get the request form data
   if (reservation.departureTime !== null && reservation.departureTime <= reservation.entryTime) { // In case the departure time it is less than entry time
     return res.status(500).send({departureTimeMsg: 'La hora de salida ya paso'})
