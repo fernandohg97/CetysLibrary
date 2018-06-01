@@ -8,6 +8,7 @@ import { DepartmentsService } from '../../../services/departments/departments.se
 import { UsersService } from '../../../services/users/users.service';
 import { EmployeesService } from '../../../services/employees/employees.service';
 import { CareersService } from '../../../services/careers/careers.service';
+import { CompanionsService } from '../../../services/companions/companions.service';
 import { NguiPopupComponent } from '@ngui/popup';
 
 @Component({
@@ -29,11 +30,12 @@ export class PopupConfirmComponent implements OnInit {
     private usersService: UsersService,
     private careersService: CareersService,
     private departmentsService: DepartmentsService,
-    private cubiclesService: CubiclesService
+    private cubiclesService: CubiclesService,
+    private companionsService: CompanionsService
   ) { }
   // Execute when component initialize
   ngOnInit() {
-    this.adminSelected = this.dataReservationService.getAdminSelected() 
+    this.adminSelected = this.dataReservationService.getAdminSelected()
   }
   // Get admin type text depending on admin selected
   getAdminText(adminChoosen) {
@@ -117,12 +119,14 @@ export class PopupConfirmComponent implements OnInit {
         break;
     case AdminSection.reservations:
         this.reservationsService.removeAll().then(response => {
-          if (response.status == 200 || response.status == 204) {
-            this.router.navigateByUrl('/home')
-            setTimeout(() => {
-              alert('Reservaciones eliminadas exitosamente')
-            }, 400)
-          }
+          this.companionsService.removeAll().then(response => {
+            if (response.status == 200 || response.status == 204) {
+              this.router.navigateByUrl('/home')
+              setTimeout(() => {
+                alert('Reservaciones eliminadas exitosamente')
+              }, 400)
+            }
+          }).catch(err => err)
         }).catch(err => {
           alert('Error:\nNo se ha podido eliminar las reservaciones')
         })
