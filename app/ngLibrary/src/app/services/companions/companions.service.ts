@@ -17,7 +17,7 @@ export class CompanionsService {
     return Promise.reject(error.message || error);
   }
 
-  getAll(): Promise<CompanionModel[]> { // Get all careers
+  getAll(): Promise<CompanionModel[]> { // Get all companions
     return this.http.get(this.url)
     .toPromise()
     .then(res => res.json() as CompanionModel[])
@@ -31,8 +31,15 @@ export class CompanionsService {
     .catch(CompanionsService.handleError)
   }
 
-  getById(_id: String): Promise<CompanionModel> { // Get career by id
+  getById(_id: String): Promise<CompanionModel> { // Get companion by id
     return this.http.get(`${this.url}/${_id}`)
+    .toPromise()
+    .then(res => res.json() as CompanionModel)
+    .catch(CompanionsService.handleError)
+  }
+
+  getByReservation(reservation: String): Promise<CompanionModel> {
+    return this.http.get(`${this.url}/reservation/${reservation}`)
     .toPromise()
     .then(res => res.json() as CompanionModel)
     .catch(CompanionsService.handleError)
@@ -62,15 +69,15 @@ export class CompanionsService {
     .catch(err => CompanionsService.handleError(err))
   }
 
-  update(id: String, companionModel: CompanionModel) { // Update specific career from database
+  update(id: String, companionModel: CompanionModel) { // Update specific companion from database
     return this.http.put(`${this.url}/${id}`, companionModel).toPromise()
   }
 
-  remove(id: String) { // Delete specific career from database
+  remove(id: String) { // Delete specific companion from database
     return this.http.delete(`${this.url}/${id}`).toPromise()
   }
 
-  removeAll() { // Delete all careers from database
+  removeAll() { // Delete all companions from database
     return this.http.delete(`${this.url}`).toPromise()
   }
 
