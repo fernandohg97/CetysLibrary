@@ -42,7 +42,6 @@ export class PopupConfirmElementComponent implements OnInit {
   ngOnInit() {
     this.companionsService.getByReservation(this.adminDataService.getCurrentReservationId()).then(companion => {
       console.log(companion)
-      console.log(companion._id)
       this.currentCompanion = companion
     })
     this.currentId = this.adminDataService.getCurrentId()
@@ -113,7 +112,7 @@ export class PopupConfirmElementComponent implements OnInit {
           break;
       case ElementType.reservations:
           this.reservationsService.remove(this.currentId).then(response => {
-            this.companionsService.remove(this.currentCompanion._id).then(response => {
+            this.companionsService.remove(this.currentId).then(response => {
               if (response.status == 200 || response.status == 204) {
                 this.router.navigateByUrl('/home')
                 setTimeout(() => {
