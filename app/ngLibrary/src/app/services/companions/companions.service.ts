@@ -73,8 +73,8 @@ export class CompanionsService {
     return this.http.put(`${this.url}/${id}`, companionModel).toPromise()
   }
 
-  remove(id: String) { // Delete specific companion from database
-    return this.http.delete(`${this.url}/${id}`).toPromise()
+  remove(reservation: String) { // Delete specific companion from database
+    return this.http.delete(`${this.url}/${reservation}`).toPromise()
   }
 
   removeAll() { // Delete all companions from database
