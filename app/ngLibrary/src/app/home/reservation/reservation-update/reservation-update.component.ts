@@ -69,9 +69,11 @@ export class ReservationUpdateComponent implements OnInit {
       if (this.reservationId) {
         this.companionsService.getByReservation(this.reservationId).then(companion => {
           this.companion = companion
+          console.log(`Acompanante correspondiente:`)
           console.log(this.companion)
         })
         this.reservationsService.getById(this.reservationId).then(reservation => {
+          console.log(`Reservacion a modificar:`)
           console.log(reservation)
             let entryTime = new Date(reservation.entryTime)
             let hour = entryTime.getHours().toString()
@@ -217,18 +219,58 @@ export class ReservationUpdateComponent implements OnInit {
   // Update reservation
   updateInfo() {
     this.reservationsService.update(this.reservationId, this.updateReservation).then(response => {
-      console.log(JSON.parse(response['_body']).reservationUpdated)
-
-      if (response.status == 200 || response.status == 204) {
-        setTimeout(() => {
-          alert(`Reservacion actualizada exitosamente`)
-        }, 500)
-        this.router.navigateByUrl('/')
-      }
+      this.companionsService.remove(this.reservationId).then(response => {
+        this.updateCompanions()
+        if (response.status == 200 || response.status == 204) {
+          setTimeout(() => {
+            alert(`Reservacion actualizada exitosamente`)
+          }, 500)
+          this.router.navigateByUrl('/')
+        }
+      }).catch(error => {
+        this.anyErrors = JSON.parse(error._body)
+      })
     }).catch(error => {
       this.anyErrors = JSON.parse(error._body)
     })
+
   }
+
+  updateCompanions() {
+    this.reservationsService.getById(this.reservationId).then(reservation => {
+      // Set companions
+      console.log(reservation)
+      for (let i = 0; i < reservation.usersDetails.length; i++) {
+        let companion = new CompanionModel(
+          reservation.reservationDate,
+          reservation.usersDetails[i].quantity,
+          reservation._id,
+          reservation.usersDetails[i].registrationNumber,
+          reservation.usersDetails[i].userCode,
+          reservation.usersDetails[i].division,
+          reservation.usersDetails[i].career,
+          reservation.usersDetails[i].department
+          )
+        this.companions.push(companion)
+      }
+
+    console.log(this.companions)
+    if (this.companions.length > 1) { // create one companion
+      this.companionsService.createMany(this.companions)
+      .subscribe(
+        (response => console.log(response)),
+        (err => console.log(err))
+      )
+    } else if (this.companions.length == 1) { // create many companions
+      this.companionsService.create(this.companions[0])
+      .subscribe(
+        (response => console.log(response)),
+        (err => console.log(err))
+      )
+      }
+    })
+  }
+
   // Change user number input
   changeUserNumber(newValue) {
     if (this.externalUser) {
