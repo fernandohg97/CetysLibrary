@@ -46,6 +46,6 @@ hr {
     text-align: left;
   }
 }
-.fa-check {
+.fa-check, .user-number, .user-people {
   cursor: pointer;
 }
