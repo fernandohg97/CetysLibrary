@@ -106,7 +106,7 @@ function downloadReservationFile(req, res) {
 
 // Update specific reservation from database
 function updateReservation(req, res) {
-  let updateReservation = Reservation.findByIdAndUpdate(req.params.reservation_id, req.body)
+  let updateReservation = Reservation.updateOne(req.params.reservation_id, req.body)
 
   updateReservation.then(reservation => {
     res.json({
