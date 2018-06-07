@@ -9,14 +9,6 @@ companionRouter.get('/companions', companionCtrl.getCompanions) // Get all compa
 
 companionRouter.get('/companions/count', companionCtrl.getCompanionsCount) // Get maximun number of companions
 
-// careerRouter.get('/careers/file', careerCtrl.createCareersFile) // Create careers local file
-
-// careerRouter.get('/careers/download', careerCtrl.downloadCareersFile) // Download careers local file
-
-// careerRouter.get('/careers/remove', careerCtrl.removeCareersFile) // Remove careers local file
-
-// careerRouter.get('/careers/division', careerCtrl.getCareersByDivision) // Get careers by division
-
 companionRouter.get('/companions/:companion_id', companionCtrl.getCompanion) // Get companion by id
 
 companionRouter.get('/companions/reservation/:reservation', companionCtrl.getCompanionByReservation) // Get companion by id
@@ -25,8 +17,8 @@ companionRouter.post('/companions', companionCtrl.createCompanion) // Create com
 
 companionRouter.put('/companions/:companion_id', companionCtrl.updateCompanion) // Update companion
 
-companionRouter.delete('/companions/:companion_id', companionCtrl.removeCompanion) // Delete companion by id
+companionRouter.delete('/companions/:reservation', companionCtrl.removeCompanion) // Delete companion by reservation id
 
-companionRouter.delete('/companions', companionCtrl.removeCompanions) // Delete all companions
+companionRouter.delete('/companions', companionCtrl.removeAll) // Delete all companions
 
 module.exports = companionRouter
