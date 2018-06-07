@@ -57,7 +57,7 @@ function getCompanion(req, res) {
 
 // Get companion by reservation id
 function getCompanionByReservation(req, res) {
-  let findCompanion = Companion.findOne(req.params)
+  let findCompanion = Companion.find(req.params)
 
   findCompanion.then(companion => {
     if (companion) {
@@ -91,79 +91,48 @@ function createCompanion(req, res) {
   }
 }
 
-// Create local file with all careers from database
-// function createCareersFile(req, res) {
-//   let rootFile = `${__dirname}/carreras.json`
-//   let content = Career.find({}, {_id: 0, __v: 0})
-//   content.then(data => {
-//     data = JSON.stringify(data)
-//     fs.writeFile(rootFile, data, 'utf-8', (err) => {
-//       if (err) return res.status(500).send('Error al crear el archivo ' + err)
-//       return res.status(200).send({message: 'File was saved'})
-//     })
-//   }).catch(err => res.status(500).send({message: `Error del server ${err}`}))
-// }
-
-// Remove local file with all careers
-// function removeCareersFile(req, res) {
-//   let rootFile = `${__dirname}/carreras.json`
-//   fs.unlink(rootFile, (err) => {
-//     if (err) throw err;
-//     return res.status(200).send({message: 'carreras.json successfully deleted'})
-//   });
-// }
-
-// Download local file with all careers
-// function downloadCareersFile(req, res) {
-//   let rootFile = `${__dirname}/carreras.json`
-//   res.download(rootFile, 'carreras.json')
-// }
-
-// Update specific career from database
+// Update specific companion from database
 function updateCompanion(req, res) {
   let updateCompanion = Companion.findByIdAndUpdate(req.params.companion_id, req.body)
 
-  updateCompanion.then(career => {
+  updateCompanion.then(companion => {
     res.json({message: 'Companion updated successfully'})
   })
   .catch(err => {
     res.status(500).send({message: `No se pudo actualizar el acompanante: ${err}`})
   })
 }
-// Delete specific career from database
+// Delete specific companion from database
 function removeCompanion(req, res) {
-  let removeCompanion = Companion.findByIdAndRemove(req.params.companion_id)
+  let removeCompanion = Companion.remove({reservation: req.params.reservation})
 
-  removeCompanion.then(career => {
+  removeCompanion.then(companion => {
     res.json({message: 'Companion deleted successfully'})
   })
   .catch(err => {
     res.status(500).send({message: `No se pudo eliminar el acompanante: ${err}`})
   })
 }
-// Delete all careers from database
-function removeCompanions(req, res) {
-  let removeCompanions = Companion.deleteMany({})
 
-  removeCompanions.then(response => {
-    res.json({message: 'Companions deleted successfully'})
+//Remove all companions from database
+function removeAll(req, res) {
+  let removeAll = Companion.remove({})
+
+  removeAll.then(companions => {
+    res.json({message: 'Companions deleted succesfully'})
   })
   .catch(err => {
-    res.status(500).send({message: `No se pudo eliminar las carreras: ${err}`})
+    res.status(500).send({message: `No se pudo eliminar los acompanantes: ${err}`})
   })
 }
 
 module.exports = {
   getCompanions,
-  // getCareersByDivision,
   getCompanionsCount,
   getCompanion,
   getCompanionByReservation,
   createCompanion,
-  // createCareersFile,
-  // downloadCareersFile,
-  // removeCareersFile,
   updateCompanion,
   removeCompanion,
-  removeCompanions
+  removeAll
 }
